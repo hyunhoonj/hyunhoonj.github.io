@@ -190,6 +190,12 @@ body { background: var(--color-neutral-100); font-family: var(--font-body); }
 
   /* 44px is the smallest target a thumb hits reliably. */
   .studio-editor .input { min-height: 44px; }
+  /* Every editor field carries its size inline, from the canvas — and inline
+     beats a stylesheet, so holding iOS above its 16px zoom threshold takes
+     !important. Below it, tapping any field zooms the page and never undoes it. */
+  .studio-editor input.input,
+  .studio-editor textarea.input,
+  .studio-editor select.input { font-size: 16px !important; }
   .studio-editor .btn-ghost { width: 100%; min-height: 44px; }
   .studio-mini { min-height: 32px; }
   .studio-mini--baseline { padding-bottom: 0; }

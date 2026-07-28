@@ -10,7 +10,19 @@
   --font-body: "Source Serif 4", "Noto Serif KR", system-ui, serif;
 }
 
+/* Safari on iOS reflows text up on its own unless told not to. */
+html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
 body { background: var(--color-bg); font-family: var(--font-body); }
+
+/* iOS Safari zooms the whole page in when you focus a control whose text is
+   under 16px, and it does not zoom back out — which reads as "the width is
+   wrong" and leaves the page scrolling sideways for the rest of the visit. The
+   canvas sets 14px here, but it was drawn at 390px, not held in a hand. This is
+   a property of the device rather than of the sheet, so it is a media query and
+   not a container one. */
+@media (max-width: 760px) {
+  input.input, textarea.input, select.input { font-size: 16px; }
+}
 
 /* Links are page furniture, not blue text: they take the surrounding ink and
    only warm on hover. The one exception is .btn-primary, which owns its color. */
