@@ -1,0 +1,131 @@
+/* The writing desk (design canvas, turn 8) — the four pages in one editor,
+   with the page itself redrawn at 47% on the right as you type. */
+
+:root {
+  --font-heading: "Source Serif 4", "Noto Serif KR", system-ui, serif;
+  --font-body: "Source Serif 4", "Noto Serif KR", system-ui, serif;
+}
+
+body { background: var(--color-neutral-100); font-family: var(--font-body); }
+/* Chrome links only — anything inside .sheet is the page previewing itself and
+   keeps the site's own link colour. */
+.studio-bar a, .studio-editor a, .studio-rail a { color: var(--color-accent-700); text-decoration: none; }
+.studio-bar a:hover, .studio-editor a:hover, .studio-rail a:hover { color: var(--color-accent); }
+
+/* — bar ———————————————————————————————————————————————— */
+.studio-bar {
+  display: flex; justify-content: space-between; align-items: center;
+  gap: var(--space-4) var(--space-6);
+  padding: var(--space-4) var(--space-6) var(--space-3);
+  font-size: 13px; line-height: 1; flex-wrap: wrap;
+}
+.studio-bar-left { display: flex; align-items: baseline; gap: var(--space-3); }
+.studio-bar-right { display: flex; align-items: center; gap: var(--space-4); }
+.slash { color: var(--color-neutral-500); }
+.studio-crumb, .studio-saved { color: var(--color-neutral-600); }
+.studio-bar .btn { white-space: nowrap; }
+
+/* — three columns ——————————————————————————————————————— */
+.studio-grid {
+  display: grid; grid-template-columns: 150px minmax(0, 1fr) 560px;
+  column-gap: var(--space-6);
+  padding: var(--space-6) var(--space-6) var(--space-8);
+  align-items: start;
+}
+
+.studio-rail {
+  display: flex; flex-direction: column; gap: var(--space-6);
+  position: sticky; top: var(--space-4);
+}
+.studio-rail-title { font-size: 13px; color: var(--color-neutral-600); margin-bottom: 8px; }
+.studio-tabs { display: flex; flex-direction: column; align-items: flex-start; gap: 6px; font-size: 15px; }
+.studio-tab { all: unset; cursor: pointer; text-align: left; }
+.studio-tab:hover { color: var(--color-accent-700); }
+.studio-tab:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 2px; }
+.studio-tab .on {
+  background: color-mix(in srgb, var(--color-accent-400) 52%, transparent);
+  padding: .15em .1em; margin: 0 -.04em;
+}
+.studio-drafts {
+  display: flex; flex-direction: column; gap: 6px;
+  font-size: 14px; line-height: 1.45; color: var(--color-neutral-700);
+}
+
+/* — editor ——————————————————————————————————————————————— */
+.studio-editor { display: flex; flex-direction: column; gap: var(--space-4); max-width: 620px; }
+.studio-editor-head {
+  display: flex; justify-content: space-between; align-items: center;
+  gap: var(--space-4); flex-wrap: wrap;
+}
+.studio-fields { display: flex; flex-direction: column; gap: var(--space-4); }
+.studio-hint { font-size: 13px; color: var(--color-neutral-600); line-height: 1.55; }
+.studio-hint .mark {
+  background: color-mix(in srgb, var(--color-accent-2-400) 42%, transparent);
+  padding: .15em .1em;
+}
+.studio-section { font-size: 13px; letter-spacing: .02em; color: var(--color-neutral-600); margin-top: var(--space-3); }
+.studio-status { display: flex; flex-wrap: wrap; gap: 0 6px; font-size: 13px; color: var(--color-neutral-600); }
+
+.studio-cols { display: grid; gap: var(--space-4); }
+.studio-cols--meta { grid-template-columns: 1fr 1fr 1.4fr; }
+.studio-cols--2 { grid-template-columns: 1fr 1fr; }
+.studio-cols--contact { grid-template-columns: 1fr 1.2fr; }
+
+.studio-row { display: flex; flex-direction: column; gap: var(--space-3); padding: var(--space-3) 0; }
+.studio-row-head {
+  display: flex; justify-content: space-between; align-items: baseline;
+  gap: var(--space-4); font-size: 13px; color: var(--color-neutral-600);
+}
+.studio-row-acts { display: flex; gap: var(--space-4); }
+.studio-row-cols { display: grid; grid-template-columns: 2.2fr 1fr 1fr; gap: var(--space-3); }
+.studio-row-cols--link { grid-template-columns: 1fr 1.6fr; }
+.studio-row-cols--group { grid-template-columns: 1fr 2.4fr; align-items: start; }
+.studio-row-cols--channel { grid-template-columns: 1fr 1.6fr 1.4fr auto; align-items: end; }
+
+.studio-mini { all: unset; cursor: pointer; font-size: 13px; color: var(--color-neutral-600); }
+.studio-mini:hover { color: var(--color-accent-700); }
+.studio-mini:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 2px; }
+.studio-mini--danger:hover { color: var(--color-accent-2-700); }
+.studio-mini--baseline { padding-bottom: 12px; }
+
+/* Figure slots. A static site has nowhere to upload to, so the slot takes the
+   path of a file in images/ and shows what is there. */
+.studio-figs { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: var(--space-4); }
+.studio-fig { display: flex; flex-direction: column; gap: 8px; }
+.studio-fig-plate {
+  background: var(--color-neutral-200); overflow: hidden;
+  display: grid; place-items: center;
+  font-size: 12px; color: var(--color-neutral-600); text-align: center; padding: var(--space-2);
+}
+.studio-fig-plate img { width: 100%; height: 100%; object-fit: cover; }
+
+/* — preview ——————————————————————————————————————————————— */
+.studio-preview { position: sticky; top: var(--space-4); display: flex; flex-direction: column; gap: 10px; }
+.studio-preview-head {
+  display: flex; justify-content: space-between; align-items: baseline;
+  font-size: 13px; color: var(--color-neutral-600);
+}
+.studio-viewport { width: 560px; height: 680px; overflow: hidden; background: var(--color-bg); }
+.studio-scaler {
+  width: 1200px; transform: scale(.4667); transform-origin: top left;
+  pointer-events: none; /* the page here is a picture of itself, not a page */
+}
+.studio-common-note {
+  margin: calc(var(--space-8) * 2.6) 0 0; max-width: 24em;
+  font-size: 24px; line-height: 1.5; color: var(--color-neutral-600); text-wrap: pretty;
+}
+.studio-common-block { margin-top: calc(var(--space-8) * 2); height: 260px; background: var(--color-neutral-200); }
+
+@media (max-width: 1180px) {
+  .studio-grid { grid-template-columns: 150px minmax(0, 1fr); }
+  .studio-preview { grid-column: 1 / -1; position: static; margin-top: var(--space-8); }
+}
+@media (max-width: 760px) {
+  .studio-grid { grid-template-columns: 1fr; row-gap: var(--space-6); padding-inline: var(--space-4); }
+  .studio-rail { position: static; }
+  .studio-cols--meta, .studio-cols--2, .studio-cols--contact,
+  .studio-row-cols, .studio-row-cols--link,
+  .studio-row-cols--group, .studio-row-cols--channel { grid-template-columns: 1fr; }
+  .studio-mini--baseline { padding-bottom: 0; }
+  .studio-viewport { width: 100%; max-width: 560px; }
+}

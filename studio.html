@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>작성 — Hyunhoon Jung</title>
+  <meta name="robots" content="noindex">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,400&amp;family=Noto+Serif+KR:wght@300;400;600&amp;display=swap">
+  <link rel="stylesheet" href="assets/broadsheet.css">
+  <link rel="stylesheet" href="assets/site.css">
+  <link rel="stylesheet" href="assets/studio.css">
+</head>
+<body>
+
+<header class="studio-bar">
+  <div class="studio-bar-left">
+    <span data-slot="brand"></span>
+    <span class="studio-crumb" data-slot="crumb"></span>
+  </div>
+  <div class="studio-bar-right">
+    <div class="seg" data-slot="uilang"></div>
+    <span class="studio-saved" data-slot="saved"></span>
+    <button class="btn btn-ghost" type="button" data-action="revert"></button>
+    <button class="btn btn-ghost" type="button" data-action="save"></button>
+    <button class="btn btn-primary" type="button" data-action="publish"></button>
+  </div>
+</header>
+
+<div class="studio-grid">
+  <aside class="studio-rail">
+    <div>
+      <div class="studio-rail-title" data-slot="pagesLabel"></div>
+      <div class="studio-tabs" data-slot="tabs"></div>
+    </div>
+    <div>
+      <div class="studio-rail-title" data-slot="draftsLabel"></div>
+      <div class="studio-drafts" data-slot="drafts"></div>
+    </div>
+  </aside>
+
+  <section class="studio-editor" data-slot="editor"></section>
+
+  <aside class="studio-preview">
+    <div class="studio-preview-head">
+      <span data-slot="previewLabel"></span>
+      <span>47%</span>
+    </div>
+    <div class="studio-viewport">
+      <div class="studio-scaler" data-slot="preview"></div>
+    </div>
+    <span class="studio-hint" data-slot="previewNote"></span>
+  </aside>
+</div>
+
+<script src="assets/content.js"></script>
+<script src="assets/render.js"></script>
+<script src="assets/studio.js"></script>
+</body>
+</html>
