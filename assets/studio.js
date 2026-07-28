@@ -8,6 +8,7 @@
   var R = window.SiteRender;
   var esc = R.esc;
   var DRAFT_KEY = 'personal-site:draft';
+  var UI_KEY = 'personal-site:ui';
 
   /* ── strings ──────────────────────────────────────────────────────────── */
 
@@ -19,7 +20,7 @@
       published: '발행 — content.js 내려받음',
       reverted: '파일의 값으로 되돌림',
       revertAsk: '한 번 더 누르면 assets/content.js 의 값으로 되돌립니다',
-      pages: '지면', drafts: '초안', preview: '미리보기',
+      pages: '지면', drafts: '초안', preview: '미리보기', edit: '편집',
       previewNote: '입력하는 대로 지면이 바뀝니다. 도판은 images/ 폴더의 파일 경로로 지정합니다.',
       tabs: { post: '글', home: '메인', info: '소개', contact: '연락', common: '공통' },
       crumb: { post: '글 › ', home: '지면 › 메인', info: '지면 › 소개', contact: '지면 › 연락', common: '설정 › 공통' },
@@ -59,7 +60,7 @@
       published: 'Published — content.js downloaded',
       reverted: 'Reverted to the file',
       revertAsk: 'Press again to reload the values in assets/content.js',
-      pages: 'Pages', drafts: 'Drafts', preview: 'Preview',
+      pages: 'Pages', drafts: 'Drafts', preview: 'Preview', edit: 'Edit',
       previewNote: 'The page changes as you type. Figures take the path of a file in images/.',
       tabs: { post: 'Article', home: 'Home', info: 'Information', contact: 'Contact', common: 'Shared' },
       crumb: { post: 'Article › ', home: 'Page › Home', info: 'Page › Information', contact: 'Page › Contact', common: 'Settings › Shared' },
@@ -104,6 +105,10 @@
     ui: 'ko',
     tab: 'post',
     dlang: 'ko',
+    /* Narrow sheets have room for one pane at a time (turn 9e), so edit and
+       preview become a switch. On a wide sheet both are always up and this is
+       inert. */
+    view: 'edit',
     doc: clone(window.SITE_CONTENT),
     dirty: false,
     savedAt: null,
@@ -119,6 +124,11 @@
   try {
     var stored = JSON.parse(localStorage.getItem(DRAFT_KEY) || 'null');
     if (stored && stored.doc) { state.doc = stored.doc; state.savedAt = stored.savedAt || null; }
+    /* The chrome-language switch is a wide-sheet control (turn 9e drops it for
+       room), so the choice has to persist or a phone could never leave the
+       default. */
+    var ui = localStorage.getItem(UI_KEY);
+    if (ui === 'ko' || ui === 'en') state.ui = ui;
   } catch (e) { /* a corrupt draft is not worth a broken editor */ }
 
   /* Paths are read and written against the current tab + language slice, so a
@@ -200,19 +210,19 @@
   function editorPost() {
     var s = t(), d = cur();
     return '<div class="studio-fields">' +
-      fieldText(s.title, 'title', { style: 'font-size:20px' }) +
+      fieldText(s.title, 'title', { style: 'font-size:19px' }) +
       fieldArea(s.lead, 'dek', 3, { style: 'line-height:1.6', hint: s.bandHint }) +
       '<div class="studio-cols studio-cols--meta">' +
         fieldText(s.kind, 'kind') + fieldText(s.date, 'date') + fieldText(s.url, 'slug') +
       '</div>' +
-      fieldArea(s.body, 'body', 16, { style: 'line-height:1.7;font-size:15px', hint: s.bodyHint }) +
+      fieldArea(s.body, 'body', 16, { style: 'line-height:1.7;font-size:14px', hint: s.bodyHint }) +
       figureSlots('figures', d.figures, [{ ratio: '4-3' }, { ratio: '4-3' }]) +
       '<div class="studio-cols studio-cols--2">' +
-        fieldArea(s.toc, 'toc', 3, { style: 'font-size:14px' }) +
-        fieldArea(s.subjects, 'subjects', 3, { style: 'font-size:14px' }) +
+        fieldArea(s.toc, 'toc', 3, { style: 'font-size:13px' }) +
+        fieldArea(s.subjects, 'subjects', 3, { style: 'font-size:13px' }) +
       '</div>' +
       '<div class="studio-cols studio-cols--2">' +
-        fieldArea(s.refs, 'refs', 3, { style: 'font-size:14px' }) +
+        fieldArea(s.refs, 'refs', 3, { style: 'font-size:13px' }) +
         fieldText(s.readTime, 'readTime') +
       '</div>' +
       '<div class="studio-section">[' + esc(s.next) + ']</div>' +
@@ -236,7 +246,7 @@
           fieldText(s.kind, 'blocks.' + i + '.kind') +
           fieldText(s.year, 'blocks.' + i + '.year') +
         '</div>' +
-        fieldArea(s.desc, 'blocks.' + i + '.desc', 3, { style: 'font-size:15px;line-height:1.65' }) +
+        fieldArea(s.desc, 'blocks.' + i + '.desc', 3, { style: 'font-size:14px;line-height:1.65' }) +
         '<div class="studio-row-cols studio-row-cols--link">' +
           '<div class="field"><label for="ed-layout-' + i + '">' + esc(s.layout) + '</label>' +
             '<select class="input" id="ed-layout-' + i + '" data-act="layout" data-i="' + i + '">' +
@@ -251,7 +261,7 @@
     }).join('');
 
     return '<div class="studio-fields">' +
-      fieldArea(s.statementOne, 'statement', 3, { style: 'font-size:16px;line-height:1.6', hint: s.bandHint }) +
+      fieldArea(s.statementOne, 'statement', 3, { style: 'font-size:15px;line-height:1.6', hint: s.bandHint }) +
       '<div class="studio-section">[' + esc(s.workBlocks) + ']</div>' + rows +
       '<div><button class="btn btn-ghost" type="button" data-act="add" data-list="blocks">' + esc(s.addBlock) + '</button></div>' +
       '</div>';
@@ -263,13 +273,13 @@
       return '<div class="studio-row">' + rowHead('groups', i) +
         '<div class="studio-row-cols studio-row-cols--group">' +
           fieldText(s.label, 'groups.' + i + '.label') +
-          fieldArea(s.items, 'groups.' + i + '.items', 4, { style: 'font-size:14px;line-height:1.7' }) +
+          fieldArea(s.items, 'groups.' + i + '.items', 4, { style: 'font-size:13px;line-height:1.7' }) +
         '</div>' +
         '</div>';
     }).join('');
 
     return '<div class="studio-fields">' +
-      fieldArea(s.bio, 'statement', 7, { style: 'font-size:15px;line-height:1.7', hint: s.bandHint }) +
+      fieldArea(s.bio, 'statement', 7, { style: 'font-size:14px;line-height:1.7', hint: s.bandHint }) +
       '<div class="studio-section">[' + esc(s.groups) + ']</div>' + rows +
       '<div><button class="btn btn-ghost" type="button" data-act="add" data-list="groups">' + esc(s.addGroup) + '</button></div>' +
       '</div>';
@@ -287,11 +297,11 @@
     }).join('');
 
     return '<div class="studio-fields">' +
-      fieldArea(s.statement, 'statement', 3, { style: 'font-size:16px;line-height:1.6', hint: s.bandHint }) +
+      fieldArea(s.statement, 'statement', 3, { style: 'font-size:15px;line-height:1.6', hint: s.bandHint }) +
       '<div class="studio-cols studio-cols--contact">' +
         fieldText(s.email, 'email') + fieldText(s.reply, 'reply') +
       '</div>' +
-      fieldArea(s.currently, 'currently', 3, { style: 'font-size:15px;line-height:1.65', hint: s.bandHint }) +
+      fieldArea(s.currently, 'currently', 3, { style: 'font-size:14px;line-height:1.65', hint: s.bandHint }) +
       '<div class="studio-section">[' + esc(s.elsewhere) + ']</div>' + rows +
       '<div><button class="btn btn-ghost" type="button" data-act="add" data-list="channels">' + esc(s.addChannel) + '</button></div>' +
       '<div class="studio-section">[' + esc(s.formSection) + ']</div>' +
@@ -308,15 +318,15 @@
     var s = t();
     return '<div class="studio-fields">' +
       '<span class="studio-hint">' + esc(s.commonNote) + '</span>' +
-      fieldText(s.displayName, 'name', { style: 'font-size:18px' }) +
+      fieldText(s.displayName, 'name', { style: 'font-size:17px' }) +
       '<div class="studio-cols studio-cols--2">' +
         fieldText(s.navInfo, 'navInfo') + fieldText(s.navContact, 'navContact') +
       '</div>' +
       '<div class="studio-cols studio-cols--2">' +
         fieldText(s.langSwitch, 'langSwitch') + fieldText(s.copyright, 'copyright') +
       '</div>' +
-      fieldArea(s.footerLinks, 'links', 5, { style: 'font-size:14px;line-height:1.7', hint: esc(s.linksHint) }) +
-      fieldArea(s.draftList, 'drafts', 3, { style: 'font-size:14px;line-height:1.7' }) +
+      fieldArea(s.footerLinks, 'links', 5, { style: 'font-size:13px;line-height:1.7', hint: esc(s.linksHint) }) +
+      fieldArea(s.draftList, 'drafts', 3, { style: 'font-size:13px;line-height:1.7' }) +
       '</div>';
   }
 
@@ -337,11 +347,16 @@
 
   function slot(name) { return document.querySelector('[data-slot="' + name + '"]'); }
 
+  /* An option may carry a shorter cut for the narrow sheet — 한국어 becomes KO
+     once the row has to hold the edit/preview switch too. CSS picks. */
   function seg(nameAttr, options) {
     return options.map(function (o) {
+      var label = o.abbr
+        ? '<span class="full">' + esc(o.label) + '</span><span class="abbr">' + esc(o.abbr) + '</span>'
+        : esc(o.label);
       return '<label class="seg-opt" style="white-space:nowrap">' +
         '<input type="radio" name="' + nameAttr + '" value="' + o.value + '"' + (o.on ? ' checked' : '') + '>' +
-        esc(o.label) + '</label>';
+        label + '</label>';
     }).join('');
   }
 
@@ -394,13 +409,17 @@
     var s = t();
     slot('editor').innerHTML =
       '<div class="studio-editor-head">' +
-        '<div class="seg">' + seg('dclang', [
-          { value: 'ko', label: '한국어', on: state.dlang === 'ko' },
-          { value: 'en', label: 'English', on: state.dlang === 'en' }
+        '<div class="seg seg--view">' + seg('dcview', [
+          { value: 'edit', label: s.edit, on: state.view === 'edit' },
+          { value: 'preview', label: s.preview, on: state.view === 'preview' }
         ]) + '</div>' +
-        '<span class="studio-hint">' + esc(s.dualNote) + '</span>' +
+        '<div class="seg">' + seg('dclang', [
+          { value: 'ko', label: '한국어', abbr: 'KO', on: state.dlang === 'ko' },
+          { value: 'en', label: 'English', abbr: 'EN', on: state.dlang === 'en' }
+        ]) + '</div>' +
+        '<span class="studio-hint studio-dualnote">' + esc(s.dualNote) + '</span>' +
       '</div>' +
-      EDITORS[state.tab]();
+      '<div class="studio-editor-body">' + EDITORS[state.tab]() + '</div>';
   }
 
   function renderPreview() {
@@ -422,7 +441,10 @@
     }
   }
 
-  function renderAll() { renderBar(); renderRail(); renderEditor(); renderPreview(); }
+  function renderAll() {
+    document.body.dataset.view = state.view;
+    renderBar(); renderRail(); renderEditor(); renderPreview();
+  }
 
   /* ── actions ──────────────────────────────────────────────────────────── */
 
@@ -530,8 +552,21 @@
 
   document.addEventListener('change', function (e) {
     var el = e.target;
-    if (el.name === 'uilang') { state.ui = el.value; renderAll(); return; }
+    if (el.name === 'uilang') {
+      state.ui = el.value;
+      try { localStorage.setItem(UI_KEY, state.ui); } catch (e) { /* private mode */ }
+      renderAll();
+      return;
+    }
     if (el.name === 'dclang') { state.dlang = el.value; renderAll(); return; }
+    if (el.name === 'dcview') {
+      state.view = el.value;
+      document.body.dataset.view = state.view;
+      /* The switch only shows on a narrow sheet, where the pane you just left
+         may have been scrolled a long way down. */
+      window.scrollTo({ top: 0, behavior: 'instant' });
+      return;
+    }
     if (el.dataset && el.dataset.act === 'layout') {
       setLayout(Number(el.dataset.i), el.value);
       state.dirty = true;

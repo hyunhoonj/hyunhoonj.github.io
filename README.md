@@ -3,8 +3,9 @@
 Implementation of the `Personal Site.dc.html` design canvas
 ([Claude Design project](https://claude.ai/design/p/0fc009b0-e941-4408-92f2-37902e1651e5)).
 
-Four pages, two languages, plus the writing desk from turn 8. No dependencies,
-no framework, no build tooling beyond one Node script.
+Four pages, two languages, at two widths — the 1200px sheet from turns 3–7 and
+the 390px one from turn 9 — plus the writing desk from turns 8 and 9e. No
+dependencies, no framework, no build tooling beyond one Node script.
 
 ```
 index.html                       메인 / Home            ┐
@@ -44,7 +45,10 @@ Two ways in, one source of truth (`assets/content.js`):
 
 **Through the studio.** Open `studio.html`. Pick a page in the left rail, pick a
 language, type — the right column redraws the actual page at 47% through the
-same renderer `build.js` uses, so the preview is not an approximation.
+same renderer `build.js` uses, so the preview is not an approximation. On a
+phone the rail becomes one scrolling row of tabs and 편집 / 미리보기 become a
+switch, since there is only room for one pane; the preview then shows the page
+at the width a reader actually holds it at, unscaled.
 
 - **저장 / Save** keeps a draft in `localStorage`. It survives a reload; it does
   not touch any file.
@@ -54,7 +58,9 @@ same renderer `build.js` uses, so the preview is not an approximation.
 
 The 한국어 / English switch in the top bar changes the *editor's* language; the
 one above the fields changes *which language you are writing*. The two documents
-are stored separately, as the design says.
+are stored separately, as the design says. The editor-language switch is a
+wide-sheet control — turn 9e gives that room to 저장 / 발행 — so the choice is
+remembered in `localStorage` and carries over to a phone.
 
 ### The markup inside text fields
 
@@ -78,15 +84,19 @@ split, the `calc(var(--space-8) * n)` rhythm, the two band colours, the type
 sizes, both languages of every string. Where the implementation had to decide
 something the canvas did not state:
 
-- **Responsive behaviour.** The canvas is a fixed 1200px sheet. Below ~900px the
-  1fr/1.6fr split folds to one column and the display sizes step down; below
-  ~620px figure grids go single-column. These are *container* queries against
-  `.sheet`, not viewport queries, so the studio's 1200px preview keeps the
-  desktop layout however narrow the browser window is.
+- **Where the two sheets meet.** The canvas states 1200px and 390px and nothing
+  in between. Below 900px the 1fr/1.6fr split folds to one column, contact
+  reorders (address → form → the rest), and the display sizes start down; below
+  620px the sheet is turn 9 exactly. These are *container* queries against
+  `.sheet`, not viewport queries, so the studio's 1200px preview keeps the wide
+  layout however narrow the browser window is — and its phone preview gets the
+  narrow one at real size.
 - **Language switch.** The canvas has a Korean and an English version of each
   page but no control to move between them (it switched through canvas chrome).
   The masthead gets a third, quieter nav item — `English` / `한국어` — pointing at
-  the counterpart page.
+  the counterpart page. On the narrow sheet that third item is one thing too
+  many beside `Information`, so `navInfoShort` (`Info`, as turn 9 sets it) takes
+  over; a label with no short cut just keeps its full one.
 - **Article page.** Turn 8's preview drops the `[주제]` and `[다음 글]` blocks that
   the confirmed page (5a / 7c) carries — the editor simply had no fields for
   them. Both are kept, and the studio grew the fields.
@@ -102,6 +112,12 @@ something the canvas did not state:
 - **Figure slots.** The canvas's `<image-slot>` is an upload widget belonging to
   the design tool. A static site has nowhere to upload to, so a slot takes the
   path of a file in `images/` and shows what is there.
+- **Figure counts on a phone.** Turn 9a draws fewer plates per work block than
+  the wide sheet does, but it also carries the editor's seed text rather than
+  the page's, so that reads as an abbreviated mock rather than a decision — and
+  9e says "데스크톱과 같은 데이터" out loud. Both sheets render the same figures;
+  the narrow one stacks them. Only the wide 16:8 plate changes, to 16:9, which
+  turn 9 does state.
 - **`broadsheet.css`.** Imported as-is except the print-treatment blocks
   (`.halftone`, `.cmyk*`), which drive an SVG filter deck (`print-plates.js`)
   this site does not carry and no page here uses.

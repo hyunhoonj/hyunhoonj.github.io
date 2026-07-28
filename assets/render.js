@@ -90,14 +90,22 @@
     return '<div class="figures">' + out.join('') + '</div>';
   }
 
+  /* A nav label that has a shorter cut for the narrow sheet, where the full one
+     would not fit beside the brand and the language switch. CSS picks. */
+  function navLabel(full, short) {
+    if (!short || short === full) return esc(full);
+    return '<span class="nav-full">' + esc(full) + '</span>' +
+      '<span class="nav-abbr">' + esc(short) + '</span>';
+  }
+
   function masthead(ctx) {
     var c = ctx.common;
     var name = esc(c.name).replace(' / ', ' <span class="slash">/</span> ');
     var other = ctx.lang === 'ko' ? 'en' : 'ko';
     var nav = [
       link(ctx, ctx.page === 'home' ? '' : 'home', name, 'masthead-name'),
-      link(ctx, 'info', esc(c.navInfo), '', ctx.page === 'info'),
-      link(ctx, 'contact', esc(c.navContact), '', ctx.page === 'contact'),
+      link(ctx, 'info', navLabel(c.navInfo, c.navInfoShort), '', ctx.page === 'info'),
+      link(ctx, 'contact', navLabel(c.navContact, c.navContactShort), '', ctx.page === 'contact'),
       '<a class="lang-switch" lang="' + other + '" hreflang="' + other + '" href="' +
         esc(ctx.resolve(ctx.counterpart)) + '">' + esc(c.langSwitch) + '</a>'
     ];
@@ -199,14 +207,16 @@
     return '<p class="lede lede--narrow">' + band(d.statement, 'band') + '</p>\n' +
       '<div class="split contact">' +
         '<div class="contact-col">' +
-          '<div>' + bracket(d.emailLabel) +
+          '<div class="contact-block contact-block--email">' + bracket(d.emailLabel) +
             '<div><a class="contact-email" href="mailto:' + esc(d.email) + '">' + esc(d.email) + '</a></div>' +
             '<div class="contact-reply">' + esc(d.reply) + '</div>' +
           '</div>' +
-          '<div>' + bracket(d.channelsLabel) + '<div class="channels">' + channels + '</div></div>' +
+          '<div class="contact-block contact-block--channels">' + bracket(d.channelsLabel) +
+            '<div class="channels">' + channels + '</div>' +
+          '</div>' +
         '</div>' +
         '<div class="contact-col">' + form +
-          '<div>' + bracket(d.currentlyLabel) +
+          '<div class="contact-block contact-block--currently">' + bracket(d.currentlyLabel) +
             '<div class="currently">' + band(d.currently, 'band-2') + '</div>' +
           '</div>' +
         '</div>' +

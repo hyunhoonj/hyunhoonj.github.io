@@ -1,5 +1,7 @@
-/* The writing desk (design canvas, turn 8) — the four pages in one editor,
-   with the page itself redrawn at 47% on the right as you type. */
+/* The writing desk — turn 8 on a wide sheet, turn 9e on a narrow one.
+   Wide: rail · editor · preview, all three at once, the page redrawn at 47%.
+   Narrow: one scrolling tab row, and edit/preview become a switch because
+   there is only room for one of them. Same state, same renderer, both ways. */
 
 :root {
   --font-heading: "Source Serif 4", "Noto Serif KR", system-ui, serif;
@@ -17,13 +19,17 @@ body { background: var(--color-neutral-100); font-family: var(--font-body); }
   display: flex; justify-content: space-between; align-items: center;
   gap: var(--space-4) var(--space-6);
   padding: var(--space-4) var(--space-6) var(--space-3);
-  font-size: 13px; line-height: 1; flex-wrap: wrap;
+  font-size: 12px; line-height: 1; flex-wrap: wrap;
 }
 .studio-bar-left { display: flex; align-items: baseline; gap: var(--space-3); }
 .studio-bar-right { display: flex; align-items: center; gap: var(--space-4); }
 .slash { color: var(--color-neutral-500); }
 .studio-crumb, .studio-saved { color: var(--color-neutral-600); }
 .studio-bar .btn { white-space: nowrap; }
+
+/* The narrow cut of a seg option; the wide one is the default. */
+.seg .abbr { display: none; }
+.seg--view { display: none; }
 
 /* — three columns ——————————————————————————————————————— */
 .studio-grid {
@@ -37,34 +43,35 @@ body { background: var(--color-neutral-100); font-family: var(--font-body); }
   display: flex; flex-direction: column; gap: var(--space-6);
   position: sticky; top: var(--space-4);
 }
-.studio-rail-title { font-size: 13px; color: var(--color-neutral-600); margin-bottom: 8px; }
-.studio-tabs { display: flex; flex-direction: column; align-items: flex-start; gap: 6px; font-size: 15px; }
+.studio-rail-title { font-size: 12px; color: var(--color-neutral-600); margin-bottom: 8px; }
+.studio-tabs { display: flex; flex-direction: column; align-items: flex-start; gap: 6px; font-size: 14px; }
 .studio-tab { all: unset; cursor: pointer; text-align: left; }
 .studio-tab:hover { color: var(--color-accent-700); }
 .studio-tab:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 2px; }
 .studio-tab .on {
   background: color-mix(in srgb, var(--color-accent-400) 52%, transparent);
+  box-decoration-break: clone; -webkit-box-decoration-break: clone;
   padding: .15em .1em; margin: 0 -.04em;
 }
 .studio-drafts {
   display: flex; flex-direction: column; gap: 6px;
-  font-size: 14px; line-height: 1.45; color: var(--color-neutral-700);
+  font-size: 13px; line-height: 1.45; color: var(--color-neutral-700);
 }
 
 /* — editor ——————————————————————————————————————————————— */
 .studio-editor { display: flex; flex-direction: column; gap: var(--space-4); max-width: 620px; }
 .studio-editor-head {
   display: flex; justify-content: space-between; align-items: center;
-  gap: var(--space-4); flex-wrap: wrap;
+  gap: var(--space-3); flex-wrap: wrap;
 }
-.studio-fields { display: flex; flex-direction: column; gap: var(--space-4); }
-.studio-hint { font-size: 13px; color: var(--color-neutral-600); line-height: 1.55; }
+.studio-editor-body, .studio-fields { display: flex; flex-direction: column; gap: var(--space-4); }
+.studio-hint { font-size: 12px; color: var(--color-neutral-600); line-height: 1.55; }
 .studio-hint .mark {
   background: color-mix(in srgb, var(--color-accent-2-400) 42%, transparent);
   padding: .15em .1em;
 }
-.studio-section { font-size: 13px; letter-spacing: .02em; color: var(--color-neutral-600); margin-top: var(--space-3); }
-.studio-status { display: flex; flex-wrap: wrap; gap: 0 6px; font-size: 13px; color: var(--color-neutral-600); }
+.studio-section { font-size: 12px; letter-spacing: .02em; color: var(--color-neutral-600); margin-top: var(--space-3); }
+.studio-status { display: flex; flex-wrap: wrap; gap: 0 6px; font-size: 12px; color: var(--color-neutral-600); }
 
 .studio-cols { display: grid; gap: var(--space-4); }
 .studio-cols--meta { grid-template-columns: 1fr 1fr 1.4fr; }
@@ -74,7 +81,7 @@ body { background: var(--color-neutral-100); font-family: var(--font-body); }
 .studio-row { display: flex; flex-direction: column; gap: var(--space-3); padding: var(--space-3) 0; }
 .studio-row-head {
   display: flex; justify-content: space-between; align-items: baseline;
-  gap: var(--space-4); font-size: 13px; color: var(--color-neutral-600);
+  gap: var(--space-4); font-size: 12px; color: var(--color-neutral-600);
 }
 .studio-row-acts { display: flex; gap: var(--space-4); }
 .studio-row-cols { display: grid; grid-template-columns: 2.2fr 1fr 1fr; gap: var(--space-3); }
@@ -82,7 +89,7 @@ body { background: var(--color-neutral-100); font-family: var(--font-body); }
 .studio-row-cols--group { grid-template-columns: 1fr 2.4fr; align-items: start; }
 .studio-row-cols--channel { grid-template-columns: 1fr 1.6fr 1.4fr auto; align-items: end; }
 
-.studio-mini { all: unset; cursor: pointer; font-size: 13px; color: var(--color-neutral-600); }
+.studio-mini { all: unset; cursor: pointer; font-size: 12px; color: var(--color-neutral-600); }
 .studio-mini:hover { color: var(--color-accent-700); }
 .studio-mini:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 2px; }
 .studio-mini--danger:hover { color: var(--color-accent-2-700); }
@@ -103,7 +110,7 @@ body { background: var(--color-neutral-100); font-family: var(--font-body); }
 .studio-preview { position: sticky; top: var(--space-4); display: flex; flex-direction: column; gap: 10px; }
 .studio-preview-head {
   display: flex; justify-content: space-between; align-items: baseline;
-  font-size: 13px; color: var(--color-neutral-600);
+  font-size: 12px; color: var(--color-neutral-600);
 }
 .studio-viewport { width: 560px; height: 680px; overflow: hidden; background: var(--color-bg); }
 .studio-scaler {
@@ -112,20 +119,75 @@ body { background: var(--color-neutral-100); font-family: var(--font-body); }
 }
 .studio-common-note {
   margin: calc(var(--space-8) * 2.6) 0 0; max-width: 24em;
-  font-size: 24px; line-height: 1.5; color: var(--color-neutral-600); text-wrap: pretty;
+  font-size: 22px; line-height: 1.5; color: var(--color-neutral-600); text-wrap: pretty;
 }
 .studio-common-block { margin-top: calc(var(--space-8) * 2); height: 260px; background: var(--color-neutral-200); }
 
+/* — the preview stops fitting beside the editor ————————————— */
 @media (max-width: 1180px) {
   .studio-grid { grid-template-columns: 150px minmax(0, 1fr); }
   .studio-preview { grid-column: 1 / -1; position: static; margin-top: var(--space-8); }
 }
+
+/* — turn 9e: the 390px desk ————————————————————————————— */
 @media (max-width: 760px) {
-  .studio-grid { grid-template-columns: 1fr; row-gap: var(--space-6); padding-inline: var(--space-4); }
-  .studio-rail { position: static; }
-  .studio-cols--meta, .studio-cols--2, .studio-cols--contact,
+  .studio-bar {
+    gap: var(--space-2) var(--space-3);
+    padding: var(--space-3) var(--space-4) 0;
+  }
+  .studio-bar-right { gap: var(--space-3); flex-wrap: wrap; }
+  .studio-bar .btn { padding: var(--space-2); min-height: 40px; }
+  /* Room for the brand and the two actions, nothing else. */
+  .studio-crumb, .studio-bar [data-slot="uilang"] { display: none; }
+  .studio-saved { order: 1; flex-basis: 100%; line-height: 1.55; }
+
+  .studio-grid {
+    grid-template-columns: 1fr; row-gap: var(--space-3);
+    padding: var(--space-3) var(--space-4) var(--space-6);
+  }
+
+  /* The rail becomes one scrolling row of tabs; the drafts list stands down. */
+  .studio-rail { position: static; gap: 0; }
+  .studio-rail-title, .studio-drafts { display: none; }
+  .studio-rail > div + div { display: none; }
+  .studio-tabs {
+    flex-direction: row; gap: var(--space-4);
+    overflow-x: auto; padding: var(--space-2) 0;
+    scrollbar-width: none;
+  }
+  .studio-tabs::-webkit-scrollbar { display: none; }
+  .studio-tab { padding: 6px 0; min-height: 32px; white-space: nowrap; }
+  .studio-tab:not([aria-current]) { color: var(--color-neutral-700); }
+
+  .studio-editor { max-width: none; }
+  .studio-editor-head { flex-wrap: nowrap; }
+  .seg--view { display: inline-flex; }
+  .seg .full { display: none; }
+  .seg .abbr { display: inline; }
+  .studio-dualnote { display: none; }
+
+  /* 44px is the smallest target a thumb hits reliably. */
+  .studio-editor .input { min-height: 44px; }
+  .studio-editor .btn-ghost { width: 100%; min-height: 44px; }
+  .studio-mini { min-height: 32px; }
+  .studio-mini--baseline { padding-bottom: 0; }
+
+  .studio-cols--meta, .studio-cols--contact,
   .studio-row-cols, .studio-row-cols--link,
   .studio-row-cols--group, .studio-row-cols--channel { grid-template-columns: 1fr; }
-  .studio-mini--baseline { padding-bottom: 0; }
-  .studio-viewport { width: 100%; max-width: 560px; }
+  .studio-cols, .studio-row-cols { gap: var(--space-3); }
+  .studio-figs { grid-template-columns: 1fr; }
+
+  /* The preview is no longer a picture of the page — it is the page, at the
+     width the reader will hold it at. */
+  .studio-preview { margin-top: 0; gap: 0; }
+  .studio-preview-head { display: none; }
+  .studio-viewport { width: 100%; height: auto; overflow: visible; }
+  .studio-scaler { width: 100%; transform: none; }
+  .studio-common-note { margin-top: calc(var(--space-8) * 1.4); font-size: 15px; }
+  .studio-common-block { margin-top: calc(var(--space-8) * 1.4); height: 180px; }
+
+  /* One pane at a time. */
+  body[data-view="edit"] .studio-preview { display: none; }
+  body[data-view="preview"] .studio-editor-body { display: none; }
 }
