@@ -32,6 +32,9 @@
       tokenLabel: 'GitHub 토큰',
       tokenHint: 'fine-grained PAT · 이 저장소 하나 · Contents 읽기/쓰기. <strong>이 브라우저에만</strong> 저장되고 다른 곳으로 나가지 않습니다. 만료일을 걸어두세요.',
       tokenOn: '연결됨', tokenOff: '연결 안 됨',
+      tokenBad: '토큰 형태가 아닙니다 — github_pat_ 로 시작해야 합니다',
+      tokenClear: '지우기', tokenCleared: '토큰을 지웠습니다',
+      badToken: 'GitHub가 토큰을 거절했습니다 (401) — 만료됐거나 잘못된 값입니다',
       download: 'content.js 내려받기',
       downloadNote: '토큰 없이 직접 넣고 싶을 때',
       downloaded: 'content.js 내려받음',
@@ -88,6 +91,9 @@
       tokenLabel: 'GitHub token',
       tokenHint: 'A fine-grained PAT · this one repository · Contents: Read and write. Kept in <strong>this browser only</strong> and sent nowhere else. Give it an expiry.',
       tokenOn: 'Connected', tokenOff: 'Not connected',
+      tokenBad: 'That is not a token — it should start with github_pat_',
+      tokenClear: 'Clear', tokenCleared: 'Token cleared',
+      badToken: 'GitHub rejected the token (401) — expired, or not a token',
       download: 'Download content.js',
       downloadNote: 'For putting the file in by hand',
       downloaded: 'content.js downloaded',
@@ -378,9 +384,20 @@
 
   /* Not content — the key this device uses to commit. It sits under the Shared
      tab because that tab is already the settings screen ("설정 › 공통"). */
+  /* Every GitHub token starts with one of these. Checking the shape catches the
+     usual slip — pasting whatever else was on the clipboard — at the field
+     rather than at the first publish. */
+  function tokenShape(value) {
+    if (!value) return 'off';
+    return /^(github_pat_|ghp_|gho_|ghu_|ghs_|ghr_)/.test(value) ? 'on' : 'bad';
+  }
+
   function connectionPanel() {
     var s = t(), G = window.SiteGitHub;
     var repo = G.REPO.owner + '/' + G.REPO.repo;
+    var shape = tokenShape(G.token());
+    var label = { on: s.tokenOn, off: s.tokenOff, bad: s.tokenBad }[shape];
+
     return '<div class="studio-section">[' + esc(s.connection) + ']</div>' +
       '<span class="studio-hint">' + esc(s.connectionNote) + '</span>' +
       '<div class="field">' +
@@ -388,11 +405,12 @@
         '<input class="input" id="ed-token" type="password" autocomplete="off" spellcheck="false"' +
           ' data-token value="' + esc(G.token()) + '" placeholder="github_pat_…">' +
         '<span class="studio-hint">' +
-          '<span class="studio-dot' + (G.hasToken() ? ' on' : '') + '"></span>' +
-          esc(G.hasToken() ? s.tokenOn : s.tokenOff) + ' · ' + s.tokenHint +
+          '<span class="studio-dot" data-conn-dot data-shape="' + shape + '"></span>' +
+          '<span data-conn-label>' + esc(label) + '</span> · ' + s.tokenHint +
         '</span>' +
       '</div>' +
       '<div class="studio-editor-head">' +
+        '<button class="btn btn-ghost" type="button" data-act="clearToken">' + esc(s.tokenClear) + '</button>' +
         '<button class="btn btn-ghost" type="button" data-act="download">' + esc(s.download) + '</button>' +
         '<span class="studio-hint">' + esc(s.downloadNote) + '</span>' +
       '</div>';
@@ -597,7 +615,7 @@
       state.dirty = false;
       flash(s.published);
     }).catch(function (err) {
-      flash(s.failed + ' — ' + (err.message || err));
+      flash(err.status === 401 ? s.badToken : s.failed + ' — ' + (err.message || err));
     });
   }
 
@@ -616,7 +634,7 @@
       renderPreview();
       flash(s.uploaded);
     }).catch(function (err) {
-      flash(s.failed + ' — ' + (err.message || err));
+      flash(err.status === 401 ? s.badToken : s.failed + ' — ' + (err.message || err));
     });
   }
 
@@ -676,10 +694,14 @@
     if (el.dataset.path) { setPath(el.dataset.path, el.value); return; }
     /* The token is not part of the document, so it never marks it dirty. */
     if (el.hasAttribute('data-token')) {
-      window.SiteGitHub.setToken(el.value.trim());
-      var dot = el.parentNode.querySelector('.studio-dot');
-      if (dot) dot.classList.toggle('on', window.SiteGitHub.hasToken());
-      if (window.SiteGitHub.hasToken()) syncBaseSha();
+      var value = el.value.trim();
+      window.SiteGitHub.setToken(value);
+      var shape = tokenShape(value), s = t();
+      var dot = el.parentNode.querySelector('[data-conn-dot]');
+      var label = el.parentNode.querySelector('[data-conn-label]');
+      if (dot) dot.dataset.shape = shape;
+      if (label) label.textContent = { on: s.tokenOn, off: s.tokenOff, bad: s.tokenBad }[shape];
+      if (shape === 'on') syncBaseSha();
     }
   });
 
@@ -724,6 +746,12 @@
 
     var act = el.dataset.act;
     if (act === 'download') return download();
+    if (act === 'clearToken') {
+      window.SiteGitHub.setToken('');
+      state.baseSha = null;
+      renderEditor();
+      return flash(t().tokenCleared);
+    }
     if (!act || act === 'layout') return;
     var name = el.dataset.list;
     var i = Number(el.dataset.i);

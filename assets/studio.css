@@ -125,7 +125,8 @@ body { background: var(--color-neutral-100); font-family: var(--font-body); }
   border-radius: 50%; background: var(--color-neutral-400);
   vertical-align: baseline;
 }
-.studio-dot.on { background: var(--color-accent); }
+.studio-dot[data-shape="on"] { background: var(--color-accent); }
+.studio-dot[data-shape="bad"] { background: var(--color-accent-2); }
 
 /* — preview ——————————————————————————————————————————————— */
 .studio-preview { position: sticky; top: var(--space-4); display: flex; flex-direction: column; gap: 10px; }
