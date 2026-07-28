@@ -16,14 +16,16 @@ en/index.html                    Home                   ┐
 en/information.html              Information            │ English
 en/contact.html                  Contact                │
 en/writing/silence-….html        Article                ┘
-studio.html                      작성 어드민 / the writing desk
+studio-e064cec987.html           작성 어드민 / the writing desk
 
 assets/content.js                 all the words, both languages — the only source
 build.js                          node build.js → writes the eight pages
+.github/workflows/build.yml       runs build.js on every content commit
 assets/broadsheet.css             the design system, imported from the project
 assets/site.css                   the four pages
-assets/render.js                  one renderer, used by build.js and studio.html
+assets/render.js                  one renderer, used by build.js and the studio
 assets/site.js                    the contact form (nothing else)
+assets/github.js                  the studio's commit path into this repository
 assets/studio.css, studio.js      the writing desk
 images/fig-waiting-state.png      the one real figure in the canvas
 ```
@@ -43,7 +45,7 @@ Two ways in, one source of truth (`assets/content.js`):
 
 **By hand.** Edit `assets/content.js`, run `node build.js`, done.
 
-**Through the studio.** Open `studio.html`. Pick a page in the left rail, pick a
+**Through the studio.** Open `studio-e064cec987.html`. Pick a page in the left rail, pick a
 language, type — the right column redraws the actual page at 47% through the
 same renderer `build.js` uses, so the preview is not an approximation. On a
 phone the rail becomes one scrolling row of tabs and 편집 / 미리보기 become a
@@ -51,16 +53,57 @@ switch, since there is only room for one pane; the preview then shows the page
 at the width a reader actually holds it at, unscaled.
 
 - **저장 / Save** keeps a draft in `localStorage`. It survives a reload; it does
-  not touch any file.
-- **발행 / Publish** downloads a replacement `content.js`. Drop it over
-  `assets/content.js` and run `node build.js`.
+  not touch any file, and it does not leave the device.
+- **발행 / Publish** commits `assets/content.js` to this repository over the
+  GitHub API — from a laptop or from a phone, no server in between. A workflow
+  then runs `node build.js` and commits the eight pages; the site is live a
+  minute or two later. Publishing clears the local draft, so the next load on
+  any device starts from what the repository serves.
 - **되돌리기 / Revert** (twice) throws the draft away and reloads the file's values.
+
+If a figure slot is empty, **사진 올리기** commits the picture into `images/` the
+same way and fills the path in — which is the whole point of using this from a
+phone.
 
 The 한국어 / English switch in the top bar changes the *editor's* language; the
 one above the fields changes *which language you are writing*. The two documents
 are stored separately, as the design says. The editor-language switch is a
 wide-sheet control — turn 9e gives that room to 저장 / 발행 — so the choice is
 remembered in `localStorage` and carries over to a phone.
+
+## Publishing from a phone
+
+The studio commits over the GitHub REST API, which answers CORS, so there is no
+server anywhere in this. It needs one token, once per device.
+
+1. GitHub → Settings → Developer settings → **Fine-grained personal access
+   tokens** → Generate new token.
+2. Repository access: **Only select repositories** → `hyunhoonj.github.io`.
+3. Permissions → Repository permissions → **Contents: Read and write**. Nothing
+   else. Give it an expiry.
+4. Open the studio → **공통 / Shared** tab → **[연결]** → paste it.
+
+The dot next to the field turns cyan when it is stored. From then on 발행
+commits `assets/content.js`, `.github/workflows/build.yml` rebuilds the eight
+pages, and Pages serves them a minute or two later.
+
+**About the token.** It lives in that browser's `localStorage` — per device,
+never committed, sent nowhere but `api.github.com`. Whoever holds the unlocked
+phone holds the token, which is why it is scoped to one repository and one
+permission and should carry an expiry; revoke it on GitHub if a device goes
+missing. Nothing here can reach it from another site, but it is a real key sitting
+in a browser, and that is the trade this setup makes.
+
+**Two devices at once.** The studio remembers the blob sha it last saw. If the
+repository moved on since — you published from the laptop, then opened the phone
+— 발행 refuses the first press and says so; pressing again overwrites. And a
+device holding an unpublished draft says so on load rather than looking synced.
+
+**The studio's address is not a secret.** It sits at an unguessable path so the
+site never leads anyone to it, but this repository is public, so the filename is
+readable by anyone who looks at it. Without a token the page is a read-only
+editor, which is why that is acceptable here. If it needs to be genuinely
+private, the studio has to move to a separate private repository.
 
 ### The markup inside text fields
 
@@ -110,8 +153,9 @@ something the canvas did not state:
   visitor's mail client. With JavaScript off the form does nothing and the
   address above it is still a live link.
 - **Figure slots.** The canvas's `<image-slot>` is an upload widget belonging to
-  the design tool. A static site has nowhere to upload to, so a slot takes the
-  path of a file in `images/` and shows what is there.
+  the design tool. With a token in place the slot does upload — straight into
+  `images/` as a commit — and it also takes a path typed by hand, for the times
+  the file is already in the repository.
 - **Figure counts on a phone.** Turn 9a draws fewer plates per work block than
   the wide sheet does, but it also carries the editor's seed text rather than
   the page's, so that reads as an abbreviated mock rather than a decision — and

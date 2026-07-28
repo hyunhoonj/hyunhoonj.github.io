@@ -1,0 +1,46 @@
+# Rebuild the eight static pages whenever the content or the renderer changes.
+# The studio commits assets/content.js straight from the browser; this is what
+# turns that one file into the pages GitHub Pages serves.
+name: Build pages
+
+on:
+  push:
+    branches: [main]
+    # The commit this job makes only touches the generated HTML, which is not
+    # in this list — so it cannot trigger itself.
+    paths:
+      - 'assets/content.js'
+      - 'assets/render.js'
+      - 'build.js'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: build-pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - run: node build.js
+
+      - name: Commit the rebuilt pages
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -A
+          if git diff --staged --quiet; then
+            echo 'Pages already match content.js — nothing to commit.'
+          else
+            git commit -m 'Rebuild pages from content.js'
+            git push
+          fi

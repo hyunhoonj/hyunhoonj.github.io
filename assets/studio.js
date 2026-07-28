@@ -9,6 +9,7 @@
   var esc = R.esc;
   var DRAFT_KEY = 'personal-site:draft';
   var UI_KEY = 'personal-site:ui';
+  var CONTENT_PATH = 'assets/content.js';
 
   /* ── strings ──────────────────────────────────────────────────────────── */
 
@@ -17,7 +18,23 @@
       role: '작성', save: '저장', publish: '발행', revert: '되돌리기',
       dirty: '저장되지 않은 변경', savedNow: '방금 저장됨',
       savedAgo: function (n) { return n + '분 전 저장됨'; },
-      published: '발행 — content.js 내려받음',
+      published: '커밋됨 — 1~2분 뒤 지면에 반영됩니다',
+      publishing: '저장소에 커밋하는 중…',
+      conflict: '저장소 쪽이 더 새롭습니다 — 한 번 더 누르면 덮어씁니다',
+      failed: '실패',
+      needToken: '발행하려면 [공통] 탭에서 GitHub 토큰을 넣어주세요',
+      localDraft: '이 기기에 아직 발행되지 않은 초안이 있습니다',
+      uploading: '사진 올리는 중…',
+      uploaded: '사진 올렸습니다 — 반영까지 1~2분',
+      upload: '사진 올리기',
+      connection: '연결',
+      connectionNote: '토큰을 넣으면 [발행]이 이 기기에서 저장소로 바로 커밋합니다. 커밋이 들어가면 지면은 자동으로 다시 만들어집니다.',
+      tokenLabel: 'GitHub 토큰',
+      tokenHint: 'fine-grained PAT · 이 저장소 하나 · Contents 읽기/쓰기. <strong>이 브라우저에만</strong> 저장되고 다른 곳으로 나가지 않습니다. 만료일을 걸어두세요.',
+      tokenOn: '연결됨', tokenOff: '연결 안 됨',
+      download: 'content.js 내려받기',
+      downloadNote: '토큰 없이 직접 넣고 싶을 때',
+      downloaded: 'content.js 내려받음',
       reverted: '파일의 값으로 되돌림',
       revertAsk: '한 번 더 누르면 assets/content.js 의 값으로 되돌립니다',
       pages: '지면', drafts: '초안', preview: '미리보기', edit: '편집',
@@ -57,7 +74,23 @@
       role: 'Studio', save: 'Save', publish: 'Publish', revert: 'Revert',
       dirty: 'Unsaved changes', savedNow: 'Saved just now',
       savedAgo: function (n) { return 'Saved ' + n + ' min ago'; },
-      published: 'Published — content.js downloaded',
+      published: 'Committed — live in a minute or two',
+      publishing: 'Committing to the repository…',
+      conflict: 'The repository is newer — press again to overwrite',
+      failed: 'Failed',
+      needToken: 'Add a GitHub token under [Shared] to publish',
+      localDraft: 'This device has a draft that was never published',
+      uploading: 'Uploading…',
+      uploaded: 'Uploaded — live in a minute or two',
+      upload: 'Upload a photo',
+      connection: 'Connection',
+      connectionNote: 'With a token, Publish commits straight to the repository from this device. The pages rebuild themselves once the commit lands.',
+      tokenLabel: 'GitHub token',
+      tokenHint: 'A fine-grained PAT · this one repository · Contents: Read and write. Kept in <strong>this browser only</strong> and sent nowhere else. Give it an expiry.',
+      tokenOn: 'Connected', tokenOff: 'Not connected',
+      download: 'Download content.js',
+      downloadNote: 'For putting the file in by hand',
+      downloaded: 'content.js downloaded',
       reverted: 'Reverted to the file',
       revertAsk: 'Press again to reload the values in assets/content.js',
       pages: 'Pages', drafts: 'Drafts', preview: 'Preview', edit: 'Edit',
@@ -112,6 +145,9 @@
     doc: clone(window.SITE_CONTENT),
     dirty: false,
     savedAt: null,
+    /* The blob sha of assets/content.js as the repository had it when this
+       device last looked — how a stale publish gets caught. */
+    baseSha: null,
     flash: ''
   };
 
@@ -121,9 +157,14 @@
   function t() { return L[state.ui]; }
   function cur() { return state.doc[state.tab][state.dlang]; }
 
+  var hadDraft = false;
   try {
     var stored = JSON.parse(localStorage.getItem(DRAFT_KEY) || 'null');
-    if (stored && stored.doc) { state.doc = stored.doc; state.savedAt = stored.savedAt || null; }
+    if (stored && stored.doc) {
+      state.doc = stored.doc;
+      state.savedAt = stored.savedAt || null;
+      hadDraft = true;
+    }
     /* The chrome-language switch is a wide-sheet control (turn 9e drops it for
        room), so the choice has to persist or a phone could never leave the
        default. */
@@ -197,6 +238,10 @@
         : esc(s.figures + ' ' + (i + 1) + ' · ' + sp.ratio.replace('-', ':'));
       return '<div class="studio-fig">' +
         '<div class="studio-fig-plate" style="aspect-ratio:' + RATIO_CSS[sp.ratio] + '">' + plate + '</div>' +
+        '<label class="studio-upload">' +
+          '<input type="file" accept="image/*" data-upload="' + esc(path) + '">' +
+          '<span>' + esc(s.upload) + '</span>' +
+        '</label>' +
         fieldText(s.imagePath + ' ' + (i + 1), path + '.src') +
         fieldText(s.caption + ' ' + (i + 1), path + '.caption') +
         '</div>';
@@ -327,6 +372,29 @@
       '</div>' +
       fieldArea(s.footerLinks, 'links', 5, { style: 'font-size:13px;line-height:1.7', hint: esc(s.linksHint) }) +
       fieldArea(s.draftList, 'drafts', 3, { style: 'font-size:13px;line-height:1.7' }) +
+      connectionPanel() +
+      '</div>';
+  }
+
+  /* Not content — the key this device uses to commit. It sits under the Shared
+     tab because that tab is already the settings screen ("설정 › 공통"). */
+  function connectionPanel() {
+    var s = t(), G = window.SiteGitHub;
+    var repo = G.REPO.owner + '/' + G.REPO.repo;
+    return '<div class="studio-section">[' + esc(s.connection) + ']</div>' +
+      '<span class="studio-hint">' + esc(s.connectionNote) + '</span>' +
+      '<div class="field">' +
+        '<label for="ed-token">' + esc(s.tokenLabel) + ' &mdash; ' + esc(repo) + '</label>' +
+        '<input class="input" id="ed-token" type="password" autocomplete="off" spellcheck="false"' +
+          ' data-token value="' + esc(G.token()) + '" placeholder="github_pat_…">' +
+        '<span class="studio-hint">' +
+          '<span class="studio-dot' + (G.hasToken() ? ' on' : '') + '"></span>' +
+          esc(G.hasToken() ? s.tokenOn : s.tokenOff) + ' · ' + s.tokenHint +
+        '</span>' +
+      '</div>' +
+      '<div class="studio-editor-head">' +
+        '<button class="btn btn-ghost" type="button" data-act="download">' + esc(s.download) + '</button>' +
+        '<span class="studio-hint">' + esc(s.downloadNote) + '</span>' +
       '</div>';
   }
 
@@ -467,24 +535,25 @@
     renderStatus();
   }
 
-  /* Publishing a static site means handing back the file the build reads. */
-  function publish() {
-    save();
-    var head = [
-      '/* Generated by studio.html. Replace assets/content.js with this file and',
-      ' * run `node build.js` to write the eight pages. */'
+  /* The document, as the file the build reads. */
+  function contentSource() {
+    return [
+      '/* Written by the studio. `node build.js` turns this into the eight pages.',
+      ' * The workflow in .github/workflows/build.yml does that on every commit. */',
+      '(function (root, factory) {',
+      '  var content = factory();',
+      '  if (typeof module === \'object\' && module.exports) module.exports = content;',
+      '  else root.SITE_CONTENT = content;',
+      '})(typeof globalThis !== \'undefined\' ? globalThis : this, function () {',
+      '  return ' + JSON.stringify(state.doc, null, 2).split('\n').join('\n  ') + ';',
+      '});',
+      ''
     ].join('\n');
-    var source = '' +
-      head + '\n' +
-      '(function (root, factory) {\n' +
-      '  var content = factory();\n' +
-      '  if (typeof module === \'object\' && module.exports) module.exports = content;\n' +
-      '  else root.SITE_CONTENT = content;\n' +
-      '})(typeof globalThis !== \'undefined\' ? globalThis : this, function () {\n' +
-      '  return ' + JSON.stringify(state.doc, null, 2).split('\n').join('\n  ') + ';\n' +
-      '});\n';
+  }
 
-    var url = URL.createObjectURL(new Blob([source], { type: 'text/javascript' }));
+  /* The escape hatch: no token, no network — just the file. */
+  function download() {
+    var url = URL.createObjectURL(new Blob([contentSource()], { type: 'text/javascript' }));
     var a = document.createElement('a');
     a.href = url;
     a.download = 'content.js';
@@ -492,7 +561,63 @@
     a.click();
     a.remove();
     setTimeout(function () { URL.revokeObjectURL(url); }, 1000);
-    flash(t().published);
+    flash(t().downloaded);
+  }
+
+  /* Publishing commits assets/content.js from wherever you happen to be
+     standing. The sha we read on the way in is handed back on the way out, so
+     GitHub refuses the write if another device got there first. */
+  var overwriteArmed = false;
+  function publish() {
+    var G = window.SiteGitHub, s = t();
+    if (!G.hasToken()) {
+      state.tab = 'common';
+      renderAll();
+      flash(s.needToken);
+      return;
+    }
+    save();
+    flash(s.publishing);
+
+    G.sha(CONTENT_PATH).then(function (remote) {
+      if (state.baseSha && remote && remote !== state.baseSha && !overwriteArmed) {
+        overwriteArmed = true;
+        setTimeout(function () { overwriteArmed = false; }, 8000);
+        flash(s.conflict);
+        return null;
+      }
+      overwriteArmed = false;
+      return G.putText(CONTENT_PATH, contentSource(), 'Update content from the studio', remote);
+    }).then(function (newSha) {
+      if (!newSha) return;
+      state.baseSha = newSha;
+      /* Published work is no longer a draft — the next load, on any device,
+         should start from what the repository now serves. */
+      try { localStorage.removeItem(DRAFT_KEY); } catch (e) { /* nothing to clear */ }
+      state.dirty = false;
+      flash(s.published);
+    }).catch(function (err) {
+      flash(s.failed + ' — ' + (err.message || err));
+    });
+  }
+
+  /* A figure, straight from the phone's camera roll into images/. */
+  function uploadFigure(basePath, file) {
+    var G = window.SiteGitHub, s = t();
+    if (!G.hasToken()) { state.tab = 'common'; renderAll(); flash(s.needToken); return; }
+
+    var clean = file.name.toLowerCase().replace(/[^a-z0-9.]+/g, '-').replace(/^-|-$/g, '');
+    var path = 'images/' + Date.now().toString(36) + '-' + (clean || 'figure.png');
+    flash(s.uploading);
+
+    G.putFile(path, file, 'Add ' + path + ' from the studio').then(function () {
+      setPath(basePath + '.src', path);
+      renderEditor();
+      renderPreview();
+      flash(s.uploaded);
+    }).catch(function (err) {
+      flash(s.failed + ' — ' + (err.message || err));
+    });
   }
 
   /* Two taps rather than a modal: the first arms it and says so in the bar,
@@ -547,7 +672,15 @@
 
   document.addEventListener('input', function (e) {
     var el = e.target;
-    if (el.dataset && el.dataset.path) setPath(el.dataset.path, el.value);
+    if (!el.dataset) return;
+    if (el.dataset.path) { setPath(el.dataset.path, el.value); return; }
+    /* The token is not part of the document, so it never marks it dirty. */
+    if (el.hasAttribute('data-token')) {
+      window.SiteGitHub.setToken(el.value.trim());
+      var dot = el.parentNode.querySelector('.studio-dot');
+      if (dot) dot.classList.toggle('on', window.SiteGitHub.hasToken());
+      if (window.SiteGitHub.hasToken()) syncBaseSha();
+    }
   });
 
   document.addEventListener('change', function (e) {
@@ -565,6 +698,11 @@
       /* The switch only shows on a narrow sheet, where the pane you just left
          may have been scrolled a long way down. */
       window.scrollTo({ top: 0, behavior: 'instant' });
+      return;
+    }
+    if (el.dataset && el.dataset.upload && el.files && el.files[0]) {
+      uploadFigure(el.dataset.upload, el.files[0]);
+      el.value = '';
       return;
     }
     if (el.dataset && el.dataset.act === 'layout') {
@@ -585,6 +723,7 @@
     if (el.dataset.action === 'revert') return revert();
 
     var act = el.dataset.act;
+    if (act === 'download') return download();
     if (!act || act === 'layout') return;
     var name = el.dataset.list;
     var i = Number(el.dataset.i);
@@ -609,5 +748,18 @@
   /* Keep "saved N minutes ago" honest without re-rendering anything else. */
   setInterval(function () { if (!state.dirty && !state.flash) renderStatus(); }, 30000);
 
+  function syncBaseSha() {
+    window.SiteGitHub.sha(CONTENT_PATH)
+      .then(function (s) { state.baseSha = s; })
+      .catch(function () { state.baseSha = null; /* offline, or a bad token */ });
+  }
+
   renderAll();
+  if (window.SiteGitHub.hasToken()) syncBaseSha();
+
+  /* Opening on a second device with work still sitting on this one is the
+     easiest way to lose it — say so rather than let it look published. */
+  if (hadDraft && JSON.stringify(state.doc) !== JSON.stringify(window.SITE_CONTENT)) {
+    flash(t().localDraft);
+  }
 })();
