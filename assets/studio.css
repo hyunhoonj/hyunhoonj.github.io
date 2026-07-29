@@ -97,8 +97,13 @@ body { background: var(--color-neutral-100); font-family: var(--font-body); }
 
 /* Figure slots. A static site has nowhere to upload to, so the slot takes the
    path of a file in images/ and shows what is there. */
-.studio-figs { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: var(--space-4); }
-.studio-fig { display: flex; flex-direction: column; gap: 8px; }
+/* A figure row: the plate, the fields beside it, the delete at the end. */
+.studio-figrow { display: flex; align-items: flex-end; gap: var(--space-4); padding: var(--space-2) 0; }
+.studio-figrow-fields { flex: 1; display: grid; grid-template-columns: minmax(0, 1fr) 120px; gap: var(--space-3); align-items: end; }
+.studio-fig { width: 132px; flex: none; display: flex; flex-direction: column; gap: 8px; }
+/* The body's markup list, one rule per line. */
+.studio-lines { display: flex; flex-direction: column; gap: 3px; }
+.studio-cols-pick { width: 190px; flex: none; }
 .studio-fig-plate {
   background: var(--color-neutral-200); overflow: hidden;
   display: grid; place-items: center;
@@ -204,7 +209,12 @@ body { background: var(--color-neutral-100); font-family: var(--font-body); }
   .studio-row-cols, .studio-row-cols--link,
   .studio-row-cols--group, .studio-row-cols--channel { grid-template-columns: 1fr; }
   .studio-cols, .studio-row-cols { gap: var(--space-3); }
-  .studio-figs { grid-template-columns: 1fr; }
+  /* The plate keeps its column; the fields stack under nothing but themselves. */
+  .studio-fig { width: 88px; }
+  .studio-figrow-fields { grid-template-columns: minmax(0, 1fr); }
+  .studio-figrow { gap: var(--space-3); }
+  .studio-cols-pick { width: 100%; }
+  .studio-editor-head:has(.studio-cols-pick) { flex-wrap: wrap; }
 
   /* The preview is no longer a picture of the page — it is the page, at the
      width the reader will hold it at. */

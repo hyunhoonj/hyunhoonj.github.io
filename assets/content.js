@@ -35,6 +35,7 @@
     "home": {
       "ko": {
         "statement": "==사람과 AI가 서로를 이해하는 방식을 연구하고, 그 결과를 인터페이스로 옮기는 일을 합니다.==",
+        "cols": "3",
         "blocks": [
           {
             "id": "silence-in-conversational-interfaces",
@@ -42,25 +43,12 @@
             "title": "대화형 인터페이스의 침묵",
             "kind": "에세이",
             "year": "2026",
-            "desc": "대기 상태는 대체로 설계되지 않는다. 스피너 하나, 점 세 개, 혹은 아무것도 없음. 그러나 사용자는 그 몇 초 동안 모델에 대한 이론을 만든다. 이 글은 ==계산의 침묵, 검색의 침묵, 거절의 침묵==을 구분하고, 각각이 인터페이스에서 어떻게 다르게 말해야 하는지를 다룬다. 열두 명을 대상으로 한 현장 연구가 함께 실려 있다.",
-            "layout": "wide",
-            "figures": [
-              {
-                "src": "images/fig-waiting-state.png",
-                "alt": "대기 상태를 측정한 도판",
-                "caption": "대기 상태 인터페이스"
-              },
-              {
-                "src": "",
-                "alt": "",
-                "caption": "세 가지 침묵의 분류"
-              },
-              {
-                "src": "",
-                "alt": "",
-                "caption": "현장 연구 기록, 서울 2026"
-              }
-            ]
+            "desc": "대기 상태는 대체로 설계되지 않는다. 사용자는 그 몇 초 동안 ==모델에 대한 이론==을 만든다.",
+            "ratio": "1/1",
+            "image": {
+              "src": "images/fig-waiting-state.png",
+              "alt": "대기 상태를 측정한 도판"
+            }
           },
           {
             "id": "repair-strategies",
@@ -68,20 +56,12 @@
             "title": "Repair Strategies in Human–AI Dialogue",
             "kind": "연구",
             "year": "CHI 2026",
-            "desc": "대화가 어긋난 뒤 사람들이 그것을 되돌리는 방법을 관찰했다. 사용자는 질문을 다시 쓰거나, 모델의 말을 인용하거나, 대화를 버리고 새로 시작한다. 세 가지 복구 전략의 성공률과 비용을 측정하고, 인터페이스가 어떤 복구를 더 쉽게 만들 수 있는지 제안한다.",
-            "layout": "tall",
-            "figures": [
-              {
-                "src": "",
-                "alt": "",
-                "caption": "복구 전략 분류표"
-              },
-              {
-                "src": "",
-                "alt": "",
-                "caption": "CHI 2026 발표"
-              }
-            ]
+            "desc": "대화가 어긋난 뒤 사람들이 그것을 되돌리는 방법을 관찰했다. 세 전략의 성공률과 비용을 측정했다.",
+            "ratio": "1/1",
+            "image": {
+              "src": "",
+              "alt": ""
+            }
           },
           {
             "id": "llms-as-reading-tools",
@@ -89,20 +69,18 @@
             "title": "읽기 도구로서의 언어 모델",
             "kind": "에세이",
             "year": "2025",
-            "desc": "우리는 모델에게 쓰는 법보다 읽는 법을 먼저 배우고 있는지도 모른다. 요약이 원문을 대신하기 시작할 때 무엇이 사라지는지, 그리고 읽기를 돕는 도구가 읽기를 대체하지 않으려면 어떤 형태여야 하는지에 대하여.",
-            "layout": "full",
-            "figures": [
-              {
-                "src": "",
-                "alt": "",
-                "caption": "읽기 도구 프로토타입"
-              }
-            ]
+            "desc": "요약이 원문을 대신하기 시작할 때 무엇이 사라지는가.",
+            "ratio": "1/1",
+            "image": {
+              "src": "",
+              "alt": ""
+            }
           }
         ]
       },
       "en": {
         "statement": "==Researcher based in Seoul, studying how people and AI understand each other, and turning that into interfaces.==",
+        "cols": "3",
         "blocks": [
           {
             "id": "silence-in-conversational-interfaces",
@@ -110,25 +88,12 @@
             "title": "The Silence in Conversational Interfaces",
             "kind": "Essay",
             "year": "2026",
-            "desc": "The waiting state is rarely designed — a spinner, three dots, or nothing at all. Yet in those seconds a user builds a theory of the model. The essay separates ==the silence of computation, of retrieval, and of refusal==, and asks how each should speak differently in an interface. It is accompanied by a field study with twelve participants.",
-            "layout": "wide",
-            "figures": [
-              {
-                "src": "images/fig-waiting-state.png",
-                "alt": "A figure measuring the waiting state",
-                "caption": "Waiting-state interface"
-              },
-              {
-                "src": "",
-                "alt": "",
-                "caption": "Three kinds of silence"
-              },
-              {
-                "src": "",
-                "alt": "",
-                "caption": "Field study notes, Seoul 2026"
-              }
-            ]
+            "desc": "The waiting state is rarely designed, yet in those seconds a user builds ==a theory of the model==.",
+            "ratio": "1/1",
+            "image": {
+              "src": "images/fig-waiting-state.png",
+              "alt": "A figure measuring the waiting state"
+            }
           },
           {
             "id": "repair-strategies",
@@ -136,20 +101,12 @@
             "title": "Repair Strategies in Human–AI Dialogue",
             "kind": "Research",
             "year": "CHI 2026",
-            "desc": "A study of how people repair a conversation once it has gone wrong: they rewrite the question, quote the model back to itself, or abandon the thread and start over. We measure the success and cost of each strategy, and propose which repairs an interface should make cheaper.",
-            "layout": "tall",
-            "figures": [
-              {
-                "src": "",
-                "alt": "",
-                "caption": "Repair taxonomy"
-              },
-              {
-                "src": "",
-                "alt": "",
-                "caption": "CHI 2026 talk"
-              }
-            ]
+            "desc": "How people repair a conversation once it has gone wrong — the success and cost of three strategies.",
+            "ratio": "1/1",
+            "image": {
+              "src": "",
+              "alt": ""
+            }
           },
           {
             "id": "llms-as-reading-tools",
@@ -157,15 +114,12 @@
             "title": "LLMs as Reading Tools",
             "kind": "Essay",
             "year": "2025",
-            "desc": "Perhaps we are learning to read with models before we learn to write with them. On what disappears when a summary begins to stand in for the source, and what shape a reading tool must take if it is not to replace reading.",
-            "layout": "full",
-            "figures": [
-              {
-                "src": "",
-                "alt": "",
-                "caption": "Reading-tool prototype"
-              }
-            ]
+            "desc": "On what disappears when a summary begins to stand in for the source.",
+            "ratio": "1/1",
+            "image": {
+              "src": "",
+              "alt": ""
+            }
           }
         ]
       }
@@ -282,17 +236,19 @@
         "kind": "에세이",
         "date": "2026.03",
         "readTime": "12분",
-        "body": "스피너 하나, 점 세 개, 혹은 아무것도 없음. 대기 상태를 설계하는 사람은 드물다. 그것이 기능이 아니라 지연이라고 생각하기 때문이다. 그러나 관찰해 보면 사용자는 그 몇 초 동안 가만히 있지 않는다. 커서를 움직이고, 방금 쓴 질문을 다시 읽고, 이 시스템이 지금 무엇을 하고 있는지 추측한다. 추측은 곧 이론이 되고, 이론은 다음 질문의 형태를 바꾼다.\n\n문제는 침묵이 한 종류가 아니라는 데 있다. 계산하는 침묵과 찾는 침묵, 그리고 답하지 않기로 결정한 침묵은 사용자에게 전혀 다른 사건인데, 인터페이스는 이 셋을 같은 애니메이션으로 말한다.\n\n[도판 1]\n\n> “==기다림을 없앨 수 없다면, 최소한 무엇을 기다리는지는 말해야 한다.==”\n\n열두 명과 함께한 현장 연구에서, 지연의 이유를 한 줄로 밝힌 화면은 같은 길이의 기다림을 더 짧게 느끼게 했다. 흥미로운 것은 체감 시간이 아니라 다음 행동이었다. 이유를 아는 사용자는 질문을 다시 쓰지 않고 기다렸다.",
+        "body": "스피너 하나, 점 세 개, 혹은 아무것도 없음. 대기 상태를 설계하는 사람은 드물다. 그것이 기능이 아니라 지연이라고 생각하기 때문이다. 그러나 관찰해 보면 사용자는 그 몇 초 동안 가만히 있지 않는다. 커서를 움직이고, 방금 쓴 질문을 다시 읽고, 이 시스템이 지금 무엇을 하고 있는지 추측한다. 추측은 곧 이론이 되고, 이론은 다음 질문의 형태를 바꾼다.\n\n문제는 침묵이 한 종류가 아니라는 데 있다. 계산하는 침묵과 찾는 침묵, 그리고 답하지 않기로 결정한 침묵은 사용자에게 전혀 다른 사건인데, 인터페이스는 이 셋을 같은 애니메이션으로 말한다.\n\n[도판 1]\n\n## 세 가지 침묵\n\n[표: 표 1 — 침묵의 종류와 사용자의 다음 행동]\n종류 | 평균 지연 | 재질문 비율\n계산 | 3.2초 | .72\n검색 | 5.4초 | .48\n거절 | 1.1초 | .19\n\n[도판 2]\n\n> ==기다림을 없앨 수 없다면, 최소한 무엇을 기다리는지는 말해야 한다.==\n\n열두 명과 함께한 현장 연구에서, 지연의 이유를 한 줄로 밝힌 화면은 같은 길이의 기다림을 더 짧게 느끼게 했다. 흥미로운 것은 체감 시간이 아니라 다음 행동이었다. 이유를 아는 사용자는 질문을 다시 쓰지 않고 기다렸다.",
         "figures": [
           {
             "src": "images/fig-waiting-state.png",
             "alt": "대기 상태를 측정한 도판",
-            "caption": "도판 1 — 응답 지연 구간의 화면 기록"
+            "caption": "도판 1 — 응답 지연 구간의 화면 기록",
+            "ratio": "4/3"
           },
           {
             "src": "",
             "alt": "",
-            "caption": "도판 2 — 세 가지 침묵의 분류"
+            "caption": "도판 2 — 세 가지 침묵의 분류",
+            "ratio": "16/9"
           }
         ],
         "tocLabel": "차례",
@@ -316,17 +272,19 @@
         "kind": "Essay",
         "date": "2026.03",
         "readTime": "12 min",
-        "body": "A spinner, three dots, or nothing at all. Few people design the waiting state, because it reads as delay rather than function. But watch closely and the user is not idle in those seconds: they move the cursor, reread the question they just wrote, and guess at what the system is doing. The guess becomes a theory, and the theory changes the shape of the next question.\n\nThe trouble is that silence is not one thing. The silence of computing, of searching, and of having decided not to answer are entirely different events for a user — and the interface says all three with the same animation.\n\n[Fig. 1]\n\n> “==If the wait cannot be removed, the interface should at least name what is being waited for.==”\n\nIn a field study with twelve participants, a screen that named the reason for the delay in one line made an identical wait feel shorter. The more interesting result was not perceived time but the next action: users who knew the reason waited instead of rewriting the question.",
+        "body": "A spinner, three dots, or nothing at all. Few people design the waiting state, because it reads as delay rather than function. But watch closely and the user is not idle in those seconds: they move the cursor, reread the question they just wrote, and guess at what the system is doing. The guess becomes a theory, and the theory changes the shape of the next question.\n\nThe trouble is that silence is not one thing. The silence of computing, of searching, and of having decided not to answer are entirely different events for a user — and the interface says all three with the same animation.\n\n[Fig. 1]\n\n## Three kinds of silence\n\n[Table: Table 1 — kinds of silence and what the user did next]\nKind | Mean latency | Rewrote\nComputation | 3.2s | .72\nRetrieval | 5.4s | .48\nRefusal | 1.1s | .19\n\n[Fig. 2]\n\n> ==If the wait cannot be removed, the interface should at least name what is being waited for.==\n\nIn a field study with twelve participants, a screen that named the reason for the delay in one line made an identical wait feel shorter. The more interesting result was not perceived time but the next action: users who knew the reason waited instead of rewriting the question.",
         "figures": [
           {
             "src": "images/fig-waiting-state.png",
             "alt": "A figure measuring the waiting state",
-            "caption": "Fig. 1 — Screen record of the latency window"
+            "caption": "Fig. 1 — Screen record of the latency window",
+            "ratio": "4/3"
           },
           {
             "src": "",
             "alt": "",
-            "caption": "Fig. 2 — Three kinds of silence"
+            "caption": "Fig. 2 — Three kinds of silence",
+            "ratio": "16/9"
           }
         ],
         "tocLabel": "Contents",

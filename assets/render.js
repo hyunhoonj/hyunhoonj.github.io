@@ -20,14 +20,12 @@
     en: { home: 'en/index.html', info: 'en/information.html', contact: 'en/contact.html', writing: 'en/writing/' }
   };
 
-  /* Figure layouts, as the design uses them. `wide` spans both columns. */
-  var LAYOUTS = {
-    two: [{ ratio: '4-3' }, { ratio: '4-3' }],
-    tall: [{ ratio: '4-5' }, { ratio: '4-5' }],
-    wide: [{ ratio: '4-3' }, { ratio: '4-3' }, { ratio: '16-8', wide: true }],
-    full: [{ ratio: '16-8', wide: true }],
-    none: []
-  };
+  /* Aspect ratios travel with the content as plain CSS values — '4/3', '1/1' —
+     so a new one needs no class and no change here. */
+  var DEFAULT_RATIO = '4/3';
+  function ratio(value) {
+    return /^\d+\s*\/\s*\d+$/.test(String(value || '')) ? String(value) : DEFAULT_RATIO;
+  }
 
   var ESCAPES = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' };
   function esc(s) {
@@ -72,22 +70,20 @@
 
   /* ── pieces ───────────────────────────────────────────────────────────── */
 
-  function figure(ctx, fig, ratio, wide) {
-    fig = fig || {};
-    var body = fig.src
-      ? '<img src="' + esc(ctx.resolve(fig.src)) + '" alt="' + esc(fig.alt || '') + '">'
-      : '';
-    return '<figure' + (wide ? ' class="figure-wide"' : '') + '>' +
-      '<div class="frame ratio-' + ratio + '">' + body + '</div>' +
-      (fig.caption ? '<figcaption>' + esc(fig.caption) + '</figcaption>' : '') +
-      '</figure>';
+  /* An empty plate where there is no image yet — exactly what the canvas draws
+     for a slot nobody has filled. */
+  function plate(ctx, image, r) {
+    image = image || {};
+    return '<div class="frame" style="aspect-ratio:' + ratio(r) + '">' +
+      (image.src ? '<img src="' + esc(ctx.resolve(image.src)) + '" alt="' + esc(image.alt || '') + '">' : '') +
+      '</div>';
   }
 
-  function figures(ctx, layout, figs) {
-    var spec = LAYOUTS[layout] || LAYOUTS.none;
-    if (!spec.length) return '';
-    var out = spec.map(function (s, i) { return figure(ctx, (figs || [])[i], s.ratio, s.wide); });
-    return '<div class="figures">' + out.join('') + '</div>';
+  function figure(ctx, fig) {
+    fig = fig || {};
+    return '<figure>' + plate(ctx, fig, fig.ratio) +
+      (fig.caption ? '<figcaption>' + esc(fig.caption) + '</figcaption>' : '') +
+      '</figure>';
   }
 
   /* A nav label that has a shorter cut for the narrow sheet, where the full one
@@ -147,28 +143,31 @@
 
   /* ── pages ────────────────────────────────────────────────────────────── */
 
+  /* Home is an index of cards, not a stack of essays: one image, the line of
+     metadata, and a sentence. The narrow sheet lays them two up and drops the
+     sentence — the description belongs to the article from there on. */
   function home(ctx) {
     var d = ctx.content.home[ctx.lang];
-    var works = (d.blocks || []).map(function (b) {
+    var cols = String(d.cols || '3').replace(/[^0-9]/g, '') || '3';
+
+    var cards = (d.blocks || []).map(function (b) {
       var title = esc(b.title);
       if (b.slug) {
         title = '<a href="' + esc(ctx.resolve(articlePath(ctx.lang, b.slug))) + '">' + title + '</a>';
       }
       return '<article class="work"' + (b.id ? ' id="' + esc(b.id) + '"' : '') + '>' +
-        '<div class="split">' +
-          '<div class="meta">' +
-            '<span>' + title + '</span>' +
-            '<span class="dim">,</span><span class="dim">' + esc(b.kind) + '</span>' +
-            '<span class="dim">,</span><span class="dim">' + esc(b.year) + '</span>' +
-          '</div>' +
-          '<p class="work-desc">' + band(b.desc, 'band-2') + '</p>' +
+        plate(ctx, b.image, b.ratio) +
+        '<div class="work-meta">' +
+          '<span class="work-title">' + title + '</span>' +
+          '<span class="dim work-sep">,</span><span class="dim">' + esc(b.kind) + '</span>' +
+          '<span class="dim work-sep">,</span><span class="dim">' + esc(b.year) + '</span>' +
         '</div>' +
-        figures(ctx, b.layout, b.figures) +
+        '<p class="work-desc">' + band(b.desc, 'band-2') + '</p>' +
         '</article>';
     }).join('\n');
 
     return '<h1 class="statement">' + band(d.statement, 'band') + '</h1>\n' +
-      '<div class="works">\n' + works + '\n</div>';
+      '<div class="works" style="--cols:' + cols + '">\n' + cards + '\n</div>';
   }
 
   function info(ctx) {
@@ -223,7 +222,28 @@
       '</div>';
   }
 
-  /* Blank line = paragraph · `> ` = pull-quote · [도판 n] / [Fig. n] = figure n. */
+  function tableBlock(caption, lines) {
+    var row = function (line, cell) {
+      return '<tr>' + line.split('|').map(function (c) {
+        return '<' + cell + '>' + esc(c.trim()) + '</' + cell + '>';
+      }).join('') + '</tr>';
+    };
+    return '<div class="table-block">' +
+      '<table class="table">' +
+        '<thead>' + row(lines[0] || '', 'th') + '</thead>' +
+        '<tbody>' + lines.slice(1).map(function (l) { return row(l, 'td'); }).join('') + '</tbody>' +
+      '</table>' +
+      (caption ? '<div class="table-cap">' + esc(caption) + '</div>' : '') +
+      '</div>';
+  }
+
+  /* One block per blank-line-separated chunk:
+       [도판 n] / [Fig. n]   figure n of this document's figures
+       ## text               a section heading
+       > text                a pull quote — the quotation marks are ours, so the
+                             text never has to carry a matched pair
+       [표: cap] + rows      a table, cells split by |, first row the head
+       anything else         a paragraph */
   function articleBody(ctx, text, figs) {
     return String(text == null ? '' : text)
       .split(/\n\s*\n/)
@@ -231,8 +251,21 @@
       .filter(Boolean)
       .map(function (t) {
         var fig = /^\[(?:도판|Fig\.?)\s*(\d+)\]$/i.exec(t);
-        if (fig) return figure(ctx, (figs || [])[Number(fig[1]) - 1], '4-3', false);
-        if (t.charAt(0) === '>') return '<p class="pull">' + band(t.slice(1).trim(), 'band-2') + '</p>';
+        if (fig) return figure(ctx, (figs || [])[Number(fig[1]) - 1]);
+
+        var head = /^##\s+(.+)$/.exec(t);
+        if (head) return '<h2 class="article-h2">' + esc(head[1].trim()) + '</h2>';
+
+        if (t.charAt(0) === '>') {
+          return '<p class="pull">&ldquo;' + band(t.replace(/^>\s*/, ''), 'band-2') + '&rdquo;</p>';
+        }
+
+        var table = /^\[(?:표|Table)(?::\s*([^\]]*))?\]\n([\s\S]+)$/.exec(t);
+        if (table) {
+          var lines = table[2].split('\n').map(function (l) { return l.trim(); }).filter(Boolean);
+          return tableBlock((table[1] || '').trim(), lines);
+        }
+
         return '<p>' + band(t, 'band-2') + '</p>';
       })
       .join('\n');
@@ -347,7 +380,7 @@
   }
 
   return {
-    LANGS: LANGS, ROUTES: ROUTES, LAYOUTS: LAYOUTS,
+    LANGS: LANGS, ROUTES: ROUTES, ratio: ratio,
     esc: esc, band: band, plain: plain, lines: lines, num: num,
     relative: relative, pagePath: pagePath, articlePath: articlePath,
     body: body, meta: meta, document: document_

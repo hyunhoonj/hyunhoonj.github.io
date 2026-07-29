@@ -46,7 +46,19 @@
       crumb: { post: '글 › ', home: '지면 › 메인', info: '지면 › 소개', contact: '지면 › 연락', common: '설정 › 공통' },
       dualNote: '두 언어는 따로 저장됩니다',
       bandHint: '<span class="mark">==강조==</span> 로 감싼 부분이 하이라이트 밴드가 됩니다',
-      bodyHint: '빈 줄 = 새 단락 · <span class="mark">==강조==</span> = 하이라이트 밴드 · <span class="mark">&gt; 문장</span> = 인용 · <span class="mark">[도판 1]</span> = 그 자리에 도판',
+      bodyHint: [
+        '빈 줄 = 새 단락',
+        '<span class="mark">## 소제목</span>',
+        '<span class="mark">&gt; 인용</span> — 크게 기울여 조판',
+        '<span class="mark">[도판 1]</span> — 아래 도판 목록의 번호',
+        '<span class="mark">[표: 캡션]</span> 다음 줄부터 파이프(|)로 칸 나눔, 첫 줄이 머리',
+        '<span class="mark">==강조==</span> = 하이라이트 밴드'
+      ],
+      figList: '도판 목록', addFig: '＋ 도판 추가', ratioLabel: '비율',
+      figCap: '설명', coverImage: '대표 이미지', coverRatio: '이미지 비율',
+      perRow: '데스크톱 한 줄에 몇 개', colsTwo: '2개', colsThree: '3개',
+      descNote: '데스크톱 메인에만 나갑니다 — 모바일은 제목·분류·연도만 있는 2열 색인입니다.',
+      coverNote: '메인에는 이 한 장과 위의 설명만 나갑니다.',
       linksHint: '한 줄에 하나 — 이름 | 주소',
       title: '제목', lead: '리드 문장', kind: '분류', date: '날짜', url: 'URL',
       readTime: '읽는 시간', body: '본문',
@@ -70,8 +82,7 @@
       draftList: '초안 목록 — 한 줄에 하나',
       commonPreview: '위의 머리와 아래의 꼬리가 네 지면에 그대로 얹힙니다. 본문 자리는 각 지면에서 채워집니다.',
       chars: function (n) { return n + '자'; },
-      readAbout: '읽는 시간 약 ', readUnit: function (n) { return n + '분'; }, draftWord: '초안',
-      layouts: { two: '2단 · 4:3 둘', tall: '2단 · 4:5 둘', wide: '2단 + 전폭', full: '전폭 · 16:8', none: '도판 없음' }
+      readAbout: '읽는 시간 약 ', readUnit: function (n) { return n + '분'; }, draftWord: '초안'
     },
     en: {
       role: 'Studio', save: 'Save', publish: 'Publish', revert: 'Revert',
@@ -105,7 +116,19 @@
       crumb: { post: 'Article › ', home: 'Page › Home', info: 'Page › Information', contact: 'Page › Contact', common: 'Settings › Shared' },
       dualNote: 'The two languages save separately',
       bandHint: 'Text wrapped in <span class="mark">==…==</span> becomes the highlight band',
-      bodyHint: 'Blank line = new paragraph · <span class="mark">==text==</span> = highlight band · <span class="mark">&gt; line</span> = pull-quote · <span class="mark">[Fig. 1]</span> = figure here',
+      bodyHint: [
+        'Blank line = new paragraph',
+        '<span class="mark">## Section heading</span>',
+        '<span class="mark">&gt; Pull quote</span> — set large in italics',
+        '<span class="mark">[Fig. 1]</span> — the number from the figure list below',
+        '<span class="mark">[Table: caption]</span> then pipe-separated rows, the first one the head',
+        '<span class="mark">==text==</span> = highlight band'
+      ],
+      figList: 'Figure list', addFig: '＋ Add figure', ratioLabel: 'Ratio',
+      figCap: 'Caption', coverImage: 'Cover image', coverRatio: 'Ratio',
+      perRow: 'Desktop per row', colsTwo: 'Two', colsThree: 'Three',
+      descNote: 'Desktop home only — a narrow sheet shows a two-up index of title, kind and year.',
+      coverNote: 'Home shows this one picture and the sentence above.',
       linksHint: 'One per line — name | URL',
       title: 'Title', lead: 'Lead', kind: 'Kind', date: 'Date', url: 'URL',
       readTime: 'Read time', body: 'Body',
@@ -129,14 +152,13 @@
       draftList: 'Draft list — one per line',
       commonPreview: 'The head above and the foot below sit on all four pages. The body is filled in on each page.',
       chars: function (n) { return n + ' chars'; },
-      readAbout: 'about ', readUnit: function (n) { return n + ' min'; }, draftWord: 'Draft',
-      layouts: { two: 'Two · 4:3', tall: 'Two · 4:5', wide: 'Two + full', full: 'Full · 16:8', none: 'None' }
+      readAbout: 'about ', readUnit: function (n) { return n + ' min'; }, draftWord: 'Draft'
     }
   };
 
   var TABS = ['post', 'home', 'info', 'contact', 'common'];
-  var LAYOUT_KEYS = ['two', 'tall', 'wide', 'full', 'none'];
-  var RATIO_CSS = { '4-3': '4 / 3', '4-5': '4 / 5', '16-8': '16 / 8' };
+  var FIG_RATIOS = ['4/3', '16/9', '1/1', '4/5'];
+  var COVER_RATIOS = ['1/1', '4/3', '4/5'];
 
   /* ── state ────────────────────────────────────────────────────────────── */
 
@@ -232,29 +254,35 @@
       '</div>';
   }
 
-  /* The design's <image-slot> upload has nowhere to upload to on a static site,
-     so a slot is a plate showing whatever the path points at, plus the path. */
-  function figureSlots(basePath, figs, spec) {
+  /* One image: the plate showing whatever the path points at, the camera-roll
+     button, and the path itself for a file already in the repository. */
+  function imageSlot(path, image, ratio, label) {
     var s = t();
-    return '<div class="studio-figs">' + spec.map(function (sp, i) {
-      var f = (figs || [])[i] || {};
-      var path = basePath + '.' + i;
-      var plate = f.src
-        ? '<img src="' + esc(f.src) + '" alt="">'
-        : esc(s.figures + ' ' + (i + 1) + ' · ' + sp.ratio.replace('-', ':'));
-      return '<div class="studio-fig">' +
-        '<div class="studio-fig-plate" style="aspect-ratio:' + RATIO_CSS[sp.ratio] + '">' + plate + '</div>' +
-        '<label class="studio-upload">' +
-          '<input type="file" accept="image/*" data-upload="' + esc(path) + '">' +
-          '<span>' + esc(s.upload) + '</span>' +
-        '</label>' +
-        fieldText(s.imagePath + ' ' + (i + 1), path + '.src') +
-        fieldText(s.caption + ' ' + (i + 1), path + '.caption') +
-        '</div>';
-    }).join('') + '</div>';
+    image = image || {};
+    return '<div class="studio-fig">' +
+      '<div class="studio-fig-plate" style="aspect-ratio:' + R.ratio(ratio) + '">' +
+        (image.src ? '<img src="' + esc(image.src) + '" alt="">' : esc(label || s.figures)) +
+      '</div>' +
+      '<label class="studio-upload">' +
+        '<input type="file" accept="image/*" data-upload="' + esc(path) + '">' +
+        '<span>' + esc(s.upload) + '</span>' +
+      '</label>' +
+      fieldText(s.imagePath, path + '.src') +
+      '</div>';
   }
 
-  function specFor(layout) { return R.LAYOUTS[layout] || R.LAYOUTS.none; }
+  function ratioSelect(label, path, options) {
+    var id = 'ed-' + path.replace(/\./g, '-');
+    var value = getPath(path);
+    return '<div class="field">' +
+      '<label for="' + id + '">' + esc(label) + '</label>' +
+      '<select class="input" id="' + id + '" data-path="' + esc(path) + '">' +
+        options.map(function (r) {
+          return '<option value="' + r + '"' + (value === r ? ' selected' : '') + '>' +
+            r.replace('/', ':') + '</option>';
+        }).join('') +
+      '</select></div>';
+  }
 
   /* ── editor per tab ───────────────────────────────────────────────────── */
 
@@ -266,8 +294,26 @@
       '<div class="studio-cols studio-cols--meta">' +
         fieldText(s.kind, 'kind') + fieldText(s.date, 'date') + fieldText(s.url, 'slug') +
       '</div>' +
-      fieldArea(s.body, 'body', 16, { style: 'line-height:1.7;font-size:14px', hint: s.bodyHint }) +
-      figureSlots('figures', d.figures, [{ ratio: '4-3' }, { ratio: '4-3' }]) +
+      fieldArea(s.body, 'body', 16, {
+        style: 'line-height:1.7;font-size:14px',
+        hint: '<span class="studio-lines">' +
+          s.bodyHint.map(function (line) { return '<span>' + line + '</span>'; }).join('') +
+          '</span>'
+      }) +
+      '<div class="studio-section">[' + esc(s.figList) + ']</div>' +
+      (d.figures || []).map(function (f, i) {
+        var path = 'figures.' + i;
+        return '<div class="studio-figrow">' +
+          imageSlot(path, f, f.ratio, '[' + s.figures + ' ' + (i + 1) + ']') +
+          '<div class="studio-figrow-fields">' +
+            fieldText(s.figCap + ' — [' + s.figures + ' ' + (i + 1) + ']', path + '.caption') +
+            ratioSelect(s.ratioLabel, path + '.ratio', FIG_RATIOS) +
+          '</div>' +
+          '<button class="studio-mini studio-mini--danger studio-mini--baseline" type="button"' +
+            ' data-act="del" data-list="figures" data-i="' + i + '">' + esc(s.del) + '</button>' +
+          '</div>';
+      }).join('') +
+      '<div><button class="btn btn-ghost" type="button" data-act="add" data-list="figures">' + esc(s.addFig) + '</button></div>' +
       '<div class="studio-cols studio-cols--2">' +
         fieldArea(s.toc, 'toc', 3, { style: 'font-size:13px' }) +
         fieldArea(s.subjects, 'subjects', 3, { style: 'font-size:13px' }) +
@@ -290,30 +336,39 @@
   function editorHome() {
     var s = t(), d = cur();
     var rows = (d.blocks || []).map(function (b, i) {
-      var spec = specFor(b.layout);
+      var path = 'blocks.' + i;
       return '<div class="studio-row">' + rowHead('blocks', i) +
         '<div class="studio-row-cols">' +
-          fieldText(s.title, 'blocks.' + i + '.title') +
-          fieldText(s.kind, 'blocks.' + i + '.kind') +
-          fieldText(s.year, 'blocks.' + i + '.year') +
+          fieldText(s.title, path + '.title') +
+          fieldText(s.kind, path + '.kind') +
+          fieldText(s.year, path + '.year') +
         '</div>' +
-        fieldArea(s.desc, 'blocks.' + i + '.desc', 3, { style: 'font-size:14px;line-height:1.65' }) +
-        '<div class="studio-row-cols studio-row-cols--link">' +
-          '<div class="field"><label for="ed-layout-' + i + '">' + esc(s.layout) + '</label>' +
-            '<select class="input" id="ed-layout-' + i + '" data-act="layout" data-i="' + i + '">' +
-              LAYOUT_KEYS.map(function (k) {
-                return '<option value="' + k + '"' + (b.layout === k ? ' selected' : '') + '>' + esc(s.layouts[k]) + '</option>';
-              }).join('') +
-            '</select></div>' +
-          fieldText(s.link, 'blocks.' + i + '.slug') +
+        fieldArea(s.desc, path + '.desc', 3, { style: 'font-size:14px;line-height:1.65', hint: esc(s.descNote) }) +
+        '<div class="studio-figrow">' +
+          imageSlot(path + '.image', b.image, b.ratio, esc(s.coverImage)) +
+          '<div class="studio-figrow-fields">' +
+            ratioSelect(s.coverRatio, path + '.ratio', COVER_RATIOS) +
+            fieldText(s.link, path + '.slug') +
+          '</div>' +
         '</div>' +
-        (spec.length ? figureSlots('blocks.' + i + '.figures', b.figures, spec) : '') +
+        '<span class="studio-hint">' + esc(s.coverNote) + '</span>' +
         '</div>';
     }).join('');
 
     return '<div class="studio-fields">' +
       fieldArea(s.statementOne, 'statement', 3, { style: 'font-size:15px;line-height:1.6', hint: s.bandHint }) +
-      '<div class="studio-section">[' + esc(s.workBlocks) + ']</div>' + rows +
+      '<div class="studio-editor-head">' +
+        '<div class="studio-section" style="margin:0">[' + esc(s.workBlocks) + ']</div>' +
+        '<div class="field studio-cols-pick">' +
+          '<label for="ed-cols">' + esc(s.perRow) + '</label>' +
+          '<select class="input" id="ed-cols" data-path="cols">' +
+            ['2', '3'].map(function (n) {
+              return '<option value="' + n + '"' + (String(d.cols || '3') === n ? ' selected' : '') + '>' +
+                esc(n === '2' ? s.colsTwo : s.colsThree) + '</option>';
+            }).join('') +
+          '</select>' +
+        '</div>' +
+      '</div>' + rows +
       '<div><button class="btn btn-ghost" type="button" data-act="add" data-list="blocks">' + esc(s.addBlock) + '</button></div>' +
       '</div>';
   }
@@ -658,7 +713,8 @@
   }
 
   var BLANKS = {
-    blocks: function () { return { id: '', slug: '', title: '', kind: '', year: '', desc: '', layout: 'two', figures: [{ src: '', alt: '', caption: '' }, { src: '', alt: '', caption: '' }] }; },
+    blocks: function () { return { id: '', slug: '', title: '', kind: '', year: '', desc: '', ratio: '1/1', image: { src: '', alt: '' } }; },
+    figures: function () { return { src: '', alt: '', caption: '', ratio: '4/3' }; },
     groups: function () { return { label: '', items: '' }; },
     channels: function () { return { name: '', note: '', href: '' }; }
   };
@@ -673,17 +729,6 @@
     var l = list(name), j = i + dir;
     if (j < 0 || j >= l.length) return;
     var tmp = l[i]; l[i] = l[j]; l[j] = tmp;
-  }
-
-  /* Changing a layout keeps the captions already written and grows or trims the
-     figure list to the number of plates the new layout has. */
-  function setLayout(i, layout) {
-    var b = list('blocks')[i];
-    b.layout = layout;
-    var want = specFor(layout).length;
-    b.figures = b.figures || [];
-    while (b.figures.length < want) b.figures.push({ src: '', alt: '', caption: '' });
-    b.figures.length = want;
   }
 
   /* ── wiring ───────────────────────────────────────────────────────────── */
@@ -727,10 +772,10 @@
       el.value = '';
       return;
     }
-    if (el.dataset && el.dataset.act === 'layout') {
-      setLayout(Number(el.dataset.i), el.value);
-      state.dirty = true;
-      renderEditor(); renderBar(); renderPreview();
+    /* A ratio or a column count changes what the editor itself should draw —
+       the plate beside it, the shape of the grid — so redraw the pane. */
+    if (el.tagName === 'SELECT' && el.dataset && el.dataset.path) {
+      renderEditor(); renderStatus(); renderPreview();
     }
   });
 
@@ -752,7 +797,7 @@
       renderEditor();
       return flash(t().tokenCleared);
     }
-    if (!act || act === 'layout') return;
+    if (!act) return;
     var name = el.dataset.list;
     var i = Number(el.dataset.i);
 

@@ -111,14 +111,25 @@ private, the studio has to move to a separate private repository.
 |---|---|
 | `==text==` | highlight band |
 | blank line | new paragraph |
-| `> line` | pull-quote (bodies only) |
-| `[도판 1]` / `[Fig. 1]` | drops figure 1 in at that point (bodies only) |
+| `## text` | section heading (bodies only) |
+| `> line` | pull-quote — the renderer supplies the quotation marks |
+| `[도판 1]` / `[Fig. 1]` | figure 1 from this document's figure list |
+| `[표: caption]` / `[Table: caption]` | a table — see below |
 | `name \| url` | one footer link per line |
 
-Figure layouts per work block: `two` (two 4:3), `tall` (two 4:5), `wide` (two 4:3
-plus a full-width 16:8), `full` (one 16:8), `none`. A figure with no `src`
-renders as the empty plate the canvas shows — drop a file in `images/` and put
-its path in the slot to fill it.
+A table is one block, no blank lines inside it: the marker line, then one row
+per line with cells split by `|`. The first row is the head.
+
+```
+[표: 표 1 — 침묵의 종류와 사용자의 다음 행동]
+종류 | 평균 지연 | 재질문 비율
+계산 | 3.2초 | .72
+```
+
+Each figure in the article's figure list carries its own aspect ratio (4:3,
+16:9, 1:1, 4:5); each home block carries one cover image and its ratio, and
+`cols` sets how many cards a desktop row holds. An image with no `src` renders
+as the empty plate the canvas shows.
 
 ## Notes on the translation from the canvas
 
@@ -156,12 +167,14 @@ something the canvas did not state:
   the design tool. With a token in place the slot does upload — straight into
   `images/` as a commit — and it also takes a path typed by hand, for the times
   the file is already in the repository.
-- **Figure counts on a phone.** Turn 9a draws fewer plates per work block than
-  the wide sheet does, but it also carries the editor's seed text rather than
-  the page's, so that reads as an abbreviated mock rather than a decision — and
-  9e says "데스크톱과 같은 데이터" out loud. Both sheets render the same figures;
-  the narrow one stacks them. Only the wide 16:8 plate changes, to 16:9, which
-  turn 9 does state.
+- **What the phone drops.** Turn 9f is explicit — "설명은 상세로 넘김" — so the
+  narrow index shows the picture, the title, and the kind and year, and the
+  sentence waits for the article. That is a stated decision, unlike the figure
+  counts in the earlier mobile mock, which only ever differed because the mock
+  carried the editor's seed text.
+- **The article body.** Turn 3a's seed and the confirmed page 5a lay the same
+  material out slightly differently — the seed opens with a `## 설계되지 않은 몇 초`
+  heading, 5a does not. The pages follow 5a, which is the 확정판.
 - **`broadsheet.css`.** Imported as-is except the print-treatment blocks
   (`.halftone`, `.cmyk*`), which drive an SVG filter deck (`print-plates.js`)
   this site does not carry and no page here uses.

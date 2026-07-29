@@ -85,16 +85,9 @@ a:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 2px; }
 .work-desc .band-2 { padding: .26em .1em; }
 
 /* — figures ——————————————————————————————————————————— */
-.figures {
-  display: grid; grid-template-columns: 1fr 1fr;
-  gap: var(--space-8) var(--space-6); margin-top: calc(var(--space-8) * 1.4);
-}
-.figure-wide { grid-column: 1 / -1; }
+/* The aspect ratio rides in on the content, as an inline style. */
 .frame { overflow: hidden; background: var(--color-neutral-200); }
 .frame img { display: block; width: 100%; height: 100%; object-fit: cover; }
-.ratio-4-3 { aspect-ratio: 4 / 3; }
-.ratio-4-5 { aspect-ratio: 4 / 5; }
-.ratio-16-8 { aspect-ratio: 16 / 8; }
 figcaption { margin-top: 10px; font-size: 12px; color: var(--color-neutral-600); }
 
 /* — home ——————————————————————————————————————————————— */
@@ -103,9 +96,15 @@ figcaption { margin-top: 10px; font-size: 12px; color: var(--color-neutral-600);
   margin: calc(var(--space-8) * 2.6) 0 0; max-width: 20em;
   font-size: 36px; line-height: 1.34; letter-spacing: -.02em; text-wrap: pretty;
 }
-.works { margin-top: calc(var(--space-8) * 3); }
-.work + .work { margin-top: calc(var(--space-8) * 3.4); }
-.work-desc { margin: 0; max-width: 44em; font-size: 15px; line-height: 1.65; text-wrap: pretty; }
+/* An index, not a stack of essays. --cols comes from the content, so how many
+   cards a row holds is the author's call. */
+.works {
+  display: grid; grid-template-columns: repeat(var(--cols, 3), 1fr);
+  gap: var(--space-8) var(--space-6); margin-top: calc(var(--space-8) * 3);
+}
+.work { display: flex; flex-direction: column; gap: var(--space-3); }
+.work-meta { display: flex; flex-wrap: wrap; gap: 0 6px; font-size: 13px; }
+.work-desc { margin: 0; font-size: 14px; line-height: 1.65; text-wrap: pretty; }
 
 /* — information & contact —————————————————————————————— */
 .lede {
@@ -140,6 +139,14 @@ figcaption { margin-top: 10px; font-size: 12px; color: var(--color-neutral-600);
 .currently { max-width: 32em; font-size: 15px; line-height: 1.65; text-wrap: pretty; }
 
 /* — article ———————————————————————————————————————————— */
+.article-h2 {
+  font-family: var(--font-heading); font-weight: 400;
+  margin: calc(var(--space-8) * 1.2) 0 0;
+  font-size: 20px; line-height: 1.35; letter-spacing: -.01em;
+}
+.table-block { margin: var(--space-4) 0 0; }
+.table-block .table { width: 100%; font-size: 13px; }
+.table-cap { margin-top: 8px; font-size: 12px; color: var(--color-neutral-600); }
 .article-head { margin-top: calc(var(--space-8) * 2.6); }
 .article-title {
   font-family: var(--font-heading); font-weight: 400;
@@ -167,9 +174,14 @@ figcaption { margin-top: 10px; font-size: 12px; color: var(--color-neutral-600);
   margin: calc(var(--space-8) * 1.2) 0 0;
   font-size: 22px; line-height: 1.5; font-style: italic;
 }
-/* Prose resuming after a figure or a pull-quote takes the wider rest. */
+/* Prose resuming after anything that is not prose takes the wider rest. */
 .article-body > figure + p,
-.article-body > .pull + p { margin-top: calc(var(--space-8) * 1.2); }
+.article-body > .pull + p,
+.article-body > .table-block + p { margin-top: calc(var(--space-8) * 1.2); }
+/* A heading owns the space above it; whatever follows sits close under it. */
+.article-body > .article-h2 + p,
+.article-body > .article-h2 + .table-block,
+.article-body > .article-h2 + figure { margin-top: var(--space-4); }
 .article-refs { margin: calc(var(--space-8) * 1.6) 0 0; }
 .article-refs .rail-title { margin-bottom: var(--space-3); }
 .article-refs .rail-list {
@@ -234,15 +246,24 @@ figcaption { margin-top: 10px; font-size: 12px; color: var(--color-neutral-600);
   .label, .rail-title { font-size: 12px; }
   .rail-title { margin-bottom: var(--space-2); }
 
-  /* Figures stop being a grid and stack; the wide plate stops being a letterbox. */
-  .figures { display: flex; flex-direction: column; gap: var(--space-4); margin-top: var(--space-4); }
-  .ratio-16-8 { aspect-ratio: 16 / 9; }
   figcaption { margin-top: 8px; }
 
-  .statement { margin-top: calc(var(--space-8) * 1.4); font-size: 25px; line-height: 1.35; letter-spacing: -.014em; }
-  .works { margin-top: calc(var(--space-8) * 1.8); }
-  .work + .work { margin-top: calc(var(--space-8) * 1.6); }
-  .work-desc { font-size: 15px; line-height: 1.68; }
+  .statement { margin-top: calc(var(--space-8) * 1.4); font-size: 23px; line-height: 1.38; letter-spacing: -.012em; }
+  /* Two up, and the sentence goes with the article: a card here is a picture,
+     a title, and where it came from. */
+  .works {
+    grid-template-columns: 1fr 1fr; gap: var(--space-6) var(--space-4);
+    margin-top: calc(var(--space-8) * 1.8);
+  }
+  .work { gap: 8px; }
+  .work-desc { display: none; }
+  .work-meta { gap: 2px 0; }
+  .work-title { flex-basis: 100%; font-size: 13px; line-height: 1.4; }
+  .work-meta .dim { font-size: 12px; }
+  .work-sep { margin-right: 4px; }
+  /* The title has its own line here, so the comma that followed it has nothing
+     left to separate. (:first-of-type would look at spans, not at this class.) */
+  .work-title + .work-sep { display: none; }
 
   .lede { margin-top: calc(var(--space-8) * 1.4); font-size: 19px; line-height: 1.5; letter-spacing: -.008em; }
   .lede--narrow { font-size: 22px; line-height: 1.45; letter-spacing: -.01em; }
@@ -265,7 +286,12 @@ figcaption { margin-top: 10px; font-size: 12px; color: var(--color-neutral-600);
   .article-body { font-size: 16px; line-height: 1.78; }
   .article-body > figure { margin: var(--space-3) 0; }
   .article-body > .pull { margin-top: var(--space-4); font-size: 19px; }
-  .article-body > figure + p, .article-body > .pull + p { margin-top: var(--space-4); }
+  .article-body > figure + p,
+  .article-body > .pull + p,
+  .article-body > .table-block + p { margin-top: var(--space-4); }
+  .article-h2 { margin-top: var(--space-3); font-size: 17px; }
+  .table-block .table { font-size: 12px; }
+  .table-block .table th, .table-block .table td { padding: var(--space-2) var(--space-1); }
   .article-refs { margin-top: calc(var(--space-8) * 1.4); }
   .article-next { margin-top: calc(var(--space-8) * 1.4); row-gap: var(--space-2); }
   .article-next .meta { font-size: 15px; }
