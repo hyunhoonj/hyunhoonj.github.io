@@ -244,6 +244,13 @@
       '</div>';
   }
 
+  /* The hint for a field where a typed newline survives to the page. */
+  function breakableHint() {
+    var s = t();
+    return '<span class="studio-lines"><span>' + s.bandHint + '</span>' +
+      '<span>' + esc(s.breakHint) + '</span></span>';
+  }
+
   function rowHead(list, i) {
     var s = t();
     return '<div class="studio-row-head">' +
@@ -360,7 +367,7 @@
     return '<div class="studio-fields">' +
       fieldArea(s.statementOne, 'statement', 4, {
         style: 'font-size:15px;line-height:1.6',
-        hint: '<span class="studio-lines"><span>' + s.bandHint + '</span><span>' + esc(s.breakHint) + '</span></span>'
+        hint: breakableHint()
       }) +
       '<div class="studio-editor-head">' +
         '<div class="studio-section" style="margin:0">[' + esc(s.workBlocks) + ']</div>' +
@@ -390,7 +397,7 @@
     }).join('');
 
     return '<div class="studio-fields">' +
-      fieldArea(s.bio, 'statement', 7, { style: 'font-size:14px;line-height:1.7', hint: s.bandHint }) +
+      fieldArea(s.bio, 'statement', 8, { style: 'font-size:14px;line-height:1.7', hint: breakableHint() }) +
       '<div class="studio-section">[' + esc(s.groups) + ']</div>' + rows +
       '<div><button class="btn btn-ghost" type="button" data-act="add" data-list="groups">' + esc(s.addGroup) + '</button></div>' +
       '</div>';
@@ -408,7 +415,7 @@
     }).join('');
 
     return '<div class="studio-fields">' +
-      fieldArea(s.statement, 'statement', 3, { style: 'font-size:15px;line-height:1.6', hint: s.bandHint }) +
+      fieldArea(s.statement, 'statement', 4, { style: 'font-size:15px;line-height:1.6', hint: breakableHint() }) +
       '<div class="studio-cols studio-cols--contact">' +
         fieldText(s.email, 'email') + fieldText(s.reply, 'reply') +
       '</div>' +

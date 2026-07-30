@@ -45,8 +45,8 @@
 
   function plain(text) { return String(text == null ? '' : text).replace(/==/g, '').replace(/\s+/g, ' ').trim(); }
 
-  /* A newline the author typed becomes a break. Only the home statement asks
-     for this — everywhere else the measure decides where lines end. The break
+  /* A newline the author typed becomes a break. The three statements ask for
+     this — the rest of the site lets the measure decide where lines end. The break
      is marked so a narrow sheet, which re-wraps at a different size, can stand
      it down rather than inherit a break measured against the wide one. */
   function authorBreaks(html) {
@@ -187,7 +187,7 @@
       var items = lines(g.items).map(function (t) { return '<div>' + esc(t) + '</div>'; }).join('');
       return '<div class="split">' + bracket(g.label) + '<div class="group-items">' + items + '</div></div>';
     }).join('\n');
-    return '<p class="lede">' + band(d.statement, 'band') + '</p>\n' +
+    return '<p class="lede">' + authorBreaks(band(d.statement, 'band')) + '</p>\n' +
       '<div class="groups">\n' + groups + '\n</div>';
   }
 
@@ -214,7 +214,7 @@
         '</div>' +
       '</form>';
 
-    return '<p class="lede lede--narrow">' + band(d.statement, 'band') + '</p>\n' +
+    return '<p class="lede lede--narrow">' + authorBreaks(band(d.statement, 'band')) + '</p>\n' +
       '<div class="split contact">' +
         '<div class="contact-col">' +
           '<div class="contact-block contact-block--email">' + bracket(d.emailLabel) +
