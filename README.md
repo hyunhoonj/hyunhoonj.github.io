@@ -170,8 +170,11 @@ something the canvas did not state:
 - **Contact page.** Turn 8 restructured the left column ( `[메일]` + `[그 밖에]`
   with notes, `[요즘]` on the right) over 6b / 7d's `[직접]` + `[응답]`. Turn 8
   wins, being both later and a superset.
-- **Work titles link.** They are spans in the canvas; here a block with a `slug`
-  links to its article. Identical appearance, and the site is navigable.
+- **The whole card is the target.** Work titles are spans in the canvas; here a
+  block with a `slug` links to its article, and the link's `::after` is stretched
+  over the card so the picture is clickable too — in a grid index that is the
+  thing people reach for. The link itself stays on the title, so that is what a
+  screen reader announces. A block with no `slug` has no link and no overlay.
 - **Contact form.** There is no server. The design's own note says the message is
   sent as mail and nothing is stored, so submitting composes a `mailto:` in the
   visitor's mail client. With JavaScript off the form does nothing and the
