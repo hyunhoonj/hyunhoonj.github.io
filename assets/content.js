@@ -16,7 +16,7 @@
         "navContactShort": "",
         "langSwitch": "English",
         "copyright": "© 2026",
-        "links": "Github | https://github.com/hyunhoon\nGoogle Scholar | https://scholar.google.com/\nhyunhoon@email.com | mailto:hyunhoon@email.com",
+        "links": "Github | https://github.com/hyunhoonj\nGoogle Scholar | https://scholar.google.com/citations?user=0ROak0YAAAAJ&hl=en\nhyunhoon.j@gmail.com | mailto:hyunhoon.j@gmail.com",
         "drafts": "거절의 문장들\n신뢰의 보정 노트"
       },
       "en": {
@@ -28,13 +28,13 @@
         "navContactShort": "",
         "langSwitch": "한국어",
         "copyright": "© 2026",
-        "links": "Github | https://github.com/hyunhoon\nGoogle Scholar | https://scholar.google.com/\nhyunhoon@email.com | mailto:hyunhoon@email.com",
+        "links": "Github | https://github.com/hyunhoonj\nGoogle Scholar | https://scholar.google.com/citations?user=0ROak0YAAAAJ&hl=en\nhyunhoon.j@gmail.com | mailto:hyunhoon.j@gmail.com",
         "drafts": "Sentences of refusal\nNotes on calibration"
       }
     },
     "home": {
       "ko": {
-        "statement": "==사람과 AI가 서로를 이해하는 방식을 연구하고, 그 결과를 인터페이스로 옮기는 일을 합니다.==",
+        "statement": "==사람을 깊이,\n그리고 AI를 깊이 이해하여\n그 둘이 자연스레 연결될 수 있도록.==",
         "cols": "3",
         "blocks": [
           {
