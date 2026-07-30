@@ -79,7 +79,7 @@
         ]
       },
       "en": {
-        "statement": "==Researcher based in Seoul, studying how people and AI understand each other, and turning that into interfaces.==",
+        "statement": "==To understand people deeply and AI deeply,\n— so the two connect naturally.==",
         "cols": "3",
         "blocks": [
           {
