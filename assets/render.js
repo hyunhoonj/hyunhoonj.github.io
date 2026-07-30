@@ -358,12 +358,15 @@
     return { title: content.post[lang].title + ' — ' + c.title, desc: plain(content.post[lang].dek) };
   }
 
-  /* The full document, for build.js. */
+  /* The full document, for build.js. `version` stamps the asset links: GitHub
+     Pages serves them with a ten-minute cache, so without it a deploy can land
+     and a browser still read yesterday's stylesheet. */
   function document_(content, opts) {
     var lang = opts.lang, page = opts.page;
     var self = pagePath(content, lang, page);
     var other = lang === 'ko' ? 'en' : 'ko';
-    var rel = function (p) { return relative(self, p); };
+    var stamp = opts.version ? '?v=' + opts.version : '';
+    var rel = function (p) { return relative(self, p) + (/\.(css|js)$/.test(p) ? stamp : ''); };
     var m = meta(content, lang, page);
     var alternates = LANGS.map(function (l) {
       return '<link rel="alternate" hreflang="' + l + '" href="' + esc(rel(pagePath(content, l, page))) + '">';

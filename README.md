@@ -45,6 +45,11 @@ Two ways in, one source of truth (`assets/content.js`):
 
 **By hand.** Edit `assets/content.js`, run `node build.js`, done.
 
+`build.js` stamps every asset link with a hash of the assets — `site.css?v=…`.
+GitHub Pages serves them with a ten-minute cache, so without the stamp a change
+can be live while a browser still reads the old file. Run the build after
+touching anything in `assets/`, not just the content; the workflow does.
+
 **Through the studio.** Open `studio-e064cec987.html`. Pick a page in the left rail, pick a
 language, type — the right column redraws the actual page at 47% through the
 same renderer `build.js` uses, so the preview is not an approximation. On a

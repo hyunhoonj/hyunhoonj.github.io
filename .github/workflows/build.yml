@@ -6,11 +6,11 @@ name: Build pages
 on:
   push:
     branches: [main]
-    # The commit this job makes only touches the generated HTML, which is not
-    # in this list — so it cannot trigger itself.
+    # Any asset change has to rebuild, because the pages carry a version stamp
+    # derived from all of them. The commit this job makes only touches HTML,
+    # which is not in this list — so it cannot trigger itself.
     paths:
-      - 'assets/content.js'
-      - 'assets/render.js'
+      - 'assets/**'
       - 'build.js'
   workflow_dispatch:
 
