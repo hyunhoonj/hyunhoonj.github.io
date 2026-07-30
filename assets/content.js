@@ -172,19 +172,19 @@
       "ko": {
         "statement": "읽은 글에 대한 이야기, 함께 해볼 만한 연구, 혹은 제가 틀렸다는 지적 — ==무엇이든 받습니다.==",
         "emailLabel": "메일",
-        "email": "hyunhoon@email.com",
+        "email": "hyunhoon.j@gmail.com",
         "reply": "보통 이틀. 답이 없으면 한 번 더 보내주세요.",
         "channelsLabel": "그 밖에",
         "channels": [
           {
             "name": "Github",
-            "note": "프로토타입과 분석 코드",
-            "href": "https://github.com/hyunhoon"
+            "note": "진행 중인 프로젝트",
+            "href": "https://github.com/hyunhoonj"
           },
           {
             "name": "Google Scholar",
             "note": "발표된 논문 전체",
-            "href": "https://scholar.google.com/"
+            "href": "https://scholar.google.com/citations?user=0ROak0YAAAAJ&hl=en"
           }
         ],
         "formOn": true,
@@ -196,7 +196,7 @@
         },
         "formNote": "내용은 메일로만 전달되고 저장되지 않습니다.",
         "currentlyLabel": "요즘",
-        "currently": "서울. 대기 상태와 복구에 관한 연구를 이어가고 있고, 2026년 하반기에는 ==짧은 강연과 워크숍 초청을 받고 있습니다.=="
+        "currently": "작성 중."
       },
       "en": {
         "statement": "A note about something you read here, research worth doing together, or a correction — ==all of it is welcome.==",
