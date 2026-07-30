@@ -116,6 +116,12 @@ private, the studio has to move to a separate private repository.
 | `[도판 1]` / `[Fig. 1]` | figure 1 from this document's figure list |
 | `[표: caption]` / `[Table: caption]` | a table — see below |
 | `name \| url` | one footer link per line |
+| Enter, in the home statement | a line break where you typed it |
+
+Only the home statement takes a typed line break, and only on a wide sheet: the
+break was measured against a 36px line, and a phone sets the same sentence at
+23px in a narrower column, so it stands the break down and wraps on its own. The
+space around the break survives either way.
 
 A table is one block, no blank lines inside it: the marker line, then one row
 per line with cells split by `|`. The first row is the head.

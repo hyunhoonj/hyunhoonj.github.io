@@ -46,6 +46,7 @@
       crumb: { post: '글 › ', home: '지면 › 메인', info: '지면 › 소개', contact: '지면 › 연락', common: '설정 › 공통' },
       dualNote: '두 언어는 따로 저장됩니다',
       bandHint: '<span class="mark">==강조==</span> 로 감싼 부분이 하이라이트 밴드가 됩니다',
+      breakHint: '줄을 바꾸고 싶은 자리에서 Enter — 넓은 화면에만 적용되고, 폰에서는 알아서 흐릅니다',
       bodyHint: [
         '빈 줄 = 새 단락',
         '<span class="mark">## 소제목</span>',
@@ -116,6 +117,7 @@
       crumb: { post: 'Article › ', home: 'Page › Home', info: 'Page › Information', contact: 'Page › Contact', common: 'Settings › Shared' },
       dualNote: 'The two languages save separately',
       bandHint: 'Text wrapped in <span class="mark">==…==</span> becomes the highlight band',
+      breakHint: 'Press Enter where you want the line to break — on the wide sheet only; a phone re-wraps on its own',
       bodyHint: [
         'Blank line = new paragraph',
         '<span class="mark">## Section heading</span>',
@@ -356,7 +358,10 @@
     }).join('');
 
     return '<div class="studio-fields">' +
-      fieldArea(s.statementOne, 'statement', 3, { style: 'font-size:15px;line-height:1.6', hint: s.bandHint }) +
+      fieldArea(s.statementOne, 'statement', 4, {
+        style: 'font-size:15px;line-height:1.6',
+        hint: '<span class="studio-lines"><span>' + s.bandHint + '</span><span>' + esc(s.breakHint) + '</span></span>'
+      }) +
       '<div class="studio-editor-head">' +
         '<div class="studio-section" style="margin:0">[' + esc(s.workBlocks) + ']</div>' +
         '<div class="field studio-cols-pick">' +

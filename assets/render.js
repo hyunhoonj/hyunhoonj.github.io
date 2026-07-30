@@ -43,7 +43,18 @@
     return out + esc(t.slice(last));
   }
 
-  function plain(text) { return String(text == null ? '' : text).replace(/==/g, ''); }
+  function plain(text) { return String(text == null ? '' : text).replace(/==/g, '').replace(/\s+/g, ' ').trim(); }
+
+  /* A newline the author typed becomes a break. Only the home statement asks
+     for this — everywhere else the measure decides where lines end. The break
+     is marked so a narrow sheet, which re-wraps at a different size, can stand
+     it down rather than inherit a break measured against the wide one. */
+  function authorBreaks(html) {
+    /* The space after the break matters: on a wide sheet it is swallowed as
+       leading whitespace on the new line, and on a narrow one — where the break
+       stands down — it is the only thing left keeping the two words apart. */
+    return html.replace(/[ \t]*\n[ \t]*/g, '<br class="soft-break"> ');
+  }
   function lines(text) {
     return String(text == null ? '' : text).split('\n').map(function (s) { return s.trim(); }).filter(Boolean);
   }
@@ -166,7 +177,7 @@
         '</article>';
     }).join('\n');
 
-    return '<h1 class="statement">' + band(d.statement, 'band') + '</h1>\n' +
+    return '<h1 class="statement">' + authorBreaks(band(d.statement, 'band')) + '</h1>\n' +
       '<div class="works" style="--cols:' + cols + '">\n' + cards + '\n</div>';
   }
 
