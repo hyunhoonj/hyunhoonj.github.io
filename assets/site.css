@@ -37,12 +37,16 @@ a:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 2px; }
 .page { max-width: 1200px; margin: 0 auto; padding: var(--space-4) var(--space-6) var(--space-8); }
 
 /* — masthead & colophon ————————————————————————————————— */
+/* The head sits a step above the rest of the chrome now, and the name carries
+   the weight. Baseline, not centre — at line-height 1 the two sides of the row
+   should sit on one line, whatever they are set at. */
 .masthead {
-  display: flex; justify-content: space-between; align-items: center;
-  gap: var(--space-6); font-size: 12px; line-height: 1; padding: var(--space-2) 0 0;
+  display: flex; justify-content: space-between; align-items: baseline;
+  gap: var(--space-6); font-size: 16px; line-height: 1; padding: var(--space-2) 0 0;
 }
+.masthead-name { font-weight: 600; }
 .masthead-name .slash { color: var(--color-neutral-500); }
-.masthead-nav { display: flex; align-items: center; gap: var(--space-4); }
+.masthead-nav { display: flex; align-items: baseline; gap: var(--space-4); }
 .masthead-nav [aria-current="page"] {
   text-decoration-line: underline; text-decoration-thickness: 1px; text-underline-offset: 4px;
 }
@@ -229,7 +233,8 @@ figcaption { margin-top: 10px; font-size: 12px; color: var(--color-neutral-600);
 @container (max-width: 620px) {
   .page { padding: var(--space-3) var(--space-4) var(--space-6); }
 
-  .masthead { gap: var(--space-4); flex-wrap: wrap; }
+  /* A phone keeps the head small — only the weight and the baseline carry over. */
+  .masthead { font-size: 12px; gap: var(--space-4); flex-wrap: wrap; }
   .masthead-nav { gap: var(--space-4); color: var(--color-neutral-700); }
   .masthead-nav [aria-current="page"] { color: var(--color-text); }
   /* "Information" does not fit beside the brand and the language switch. */
