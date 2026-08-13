@@ -251,7 +251,6 @@
             }
           ],
           "tocLabel": "차례",
-          "toc": "설계되지 않은 몇 초\n세 가지 침묵\n현장 기록",
           "subjectsLabel": "주제",
           "subjects": "불확실성의 표현\n대기 상태",
           "refsLabel": "참고",
@@ -287,7 +286,6 @@
             }
           ],
           "tocLabel": "Contents",
-          "toc": "The undesigned seconds\nThree kinds of silence\nField notes",
           "subjectsLabel": "Subjects",
           "subjects": "Disclosing uncertainty\nWaiting states",
           "refsLabel": "References",

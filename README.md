@@ -72,6 +72,12 @@ Link** field is a list of the articles that language has, so there is no slug to
 type and no way to point at a page that is not there. Renaming an article's URL
 carries the blocks pointing at it along; deleting one clears them.
 
+The 차례 is not typed. It is read off the body's `##` headings, in their order,
+and the studio shows it beside 주제 as text you cannot edit — the way to change
+that list is to change a heading. An article with no headings has no 차례 block
+at all rather than an empty one. (It was a field of its own until the two drifted:
+the one article here listed three sections against a body that had one.)
+
 - **저장 / Save** keeps a draft in `localStorage`. It survives a reload; it does
   not touch any file, and it does not leave the device.
 - **발행 / Publish** commits `assets/content.js` to this repository over the
@@ -131,7 +137,7 @@ private, the studio has to move to a separate private repository.
 |---|---|
 | `==text==` | highlight band |
 | blank line | new paragraph |
-| `## text` | section heading (bodies only) |
+| `## text` | section heading (bodies only) — and one line of the 차례 |
 | `> line` | pull-quote — the renderer supplies the quotation marks |
 | `[도판 1]` / `[Fig. 1]` | figure 1 from this document's figure list |
 | `[표: caption]` / `[Table: caption]` | a table — see below |

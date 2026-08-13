@@ -50,7 +50,7 @@
       breakHint: '줄을 바꾸고 싶은 자리에서 Enter — 넓은 화면에만 적용되고, 폰에서는 알아서 흐릅니다',
       bodyHint: [
         '빈 줄 = 새 단락',
-        '<span class="mark">## 소제목</span>',
+        '<span class="mark">## 소제목</span> — 그대로 차례가 됩니다',
         '<span class="mark">&gt; 인용</span> — 크게 기울여 조판',
         '<span class="mark">[도판 1]</span> — 아래 도판 목록의 번호',
         '<span class="mark">[표: 캡션]</span> 다음 줄부터 파이프(|)로 칸 나눔, 첫 줄이 머리',
@@ -71,7 +71,8 @@
       noPosts: '아직 글이 없습니다',
       untitled: '제목 없음',
       slugHint: '주소가 됩니다 — 영문 소문자·숫자·하이픈만',
-      toc: '차례 — 한 줄에 하나', subjects: '주제 — 한 줄에 하나', refs: '참고 — 한 줄에 하나',
+      toc: '차례 — 본문의 ## 소제목에서', tocEmpty: '본문에 ## 소제목이 아직 없습니다',
+      subjects: '주제 — 한 줄에 하나', refs: '참고 — 한 줄에 하나',
       figures: '도판', imagePath: '이미지 경로', caption: '캡션',
       next: '다음 글', nextTitle: '제목', nextKind: '분류', nextYear: '연도', nextId: '연결 — 메인 블록 id',
       statementOne: '스테이트먼트 — 한 문장',
@@ -129,7 +130,7 @@
       breakHint: 'Press Enter where you want the line to break — on the wide sheet only; a phone re-wraps on its own',
       bodyHint: [
         'Blank line = new paragraph',
-        '<span class="mark">## Section heading</span>',
+        '<span class="mark">## Section heading</span> — it becomes the contents',
         '<span class="mark">&gt; Pull quote</span> — set large in italics',
         '<span class="mark">[Fig. 1]</span> — the number from the figure list below',
         '<span class="mark">[Table: caption]</span> then pipe-separated rows, the first one the head',
@@ -150,7 +151,8 @@
       noPosts: 'No articles yet',
       untitled: 'Untitled',
       slugHint: 'This becomes the address — lowercase letters, digits, hyphens',
-      toc: 'Contents — one per line', subjects: 'Subjects — one per line', refs: 'References — one per line',
+      toc: 'Contents — from the ## headings', tocEmpty: 'The body has no ## headings yet',
+      subjects: 'Subjects — one per line', refs: 'References — one per line',
       figures: 'Figures', imagePath: 'Image path', caption: 'Caption',
       next: 'Next', nextTitle: 'Title', nextKind: 'Kind', nextYear: 'Year', nextId: 'Link — home block id',
       statementOne: 'Statement — one sentence',
@@ -428,7 +430,7 @@
       }).join('') +
       '<div><button class="btn btn-ghost" type="button" data-act="add" data-list="figures">' + esc(s.addFig) + '</button></div>' +
       '<div class="studio-cols studio-cols--2">' +
-        fieldArea(s.toc, 'toc', 3, { style: 'font-size:13px' }) +
+        tocList() +
         fieldArea(s.subjects, 'subjects', 3, { style: 'font-size:13px' }) +
       '</div>' +
       '<div class="studio-cols studio-cols--2">' +
@@ -588,6 +590,21 @@
 
   var EDITORS = { post: editorPost, home: editorHome, info: editorInfo, contact: editorContact, common: editorCommon };
 
+  /* The contents as the page will draw them, read off the body through the same
+     function the renderer uses. There is nothing to edit here — the way to
+     change this list is to change a heading. */
+  function tocList() {
+    var s = t(), heads = R.headings(cur().body);
+    return '<div class="field" data-toc>' +
+      '<label>' + esc(s.toc) + '</label>' +
+      (heads.length
+        ? '<div class="studio-toc">' + heads.map(function (h, i) {
+            return '<span>' + esc(R.num(i)) + '&nbsp;&nbsp;' + esc(h) + '</span>';
+          }).join('') + '</div>'
+        : '<span class="studio-hint">' + esc(s.tocEmpty) + '</span>') +
+      '</div>';
+  }
+
   function statusLine() {
     var s = t(), d = cur();
     var chars = String(d.body || d.statement || '').replace(/\s/g, '').length;
@@ -708,9 +725,14 @@
     host.inert = true; /* a picture of the page: nothing in it takes focus */
     slot('previewLabel').textContent = '[' + s.preview + ']';
     slot('previewNote').textContent = s.previewNote;
+    /* Both of these are read off the body, so they move as it is typed. Swapping
+       the two blocks leaves the textarea — and the caret in it — alone, which
+       redrawing the pane would not. */
     if (state.tab === 'post') {
       var status = slot('editor').querySelector('.studio-status');
       if (status) status.outerHTML = statusLine();
+      var toc = slot('editor').querySelector('[data-toc]');
+      if (toc) toc.outerHTML = tocList();
     }
   }
 
@@ -861,7 +883,7 @@
       return {
         slug: slug, title: '', dek: '', kind: '', date: '', readTime: '', body: '',
         figures: [],
-        tocLabel: toc, toc: '',
+        tocLabel: toc,
         subjectsLabel: subjects, subjects: '',
         refsLabel: refs, refs: '',
         nextLabel: next, next: { title: '', kind: '', year: '', id: '' }

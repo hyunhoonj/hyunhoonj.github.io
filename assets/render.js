@@ -69,6 +69,13 @@
     if (!content) return content;
     if (!Array.isArray(content.posts)) content.posts = content.post ? [content.post] : [];
     delete content.post;
+    /* The contents list was a field of its own once, typed beside the body it
+       described — and the two drifted apart, as two lists of the same thing do.
+       It is read off the headings now, so the field is dropped wherever an older
+       file or draft still carries one. */
+    content.posts.forEach(function (entry) {
+      LANGS.forEach(function (lang) { if (entry && entry[lang]) delete entry[lang].toc; });
+    });
     return content;
   }
 
@@ -284,16 +291,33 @@
                              text never has to carry a matched pair
        [표: cap] + rows      a table, cells split by |, first row the head
        anything else         a paragraph */
-  function articleBody(ctx, text, figs) {
+  /* The blocks a body is made of. The contents list and the body itself read the
+     same ones, so a heading cannot be in one and not the other. */
+  function blocks(text) {
     return String(text == null ? '' : text)
       .split(/\n\s*\n/)
       .map(function (s) { return s.trim(); })
-      .filter(Boolean)
+      .filter(Boolean);
+  }
+
+  var HEADING = /^##\s+(.+)$/;
+
+  /* Every section heading, in the order the body sets them — this is the
+     contents list. Nobody types it twice. */
+  function headings(text) {
+    return blocks(text).map(function (t) {
+      var m = HEADING.exec(t);
+      return m ? m[1].trim() : null;
+    }).filter(Boolean);
+  }
+
+  function articleBody(ctx, text, figs) {
+    return blocks(text)
       .map(function (t) {
         var fig = /^\[(?:도판|Fig\.?)\s*(\d+)\]$/i.exec(t);
         if (fig) return figure(ctx, (figs || [])[Number(fig[1]) - 1]);
 
-        var head = /^##\s+(.+)$/.exec(t);
+        var head = HEADING.exec(t);
         if (head) return '<h2 class="article-h2">' + esc(head[1].trim()) + '</h2>';
 
         if (t.charAt(0) === '>') {
@@ -316,6 +340,7 @@
     if (!entry || !entry[ctx.lang]) return '';
     var d = entry[ctx.lang];
     var next = d.next || {};
+    var toc = headings(d.body);
     var nextTitle = esc(next.title);
     if (next.id) {
       nextTitle = '<a href="' + esc(ctx.resolve(ROUTES[ctx.lang].home)) + '#' + esc(next.id) + '">' + nextTitle + '</a>';
@@ -334,7 +359,9 @@
       '</div>\n' +
       '<div class="split article-grid">' +
         '<div class="rail">' +
-          '<div><div class="rail-title">[' + esc(d.tocLabel) + ']</div>' + numbered(lines(d.toc)) + '</div>' +
+          /* An article with no section headings has no contents to list, and a
+             bare [차례] over nothing reads as something missing. */
+          (toc.length ? '<div><div class="rail-title">[' + esc(d.tocLabel) + ']</div>' + numbered(toc) + '</div>' : '') +
           '<div><div class="rail-title">[' + esc(d.subjectsLabel) + ']</div>' +
             '<div class="rail-list rail-list--dim">' +
               lines(d.subjects).map(function (t) { return '<span>' + esc(t) + '</span>'; }).join('') +
@@ -429,7 +456,7 @@
 
   return {
     LANGS: LANGS, ROUTES: ROUTES, ratio: ratio,
-    esc: esc, band: band, plain: plain, lines: lines, num: num,
+    esc: esc, band: band, plain: plain, lines: lines, num: num, headings: headings,
     relative: relative, pagePath: pagePath, articlePath: articlePath,
     normalize: normalize, postAt: postAt, postIndexBySlug: postIndexBySlug,
     body: body, meta: meta, document: document_
