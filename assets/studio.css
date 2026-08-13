@@ -53,10 +53,14 @@ body { background: var(--color-neutral-100); font-family: var(--font-body); }
   box-decoration-break: clone; -webkit-box-decoration-break: clone;
   padding: .15em .1em; margin: 0 -.04em;
 }
-.studio-drafts {
-  display: flex; flex-direction: column; gap: 6px;
+/* The articles the site has, under the four pages. Same list the 글 tab picks
+   from, one click away instead of a dropdown open. */
+.studio-articles {
+  display: flex; flex-direction: column; align-items: flex-start; gap: 6px;
   font-size: 13px; line-height: 1.45; color: var(--color-neutral-700);
 }
+.studio-articles .studio-tab { text-wrap: pretty; }
+.studio-tab--add { color: var(--color-neutral-600); margin-top: 2px; }
 
 /* — editor ——————————————————————————————————————————————— */
 .studio-editor { display: flex; flex-direction: column; gap: var(--space-4); max-width: 620px; }
@@ -104,6 +108,8 @@ body { background: var(--color-neutral-100); font-family: var(--font-body); }
 /* The body's markup list, one rule per line. */
 .studio-lines { display: flex; flex-direction: column; gap: 3px; }
 .studio-cols-pick { width: 190px; flex: none; }
+/* A title is longer than a column count — the article picker gets the room. */
+.studio-cols-pick--wide { width: 300px; max-width: 100%; }
 .studio-fig-plate {
   background: var(--color-neutral-200); overflow: hidden;
   display: grid; place-items: center;
@@ -173,9 +179,10 @@ body { background: var(--color-neutral-100); font-family: var(--font-body); }
     padding: var(--space-3) var(--space-4) var(--space-6);
   }
 
-  /* The rail becomes one scrolling row of tabs; the drafts list stands down. */
+  /* The rail becomes one scrolling row of tabs; the article list stands down —
+     the 글 tab carries the same picker at the top of the pane. */
   .studio-rail { position: static; gap: 0; }
-  .studio-rail-title, .studio-drafts { display: none; }
+  .studio-rail-title, .studio-articles { display: none; }
   .studio-rail > div + div { display: none; }
   .studio-tabs {
     flex-direction: row; gap: var(--space-4);

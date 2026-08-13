@@ -1,6 +1,7 @@
-/* The writing desk. Five tabs over one document, two languages kept apart,
-   and the page itself redrawn on the right through the same renderer the build
-   uses — so what the preview shows is literally what `node build.js` will emit.
+/* The writing desk. Five tabs over one document — the 글 tab holding whichever
+   article the rail has selected — two languages kept apart, and the page itself
+   redrawn on the right through the same renderer the build uses, so what the
+   preview shows is literally what `node build.js` will emit.
    Drafts live in localStorage; Publish hands back a content.js to commit. */
 (function () {
   'use strict';
@@ -40,7 +41,7 @@
       downloaded: 'content.js 내려받음',
       reverted: '파일의 값으로 되돌림',
       revertAsk: '한 번 더 누르면 assets/content.js 의 값으로 되돌립니다',
-      pages: '지면', drafts: '초안', preview: '미리보기', edit: '편집',
+      pages: '지면', articles: '글', preview: '미리보기', edit: '편집',
       previewNote: '입력하는 대로 지면이 바뀝니다. 도판은 images/ 폴더의 파일 경로로 지정합니다.',
       tabs: { post: '글', home: '메인', info: '소개', contact: '연락', common: '공통' },
       crumb: { post: '글 › ', home: '지면 › 메인', info: '지면 › 소개', contact: '지면 › 연락', common: '설정 › 공통' },
@@ -63,12 +64,21 @@
       linksHint: '한 줄에 하나 — 이름 | 주소',
       title: '제목', lead: '리드 문장', kind: '분류', date: '날짜', url: 'URL',
       readTime: '읽는 시간', body: '본문',
+      postPick: '고쳐 쓸 글', newPost: '＋ 새 글', delPost: '이 글 삭제',
+      delPostAsk: '한 번 더 누르면 이 글이 삭제됩니다',
+      postDeleted: '글을 지웠습니다 — 발행하면 지면에서도 사라집니다',
+      postAdded: '새 글을 만들었습니다 — 제목과 URL부터 채워주세요',
+      noPosts: '아직 글이 없습니다',
+      untitled: '제목 없음',
+      slugHint: '주소가 됩니다 — 영문 소문자·숫자·하이픈만',
       toc: '차례 — 한 줄에 하나', subjects: '주제 — 한 줄에 하나', refs: '참고 — 한 줄에 하나',
       figures: '도판', imagePath: '이미지 경로', caption: '캡션',
       next: '다음 글', nextTitle: '제목', nextKind: '분류', nextYear: '연도', nextId: '연결 — 메인 블록 id',
       statementOne: '스테이트먼트 — 한 문장',
       workBlocks: '작업 블록', desc: '설명', year: '연도', layout: '도판 배치',
-      link: '연결 — 글 주소', addBlock: '＋ 블록 추가',
+      link: '연결 — 글', linkNone: '연결 안 함', linkGone: '없는 글',
+      linkNote: '이 카드를 누르면 열리는 글입니다. 목록은 [글] 탭에서 만든 글입니다.',
+      addBlock: '＋ 블록 추가',
       up: '위로', down: '아래로', del: '삭제',
       bio: '소개문 — 3인칭 한 덩어리', groups: '목록 묶음', label: '라벨',
       items: '항목 — 한 줄에 하나', addGroup: '＋ 묶음 추가',
@@ -80,7 +90,6 @@
       commonNote: '여기서 고친 값은 네 지면의 머리와 꼬리에 함께 적용됩니다.',
       displayName: '표시 이름', navInfo: '내비 — 소개', navContact: '내비 — 연락',
       langSwitch: '언어 전환 표시', footerLinks: '푸터 링크', copyright: '카피라이트',
-      draftList: '초안 목록 — 한 줄에 하나',
       commonPreview: '위의 머리와 아래의 꼬리가 네 지면에 그대로 얹힙니다. 본문 자리는 각 지면에서 채워집니다.',
       chars: function (n) { return n + '자'; },
       readAbout: '읽는 시간 약 ', readUnit: function (n) { return n + '분'; }, draftWord: '초안'
@@ -111,7 +120,7 @@
       downloaded: 'content.js downloaded',
       reverted: 'Reverted to the file',
       revertAsk: 'Press again to reload the values in assets/content.js',
-      pages: 'Pages', drafts: 'Drafts', preview: 'Preview', edit: 'Edit',
+      pages: 'Pages', articles: 'Articles', preview: 'Preview', edit: 'Edit',
       previewNote: 'The page changes as you type. Figures take the path of a file in images/.',
       tabs: { post: 'Article', home: 'Home', info: 'Information', contact: 'Contact', common: 'Shared' },
       crumb: { post: 'Article › ', home: 'Page › Home', info: 'Page › Information', contact: 'Page › Contact', common: 'Settings › Shared' },
@@ -134,12 +143,21 @@
       linksHint: 'One per line — name | URL',
       title: 'Title', lead: 'Lead', kind: 'Kind', date: 'Date', url: 'URL',
       readTime: 'Read time', body: 'Body',
+      postPick: 'Editing', newPost: '＋ New article', delPost: 'Delete this article',
+      delPostAsk: 'Press again to delete this article',
+      postDeleted: 'Article deleted — publishing takes its page down',
+      postAdded: 'New article — a title and a URL first',
+      noPosts: 'No articles yet',
+      untitled: 'Untitled',
+      slugHint: 'This becomes the address — lowercase letters, digits, hyphens',
       toc: 'Contents — one per line', subjects: 'Subjects — one per line', refs: 'References — one per line',
       figures: 'Figures', imagePath: 'Image path', caption: 'Caption',
       next: 'Next', nextTitle: 'Title', nextKind: 'Kind', nextYear: 'Year', nextId: 'Link — home block id',
       statementOne: 'Statement — one sentence',
       workBlocks: 'Work blocks', desc: 'Description', year: 'Year', layout: 'Figures',
-      link: 'Link — article slug', addBlock: '＋ Add block',
+      link: 'Link — article', linkNone: 'No link', linkGone: 'missing',
+      linkNote: 'The article this card opens. The list is what the [Article] tab holds.',
+      addBlock: '＋ Add block',
       up: 'Up', down: 'Down', del: 'Delete',
       bio: 'Bio — one third-person block', groups: 'List groups', label: 'Label',
       items: 'Items — one per line', addGroup: '＋ Add group',
@@ -151,7 +169,6 @@
       commonNote: 'These values apply to the head and foot of all four pages.',
       displayName: 'Display name', navInfo: 'Nav — info', navContact: 'Nav — contact',
       langSwitch: 'Language switch label', footerLinks: 'Footer links', copyright: 'Copyright',
-      draftList: 'Draft list — one per line',
       commonPreview: 'The head above and the foot below sit on all four pages. The body is filled in on each page.',
       chars: function (n) { return n + ' chars'; },
       readAbout: 'about ', readUnit: function (n) { return n + ' min'; }, draftWord: 'Draft'
@@ -164,15 +181,21 @@
 
   /* ── state ────────────────────────────────────────────────────────────── */
 
+  /* The file as the repository has it, in the list shape — an older one carrying
+     a single `post` is brought forward here, once, for everything below. */
+  var BASE = R.normalize(window.SITE_CONTENT);
+
   var state = {
     ui: 'ko',
     tab: 'post',
+    /* Which article the 글 tab is holding. */
+    post: 0,
     dlang: 'ko',
     /* Narrow sheets have room for one pane at a time (turn 9e), so edit and
        preview become a switch. On a wide sheet both are always up and this is
        inert. */
     view: 'edit',
-    doc: clone(window.SITE_CONTENT),
+    doc: clone(BASE),
     dirty: false,
     savedAt: null,
     /* The blob sha of assets/content.js as the repository had it when this
@@ -185,13 +208,34 @@
 
   function clone(o) { return JSON.parse(JSON.stringify(o)); }
   function t() { return L[state.ui]; }
-  function cur() { return state.doc[state.tab][state.dlang]; }
+
+  function posts() {
+    if (!Array.isArray(state.doc.posts)) state.doc.posts = [];
+    return state.doc.posts;
+  }
+  /* Deleting the article you were on, or opening a draft written when there were
+     more of them, can leave the index past the end. */
+  function clampPost() {
+    state.post = Math.max(0, Math.min(state.post, posts().length - 1));
+    return state.post;
+  }
+  function curPost() {
+    var entry = posts()[clampPost()];
+    return (entry && entry[state.dlang]) || null;
+  }
+
+  /* The slice every field reads and writes against. On the 글 tab that is one
+     language of one article; elsewhere, one language of the page. */
+  function cur() {
+    if (state.tab === 'post') return curPost() || {};
+    return state.doc[state.tab][state.dlang];
+  }
 
   var hadDraft = false;
   try {
     var stored = JSON.parse(localStorage.getItem(DRAFT_KEY) || 'null');
     if (stored && stored.doc) {
-      state.doc = stored.doc;
+      state.doc = R.normalize(stored.doc);
       state.savedAt = stored.savedAt || null;
       hadDraft = true;
     }
@@ -280,28 +324,88 @@
       '</div>';
   }
 
-  function ratioSelect(label, path, options) {
+  /* A field whose value is one of a list the document itself supplies — a ratio,
+     or the article a home block points at. */
+  function selectField(label, path, options, extra) {
+    extra = extra || {};
     var id = 'ed-' + path.replace(/\./g, '-');
-    var value = getPath(path);
+    var value = String(getPath(path) == null ? '' : getPath(path));
     return '<div class="field">' +
       '<label for="' + id + '">' + esc(label) + '</label>' +
       '<select class="input" id="' + id + '" data-path="' + esc(path) + '">' +
-        options.map(function (r) {
-          return '<option value="' + r + '"' + (value === r ? ' selected' : '') + '>' +
-            r.replace('/', ':') + '</option>';
+        options.map(function (o) {
+          return '<option value="' + esc(o.value) + '"' + (value === o.value ? ' selected' : '') + '>' +
+            esc(o.label) + '</option>';
         }).join('') +
-      '</select></div>';
+      '</select>' +
+      (extra.hint ? '<span class="studio-hint">' + extra.hint + '</span>' : '') +
+      '</div>';
+  }
+
+  function ratioSelect(label, path, options) {
+    return selectField(label, path, options.map(function (r) {
+      return { value: r, label: r.replace('/', ':') };
+    }));
+  }
+
+  function postLabel(i, d, s) {
+    return String(i + 1).padStart(2, '0') + '  ' + (d.title || d.slug || s.untitled);
+  }
+
+  /* The articles this language has, for a home block to point at. An article
+     with no slug yet has no page to link to, so it is not offered. */
+  function postOptions(currentSlug) {
+    var s = t();
+    var options = [{ value: '', label: s.linkNone }];
+    posts().forEach(function (p, i) {
+      var d = (p && p[state.dlang]) || {};
+      if (d.slug) options.push({ value: d.slug, label: postLabel(i, d, s) });
+    });
+    /* A slug left over from a renamed or deleted article stays in the list and
+       says what it is, rather than resetting itself to nothing behind your back.
+       The page drops the link either way — it has nowhere to send a reader. */
+    if (currentSlug && !options.some(function (o) { return o.value === currentSlug; })) {
+      options.push({ value: currentSlug, label: currentSlug + ' — ' + s.linkGone });
+    }
+    return options;
   }
 
   /* ── editor per tab ───────────────────────────────────────────────────── */
 
+  /* Which article is on the desk, and the two things you can do to the list
+     itself. The rail carries the same list on a wide sheet; this is the copy a
+     phone gets, where the rail is one row of tabs and nothing else. */
+  function postPicker() {
+    var s = t(), list = posts();
+    var pick = list.length
+      ? '<div class="field studio-cols-pick studio-cols-pick--wide">' +
+          '<label for="ed-postpick">' + esc(s.postPick) + '</label>' +
+          '<select class="input" id="ed-postpick" data-post-select>' +
+            list.map(function (p, i) {
+              return '<option value="' + i + '"' + (i === state.post ? ' selected' : '') + '>' +
+                esc(postLabel(i, (p && p[state.dlang]) || {}, s)) + '</option>';
+            }).join('') +
+          '</select>' +
+        '</div>'
+      : '<span class="studio-hint">' + esc(s.noPosts) + '</span>';
+
+    return '<div class="studio-editor-head">' + pick +
+      '<div class="studio-row-acts">' +
+        '<button class="studio-mini" type="button" data-act="addPost">' + esc(s.newPost) + '</button>' +
+        (list.length ? '<button class="studio-mini studio-mini--danger" type="button" data-act="delPost">' + esc(s.delPost) + '</button>' : '') +
+      '</div>' +
+      '</div>';
+  }
+
   function editorPost() {
     var s = t(), d = cur();
-    return '<div class="studio-fields">' +
+    if (!posts().length) return '<div class="studio-fields">' + postPicker() + '</div>';
+    return '<div class="studio-fields">' + postPicker() +
       fieldText(s.title, 'title', { style: 'font-size:19px' }) +
       fieldArea(s.lead, 'dek', 3, { style: 'line-height:1.6', hint: s.bandHint }) +
       '<div class="studio-cols studio-cols--meta">' +
-        fieldText(s.kind, 'kind') + fieldText(s.date, 'date') + fieldText(s.url, 'slug') +
+        fieldText(s.kind, 'kind') + fieldText(s.date, 'date') +
+        fieldText(s.url, 'slug', { hint: esc(s.slugHint) }) +
       '</div>' +
       fieldArea(s.body, 'body', 16, {
         style: 'line-height:1.7;font-size:14px',
@@ -357,7 +461,7 @@
           imageSlot(path + '.image', b.image, b.ratio, esc(s.coverImage)) +
           '<div class="studio-figrow-fields">' +
             ratioSelect(s.coverRatio, path + '.ratio', COVER_RATIOS) +
-            fieldText(s.link, path + '.slug') +
+            selectField(s.link, path + '.slug', postOptions(b.slug), i === 0 ? { hint: esc(s.linkNote) } : null) +
           '</div>' +
         '</div>' +
         '<span class="studio-hint">' + esc(s.coverNote) + '</span>' +
@@ -444,7 +548,6 @@
         fieldText(s.langSwitch, 'langSwitch') + fieldText(s.copyright, 'copyright') +
       '</div>' +
       fieldArea(s.footerLinks, 'links', 5, { style: 'font-size:13px;line-height:1.7', hint: esc(s.linksHint) }) +
-      fieldArea(s.draftList, 'drafts', 3, { style: 'font-size:13px;line-height:1.7' }) +
       connectionPanel() +
       '</div>';
   }
@@ -532,7 +635,7 @@
     slot('brand').innerHTML = esc(String(cm.name || '').split(' / ')[0]) +
       ' <span class="slash">/</span> ' + esc(s.role);
     slot('crumb').textContent = state.tab === 'post'
-      ? s.crumb.post + (state.doc.post[state.dlang].slug || '')
+      ? s.crumb.post + ((curPost() || {}).slug || '')
       : s.crumb[state.tab];
     document.querySelector('[data-action="save"]').textContent = s.save;
     document.querySelector('[data-action="publish"]').textContent = s.publish;
@@ -547,15 +650,29 @@
   function renderRail() {
     var s = t();
     slot('pagesLabel').textContent = '[' + s.pages + ']';
-    slot('draftsLabel').textContent = '[' + s.drafts + ']';
+    slot('articlesLabel').textContent = '[' + s.articles + ']';
     slot('tabs').innerHTML = TABS.map(function (k) {
       var label = esc(s.tabs[k]);
       return '<button class="studio-tab" type="button" data-tab="' + k + '"' +
         (state.tab === k ? ' aria-current="true"' : '') + '>' +
         (state.tab === k ? '<span class="on">' + label + '</span>' : label) + '</button>';
     }).join('');
-    slot('drafts').innerHTML = R.lines(state.doc.common[state.dlang].drafts)
-      .map(function (d) { return '<span>' + esc(d) + '</span>'; }).join('');
+
+    /* Every article there is, in the language being written. The one on the desk
+       is marked only while the 글 tab is up — from the 소개 tab nothing here is
+       what you are looking at. */
+    var list = posts();
+    slot('articles').innerHTML = (list.length
+      ? list.map(function (p, i) {
+          var d = (p && p[state.dlang]) || {};
+          var label = esc(postLabel(i, d, s));
+          var on = state.tab === 'post' && i === state.post;
+          return '<button class="studio-tab" type="button" data-post="' + i + '"' +
+            (on ? ' aria-current="true"' : '') + '>' +
+            (on ? '<span class="on">' + label + '</span>' : label) + '</button>';
+        }).join('')
+      : '<span class="studio-hint">' + esc(s.noPosts) + '</span>') +
+      '<button class="studio-tab studio-tab--add" type="button" data-act="addPost">' + esc(s.newPost) + '</button>';
   }
 
   function renderEditor() {
@@ -578,7 +695,10 @@
   function renderPreview() {
     var s = t();
     var page = state.tab === 'common' ? 'home' : state.tab;
-    var opts = { lang: state.dlang, page: page, resolve: function (p) { return p; } };
+    var opts = {
+      lang: state.dlang, page: page, index: state.post,
+      resolve: function (p) { return p; }
+    };
     if (state.tab === 'common') {
       opts.main = '<p class="studio-common-note">' + esc(s.commonPreview) + '</p>' +
         '<div class="studio-common-block"></div>';
@@ -623,7 +743,7 @@
   /* The document, as the file the build reads. */
   function contentSource() {
     return [
-      '/* Written by the studio. `node build.js` turns this into the eight pages.',
+      '/* Written by the studio. `node build.js` turns this into the static pages.',
       ' * The workflow in .github/workflows/build.yml does that on every commit. */',
       '(function (root, factory) {',
       '  var content = factory();',
@@ -717,11 +837,89 @@
     }
     revertArmed = false;
     localStorage.removeItem(DRAFT_KEY);
-    state.doc = clone(window.SITE_CONTENT);
+    state.doc = clone(BASE);
     state.dirty = false;
     state.savedAt = null;
     renderAll();
     flash(t().reverted);
+  }
+
+  /* A new article, in both languages at once: the labels a page needs in order
+     to draw at all, and nothing else filled in. The slug is provisional but
+     valid — the build refuses an empty one, and nobody should meet that error
+     because a new article was still untitled. */
+  function blankPost() {
+    var taken = function (v) {
+      return posts().some(function (p) {
+        return R.LANGS.some(function (l) { return p && p[l] && p[l].slug === v; });
+      });
+    };
+    var slug = 'untitled', n = 1;
+    while (taken(slug)) slug = 'untitled-' + (++n);
+
+    var side = function (toc, subjects, refs, next) {
+      return {
+        slug: slug, title: '', dek: '', kind: '', date: '', readTime: '', body: '',
+        figures: [],
+        tocLabel: toc, toc: '',
+        subjectsLabel: subjects, subjects: '',
+        refsLabel: refs, refs: '',
+        nextLabel: next, next: { title: '', kind: '', year: '', id: '' }
+      };
+    };
+    return {
+      ko: side('차례', '주제', '참고', '다음 글'),
+      en: side('Contents', 'Subjects', 'References', 'Next')
+    };
+  }
+
+  function addPost() {
+    posts().push(blankPost());
+    state.post = posts().length - 1;
+    state.tab = 'post';
+    state.dirty = true;
+    renderAll();
+    flash(t().postAdded);
+  }
+
+  /* Two taps, like revert: an article is the one thing here that takes real
+     work to type back in. */
+  var delPostArmed = false;
+  function delPost() {
+    if (!posts().length) return;
+    if (!delPostArmed) {
+      delPostArmed = true;
+      flash(t().delPostAsk);
+      setTimeout(function () { delPostArmed = false; }, 5000);
+      return;
+    }
+    delPostArmed = false;
+    var gone = posts().splice(clampPost(), 1)[0] || {};
+    /* The home blocks that pointed at it now point at nothing. Left alone the
+       block would still read as a link in the editor while the page silently
+       dropped it — better to say the link is gone. */
+    R.LANGS.forEach(function (lang) {
+      var slug = (gone[lang] || {}).slug;
+      if (!slug) return;
+      (((state.doc.home || {})[lang] || {}).blocks || []).forEach(function (b) {
+        if (b.slug === slug) b.slug = '';
+      });
+    });
+    clampPost();
+    state.dirty = true;
+    renderAll();
+    flash(t().postDeleted);
+  }
+
+  /* Renaming an article renames its page, so the home blocks pointing at the old
+     name follow it — otherwise a card quietly loses its link at the next build.
+     Typing rewrites the slug a character at a time, and each keystroke moves the
+     blocks on from the value the one before it left. */
+  function retargetBlocks(from, to) {
+    if (!from || from === to) return;
+    (((state.doc.home || {})[state.dlang] || {}).blocks || []).forEach(function (b) {
+      if (b.slug === from) b.slug = to;
+    });
   }
 
   var BLANKS = {
@@ -748,7 +946,16 @@
   document.addEventListener('input', function (e) {
     var el = e.target;
     if (!el.dataset) return;
-    if (el.dataset.path) { setPath(el.dataset.path, el.value); return; }
+    if (el.dataset.path) {
+      if (state.tab === 'post' && el.dataset.path === 'slug') {
+        var was = getPath('slug');
+        setPath('slug', el.value);
+        retargetBlocks(was, el.value);
+        return;
+      }
+      setPath(el.dataset.path, el.value);
+      return;
+    }
     /* The token is not part of the document, so it never marks it dirty. */
     if (el.hasAttribute('data-token')) {
       var value = el.value.trim();
@@ -767,6 +974,11 @@
     if (el.name === 'uilang') {
       state.ui = el.value;
       try { localStorage.setItem(UI_KEY, state.ui); } catch (e) { /* private mode */ }
+      renderAll();
+      return;
+    }
+    if (el.dataset && el.dataset.postSelect != null) {
+      state.post = Number(el.value) || 0;
       renderAll();
       return;
     }
@@ -792,10 +1004,16 @@
   });
 
   document.addEventListener('click', function (e) {
-    var el = e.target.closest('[data-tab], [data-act], [data-action]');
+    var el = e.target.closest('[data-tab], [data-post], [data-act], [data-action]');
     if (!el) return;
 
     if (el.dataset.tab) { state.tab = el.dataset.tab; renderAll(); return; }
+    if (el.dataset.post != null) {
+      state.post = Number(el.dataset.post) || 0;
+      state.tab = 'post';
+      renderAll();
+      return;
+    }
 
     if (el.dataset.action === 'save') return save();
     if (el.dataset.action === 'publish') return publish();
@@ -803,6 +1021,8 @@
 
     var act = el.dataset.act;
     if (act === 'download') return download();
+    if (act === 'addPost') return addPost();
+    if (act === 'delPost') return delPost();
     if (act === 'clearToken') {
       window.SiteGitHub.setToken('');
       state.baseSha = null;
@@ -844,7 +1064,7 @@
 
   /* Opening on a second device with work still sitting on this one is the
      easiest way to lose it — say so rather than let it look published. */
-  if (hadDraft && JSON.stringify(state.doc) !== JSON.stringify(window.SITE_CONTENT)) {
+  if (hadDraft && JSON.stringify(state.doc) !== JSON.stringify(BASE)) {
     flash(t().localDraft);
   }
 })();

@@ -1,6 +1,6 @@
 /* One renderer, two callers.
  *
- * `node build.js` uses it to write the eight static pages; studio.html uses the
+ * `node build.js` uses it to write the static pages; studio.html uses the
  * same functions for its live preview. That is the whole reason it exists as a
  * plain script with a CommonJS tail rather than an ES module — it has to load
  * from a file:// page and from Node without a build step in between.
@@ -62,8 +62,37 @@
 
   function articlePath(lang, slug) { return ROUTES[lang].writing + slug + '.html'; }
 
-  function pagePath(content, lang, page) {
-    if (page === 'post') return articlePath(lang, content.post[lang].slug);
+  /* The site carried exactly one article once, as `post`. It is a list now, and
+     both callers normalise on the way in — so a content.js from before the
+     change, or a draft saved in a browser back then, still opens. */
+  function normalize(content) {
+    if (!content) return content;
+    if (!Array.isArray(content.posts)) content.posts = content.post ? [content.post] : [];
+    delete content.post;
+    return content;
+  }
+
+  function postAt(content, index) {
+    return (content.posts || [])[index || 0] || null;
+  }
+
+  /* Which article carries this slug in this language, or -1. Home blocks point
+     at an article by slug, and a block left pointing at a deleted one must not
+     become a link to a page that is not there. */
+  function postIndexBySlug(content, lang, slug) {
+    var posts = content.posts || [];
+    if (!slug) return -1;
+    for (var i = 0; i < posts.length; i++) {
+      if (posts[i] && posts[i][lang] && posts[i][lang].slug === slug) return i;
+    }
+    return -1;
+  }
+
+  function pagePath(content, lang, page, index) {
+    if (page === 'post') {
+      var p = postAt(content, index);
+      return articlePath(lang, (p && p[lang] && p[lang].slug) || '');
+    }
     return ROUTES[lang][page];
   }
 
@@ -163,7 +192,7 @@
 
     var cards = (d.blocks || []).map(function (b) {
       var title = esc(b.title);
-      if (b.slug) {
+      if (postIndexBySlug(ctx.content, ctx.lang, b.slug) >= 0) {
         title = '<a href="' + esc(ctx.resolve(articlePath(ctx.lang, b.slug))) + '">' + title + '</a>';
       }
       return '<article class="work"' + (b.id ? ' id="' + esc(b.id) + '"' : '') + '>' +
@@ -283,7 +312,9 @@
   }
 
   function post(ctx) {
-    var d = ctx.content.post[ctx.lang];
+    var entry = postAt(ctx.content, ctx.index);
+    if (!entry || !entry[ctx.lang]) return '';
+    var d = entry[ctx.lang];
     var next = d.next || {};
     var nextTitle = esc(next.title);
     if (next.id) {
@@ -329,19 +360,20 @@
 
   /* ── entry points ─────────────────────────────────────────────────────── */
 
-  /* opts: { lang, page, resolve, main } — resolve maps a root-relative path onto
-     whatever the calling document needs (build passes a relative-path helper,
-     the studio passes the path through untouched). `main` replaces the page
-     body while keeping the masthead and colophon, which is how the studio draws
-     its Shared tab: the head and foot with the matter left blank. */
+  /* opts: { lang, page, index, resolve, main } — `index` picks the article when
+     page is 'post'. resolve maps a root-relative path onto whatever the calling
+     document needs (build passes a relative-path helper, the studio passes the
+     path through untouched). `main` replaces the page body while keeping the
+     masthead and colophon, which is how the studio draws its Shared tab: the
+     head and foot with the matter left blank. */
   function body(content, opts) {
-    var lang = opts.lang, page = opts.page;
-    var self = pagePath(content, lang, page);
+    var lang = opts.lang, page = opts.page, index = opts.index || 0;
+    var self = pagePath(content, lang, page, index);
     var other = lang === 'ko' ? 'en' : 'ko';
     var ctx = {
-      content: content, lang: lang, page: page,
+      content: content, lang: lang, page: page, index: index,
       common: content.common[lang],
-      counterpart: pagePath(content, other, page),
+      counterpart: pagePath(content, other, page, index),
       resolve: opts.resolve || function (p) { return relative(self, p); }
     };
     var main = opts.main != null ? opts.main : PAGES[page](ctx);
@@ -350,26 +382,28 @@
       '\n</div>\n</div>';
   }
 
-  function meta(content, lang, page) {
+  function meta(content, lang, page, index) {
     var c = content.common[lang];
     if (page === 'home') return { title: c.title, desc: plain(content.home[lang].statement) };
     if (page === 'info') return { title: c.navInfo + ' — ' + c.title, desc: plain(content.info[lang].statement) };
     if (page === 'contact') return { title: c.navContact + ' — ' + c.title, desc: plain(content.contact[lang].statement) };
-    return { title: content.post[lang].title + ' — ' + c.title, desc: plain(content.post[lang].dek) };
+    var entry = postAt(content, index);
+    var d = (entry && entry[lang]) || {};
+    return { title: (d.title || '') + ' — ' + c.title, desc: plain(d.dek) };
   }
 
   /* The full document, for build.js. `version` stamps the asset links: GitHub
      Pages serves them with a ten-minute cache, so without it a deploy can land
      and a browser still read yesterday's stylesheet. */
   function document_(content, opts) {
-    var lang = opts.lang, page = opts.page;
-    var self = pagePath(content, lang, page);
+    var lang = opts.lang, page = opts.page, index = opts.index || 0;
+    var self = pagePath(content, lang, page, index);
     var other = lang === 'ko' ? 'en' : 'ko';
     var stamp = opts.version ? '?v=' + opts.version : '';
     var rel = function (p) { return relative(self, p) + (/\.(css|js)$/.test(p) ? stamp : ''); };
-    var m = meta(content, lang, page);
+    var m = meta(content, lang, page, index);
     var alternates = LANGS.map(function (l) {
-      return '<link rel="alternate" hreflang="' + l + '" href="' + esc(rel(pagePath(content, l, page))) + '">';
+      return '<link rel="alternate" hreflang="' + l + '" href="' + esc(rel(pagePath(content, l, page, index))) + '">';
     }).join('\n  ');
 
     return '<!DOCTYPE html>\n' +
@@ -387,7 +421,7 @@
       '  <link rel="stylesheet" href="' + esc(rel('assets/site.css')) + '">\n' +
       '</head>\n' +
       '<body>\n' +
-      body(content, { lang: lang, page: page, resolve: rel }) + '\n' +
+      body(content, { lang: lang, page: page, index: index, resolve: rel }) + '\n' +
       '<script src="' + esc(rel('assets/site.js')) + '"></script>\n' +
       '</body>\n' +
       '</html>\n';
@@ -397,6 +431,7 @@
     LANGS: LANGS, ROUTES: ROUTES, ratio: ratio,
     esc: esc, band: band, plain: plain, lines: lines, num: num,
     relative: relative, pagePath: pagePath, articlePath: articlePath,
+    normalize: normalize, postAt: postAt, postIndexBySlug: postIndexBySlug,
     body: body, meta: meta, document: document_
   };
 });

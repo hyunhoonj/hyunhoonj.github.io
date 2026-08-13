@@ -3,23 +3,24 @@
 Implementation of the `Personal Site.dc.html` design canvas
 ([Claude Design project](https://claude.ai/design/p/0fc009b0-e941-4408-92f2-37902e1651e5)).
 
-Four pages, two languages, at two widths — the 1200px sheet from turns 3–7 and
-the 390px one from turn 9 — plus the writing desk from turns 8 and 9e. No
-dependencies, no framework, no build tooling beyond one Node script.
+Three fixed pages and as many articles as there are, two languages, at two
+widths — the 1200px sheet from turns 3–7 and the 390px one from turn 9 — plus
+the writing desk from turns 8 and 9e. No dependencies, no framework, no build
+tooling beyond one Node script.
 
 ```
 index.html                       메인 / Home            ┐
 information.html                 소개                    │ Korean
 contact.html                     연락                    │
-writing/silence-….html           글 상세                 ┘
+writing/<slug>.html              글 상세 — one per article ┘
 en/index.html                    Home                   ┐
 en/information.html              Information            │ English
 en/contact.html                  Contact                │
-en/writing/silence-….html        Article                ┘
+en/writing/<slug>.html           Article — one per article ┘
 studio-e064cec987.html           작성 어드민 / the writing desk
 
 assets/content.js                 all the words, both languages — the only source
-build.js                          node build.js → writes the eight pages
+build.js                          node build.js → six pages + two per article
 .github/workflows/build.yml       runs build.js on every content commit
 assets/broadsheet.css             the design system, imported from the project
 assets/site.css                   the four pages
@@ -43,7 +44,11 @@ python3 -m http.server 8000     # then http://localhost:8000/
 
 Two ways in, one source of truth (`assets/content.js`):
 
-**By hand.** Edit `assets/content.js`, run `node build.js`, done.
+**By hand.** Edit `assets/content.js`, run `node build.js`, done. The articles
+live in `posts` — one entry per article, each with a `ko` and an `en` half, and a
+`slug` per language that becomes the filename. `build.js` refuses to write
+anything if a slug is empty, repeated, or not a filename, and it deletes the page
+of an article that is no longer in the list.
 
 `build.js` stamps every asset link with a hash of the assets — `site.css?v=…`.
 GitHub Pages serves them with a ten-minute cache, so without the stamp a change
@@ -57,11 +62,21 @@ phone the rail becomes one scrolling row of tabs and 편집 / 미리보기 becom
 switch, since there is only room for one pane; the preview then shows the page
 at the width a reader actually holds it at, unscaled.
 
+Under the four pages the rail lists every article there is. Clicking one puts it
+on the desk; **＋ 새 글** starts another and **이 글 삭제** (twice) drops the one
+you are on. The 글 tab carries the same picker at the top of the pane, which is
+what a phone uses — the rail's list is a wide-sheet control.
+
+An article is reachable when a home block points at it: the block's **연결 /
+Link** field is a list of the articles that language has, so there is no slug to
+type and no way to point at a page that is not there. Renaming an article's URL
+carries the blocks pointing at it along; deleting one clears them.
+
 - **저장 / Save** keeps a draft in `localStorage`. It survives a reload; it does
   not touch any file, and it does not leave the device.
 - **발행 / Publish** commits `assets/content.js` to this repository over the
   GitHub API — from a laptop or from a phone, no server in between. A workflow
-  then runs `node build.js` and commits the eight pages; the site is live a
+  then runs `node build.js` and commits the pages; the site is live a
   minute or two later. Publishing clears the local draft, so the next load on
   any device starts from what the repository serves.
 - **되돌리기 / Revert** (twice) throws the draft away and reloads the file's values.
@@ -89,8 +104,8 @@ server anywhere in this. It needs one token, once per device.
 4. Open the studio → **공통 / Shared** tab → **[연결]** → paste it.
 
 The dot next to the field turns cyan when it is stored. From then on 발행
-commits `assets/content.js`, `.github/workflows/build.yml` rebuilds the eight
-pages, and Pages serves them a minute or two later.
+commits `assets/content.js`, `.github/workflows/build.yml` rebuilds the pages,
+and Pages serves them a minute or two later.
 
 **About the token.** It lives in that browser's `localStorage` — per device,
 never committed, sent nowhere but `api.github.com`. Whoever holds the unlocked
