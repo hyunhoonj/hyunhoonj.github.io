@@ -199,15 +199,21 @@
 
     var cards = (d.blocks || []).map(function (b) {
       var title = esc(b.title);
-      if (postIndexBySlug(ctx.content, ctx.lang, b.slug) >= 0) {
-        title = '<a href="' + esc(ctx.resolve(articlePath(ctx.lang, b.slug))) + '">' + title + '</a>';
-      }
+      /* A card opens its article when the slug names one. Failing that it can
+         open a page of its own outside writing/ — the atlas — given as a
+         root-relative `href` ('atlas/', 'en/atlas/'), resolved like any other
+         path so it holds from the sheet and from the studio alike. */
+      var href = postIndexBySlug(ctx.content, ctx.lang, b.slug) >= 0 ? articlePath(ctx.lang, b.slug) : String(b.href || '').trim();
+      if (href) title = '<a href="' + esc(ctx.resolve(href)) + '">' + title + '</a>';
       return '<article class="work"' + (b.id ? ' id="' + esc(b.id) + '"' : '') + '>' +
         plate(ctx, b.image, b.ratio) +
         '<div class="work-meta">' +
           '<span class="work-title">' + title + '</span>' +
-          '<span class="dim work-sep">,</span><span class="dim">' + esc(b.kind) + '</span>' +
-          '<span class="dim work-sep">,</span><span class="dim">' + esc(b.year) + '</span>' +
+          /* Kind and year each follow a comma — an empty one is left out
+             with its comma, so a card can read just "title, year". */
+          [b.kind, b.year].filter(function (v) { return String(v || '').trim(); }).map(function (v) {
+            return '<span class="dim work-sep">,</span><span class="dim">' + esc(v) + '</span>';
+          }).join('') +
         '</div>' +
         '<p class="work-desc">' + band(b.desc, 'band-2') + '</p>' +
         '</article>';

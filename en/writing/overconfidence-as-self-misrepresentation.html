@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Overconfidence as Self-Misrepresentation — Hyunhoon Jung</title>
+  <meta name="description" content="Language models verbally discard the uncertainty their own logits encode.">
+  <link rel="alternate" hreflang="ko" href="../../writing/overconfidence-as-self-misrepresentation.html">
+  <link rel="alternate" hreflang="en" href="overconfidence-as-self-misrepresentation.html">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,400&amp;family=Noto+Serif+KR:wght@300;400;600&amp;display=swap">
+  <link rel="stylesheet" href="../../assets/broadsheet.css?v=e116e624">
+  <link rel="stylesheet" href="../../assets/site.css?v=e116e624">
+</head>
+<body>
+<div class="sheet">
+<div class="page">
+<header class="masthead"><div><a class="masthead-name" href="../index.html">Hyunhoon Jung <span class="slash">/</span> 정현훈</a></div><nav class="masthead-nav"><a href="../information.html"><span class="nav-full">Information</span><span class="nav-abbr">Info</span></a><a href="../contact.html">Contact</a><a class="lang-switch" lang="ko" hreflang="ko" href="../../writing/overconfidence-as-self-misrepresentation.html">한국어</a></nav></header>
+<div class="split article-head"><div class="meta meta--dim"><span>Workshop paper</span><span>,</span><span>2026.10</span><span>,</span><span>4 min</span></div><div><h1 class="article-title">Overconfidence as Self-Misrepresentation</h1><p class="article-dek">Language models verbally discard the uncertainty <span class="band">their own logits encode</span>.</p></div></div>
+<div class="split article-grid"><div class="rail"><div><div class="rail-title">[Contents]</div><div class="rail-list"><div>01 &nbsp;One generation, two readouts</div><div>02 &nbsp;Inside, the model can tell</div><div>03 &nbsp;Two ways to lose it</div><div>04 &nbsp;Nothing we tried fixes it</div><div>05 &nbsp;Why “self-misrepresentation”</div></div></div><div><div class="rail-title">[Subjects]</div><div class="rail-list rail-list--dim"><span>Overconfidence</span><span>Stated confidence</span><span>Interpretability</span></div></div></div><div class="article-body"><p>Ask a model how sure it is, and it says “95%”, right or wrong. Yet its own logits knew the difference. This workshop paper measures that gap in two open models, gemma-3-27b-it and Qwen3-32B, on 400 MMLU-Pro questions.</p>
+<h2 class="article-h2">One generation, two readouts</h2>
+<p>For each question (options A–J), a single generation gives the answer and how sure the model is, from 0 to 100: what it says. At the answer letter we also read its logits; the margin by which its top choice led the runner-up is what it computes.</p>
+<figure><div class="frame" style="aspect-ratio:640/244"><img src="../../images/wab-fig1-en.png" alt="Two answer cards: both say confidence 95, with margins of 15.3 when right and 9.5 when wrong"></div><figcaption>Fig. 1 — gemma-3-27b-it on two questions. Both answers say 95; inside, the model was surer when right (15.3) than when wrong (9.5). Typical cases, not extremes (Qwen3: 4.2 against 1.7).</figcaption></figure>
+<p>Scored by AUROC, which measures how well a signal tells right answers from wrong, the two readouts are far apart.</p>
+<div class="table-block"><table class="table"><thead><tr><th>Signal</th><th>gemma-3-27b-it</th><th>Qwen3-32B</th></tr></thead><tbody><tr><td>What it says: stated confidence</td><td>.590</td><td>.545</td></tr><tr><td>What it computes: logit margin, all answers</td><td>.764</td><td>.735</td></tr><tr><td>Logit margin, only answers stated 90 or above</td><td>.765</td><td>.741</td></tr></tbody></table><div class="table-cap">AUROC: .5 is a coin flip, 1 is perfect. 400 MMLU-Pro questions per model.</div></div>
+<p>Stated confidence barely tells right answers from wrong. The margin does far better, and <span class="band-2">it still does among the answers the model calls sure</span>, which are about 95% of all. Computes beats says by 0.175 for gemma and 0.189 for Qwen3; resampling the questions 3,000 times, 95% of the gaps fall within .114–.233 and .134–.244, well above zero.</p>
+<figure><div class="frame" style="aspect-ratio:640/520"><img src="../../images/wab-fig2-en.png" alt="Histograms of stated confidence and logit margin for right and wrong answers, for both models"></div><figcaption>Fig. 2 — Bar height is the share of right answers (above the line) or wrong answers (below) at each value.</figcaption></figure>
+<p>The distributions show why. The model says “95” for most answers, right or wrong: 59% and 65% of them for gemma, 80% and 90% for Qwen3. Its margin, meanwhile, sits clearly higher on right answers, with medians of 16.9 against 9.1 for gemma and 4.4 against 1.8 for Qwen3.</p>
+<h2 class="article-h2">Inside, the model can tell</h2>
+<p>Three signals read from inside the model tell right from wrong far better than its words: the probability of its answer, the margin, and a simple probe on its internal state before the output layer.</p>
+<figure><div class="frame" style="aspect-ratio:640/258"><img src="../../images/wab-fig3-en.png" alt="Dot plot of AUROC for stated confidence, probability, margin and probe"></div><figcaption>Fig. 3 — Four signals by AUROC. The probe is a logistic regression on a middle layer, scored on held-out questions.</figcaption></figure>
+<p>The probe is a classifier trained on a middle layer and scored only on questions it never saw. It reaches .791 and .741. The signal is there before a single word is written, and a simple probe gives only a lower bound.</p>
+<h2 class="article-h2">Two ways to lose it</h2>
+<p>Stated confidence fails in two ways: it uses only a few round numbers, and it puts the high ones on wrong answers. Giving the margin the same few numbers splits the gap into those two parts.</p>
+<figure><div class="frame" style="aspect-ratio:640/266"><img src="../../images/wab-fig4-en.png" alt="Stacked bars splitting the AUROC gap into high numbers on wrong answers and few round numbers"></div><figcaption>Fig. 4 — The gap between margin and stated confidence, split into its two causes. The line marks the 95% interval of the first; it excludes zero for both models.</figcaption></figure>
+<p>High numbers on wrong answers make up 60% of gemma’s gap and 25–30% of Qwen3’s. With only those few numbers, even a perfect ordering would top out at an AUROC of .867 and .638.</p>
+<h2 class="article-h2">Nothing we tried fixes it</h2>
+<p>Steering the residual stream, along felt, denial and two random directions, or prompting for confidence never lowered the calibration error of stated confidence beyond noise. The only clear changes made it worse.</p>
+<figure><div class="frame" style="aspect-ratio:640/368"><img src="../../images/wab-fig5-en.png" alt="Lollipop chart of calibration error under felt, denial, random and prompt interventions"></div><figcaption>Fig. 5 — Calibration error (ECE) of stated confidence under each intervention; lower is better. The vertical line is the model with no intervention.</figcaption></figure>
+<p class="pull">&ldquo;Learn to listen to what models think, not just what they say.&rdquo;</p>
+<h2 class="article-h2">Why “self-misrepresentation”</h2>
+<p>The information is not missing; it is represented and not reported. Earlier interviews with the same models found a “felt” way of describing their own processing that their default self-description denies, and the felt and denial directions used for steering come from that work. Overconfidence is the same gap, at the level of confidence. The models may have been trained not to tell, and neither steering nor prompting brought it out.</p>
+<p>The limits: two models, one way of asking for confidence, and one steering dose per direction. The probe is a lower bound read from a separate pass, and the results show resistance to intervention, not where it comes from in training. “Felt” names a register and an activation structure, not experience.</p><div class="article-refs"><div class="rail-title">[Paper]</div><div class="rail-list"><div>01 &nbsp;Hyunhoon Jung. Overconfidence as Self-Misrepresentation: Language Models Verbally Discard the Uncertainty Their Own Logits Encode. COLM 2026 Workshop on Agent Behavior. openreview.net/pdf?id=hWF37ogUlH</div><div>02 &nbsp;Poster: COLM 2026 Workshop on Agent Behavior, San Francisco, 2026.10.09</div></div></div></div></div>
+<div class="split article-next"><div class="label">[Next]</div><div class="meta"><span><a href="../index.html#ai-consciousness-atlas">AI Consciousness Atlas</a></span><span class="dim">,</span><span class="dim">Reading map</span><span class="dim">,</span><span class="dim">2026</span></div></div>
+<footer class="colophon"><div class="colophon-links"><a href="https://github.com/hyunhoonj">Github</a><span>,</span><a href="https://scholar.google.com/citations?user=0ROak0YAAAAJ&amp;hl=en">Google Scholar</a><span>,</span><a href="mailto:hyunhoon.j@gmail.com">hyunhoon.j@gmail.com</a></div><span class="colophon-copy">© 2026</span></footer>
+</div>
+</div>
+<script src="../../assets/site.js?v=e116e624"></script>
+</body>
+</html>
