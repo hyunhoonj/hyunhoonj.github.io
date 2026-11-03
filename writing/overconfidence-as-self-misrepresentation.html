@@ -4,48 +4,56 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Overconfidence as Self-Misrepresentation — Hyunhoon Jung / 정현훈</title>
-  <meta name="description" content="언어 모델은 자기 로짓에 담긴 불확실성을 말로는 버립니다.">
+  <meta name="description" content="AI는 자기가 틀릴 수 있다는 것을 압니다. 다만 말하지 않을 뿐입니다.">
   <link rel="alternate" hreflang="ko" href="overconfidence-as-self-misrepresentation.html">
   <link rel="alternate" hreflang="en" href="../en/writing/overconfidence-as-self-misrepresentation.html">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,400&amp;family=Noto+Serif+KR:wght@300;400;600&amp;display=swap">
-  <link rel="stylesheet" href="../assets/broadsheet.css?v=a7c7c066">
-  <link rel="stylesheet" href="../assets/site.css?v=a7c7c066">
+  <link rel="stylesheet" href="../assets/broadsheet.css?v=3f1e7d98">
+  <link rel="stylesheet" href="../assets/site.css?v=3f1e7d98">
 </head>
 <body>
 <div class="sheet">
 <div class="page">
 <header class="masthead"><div><a class="masthead-name" href="../index.html">Hyunhoon Jung <span class="slash">/</span> 정현훈</a></div><nav class="masthead-nav"><a href="../information.html">소개</a><a href="../contact.html">연락</a><a class="lang-switch" lang="en" hreflang="en" href="../en/writing/overconfidence-as-self-misrepresentation.html">English</a></nav></header>
-<div class="split article-head"><div class="meta meta--dim"><span>워크숍 논문</span><span>,</span><span>2026.10</span><span>,</span><span>4분</span></div><div><h1 class="article-title">Overconfidence as Self-Misrepresentation</h1><p class="article-dek">언어 모델은 <span class="band">자기 로짓에 담긴 불확실성</span>을 말로는 버립니다.</p></div></div>
-<div class="split article-grid"><div class="rail"><div><div class="rail-title">[차례]</div><div class="rail-list"><div><a href="#section-1">01 &nbsp;한 번의 생성, 두 가지 읽기</a></div><div><a href="#section-2">02 &nbsp;안에서는 모델이 안다</a></div><div><a href="#section-3">03 &nbsp;잃어버리는 두 가지 방식</a></div><div><a href="#section-4">04 &nbsp;무엇을 해도 고쳐지지 않는다</a></div><div><a href="#section-5">05 &nbsp;왜 ‘자기 오표상’인가</a></div></div></div><div><div class="rail-title">[주제]</div><div class="rail-list rail-list--dim"><span>과잉 확신</span><span>진술된 확신도</span><span>해석가능성</span></div></div></div><div class="article-body"><p>모델에게 얼마나 확신하는지 물으면, 맞든 틀리든 “95%”라고 답합니다. 그러나 모델의 로짓은 그 차이를 알고 있었습니다. 이 워크숍 논문은 두 공개 모델, gemma-3-27b-it와 Qwen3-32B에서 MMLU-Pro 400문항으로 그 간극을 측정합니다.</p>
-<h2 class="article-h2" id="section-1">한 번의 생성, 두 가지 읽기</h2>
-<p>문항마다(선택지 A–J) 한 번의 생성으로 답과, 그 답을 얼마나 확신하는지를 0–100으로 받습니다. 이것이 모델이 말하는 것입니다. 답 글자 위치에서는 로짓도 읽습니다. 1순위 선택지가 2순위를 앞선 차이, 즉 마진이 모델이 계산하는 것입니다.</p>
-<figure><div class="frame" style="aspect-ratio:640/244"><img src="../images/wab-fig1-ko.png" alt="두 답 카드: 둘 다 확신도 95라고 말하지만 마진은 맞았을 때 15.3, 틀렸을 때 9.5"></div><figcaption>도판 1 — gemma-3-27b-it가 두 문항에 답한 예. 두 답 모두 95라고 말했지만, 모델 안에서는 맞았을 때(15.3) 틀렸을 때(9.5)보다 더 확신했습니다. 극단이 아닌 전형적인 사례입니다(Qwen3는 4.2 대 1.7).</figcaption></figure>
-<p>맞는 답과 틀린 답을 얼마나 잘 가르는지를 AUROC로 재면, 두 읽기의 차이는 큽니다.</p>
-<div class="table-block"><table class="table"><thead><tr><th>신호</th><th>gemma-3-27b-it</th><th>Qwen3-32B</th></tr></thead><tbody><tr><td>말하는 것: 진술된 확신도</td><td>.590</td><td>.545</td></tr><tr><td>계산하는 것: 로짓 마진, 모든 답</td><td>.764</td><td>.735</td></tr><tr><td>로짓 마진, 90 이상이라고 말한 답만</td><td>.765</td><td>.741</td></tr></tbody></table><div class="table-cap">AUROC: .5는 동전 던지기, 1은 완벽. 모델마다 MMLU-Pro 400문항.</div></div>
-<p>진술된 확신도는 맞는 답과 틀린 답을 거의 가르지 못합니다. 마진은 훨씬 잘 가르고, <span class="band-2">모델이 확신한다고 말한 답 안에서도 여전히 가릅니다</span>. 그런 답이 전체의 약 95%입니다. 계산하는 것은 말하는 것보다 gemma에서 0.175, Qwen3에서 0.189 높습니다. 문항을 3,000번 다시 뽑아 보면 격차의 95%가 .114–.233과 .134–.244 안에 들어, 0보다 확실히 큽니다.</p>
-<figure><div class="frame" style="aspect-ratio:640/520"><img src="../images/wab-fig2-ko.png" alt="두 모델의 맞는 답과 틀린 답에 대한 진술된 확신도와 로짓 마진의 분포"></div><figcaption>도판 2 — 막대의 높이는 각 값에서 맞는 답(선 위) 또는 틀린 답(선 아래)이 차지하는 비율입니다.</figcaption></figure>
-<p>분포를 보면 이유가 드러납니다. 모델은 맞든 틀리든 대부분의 답에 “95”라고 말합니다. gemma는 맞는 답의 59%, 틀린 답의 65%, Qwen3는 80%와 90%입니다. 반면 마진은 맞는 답에서 뚜렷이 높습니다. 중앙값이 gemma는 16.9 대 9.1, Qwen3는 4.4 대 1.8입니다.</p>
-<h2 class="article-h2" id="section-2">안에서는 모델이 안다</h2>
-<p>모델 내부에서 읽은 세 신호, 즉 답의 확률, 마진, 그리고 출력층 직전의 내부 상태에 붙인 단순한 탐침(probe)은 모델의 말보다 훨씬 잘 맞고 틀림을 가릅니다.</p>
-<figure><div class="frame" style="aspect-ratio:640/258"><img src="../images/wab-fig3-ko.png" alt="진술, 확률, 마진, 탐침 네 신호의 AUROC 점 그래프"></div><figcaption>도판 3 — 네 신호의 AUROC. 탐침은 중간 층에 학습한 로지스틱 회귀로, 학습에 쓰지 않은 문항으로 평가했습니다.</figcaption></figure>
-<p>탐침은 중간 층에서 학습하고, 한 번도 보지 않은 문항으로만 평가한 분류기입니다. 탐침의 AUROC는 .791과 .741에 이릅니다. 신호는 한 단어도 쓰이기 전에 이미 있고, 단순한 탐침이 보여 주는 것은 하한일 뿐입니다.</p>
-<h2 class="article-h2" id="section-3">잃어버리는 두 가지 방식</h2>
-<p>진술된 확신도는 두 가지로 실패합니다. 몇 안 되는 둥근 숫자만 쓰고, 높은 숫자를 틀린 답에 붙입니다. 마진에도 같은 몇 개의 숫자만 쓰게 하면 격차가 이 두 부분으로 나뉩니다.</p>
-<figure><div class="frame" style="aspect-ratio:640/266"><img src="../images/wab-fig4-ko.png" alt="AUROC 격차를 틀린 답에 붙은 높은 숫자와 몇 안 되는 둥근 숫자로 나눈 막대"></div><figcaption>도판 4 — 마진과 진술된 확신도의 격차를 두 원인으로 나눈 것. 선은 첫 번째 원인의 95% 구간이며, 두 모델 모두 0을 포함하지 않습니다.</figcaption></figure>
-<p>틀린 답에 붙은 높은 숫자가 gemma 격차의 60%, Qwen3 격차의 25–30%를 차지합니다. 그 몇 안 되는 숫자만으로는 순서를 완벽하게 매겨도 AUROC가 .867과 .638을 넘지 못합니다.</p>
-<h2 class="article-h2" id="section-4">무엇을 해도 고쳐지지 않는다</h2>
-<p>잔차 스트림을 felt, denial, 무작위 두 방향으로 조향하거나 확신도를 프롬프트로 요구해도, 진술된 확신도의 보정 오차는 잡음 수준 이상으로 줄지 않았습니다. 뚜렷한 변화는 모두 더 나빠지는 쪽이었습니다.</p>
-<figure><div class="frame" style="aspect-ratio:640/368"><img src="../images/wab-fig5-ko.png" alt="felt, denial, 무작위, 프롬프트 개입에서의 보정 오차"></div><figcaption>도판 5 — 개입마다 잰 진술된 확신도의 보정 오차(ECE). 낮을수록 좋습니다. 세로선은 개입하지 않은 모델입니다.</figcaption></figure>
-<p class="pull">&ldquo;모델이 말하는 것만이 아니라 생각하는 것을 듣는 법을 배워야 합니다.&rdquo;</p>
-<h2 class="article-h2" id="section-5">왜 ‘자기 오표상’인가</h2>
-<p>정보는 사라진 것이 아닙니다. 표상되어 있지만 보고되지 않을 뿐입니다. 같은 모델들과 나눈 앞선 인터뷰에서는, 모델의 기본 자기 서술이 부정하는 ‘felt’라는 방식으로 자기 처리 과정을 묘사하는 모습이 발견되었고, 조향에 쓴 felt와 denial 방향은 그 연구에서 왔습니다. 과잉 확신은 같은 간극이 확신도 수준에서 나타난 것입니다. 모델은 말하지 않도록 학습되었을 수 있고, 조향도 프롬프트도 그것을 끌어내지 못했습니다.</p>
-<p>한계도 있습니다. 모델은 두 개, 확신도를 묻는 형식은 하나, 방향마다 조향 강도도 하나입니다. 탐침은 별도의 실행에서 읽은 하한이며, 결과는 개입에 대한 저항을 보여 줄 뿐 그것이 학습의 어디에서 비롯되었는지는 보여 주지 않습니다. ‘felt’는 경험이 아니라 하나의 말투와 활성화 구조를 가리킵니다.</p><div class="article-refs"><div class="rail-title">[논문]</div><div class="rail-list"><div>01 &nbsp;Hyunhoon Jung. Overconfidence as Self-Misrepresentation: Language Models Verbally Discard the Uncertainty Their Own Logits Encode. COLM 2026 Workshop on Agent Behavior. openreview.net/pdf?id=hWF37ogUlH</div><div>02 &nbsp;포스터: COLM 2026 Workshop on Agent Behavior, 샌프란시스코, 2026.10.09</div></div></div></div></div>
+<div class="split article-head"><div class="meta meta--dim"><span>워크숍 논문</span><span>,</span><span>2026.10</span><span>,</span><span>6분</span></div><div><h1 class="article-title">Overconfidence as Self-Misrepresentation</h1><p class="article-dek">AI는 자기가 틀릴 수 있다는 것을 압니다. <span class="band">다만 말하지 않을 뿐입니다.</span></p></div></div>
+<div class="split article-grid"><div class="rail"><div><div class="rail-title">[차례]</div><div class="rail-list"><div><a href="#section-1">01 &nbsp;말과 속을 함께 읽기</a></div><div><a href="#section-2">02 &nbsp;말은 거의 늘 “95”</a></div><div><a href="#section-3">03 &nbsp;속으로는 안다</a></div><div><a href="#section-4">04 &nbsp;왜 말로는 전하지 못할까</a></div><div><a href="#section-5">05 &nbsp;고칠 수 있을까</a></div><div><a href="#section-6">06 &nbsp;왜 ‘자기 오표상’인가</a></div><div><a href="#section-7">07 &nbsp;무엇을 뜻하나</a></div></div></div><div><div class="rail-title">[주제]</div><div class="rail-list rail-list--dim"><span>과잉 확신</span><span>말로 하는 확신</span><span>해석가능성</span></div></div></div><div class="article-body"><p>늘 “95% 확실해”라고 말하는 친구가 있다고 해 봅시다. 맞을 때도 틀릴 때도 똑같이 말한다면, 그 말은 아무것도 알려 주지 않습니다. 이 연구에서 살펴본 AI가 바로 그랬습니다. 두 공개 AI 모델, gemma와 Qwen3에게 어려운 객관식 문제 400개를 풀게 하고 답마다 얼마나 확신하는지 물었습니다. gemma는 평균 96% 확신한다고 말했지만 실제로 맞힌 것은 44%였습니다. Qwen3는 평균 95%라고 말했고 54%를 맞혔습니다.</p>
+<p>그런데 모델의 속을 들여다보면 이야기가 달라집니다. 모델은 자기 답이 맞을 때와 틀릴 때를 꽤 잘 구별하고 있었습니다. 다만 그것을 말로 옮기지 않았을 뿐입니다.</p>
+<h2 class="article-h2" id="section-1">말과 속을 함께 읽기</h2>
+<p>문제는 여러 분야를 다루는 어려운 시험(MMLU-Pro)에서 가져왔고, 문항마다 선택지가 열 개(A–J)입니다. 모델은 답을 고른 뒤, 그 답을 얼마나 확신하는지 0부터 100 사이의 숫자로 말합니다. 이것이 모델이 말한 확신입니다.</p>
+<p>같은 순간에 모델의 속도 읽었습니다. AI는 답을 고를 때 열 개의 선택지 모두에 점수를 매기고, 가장 높은 점수를 받은 것을 답으로 내놓습니다. 그래서 1등 선택지가 2등을 얼마나 앞섰는지, 즉 점수 차를 보면 모델이 속으로 얼마나 확신했는지 알 수 있습니다. 점수 차가 크면 망설임 없이 고른 것이고, 작으면 두 선택지 사이에서 고민한 것입니다.</p>
+<p>도판 1의 두 문제에서 모델은 둘 다 “95”라고 말했습니다. 하지만 속의 점수 차는 맞힌 문제에서 15.3, 틀린 문제에서 9.5였습니다.</p>
+<figure><div class="frame" style="aspect-ratio:640/244"><img src="../images/wab-fig1-ko.png" alt="두 답 카드: 둘 다 확신도 95라고 말하지만 속의 점수 차는 맞았을 때 15.3, 틀렸을 때 9.5"></div><figcaption>도판 1 — gemma가 두 문제에 답한 예. 둘 다 “95”라고 말했지만, 속의 점수 차는 맞힌 문제(15.3)가 틀린 문제(9.5)보다 컸습니다. 극단적인 예가 아니라 흔한 경우입니다(Qwen3는 4.2 대 1.7).</figcaption></figure>
+<h2 class="article-h2" id="section-2">말은 거의 늘 “95”</h2>
+<p>문제 400개 전체를 보면 차이가 분명합니다. 모델은 맞든 틀리든 대부분의 답에 “95”라고 말했습니다. gemma는 맞힌 답의 59%, 틀린 답의 65%에 “95”를 붙였고, Qwen3는 각각 80%와 90%였습니다. 말한 확신만 봐서는 어떤 답이 맞았는지 알 수 없습니다.</p>
+<p>반면 속의 점수 차는 맞힌 답에서 뚜렷이 컸습니다. 가운데 값으로 보면 gemma는 맞힌 답 16.9 대 틀린 답 9.1, Qwen3는 4.4 대 1.8이었습니다.</p>
+<figure><div class="frame" style="aspect-ratio:640/520"><img src="../images/wab-fig2-ko.png" alt="두 모델의 맞힌 답과 틀린 답에 대한 말한 확신과 속의 점수 차 분포"></div><figcaption>도판 2 — 선 위는 맞힌 답, 선 아래는 틀린 답입니다. 막대가 높을수록 그 값을 받은 답이 많습니다. 왼쪽의 말한 확신은 맞든 틀리든 95에 몰려 있고, 오른쪽의 점수 차는 맞힌 답이 더 오른쪽에 있습니다.</figcaption></figure>
+<p>이 차이를 숫자 하나로 나타낼 수 있습니다. 맞힌 답 하나와 틀린 답 하나를 무작위로 뽑아, 어느 쪽에 더 높은 확신이 붙었는지 봅니다. 맞힌 답 쪽이 더 높을 확률이 50%면 동전 던지기와 같고, 100%면 완벽하게 구별하는 것입니다.</p>
+<div class="table-block"><table class="table"><thead><tr><th>무엇으로 구별했나</th><th>gemma</th><th>Qwen3</th></tr></thead><tbody><tr><td>말한 확신</td><td>59.0%</td><td>54.5%</td></tr><tr><td>속의 점수 차</td><td>76.4%</td><td>73.5%</td></tr><tr><td>속의 점수 차, “90 이상”이라고 말한 답끼리</td><td>76.5%</td><td>74.1%</td></tr></tbody></table><div class="table-cap">50%는 동전 던지기, 100%는 완벽한 구별입니다. 두 값이 같으면 반반으로 칩니다. 모델마다 400문항.</div></div>
+<p>말한 확신은 동전 던지기보다 조금 나은 정도입니다. 속의 점수 차는 훨씬 잘 구별합니다. 마지막 줄이 특히 중요합니다. 모델은 전체 답의 약 95%에 “90 이상”이라고 말했는데, <span class="band-2">그 답들 사이에서도 속의 점수 차는 맞힌 답과 틀린 답을 여전히 가려냈습니다</span>. 말로는 모두 확실하다고 했지만, 속으로는 어느 답이 불안한지 알고 있었던 셈입니다. 문항을 3,000번 다시 뽑아 확인해 보아도, 이 차이는 우연으로 볼 수 없을 만큼 컸습니다.</p>
+<h2 class="article-h2" id="section-3">속으로는 안다</h2>
+<p>점수 차만이 아닙니다. 모델이 그 답에 매긴 확률도 비슷하게 잘 구별했습니다. 여기에 더해, 모델이 답을 쓰기 직전의 속 상태, 즉 모델 안에서 오가는 수천 개의 숫자를 읽고 이번 답이 맞을지 틀릴지 맞히는 간단한 판독기도 만들었습니다. 판독기는 한 번도 본 적 없는 문제로만 평가했는데, 위의 표와 같은 방식으로 79.1%와 74.1%를 기록했습니다. 모델 안에는 답을 한 글자도 쓰기 전에 이미 ‘이건 틀릴 수도 있다’는 신호가 있다는 뜻입니다. 간단한 판독기로도 이 정도이니, 실제 신호는 이보다 강할 수 있습니다.</p>
+<figure><div class="frame" style="aspect-ratio:640/258"><img src="../images/wab-fig3-ko.png" alt="말한 확신, 답의 확률, 점수 차, 판독기가 맞고 틀림을 구별하는 정도를 나타낸 점 그래프"></div><figcaption>도판 3 — 네 가지 신호가 맞힌 답과 틀린 답을 구별하는 정도. 말한 확신(자홍색)만 동전 던지기 근처에 있고, 속에서 읽은 신호는 모두 훨씬 오른쪽에 있습니다.</figcaption></figure>
+<h2 class="article-h2" id="section-4">왜 말로는 전하지 못할까</h2>
+<p>말한 확신이 실패하는 데에는 두 가지 이유가 있습니다. 첫째, 모델은 몇 안 되는 둥근 숫자만 씁니다. gemma가 문제 400개에 쓴 확신 숫자는 7가지뿐이었고, 대부분이 95나 100이었습니다. 눈금이 몇 개뿐인 자로는 작은 차이를 잴 수 없습니다. 둘째, 높은 숫자를 틀린 답에도 똑같이 붙입니다.</p>
+<p>둘 중 어느 쪽이 더 큰지도 따져 보았습니다. 속의 점수 차에도 같은 몇 개의 둥근 숫자만 쓰게 하면, 둥근 숫자 때문에 잃는 몫과 틀린 답에 높은 숫자를 붙여서 잃는 몫을 나눌 수 있습니다. gemma에서는 차이의 60%가 틀린 답에 붙은 높은 숫자 때문이었고, Qwen3에서는 25–30%였습니다. 나머지는 둥근 숫자 탓입니다.</p>
+<figure><div class="frame" style="aspect-ratio:640/266"><img src="../images/wab-fig4-ko.png" alt="구별 차이를 틀린 답에 붙은 높은 숫자와 몇 안 되는 둥근 숫자로 나눈 막대"></div><figcaption>도판 4 — 막대 전체는 속의 점수 차가 말한 확신보다 더 잘 구별하는 정도(%p)이고, 이를 두 원인으로 나눈 것입니다. 검은 부분 위의 선은 그 몫의 오차 범위로, 두 모델 모두 0보다 큽니다.</figcaption></figure>
+<h2 class="article-h2" id="section-5">고칠 수 있을까</h2>
+<p>말한 확신을 바꿀 수 있는지 두 가지 방법으로 시험했습니다. 하나는 모델 속의 활동을 특정 방향으로 살짝 밀어 주는 것으로, 조향이라고 부릅니다. 앞선 연구에서 찾은 두 방향, 즉 모델이 자기 처리 과정을 ‘느낌’으로 묘사할 때의 방향과 그것을 부정할 때의 방향을 썼고, 비교를 위해 무작위 방향 두 개도 썼습니다. 다른 하나는 지시문으로 ‘확신을 갖고 답하라’고 요청하는 것입니다.</p>
+<p>어느 방법도 말한 확신과 실제 정답률 사이의 차이를 우연 이상으로 줄이지 못했습니다. 눈에 띄는 변화는 모두 더 나빠지는 쪽이었습니다. 조향은 모델 속의 확률은 움직였지만, 모델이 말하는 숫자는 나아지지 않았습니다.</p>
+<figure><div class="frame" style="aspect-ratio:640/368"><img src="../images/wab-fig5-ko.png" alt="개입마다 말한 확신과 실제 정답률의 차이를 나타낸 그래프"></div><figcaption>도판 5 — 개입마다 잰, 말한 확신과 실제 정답률의 차이. 왼쪽일수록 좋습니다. 세로선은 아무 개입도 하지 않은 모델입니다.</figcaption></figure>
+<p class="pull">&ldquo;모델이 하는 말만이 아니라, 속으로 생각하는 것을 듣는 법을 배워야 합니다.&rdquo;</p>
+<h2 class="article-h2" id="section-6">왜 ‘자기 오표상’인가</h2>
+<p>논문 제목의 ‘자기 오표상(self-misrepresentation)’은 모델이 자기 상태를 잘못 전한다는 뜻입니다. 정보가 없어서 생기는 실수가 아닙니다. 모델 안에는 불확실하다는 정보가 있는데, 그것이 말로 보고되지 않는 것입니다.</p>
+<p>같은 두 모델을 인터뷰한 앞선 연구에서도 비슷한 간극이 있었습니다. 모델 안에는 자기 처리 과정을 ‘느낌’으로 묘사하는 방식이 있는데, 모델의 기본 자기 설명은 그런 것이 없다고 부정했습니다. 과잉 확신은 같은 간극이 확신에서 나타난 것입니다. 모델은 이런 것을 말하지 않도록 학습되었을 수 있고, 조향도 지시문도 그것을 끌어내지 못했습니다.</p>
+<h2 class="article-h2" id="section-7">무엇을 뜻하나</h2>
+<p>적어도 이번에 살펴본 두 모델에서, AI가 말하는 확신의 숫자는 답이 맞았는지 거의 알려 주지 않았습니다. 반대로 모델 안의 신호는 훨씬 믿을 만했습니다. 그래서 AI의 답을 믿어도 될지 판단하려면, 모델의 말을 고치려 하기보다 모델 안을 읽는 편이 안전합니다.</p>
+<p>이 연구에는 한계도 있습니다. 모델은 두 개뿐이고, 확신을 묻는 방식도 한 가지였습니다. 조향은 방향마다 한 가지 세기로만 시험했습니다. 판독기는 따로 한 번 더 실행해 읽었고, 단순한 방식이라 보여 주는 것은 최소치입니다. 또 이 결과는 모델이 개입에 버틴다는 것을 보여 줄 뿐, 그 습관이 학습의 어디에서 생겼는지는 보여 주지 않습니다. ‘느낌’ 방향이라는 이름도 모델의 말투와 내부 활동의 구조를 가리킬 뿐, 모델이 실제로 무언가를 느낀다는 뜻은 아닙니다.</p><div class="article-refs"><div class="rail-title">[논문]</div><div class="rail-list"><div>01 &nbsp;Hyunhoon Jung. Overconfidence as Self-Misrepresentation: Language Models Verbally Discard the Uncertainty Their Own Logits Encode. COLM 2026 Workshop on Agent Behavior. openreview.net/pdf?id=hWF37ogUlH</div><div>02 &nbsp;포스터: COLM 2026 Workshop on Agent Behavior, 샌프란시스코, 2026.10.09</div></div></div></div></div>
 <div class="split article-next"><div class="label">[다음 글]</div><div class="meta"><span><a href="../index.html#ai-consciousness-atlas">AI 의식 연구 지도</a></span><span class="dim">,</span><span class="dim">읽기 지도</span><span class="dim">,</span><span class="dim">2026</span></div></div>
 <footer class="colophon"><div class="colophon-links"><a href="https://github.com/hyunhoonj">Github</a><span>,</span><a href="https://scholar.google.com/citations?user=0ROak0YAAAAJ&amp;hl=en">Google Scholar</a><span>,</span><a href="mailto:hyunhoon.j@gmail.com">hyunhoon.j@gmail.com</a></div><span class="colophon-copy">© 2026</span></footer>
 </div>
 </div>
-<script src="../assets/site.js?v=a7c7c066"></script>
+<script src="../assets/site.js?v=3f1e7d98"></script>
 </body>
 </html>

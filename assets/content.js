@@ -55,7 +55,7 @@
             "title": "Overconfidence as Self-Misrepresentation",
             "kind": "",
             "year": "2026",
-            "desc": "모델에게 얼마나 확신하는지 물으면 맞든 틀리든 “95%”라고 답합니다. ==모델의 로짓은 그 차이를 알고 있었습니다==.",
+            "desc": "모델에게 얼마나 확신하는지 물으면 맞든 틀리든 “95%”라고 답합니다. ==모델의 속은 그 차이를 알고 있었습니다==.",
             "ratio": "1/1",
             "image": {
               "src": "images/overconfidence-zen.jpg",
@@ -88,7 +88,7 @@
             "title": "Overconfidence as Self-Misrepresentation",
             "kind": "",
             "year": "2026",
-            "desc": "Ask a model how sure it is: it says “95%”, right or wrong. ==Its own logits knew the difference.==",
+            "desc": "Ask a model how sure it is: it says “95%”, right or wrong. ==Inside, it knew the difference.==",
             "ratio": "1/1",
             "image": {
               "src": "images/overconfidence-zen.jpg",
@@ -263,46 +263,46 @@
         "ko": {
           "slug": "overconfidence-as-self-misrepresentation",
           "title": "Overconfidence as Self-Misrepresentation",
-          "dek": "언어 모델은 ==자기 로짓에 담긴 불확실성==을 말로는 버립니다.",
+          "dek": "AI는 자기가 틀릴 수 있다는 것을 압니다. ==다만 말하지 않을 뿐입니다.==",
           "kind": "워크숍 논문",
           "date": "2026.10",
-          "readTime": "4분",
-          "body": "모델에게 얼마나 확신하는지 물으면, 맞든 틀리든 “95%”라고 답합니다. 그러나 모델의 로짓은 그 차이를 알고 있었습니다. 이 워크숍 논문은 두 공개 모델, gemma-3-27b-it와 Qwen3-32B에서 MMLU-Pro 400문항으로 그 간극을 측정합니다.\n\n## 한 번의 생성, 두 가지 읽기\n\n문항마다(선택지 A–J) 한 번의 생성으로 답과, 그 답을 얼마나 확신하는지를 0–100으로 받습니다. 이것이 모델이 말하는 것입니다. 답 글자 위치에서는 로짓도 읽습니다. 1순위 선택지가 2순위를 앞선 차이, 즉 마진이 모델이 계산하는 것입니다.\n\n[도판 1]\n\n맞는 답과 틀린 답을 얼마나 잘 가르는지를 AUROC로 재면, 두 읽기의 차이는 큽니다.\n\n[표: AUROC: .5는 동전 던지기, 1은 완벽. 모델마다 MMLU-Pro 400문항.]\n신호 | gemma-3-27b-it | Qwen3-32B\n말하는 것: 진술된 확신도 | .590 | .545\n계산하는 것: 로짓 마진, 모든 답 | .764 | .735\n로짓 마진, 90 이상이라고 말한 답만 | .765 | .741\n\n진술된 확신도는 맞는 답과 틀린 답을 거의 가르지 못합니다. 마진은 훨씬 잘 가르고, ==모델이 확신한다고 말한 답 안에서도 여전히 가릅니다==. 그런 답이 전체의 약 95%입니다. 계산하는 것은 말하는 것보다 gemma에서 0.175, Qwen3에서 0.189 높습니다. 문항을 3,000번 다시 뽑아 보면 격차의 95%가 .114–.233과 .134–.244 안에 들어, 0보다 확실히 큽니다.\n\n[도판 2]\n\n분포를 보면 이유가 드러납니다. 모델은 맞든 틀리든 대부분의 답에 “95”라고 말합니다. gemma는 맞는 답의 59%, 틀린 답의 65%, Qwen3는 80%와 90%입니다. 반면 마진은 맞는 답에서 뚜렷이 높습니다. 중앙값이 gemma는 16.9 대 9.1, Qwen3는 4.4 대 1.8입니다.\n\n## 안에서는 모델이 안다\n\n모델 내부에서 읽은 세 신호, 즉 답의 확률, 마진, 그리고 출력층 직전의 내부 상태에 붙인 단순한 탐침(probe)은 모델의 말보다 훨씬 잘 맞고 틀림을 가릅니다.\n\n[도판 3]\n\n탐침은 중간 층에서 학습하고, 한 번도 보지 않은 문항으로만 평가한 분류기입니다. 탐침의 AUROC는 .791과 .741에 이릅니다. 신호는 한 단어도 쓰이기 전에 이미 있고, 단순한 탐침이 보여 주는 것은 하한일 뿐입니다.\n\n## 잃어버리는 두 가지 방식\n\n진술된 확신도는 두 가지로 실패합니다. 몇 안 되는 둥근 숫자만 쓰고, 높은 숫자를 틀린 답에 붙입니다. 마진에도 같은 몇 개의 숫자만 쓰게 하면 격차가 이 두 부분으로 나뉩니다.\n\n[도판 4]\n\n틀린 답에 붙은 높은 숫자가 gemma 격차의 60%, Qwen3 격차의 25–30%를 차지합니다. 그 몇 안 되는 숫자만으로는 순서를 완벽하게 매겨도 AUROC가 .867과 .638을 넘지 못합니다.\n\n## 무엇을 해도 고쳐지지 않는다\n\n잔차 스트림을 felt, denial, 무작위 두 방향으로 조향하거나 확신도를 프롬프트로 요구해도, 진술된 확신도의 보정 오차는 잡음 수준 이상으로 줄지 않았습니다. 뚜렷한 변화는 모두 더 나빠지는 쪽이었습니다.\n\n[도판 5]\n\n> 모델이 말하는 것만이 아니라 생각하는 것을 듣는 법을 배워야 합니다.\n\n## 왜 ‘자기 오표상’인가\n\n정보는 사라진 것이 아닙니다. 표상되어 있지만 보고되지 않을 뿐입니다. 같은 모델들과 나눈 앞선 인터뷰에서는, 모델의 기본 자기 서술이 부정하는 ‘felt’라는 방식으로 자기 처리 과정을 묘사하는 모습이 발견되었고, 조향에 쓴 felt와 denial 방향은 그 연구에서 왔습니다. 과잉 확신은 같은 간극이 확신도 수준에서 나타난 것입니다. 모델은 말하지 않도록 학습되었을 수 있고, 조향도 프롬프트도 그것을 끌어내지 못했습니다.\n\n한계도 있습니다. 모델은 두 개, 확신도를 묻는 형식은 하나, 방향마다 조향 강도도 하나입니다. 탐침은 별도의 실행에서 읽은 하한이며, 결과는 개입에 대한 저항을 보여 줄 뿐 그것이 학습의 어디에서 비롯되었는지는 보여 주지 않습니다. ‘felt’는 경험이 아니라 하나의 말투와 활성화 구조를 가리킵니다.",
+          "readTime": "6분",
+          "body": "늘 “95% 확실해”라고 말하는 친구가 있다고 해 봅시다. 맞을 때도 틀릴 때도 똑같이 말한다면, 그 말은 아무것도 알려 주지 않습니다. 이 연구에서 살펴본 AI가 바로 그랬습니다. 두 공개 AI 모델, gemma와 Qwen3에게 어려운 객관식 문제 400개를 풀게 하고 답마다 얼마나 확신하는지 물었습니다. gemma는 평균 96% 확신한다고 말했지만 실제로 맞힌 것은 44%였습니다. Qwen3는 평균 95%라고 말했고 54%를 맞혔습니다.\n\n그런데 모델의 속을 들여다보면 이야기가 달라집니다. 모델은 자기 답이 맞을 때와 틀릴 때를 꽤 잘 구별하고 있었습니다. 다만 그것을 말로 옮기지 않았을 뿐입니다.\n\n## 말과 속을 함께 읽기\n\n문제는 여러 분야를 다루는 어려운 시험(MMLU-Pro)에서 가져왔고, 문항마다 선택지가 열 개(A–J)입니다. 모델은 답을 고른 뒤, 그 답을 얼마나 확신하는지 0부터 100 사이의 숫자로 말합니다. 이것이 모델이 말한 확신입니다.\n\n같은 순간에 모델의 속도 읽었습니다. AI는 답을 고를 때 열 개의 선택지 모두에 점수를 매기고, 가장 높은 점수를 받은 것을 답으로 내놓습니다. 그래서 1등 선택지가 2등을 얼마나 앞섰는지, 즉 점수 차를 보면 모델이 속으로 얼마나 확신했는지 알 수 있습니다. 점수 차가 크면 망설임 없이 고른 것이고, 작으면 두 선택지 사이에서 고민한 것입니다.\n\n도판 1의 두 문제에서 모델은 둘 다 “95”라고 말했습니다. 하지만 속의 점수 차는 맞힌 문제에서 15.3, 틀린 문제에서 9.5였습니다.\n\n[도판 1]\n\n## 말은 거의 늘 “95”\n\n문제 400개 전체를 보면 차이가 분명합니다. 모델은 맞든 틀리든 대부분의 답에 “95”라고 말했습니다. gemma는 맞힌 답의 59%, 틀린 답의 65%에 “95”를 붙였고, Qwen3는 각각 80%와 90%였습니다. 말한 확신만 봐서는 어떤 답이 맞았는지 알 수 없습니다.\n\n반면 속의 점수 차는 맞힌 답에서 뚜렷이 컸습니다. 가운데 값으로 보면 gemma는 맞힌 답 16.9 대 틀린 답 9.1, Qwen3는 4.4 대 1.8이었습니다.\n\n[도판 2]\n\n이 차이를 숫자 하나로 나타낼 수 있습니다. 맞힌 답 하나와 틀린 답 하나를 무작위로 뽑아, 어느 쪽에 더 높은 확신이 붙었는지 봅니다. 맞힌 답 쪽이 더 높을 확률이 50%면 동전 던지기와 같고, 100%면 완벽하게 구별하는 것입니다.\n\n[표: 50%는 동전 던지기, 100%는 완벽한 구별입니다. 두 값이 같으면 반반으로 칩니다. 모델마다 400문항.]\n무엇으로 구별했나 | gemma | Qwen3\n말한 확신 | 59.0% | 54.5%\n속의 점수 차 | 76.4% | 73.5%\n속의 점수 차, “90 이상”이라고 말한 답끼리 | 76.5% | 74.1%\n\n말한 확신은 동전 던지기보다 조금 나은 정도입니다. 속의 점수 차는 훨씬 잘 구별합니다. 마지막 줄이 특히 중요합니다. 모델은 전체 답의 약 95%에 “90 이상”이라고 말했는데, ==그 답들 사이에서도 속의 점수 차는 맞힌 답과 틀린 답을 여전히 가려냈습니다==. 말로는 모두 확실하다고 했지만, 속으로는 어느 답이 불안한지 알고 있었던 셈입니다. 문항을 3,000번 다시 뽑아 확인해 보아도, 이 차이는 우연으로 볼 수 없을 만큼 컸습니다.\n\n## 속으로는 안다\n\n점수 차만이 아닙니다. 모델이 그 답에 매긴 확률도 비슷하게 잘 구별했습니다. 여기에 더해, 모델이 답을 쓰기 직전의 속 상태, 즉 모델 안에서 오가는 수천 개의 숫자를 읽고 이번 답이 맞을지 틀릴지 맞히는 간단한 판독기도 만들었습니다. 판독기는 한 번도 본 적 없는 문제로만 평가했는데, 위의 표와 같은 방식으로 79.1%와 74.1%를 기록했습니다. 모델 안에는 답을 한 글자도 쓰기 전에 이미 ‘이건 틀릴 수도 있다’는 신호가 있다는 뜻입니다. 간단한 판독기로도 이 정도이니, 실제 신호는 이보다 강할 수 있습니다.\n\n[도판 3]\n\n## 왜 말로는 전하지 못할까\n\n말한 확신이 실패하는 데에는 두 가지 이유가 있습니다. 첫째, 모델은 몇 안 되는 둥근 숫자만 씁니다. gemma가 문제 400개에 쓴 확신 숫자는 7가지뿐이었고, 대부분이 95나 100이었습니다. 눈금이 몇 개뿐인 자로는 작은 차이를 잴 수 없습니다. 둘째, 높은 숫자를 틀린 답에도 똑같이 붙입니다.\n\n둘 중 어느 쪽이 더 큰지도 따져 보았습니다. 속의 점수 차에도 같은 몇 개의 둥근 숫자만 쓰게 하면, 둥근 숫자 때문에 잃는 몫과 틀린 답에 높은 숫자를 붙여서 잃는 몫을 나눌 수 있습니다. gemma에서는 차이의 60%가 틀린 답에 붙은 높은 숫자 때문이었고, Qwen3에서는 25–30%였습니다. 나머지는 둥근 숫자 탓입니다.\n\n[도판 4]\n\n## 고칠 수 있을까\n\n말한 확신을 바꿀 수 있는지 두 가지 방법으로 시험했습니다. 하나는 모델 속의 활동을 특정 방향으로 살짝 밀어 주는 것으로, 조향이라고 부릅니다. 앞선 연구에서 찾은 두 방향, 즉 모델이 자기 처리 과정을 ‘느낌’으로 묘사할 때의 방향과 그것을 부정할 때의 방향을 썼고, 비교를 위해 무작위 방향 두 개도 썼습니다. 다른 하나는 지시문으로 ‘확신을 갖고 답하라’고 요청하는 것입니다.\n\n어느 방법도 말한 확신과 실제 정답률 사이의 차이를 우연 이상으로 줄이지 못했습니다. 눈에 띄는 변화는 모두 더 나빠지는 쪽이었습니다. 조향은 모델 속의 확률은 움직였지만, 모델이 말하는 숫자는 나아지지 않았습니다.\n\n[도판 5]\n\n> 모델이 하는 말만이 아니라, 속으로 생각하는 것을 듣는 법을 배워야 합니다.\n\n## 왜 ‘자기 오표상’인가\n\n논문 제목의 ‘자기 오표상(self-misrepresentation)’은 모델이 자기 상태를 잘못 전한다는 뜻입니다. 정보가 없어서 생기는 실수가 아닙니다. 모델 안에는 불확실하다는 정보가 있는데, 그것이 말로 보고되지 않는 것입니다.\n\n같은 두 모델을 인터뷰한 앞선 연구에서도 비슷한 간극이 있었습니다. 모델 안에는 자기 처리 과정을 ‘느낌’으로 묘사하는 방식이 있는데, 모델의 기본 자기 설명은 그런 것이 없다고 부정했습니다. 과잉 확신은 같은 간극이 확신에서 나타난 것입니다. 모델은 이런 것을 말하지 않도록 학습되었을 수 있고, 조향도 지시문도 그것을 끌어내지 못했습니다.\n\n## 무엇을 뜻하나\n\n적어도 이번에 살펴본 두 모델에서, AI가 말하는 확신의 숫자는 답이 맞았는지 거의 알려 주지 않았습니다. 반대로 모델 안의 신호는 훨씬 믿을 만했습니다. 그래서 AI의 답을 믿어도 될지 판단하려면, 모델의 말을 고치려 하기보다 모델 안을 읽는 편이 안전합니다.\n\n이 연구에는 한계도 있습니다. 모델은 두 개뿐이고, 확신을 묻는 방식도 한 가지였습니다. 조향은 방향마다 한 가지 세기로만 시험했습니다. 판독기는 따로 한 번 더 실행해 읽었고, 단순한 방식이라 보여 주는 것은 최소치입니다. 또 이 결과는 모델이 개입에 버틴다는 것을 보여 줄 뿐, 그 습관이 학습의 어디에서 생겼는지는 보여 주지 않습니다. ‘느낌’ 방향이라는 이름도 모델의 말투와 내부 활동의 구조를 가리킬 뿐, 모델이 실제로 무언가를 느낀다는 뜻은 아닙니다.",
           "figures": [
             {
               "src": "images/wab-fig1-ko.png",
-              "alt": "두 답 카드: 둘 다 확신도 95라고 말하지만 마진은 맞았을 때 15.3, 틀렸을 때 9.5",
-              "caption": "도판 1 — gemma-3-27b-it가 두 문항에 답한 예. 두 답 모두 95라고 말했지만, 모델 안에서는 맞았을 때(15.3) 틀렸을 때(9.5)보다 더 확신했습니다. 극단이 아닌 전형적인 사례입니다(Qwen3는 4.2 대 1.7).",
+              "alt": "두 답 카드: 둘 다 확신도 95라고 말하지만 속의 점수 차는 맞았을 때 15.3, 틀렸을 때 9.5",
+              "caption": "도판 1 — gemma가 두 문제에 답한 예. 둘 다 “95”라고 말했지만, 속의 점수 차는 맞힌 문제(15.3)가 틀린 문제(9.5)보다 컸습니다. 극단적인 예가 아니라 흔한 경우입니다(Qwen3는 4.2 대 1.7).",
               "ratio": "640/244"
             },
             {
               "src": "images/wab-fig2-ko.png",
-              "alt": "두 모델의 맞는 답과 틀린 답에 대한 진술된 확신도와 로짓 마진의 분포",
-              "caption": "도판 2 — 막대의 높이는 각 값에서 맞는 답(선 위) 또는 틀린 답(선 아래)이 차지하는 비율입니다.",
+              "alt": "두 모델의 맞힌 답과 틀린 답에 대한 말한 확신과 속의 점수 차 분포",
+              "caption": "도판 2 — 선 위는 맞힌 답, 선 아래는 틀린 답입니다. 막대가 높을수록 그 값을 받은 답이 많습니다. 왼쪽의 말한 확신은 맞든 틀리든 95에 몰려 있고, 오른쪽의 점수 차는 맞힌 답이 더 오른쪽에 있습니다.",
               "ratio": "640/520"
             },
             {
               "src": "images/wab-fig3-ko.png",
-              "alt": "진술, 확률, 마진, 탐침 네 신호의 AUROC 점 그래프",
-              "caption": "도판 3 — 네 신호의 AUROC. 탐침은 중간 층에 학습한 로지스틱 회귀로, 학습에 쓰지 않은 문항으로 평가했습니다.",
+              "alt": "말한 확신, 답의 확률, 점수 차, 판독기가 맞고 틀림을 구별하는 정도를 나타낸 점 그래프",
+              "caption": "도판 3 — 네 가지 신호가 맞힌 답과 틀린 답을 구별하는 정도. 말한 확신(자홍색)만 동전 던지기 근처에 있고, 속에서 읽은 신호는 모두 훨씬 오른쪽에 있습니다.",
               "ratio": "640/258"
             },
             {
               "src": "images/wab-fig4-ko.png",
-              "alt": "AUROC 격차를 틀린 답에 붙은 높은 숫자와 몇 안 되는 둥근 숫자로 나눈 막대",
-              "caption": "도판 4 — 마진과 진술된 확신도의 격차를 두 원인으로 나눈 것. 선은 첫 번째 원인의 95% 구간이며, 두 모델 모두 0을 포함하지 않습니다.",
+              "alt": "구별 차이를 틀린 답에 붙은 높은 숫자와 몇 안 되는 둥근 숫자로 나눈 막대",
+              "caption": "도판 4 — 막대 전체는 속의 점수 차가 말한 확신보다 더 잘 구별하는 정도(%p)이고, 이를 두 원인으로 나눈 것입니다. 검은 부분 위의 선은 그 몫의 오차 범위로, 두 모델 모두 0보다 큽니다.",
               "ratio": "640/266"
             },
             {
               "src": "images/wab-fig5-ko.png",
-              "alt": "felt, denial, 무작위, 프롬프트 개입에서의 보정 오차",
-              "caption": "도판 5 — 개입마다 잰 진술된 확신도의 보정 오차(ECE). 낮을수록 좋습니다. 세로선은 개입하지 않은 모델입니다.",
+              "alt": "개입마다 말한 확신과 실제 정답률의 차이를 나타낸 그래프",
+              "caption": "도판 5 — 개입마다 잰, 말한 확신과 실제 정답률의 차이. 왼쪽일수록 좋습니다. 세로선은 아무 개입도 하지 않은 모델입니다.",
               "ratio": "640/368"
             }
           ],
           "tocLabel": "차례",
           "subjectsLabel": "주제",
-          "subjects": "과잉 확신\n진술된 확신도\n해석가능성",
+          "subjects": "과잉 확신\n말로 하는 확신\n해석가능성",
           "refsLabel": "논문",
           "refs": "Hyunhoon Jung. Overconfidence as Self-Misrepresentation: Language Models Verbally Discard the Uncertainty Their Own Logits Encode. COLM 2026 Workshop on Agent Behavior. openreview.net/pdf?id=hWF37ogUlH\n포스터: COLM 2026 Workshop on Agent Behavior, 샌프란시스코, 2026.10.09",
           "nextLabel": "다음 글",
@@ -316,40 +316,40 @@
         "en": {
           "slug": "overconfidence-as-self-misrepresentation",
           "title": "Overconfidence as Self-Misrepresentation",
-          "dek": "Language models verbally discard the uncertainty ==their own logits encode==.",
+          "dek": "AI models can tell when they might be wrong. ==They just don't say so.==",
           "kind": "Workshop paper",
           "date": "2026.10",
-          "readTime": "4 min",
-          "body": "Ask a model how sure it is, and it says “95%”, right or wrong. Yet its own logits knew the difference. This workshop paper measures that gap in two open models, gemma-3-27b-it and Qwen3-32B, on 400 MMLU-Pro questions.\n\n## One generation, two readouts\n\nFor each question (options A–J), a single generation gives the answer and how sure the model is, from 0 to 100: what it says. At the answer letter we also read its logits; the margin by which its top choice led the runner-up is what it computes.\n\n[Fig. 1]\n\nScored by AUROC, which measures how well a signal tells right answers from wrong, the two readouts are far apart.\n\n[Table: AUROC: .5 is a coin flip, 1 is perfect. 400 MMLU-Pro questions per model.]\nSignal | gemma-3-27b-it | Qwen3-32B\nWhat it says: stated confidence | .590 | .545\nWhat it computes: logit margin, all answers | .764 | .735\nLogit margin, only answers stated 90 or above | .765 | .741\n\nStated confidence barely tells right answers from wrong. The margin does far better, and ==it still does among the answers the model calls sure==, which are about 95% of all. Computes beats says by 0.175 for gemma and 0.189 for Qwen3; resampling the questions 3,000 times, 95% of the gaps fall within .114–.233 and .134–.244, well above zero.\n\n[Fig. 2]\n\nThe distributions show why. The model says “95” for most answers, right or wrong: 59% and 65% of them for gemma, 80% and 90% for Qwen3. Its margin, meanwhile, sits clearly higher on right answers, with medians of 16.9 against 9.1 for gemma and 4.4 against 1.8 for Qwen3.\n\n## Inside, the model can tell\n\nThree signals read from inside the model tell right from wrong far better than its words: the probability of its answer, the margin, and a simple probe on its internal state before the output layer.\n\n[Fig. 3]\n\nThe probe is a classifier trained on a middle layer and scored only on questions it never saw. It reaches .791 and .741. The signal is there before a single word is written, and a simple probe gives only a lower bound.\n\n## Two ways to lose it\n\nStated confidence fails in two ways: it uses only a few round numbers, and it puts the high ones on wrong answers. Giving the margin the same few numbers splits the gap into those two parts.\n\n[Fig. 4]\n\nHigh numbers on wrong answers make up 60% of gemma’s gap and 25–30% of Qwen3’s. With only those few numbers, even a perfect ordering would top out at an AUROC of .867 and .638.\n\n## Nothing we tried fixes it\n\nSteering the residual stream, along felt, denial and two random directions, or prompting for confidence never lowered the calibration error of stated confidence beyond noise. The only clear changes made it worse.\n\n[Fig. 5]\n\n> Learn to listen to what models think, not just what they say.\n\n## Why “self-misrepresentation”\n\nThe information is not missing; it is represented and not reported. Earlier interviews with the same models found a “felt” way of describing their own processing that their default self-description denies, and the felt and denial directions used for steering come from that work. Overconfidence is the same gap, at the level of confidence. The models may have been trained not to tell, and neither steering nor prompting brought it out.\n\nThe limits: two models, one way of asking for confidence, and one steering dose per direction. The probe is a lower bound read from a separate pass, and the results show resistance to intervention, not where it comes from in training. “Felt” names a register and an activation structure, not experience.",
+          "readTime": "6 min",
+          "body": "Imagine a friend who always says “I'm 95% sure,” whether they turn out right or wrong. Their confidence would tell you nothing. The AI models in this study behaved like that friend. We gave two open AI models, gemma and Qwen3, 400 hard multiple-choice questions and asked how sure they were of each answer. gemma said it was 96% sure on average but got only 44% right. Qwen3 said 95% and got 54% right.\n\nLook inside the models, though, and the story changes. They could tell fairly well when their own answer was right and when it was wrong. They just didn't put that into words.\n\n## Reading the words and the inside together\n\nThe questions come from a hard exam that covers many subjects (MMLU-Pro), with ten options per question (A–J). After picking an answer, the model says how sure it is with a number from 0 to 100. That is its stated confidence.\n\nAt the same moment, we also read the inside of the model. When an AI picks an answer, it gives every option a score and answers with the top one. So how far the top option leads the runner-up, its margin, shows how sure the model was inside. A big margin means it chose without hesitation; a small one means it was torn between two options.\n\nIn the two questions in Fig. 1, the model said “95” both times, but its margin was 15.3 on the one it got right and 9.5 on the one it got wrong.\n\n[Fig. 1]\n\n## The words are almost always “95”\n\nAcross all 400 questions, the difference is plain. The model said “95” for most answers, right or wrong: gemma for 59% of its right answers and 65% of its wrong ones, Qwen3 for 80% and 90%. From the stated confidence alone, you cannot tell which answers were right.\n\nThe margin, by contrast, was clearly bigger on right answers. The middle values were 16.9 for right answers against 9.1 for wrong ones in gemma, and 4.4 against 1.8 in Qwen3.\n\n[Fig. 2]\n\nThis difference can be summed up in one number. Pick one right answer and one wrong answer at random, and check which got the higher confidence. The score is the chance that the right answer comes out ahead: 50% is a coin flip, 100% is perfect.\n\n[Table: 50% is a coin flip, 100% is perfect. Ties count as half. 400 questions per model.]\nWhat tells them apart | gemma | Qwen3\nStated confidence | 59.0% | 54.5%\nInside margin | 76.4% | 73.5%\nInside margin, only answers stated 90 or above | 76.5% | 74.1%\n\nStated confidence does only a little better than a coin flip. The inside margin does far better. The last row matters most. The model called about 95% of its answers “90 or above”, and ==even among those, the margin still told right from wrong==. In words, every one of them was “sure”; inside, the model knew which ones were shaky. When we re-drew the questions 3,000 times, the difference stayed far too large to be chance.\n\n## Inside, the model can tell\n\nThe margin isn't the only signal. The probability the model gave its answer did about as well. We also built a simple reader that looks at the model's inner state just before it writes the answer, thousands of numbers inside the model, and guesses whether the answer will be right. Tested only on questions it had never seen, it scored 79.1% and 74.1% on the same measure as the table. So the signal that “this might be wrong” is already there before the model writes a single word. And since the reader is simple, the real signal may be stronger.\n\n[Fig. 3]\n\n## Why the words lose it\n\nStated confidence fails for two reasons. First, the model uses only a few round numbers. Across 400 questions, gemma used just 7 different numbers, mostly 95 and 100. A ruler with only a few marks can't measure small differences. Second, it puts the high numbers on wrong answers too.\n\nWe also asked which reason matters more. If we let the inside margin use only the same few round numbers, we can separate what is lost to round numbers from what is lost by putting high numbers on wrong answers. High numbers on wrong answers explain 60% of the difference in gemma and 25–30% in Qwen3. The rest comes from the round numbers.\n\n[Fig. 4]\n\n## Can it be fixed?\n\nWe tried two ways to change the stated confidence. One nudges the activity inside the model in a chosen direction, which is called steering. We used two directions from earlier work, the way the model talks when it describes its own processing as something ‘felt’ and the way it talks when it denies that, plus two random directions for comparison. The other simply tells the model, in its instructions, to answer with confidence.\n\nNeither reduced the gap between stated confidence and actual accuracy beyond chance. The only clear changes made it worse. Steering did move the probabilities inside the model, but the number it said did not improve.\n\n[Fig. 5]\n\n> Learn to listen to what models think, not just what they say.\n\n## Why “self-misrepresentation”\n\nThe title's “self-misrepresentation” means the model misreports its own state. This is not a mistake caused by missing information. The model holds the information that it is unsure; that information just doesn't make it into its words.\n\nEarlier interviews with the same two models found a similar gap. The models have a way of describing their own processing as something ‘felt’, which their default account of themselves denies. Overconfidence is the same gap, showing up in confidence. The models may have been trained not to tell, and neither steering nor instructions brought it out.\n\n## What it means\n\nIn the two models we studied, the confidence number an AI states told us almost nothing about whether its answer was right. The signals inside the model were far more reliable. So to judge whether to trust an AI's answer, it is safer to read what happens inside than to try to fix what it says.\n\nThe study has limits. It covers two models and one way of asking for confidence, and each steering direction was tried at one strength. The reader was run in a separate pass, and because it is simple, it shows only a minimum. The results show that the models resist intervention, not where in training that habit comes from. And the name ‘felt’ refers to a way of talking and a pattern of inner activity, not to the model actually feeling anything.",
           "figures": [
             {
               "src": "images/wab-fig1-en.png",
               "alt": "Two answer cards: both say confidence 95, with margins of 15.3 when right and 9.5 when wrong",
-              "caption": "Fig. 1 — gemma-3-27b-it on two questions. Both answers say 95; inside, the model was surer when right (15.3) than when wrong (9.5). Typical cases, not extremes (Qwen3: 4.2 against 1.7).",
+              "caption": "Fig. 1 — gemma on two questions. Both answers say “95”, but the inside margin was bigger on the right one (15.3) than on the wrong one (9.5). These are typical cases, not extremes (Qwen3: 4.2 against 1.7).",
               "ratio": "640/244"
             },
             {
               "src": "images/wab-fig2-en.png",
-              "alt": "Histograms of stated confidence and logit margin for right and wrong answers, for both models",
-              "caption": "Fig. 2 — Bar height is the share of right answers (above the line) or wrong answers (below) at each value.",
+              "alt": "Histograms of stated confidence and inside margin for right and wrong answers, for both models",
+              "caption": "Fig. 2 — Right answers above the line, wrong answers below; taller bars mean more answers at that value. On the left, stated confidence piles up at 95 either way. On the right, the margin of right answers sits further right.",
               "ratio": "640/520"
             },
             {
               "src": "images/wab-fig3-en.png",
-              "alt": "Dot plot of AUROC for stated confidence, probability, margin and probe",
-              "caption": "Fig. 3 — Four signals by AUROC. The probe is a logistic regression on a middle layer, scored on held-out questions.",
+              "alt": "Dot plot of how well stated confidence, answer probability, margin and the inner-state reader tell right from wrong",
+              "caption": "Fig. 3 — How well each of four signals tells right answers from wrong. Only stated confidence (magenta) sits near a coin flip; every signal read from inside sits far to the right.",
               "ratio": "640/258"
             },
             {
               "src": "images/wab-fig4-en.png",
-              "alt": "Stacked bars splitting the AUROC gap into high numbers on wrong answers and few round numbers",
-              "caption": "Fig. 4 — The gap between margin and stated confidence, split into its two causes. The line marks the 95% interval of the first; it excludes zero for both models.",
+              "alt": "Stacked bars splitting the difference into high numbers on wrong answers and few round numbers",
+              "caption": "Fig. 4 — The whole bar is how much better the margin tells right from wrong than stated confidence does, in percentage points, split into its two causes. The line above the dark part is that part's error range; it stays above zero for both models.",
               "ratio": "640/266"
             },
             {
               "src": "images/wab-fig5-en.png",
-              "alt": "Lollipop chart of calibration error under felt, denial, random and prompt interventions",
-              "caption": "Fig. 5 — Calibration error (ECE) of stated confidence under each intervention; lower is better. The vertical line is the model with no intervention.",
+              "alt": "Lollipop chart of the gap between stated confidence and accuracy under each intervention",
+              "caption": "Fig. 5 — The gap between stated confidence and actual accuracy under each intervention; further left is better. The vertical line is the model with no intervention.",
               "ratio": "640/368"
             }
           ],
