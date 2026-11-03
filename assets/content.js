@@ -154,7 +154,7 @@
         },
         "formNote": "내용은 메일로만 전달되고 저장되지 않습니다.",
         "currentlyLabel": "요즘",
-        "currently": "작성 중."
+        "currently": ""
       },
       "en": {
         "statement": "A note about something you read here, research worth doing together, or a correction — ==all of it is welcome.==",
@@ -183,7 +183,7 @@
         },
         "formNote": "Sent as email only; nothing is stored.",
         "currentlyLabel": "Currently",
-        "currently": "In Seoul, continuing the work on waiting and repair. ==Open to short talks and workshops through late 2026.=="
+        "currently": ""
       }
     },
     "posts": [

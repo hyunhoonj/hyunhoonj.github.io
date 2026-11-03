@@ -277,9 +277,11 @@
           '</div>' +
         '</div>' +
         '<div class="contact-col">' + form +
-          '<div class="contact-block contact-block--currently">' + bracket(d.currentlyLabel) +
-            '<div class="currently">' + band(d.currently, 'band-2') + '</div>' +
-          '</div>' +
+          /* [요즘] is optional: with no sentence to show, the block goes too. */
+          (String(d.currently || '').trim() ?
+            '<div class="contact-block contact-block--currently">' + bracket(d.currentlyLabel) +
+              '<div class="currently">' + band(d.currently, 'band-2') + '</div>' +
+            '</div>' : '') +
         '</div>' +
       '</div>';
   }
