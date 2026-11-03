@@ -182,11 +182,20 @@
 
   function bracket(text) { return '<div class="label">[' + esc(text) + ']</div>'; }
 
-  function numbered(list, cls) {
+  /* `link`, when given, turns each row into a link: it maps a row's index to
+     its href (the contents rail points each heading at its section). */
+  function numbered(list, cls, link) {
     return '<div class="rail-list' + (cls ? ' ' + cls : '') + '">' +
-      list.map(function (t, i) { return '<div>' + num(i) + ' &nbsp;' + esc(t) + '</div>'; }).join('') +
+      list.map(function (t, i) {
+        var row = num(i) + ' &nbsp;' + esc(t);
+        return '<div>' + (link ? '<a href="' + esc(link(i)) + '">' + row + '</a>' : row) + '</div>';
+      }).join('') +
       '</div>';
   }
+
+  /* Section n of an article is #section-n, counted in the order headings()
+     lists them, so the contents rail and the headings agree. */
+  function sectionId(i) { return 'section-' + (i + 1); }
 
   /* ── pages ────────────────────────────────────────────────────────────── */
 
@@ -318,13 +327,14 @@
   }
 
   function articleBody(ctx, text, figs) {
+    var sections = 0;
     return blocks(text)
       .map(function (t) {
         var fig = /^\[(?:도판|Fig\.?)\s*(\d+)\]$/i.exec(t);
         if (fig) return figure(ctx, (figs || [])[Number(fig[1]) - 1]);
 
         var head = HEADING.exec(t);
-        if (head) return '<h2 class="article-h2">' + esc(head[1].trim()) + '</h2>';
+        if (head) return '<h2 class="article-h2" id="' + sectionId(sections++) + '">' + esc(head[1].trim()) + '</h2>';
 
         if (t.charAt(0) === '>') {
           return '<p class="pull">&ldquo;' + band(t.replace(/^>\s*/, ''), 'band-2') + '&rdquo;</p>';
@@ -367,7 +377,7 @@
         '<div class="rail">' +
           /* An article with no section headings has no contents to list, and a
              bare [차례] over nothing reads as something missing. */
-          (toc.length ? '<div><div class="rail-title">[' + esc(d.tocLabel) + ']</div>' + numbered(toc) + '</div>' : '') +
+          (toc.length ? '<div><div class="rail-title">[' + esc(d.tocLabel) + ']</div>' + numbered(toc, '', function (i) { return '#' + sectionId(i); }) + '</div>' : '') +
           '<div><div class="rail-title">[' + esc(d.subjectsLabel) + ']</div>' +
             '<div class="rail-list rail-list--dim">' +
               lines(d.subjects).map(function (t) { return '<span>' + esc(t) + '</span>'; }).join('') +
