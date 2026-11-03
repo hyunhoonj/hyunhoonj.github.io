@@ -182,15 +182,23 @@
 
   function bracket(text) { return '<div class="label">[' + esc(text) + ']</div>'; }
 
-  /* `link`, when given, turns each row into a link: it maps a row's index to
-     its href (the contents rail points each heading at its section). */
+  /* `link`, when given, maps a row's index to an href and links the row's
+     text (the contents rail points each heading at its section; a reference
+     points at its paper). The number stays outside the link. */
   function numbered(list, cls, link) {
     return '<div class="rail-list' + (cls ? ' ' + cls : '') + '">' +
       list.map(function (t, i) {
-        var row = num(i) + ' &nbsp;' + esc(t);
-        return '<div>' + (link ? '<a href="' + esc(link(i)) + '">' + row + '</a>' : row) + '</div>';
+        var href = link ? link(i) : '';
+        return '<div>' + num(i) + ' &nbsp;' + (href ? '<a href="' + esc(href) + '">' + esc(t) + '</a>' : esc(t)) + '</div>';
       }).join('') +
       '</div>';
+  }
+
+  /* A reference may end in its address: the citation then links there and
+     the bare URL is not printed. Without one it stays plain text. */
+  function reference(line) {
+    var m = /^(.*?)\s*(https?:\/\/\S+)$/.exec(line);
+    return m ? { text: m[1], href: m[2] } : { text: line, href: '' };
   }
 
   /* Section n of an article is #section-n, counted in the order headings()
@@ -359,6 +367,7 @@
     var d = entry[ctx.lang];
     var next = d.next || {};
     var toc = headings(d.body);
+    var refs = lines(d.refs).map(reference);
     var nextTitle = esc(next.title);
     if (next.id) {
       nextTitle = '<a href="' + esc(ctx.resolve(ROUTES[ctx.lang].home)) + '#' + esc(next.id) + '">' + nextTitle + '</a>';
@@ -388,7 +397,8 @@
         '</div>' +
         '<div class="article-body">' + articleBody(ctx, d.body, d.figures) +
           '<div class="article-refs">' +
-            '<div class="rail-title">[' + esc(d.refsLabel) + ']</div>' + numbered(lines(d.refs)) +
+            '<div class="rail-title">[' + esc(d.refsLabel) + ']</div>' +
+              numbered(refs.map(function (r) { return r.text; }), '', function (i) { return refs[i].href; }) +
           '</div>' +
         '</div>' +
       '</div>\n' +

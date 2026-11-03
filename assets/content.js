@@ -304,7 +304,7 @@
           "subjectsLabel": "주제",
           "subjects": "과잉 확신\n말로 하는 확신\n해석가능성",
           "refsLabel": "논문",
-          "refs": "Hyunhoon Jung. Overconfidence as Self-Misrepresentation: Language Models Verbally Discard the Uncertainty Their Own Logits Encode. COLM 2026 Workshop on Agent Behavior. openreview.net/pdf?id=hWF37ogUlH\n포스터: COLM 2026 Workshop on Agent Behavior, 샌프란시스코, 2026.10.09",
+          "refs": "Hyunhoon Jung. Overconfidence as Self-Misrepresentation: Language Models Verbally Discard the Uncertainty Their Own Logits Encode. COLM 2026 Workshop on Agent Behavior. https://openreview.net/pdf?id=hWF37ogUlH",
           "nextLabel": "다음 글",
           "next": {
             "title": "AI 의식 연구 지도",
@@ -357,7 +357,7 @@
           "subjectsLabel": "Subjects",
           "subjects": "Overconfidence\nStated confidence\nInterpretability",
           "refsLabel": "Paper",
-          "refs": "Hyunhoon Jung. Overconfidence as Self-Misrepresentation: Language Models Verbally Discard the Uncertainty Their Own Logits Encode. COLM 2026 Workshop on Agent Behavior. openreview.net/pdf?id=hWF37ogUlH\nPoster: COLM 2026 Workshop on Agent Behavior, San Francisco, 2026.10.09",
+          "refs": "Hyunhoon Jung. Overconfidence as Self-Misrepresentation: Language Models Verbally Discard the Uncertainty Their Own Logits Encode. COLM 2026 Workshop on Agent Behavior. https://openreview.net/pdf?id=hWF37ogUlH",
           "nextLabel": "Next",
           "next": {
             "title": "AI Consciousness Atlas",
