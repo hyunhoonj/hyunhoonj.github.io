@@ -10,16 +10,16 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,400&amp;family=Noto+Serif+KR:wght@300;400;600&amp;display=swap">
-  <link rel="stylesheet" href="../assets/broadsheet.css?v=e116e624">
-  <link rel="stylesheet" href="../assets/site.css?v=e116e624">
+  <link rel="stylesheet" href="../assets/broadsheet.css?v=07f79694">
+  <link rel="stylesheet" href="../assets/site.css?v=07f79694">
 </head>
 <body>
 <div class="sheet">
 <div class="page">
 <header class="masthead"><div><a class="masthead-name" href="../index.html">Hyunhoon Jung <span class="slash">/</span> 정현훈</a></div><nav class="masthead-nav"><a href="../information.html">소개</a><a href="../contact.html">연락</a><a class="lang-switch" lang="en" hreflang="en" href="../en/writing/overconfidence-as-self-misrepresentation.html">English</a></nav></header>
 <div class="split article-head"><div class="meta meta--dim"><span>워크숍 논문</span><span>,</span><span>2026.10</span><span>,</span><span>4분</span></div><div><h1 class="article-title">Overconfidence as Self-Misrepresentation</h1><p class="article-dek">언어 모델은 <span class="band">자기 로짓에 담긴 불확실성</span>을 말로는 버립니다.</p></div></div>
-<div class="split article-grid"><div class="rail"><div><div class="rail-title">[차례]</div><div class="rail-list"><div>01 &nbsp;한 번의 생성, 두 가지 읽기</div><div>02 &nbsp;안에서는 모델이 안다</div><div>03 &nbsp;잃어버리는 두 가지 방식</div><div>04 &nbsp;무엇을 해도 고쳐지지 않는다</div><div>05 &nbsp;왜 ‘자기 오표상’인가</div></div></div><div><div class="rail-title">[주제]</div><div class="rail-list rail-list--dim"><span>과잉 확신</span><span>진술된 확신도</span><span>해석가능성</span></div></div></div><div class="article-body"><p>모델에게 얼마나 확신하는지 물으면, 맞든 틀리든 “95%”라고 답합니다. 그러나 모델의 로짓은 그 차이를 알고 있었습니다. 이 워크숍 논문은 두 공개 모델, gemma-3-27b-it와 Qwen3-32B에서 MMLU-Pro 400문항으로 그 간극을 측정합니다.</p>
-<h2 class="article-h2">한 번의 생성, 두 가지 읽기</h2>
+<div class="split article-grid"><div class="rail"><div><div class="rail-title">[차례]</div><div class="rail-list"><div><a href="#section-1">01 &nbsp;한 번의 생성, 두 가지 읽기</a></div><div><a href="#section-2">02 &nbsp;안에서는 모델이 안다</a></div><div><a href="#section-3">03 &nbsp;잃어버리는 두 가지 방식</a></div><div><a href="#section-4">04 &nbsp;무엇을 해도 고쳐지지 않는다</a></div><div><a href="#section-5">05 &nbsp;왜 ‘자기 오표상’인가</a></div></div></div><div><div class="rail-title">[주제]</div><div class="rail-list rail-list--dim"><span>과잉 확신</span><span>진술된 확신도</span><span>해석가능성</span></div></div></div><div class="article-body"><p>모델에게 얼마나 확신하는지 물으면, 맞든 틀리든 “95%”라고 답합니다. 그러나 모델의 로짓은 그 차이를 알고 있었습니다. 이 워크숍 논문은 두 공개 모델, gemma-3-27b-it와 Qwen3-32B에서 MMLU-Pro 400문항으로 그 간극을 측정합니다.</p>
+<h2 class="article-h2" id="section-1">한 번의 생성, 두 가지 읽기</h2>
 <p>문항마다(선택지 A–J) 한 번의 생성으로 답과, 그 답을 얼마나 확신하는지를 0–100으로 받습니다. 이것이 모델이 말하는 것입니다. 답 글자 위치에서는 로짓도 읽습니다. 1순위 선택지가 2순위를 앞선 차이, 즉 마진이 모델이 계산하는 것입니다.</p>
 <figure><div class="frame" style="aspect-ratio:640/244"><img src="../images/wab-fig1-ko.png" alt="두 답 카드: 둘 다 확신도 95라고 말하지만 마진은 맞았을 때 15.3, 틀렸을 때 9.5"></div><figcaption>도판 1 — gemma-3-27b-it가 두 문항에 답한 예. 두 답 모두 95라고 말했지만, 모델 안에서는 맞았을 때(15.3) 틀렸을 때(9.5)보다 더 확신했습니다. 극단이 아닌 전형적인 사례입니다(Qwen3는 4.2 대 1.7).</figcaption></figure>
 <p>맞는 답과 틀린 답을 얼마나 잘 가르는지를 AUROC로 재면, 두 읽기의 차이는 큽니다.</p>
@@ -27,25 +27,25 @@
 <p>진술된 확신도는 맞는 답과 틀린 답을 거의 가르지 못합니다. 마진은 훨씬 잘 가르고, <span class="band-2">모델이 확신한다고 말한 답 안에서도 여전히 가릅니다</span>. 그런 답이 전체의 약 95%입니다. 계산하는 것은 말하는 것보다 gemma에서 0.175, Qwen3에서 0.189 높습니다. 문항을 3,000번 다시 뽑아 보면 격차의 95%가 .114–.233과 .134–.244 안에 들어, 0보다 확실히 큽니다.</p>
 <figure><div class="frame" style="aspect-ratio:640/520"><img src="../images/wab-fig2-ko.png" alt="두 모델의 맞는 답과 틀린 답에 대한 진술된 확신도와 로짓 마진의 분포"></div><figcaption>도판 2 — 막대의 높이는 각 값에서 맞는 답(선 위) 또는 틀린 답(선 아래)이 차지하는 비율입니다.</figcaption></figure>
 <p>분포를 보면 이유가 드러납니다. 모델은 맞든 틀리든 대부분의 답에 “95”라고 말합니다. gemma는 맞는 답의 59%, 틀린 답의 65%, Qwen3는 80%와 90%입니다. 반면 마진은 맞는 답에서 뚜렷이 높습니다. 중앙값이 gemma는 16.9 대 9.1, Qwen3는 4.4 대 1.8입니다.</p>
-<h2 class="article-h2">안에서는 모델이 안다</h2>
+<h2 class="article-h2" id="section-2">안에서는 모델이 안다</h2>
 <p>모델 내부에서 읽은 세 신호, 즉 답의 확률, 마진, 그리고 출력층 직전의 내부 상태에 붙인 단순한 탐침(probe)은 모델의 말보다 훨씬 잘 맞고 틀림을 가릅니다.</p>
 <figure><div class="frame" style="aspect-ratio:640/258"><img src="../images/wab-fig3-ko.png" alt="진술, 확률, 마진, 탐침 네 신호의 AUROC 점 그래프"></div><figcaption>도판 3 — 네 신호의 AUROC. 탐침은 중간 층에 학습한 로지스틱 회귀로, 학습에 쓰지 않은 문항으로 평가했습니다.</figcaption></figure>
 <p>탐침은 중간 층에서 학습하고, 한 번도 보지 않은 문항으로만 평가한 분류기입니다. 탐침의 AUROC는 .791과 .741에 이릅니다. 신호는 한 단어도 쓰이기 전에 이미 있고, 단순한 탐침이 보여 주는 것은 하한일 뿐입니다.</p>
-<h2 class="article-h2">잃어버리는 두 가지 방식</h2>
+<h2 class="article-h2" id="section-3">잃어버리는 두 가지 방식</h2>
 <p>진술된 확신도는 두 가지로 실패합니다. 몇 안 되는 둥근 숫자만 쓰고, 높은 숫자를 틀린 답에 붙입니다. 마진에도 같은 몇 개의 숫자만 쓰게 하면 격차가 이 두 부분으로 나뉩니다.</p>
 <figure><div class="frame" style="aspect-ratio:640/266"><img src="../images/wab-fig4-ko.png" alt="AUROC 격차를 틀린 답에 붙은 높은 숫자와 몇 안 되는 둥근 숫자로 나눈 막대"></div><figcaption>도판 4 — 마진과 진술된 확신도의 격차를 두 원인으로 나눈 것. 선은 첫 번째 원인의 95% 구간이며, 두 모델 모두 0을 포함하지 않습니다.</figcaption></figure>
 <p>틀린 답에 붙은 높은 숫자가 gemma 격차의 60%, Qwen3 격차의 25–30%를 차지합니다. 그 몇 안 되는 숫자만으로는 순서를 완벽하게 매겨도 AUROC가 .867과 .638을 넘지 못합니다.</p>
-<h2 class="article-h2">무엇을 해도 고쳐지지 않는다</h2>
+<h2 class="article-h2" id="section-4">무엇을 해도 고쳐지지 않는다</h2>
 <p>잔차 스트림을 felt, denial, 무작위 두 방향으로 조향하거나 확신도를 프롬프트로 요구해도, 진술된 확신도의 보정 오차는 잡음 수준 이상으로 줄지 않았습니다. 뚜렷한 변화는 모두 더 나빠지는 쪽이었습니다.</p>
 <figure><div class="frame" style="aspect-ratio:640/368"><img src="../images/wab-fig5-ko.png" alt="felt, denial, 무작위, 프롬프트 개입에서의 보정 오차"></div><figcaption>도판 5 — 개입마다 잰 진술된 확신도의 보정 오차(ECE). 낮을수록 좋습니다. 세로선은 개입하지 않은 모델입니다.</figcaption></figure>
 <p class="pull">&ldquo;모델이 말하는 것만이 아니라 생각하는 것을 듣는 법을 배워야 합니다.&rdquo;</p>
-<h2 class="article-h2">왜 ‘자기 오표상’인가</h2>
+<h2 class="article-h2" id="section-5">왜 ‘자기 오표상’인가</h2>
 <p>정보는 사라진 것이 아닙니다. 표상되어 있지만 보고되지 않을 뿐입니다. 같은 모델들과 나눈 앞선 인터뷰에서는, 모델의 기본 자기 서술이 부정하는 ‘felt’라는 방식으로 자기 처리 과정을 묘사하는 모습이 발견되었고, 조향에 쓴 felt와 denial 방향은 그 연구에서 왔습니다. 과잉 확신은 같은 간극이 확신도 수준에서 나타난 것입니다. 모델은 말하지 않도록 학습되었을 수 있고, 조향도 프롬프트도 그것을 끌어내지 못했습니다.</p>
 <p>한계도 있습니다. 모델은 두 개, 확신도를 묻는 형식은 하나, 방향마다 조향 강도도 하나입니다. 탐침은 별도의 실행에서 읽은 하한이며, 결과는 개입에 대한 저항을 보여 줄 뿐 그것이 학습의 어디에서 비롯되었는지는 보여 주지 않습니다. ‘felt’는 경험이 아니라 하나의 말투와 활성화 구조를 가리킵니다.</p><div class="article-refs"><div class="rail-title">[논문]</div><div class="rail-list"><div>01 &nbsp;Hyunhoon Jung. Overconfidence as Self-Misrepresentation: Language Models Verbally Discard the Uncertainty Their Own Logits Encode. COLM 2026 Workshop on Agent Behavior. openreview.net/pdf?id=hWF37ogUlH</div><div>02 &nbsp;포스터: COLM 2026 Workshop on Agent Behavior, 샌프란시스코, 2026.10.09</div></div></div></div></div>
 <div class="split article-next"><div class="label">[다음 글]</div><div class="meta"><span><a href="../index.html#ai-consciousness-atlas">AI 의식 연구 지도</a></span><span class="dim">,</span><span class="dim">읽기 지도</span><span class="dim">,</span><span class="dim">2026</span></div></div>
 <footer class="colophon"><div class="colophon-links"><a href="https://github.com/hyunhoonj">Github</a><span>,</span><a href="https://scholar.google.com/citations?user=0ROak0YAAAAJ&amp;hl=en">Google Scholar</a><span>,</span><a href="mailto:hyunhoon.j@gmail.com">hyunhoon.j@gmail.com</a></div><span class="colophon-copy">© 2026</span></footer>
 </div>
 </div>
-<script src="../assets/site.js?v=e116e624"></script>
+<script src="../assets/site.js?v=07f79694"></script>
 </body>
 </html>
