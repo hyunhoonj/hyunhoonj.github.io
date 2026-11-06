@@ -10,8 +10,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,400&amp;family=Noto+Serif+KR:wght@300;400;600&amp;display=swap">
-  <link rel="stylesheet" href="../../assets/broadsheet.css?v=55d2ee8f">
-  <link rel="stylesheet" href="../../assets/site.css?v=55d2ee8f">
+  <link rel="stylesheet" href="../../assets/broadsheet.css?v=39c106a7">
+  <link rel="stylesheet" href="../../assets/site.css?v=39c106a7">
 </head>
 <body>
 <div class="sheet">
@@ -26,7 +26,7 @@
 <p>Why the misses? The authors list four possibilities. The workspace may be a poor model of how language models think. The variable may be there but not readable by a linear map. The model may not represent it at all, for example because it found a shortcut. Or the lens may simply be an imperfect tool. The J++ post makes the case for the last.</p>
 <h2 class="article-h2" id="section-2">Why the average goes wrong</h2>
 <p>The J-lens counts every Jacobian equally. If the errors in single Jacobians were random, they would cancel out in the average. But averaging removes only unbiased noise. If some activations reliably give bad Jacobians, with errors that point the same way every time, the average keeps them.</p>
-<p>The authors found such activations. They split the activations at each layer into 8 groups by k-means clustering and fitted a separate averaged Jacobian, an expert, on each group. Then they used each expert alone as a lens on every test item, not just on items from its own group. The results varied enormously. Only 24 of the 52 experts beat a single map pooled over all activations, and 17 scored below 2%. Early layers were worse: at layers 8 and 16, 10 of the 16 experts were below 2%. Many bad experts were ‘formatting experts’, fitted mostly on punctuation and whitespace, but not all of them. What makes an expert bad is still unclear.</p>
+<p>The authors found such activations. They split the activations at each layer into 8 groups by k-means clustering and fitted a separate averaged Jacobian on each group. The authors call these expert Jacobians, after mixture-of-experts models, because each one specialises in one region of the activations. Below, I call them experts for short. Then they used each expert alone as a lens on every test item, not just on items from its own group. The results varied enormously. Only 24 of the 52 experts beat a single map pooled over all activations, and 17 scored below 2%. Early layers were worse: at layers 8 and 16, 10 of the 16 experts were below 2%. Many bad experts were ‘formatting experts’, fitted mostly on punctuation and whitespace, but not all of them. What makes an expert bad is still unclear.</p>
 <figure><div class="frame" style="aspect-ratio:640/316"><img src="../../images/jpp-fig1-en.png" alt="Schematic of one layer. Top: the J-lens averages eight clusters of activations with equal weight, noisy clusters included, and at layer 24 of the heart prompt reads nothing related. Bottom: the J++ lens gives the noisy clusters zero or negative weight and reads ‘heart’"></div><figcaption>Fig. 1 — How the two lenses build their map for one layer, as a schematic. Both end with a single linear map. The J-lens weights every cluster of activations the same, so the clusters whose Jacobians read out poorly (hatched) blur it. The J++ lens fits one expert Jacobian per cluster (8 per layer) and learns their weights, so those clusters get little, zero or negative weight. The readout on the right is from the post&#39;s heart example at layer 24 of Qwen 3.6 27B.</figcaption></figure>
 <p>Their explanation is geometric. A Jacobian is a linear approximation, accurate only where the function is close to flat. Around some activations, the path from the middle layer to the output may bend sharply, and there the approximation is poor. Mixed into the average, those regions blur the whole map.</p>
 <p>A second source of noise is the backward pass itself. With the ordinary gradient, the size of the gradients explodes toward early layers. The further back the lens reaches, the more error piles up on the way, which fits the J-lens being weakest exactly there.</p>
@@ -73,6 +73,6 @@
 <footer class="colophon"><div class="colophon-links"><a href="https://github.com/hyunhoonj">Github</a><span>,</span><a href="https://scholar.google.com/citations?user=0ROak0YAAAAJ&amp;hl=en">Google Scholar</a><span>,</span><a href="mailto:hyunhoon.j@gmail.com">hyunhoon.j@gmail.com</a></div><span class="colophon-copy">© 2026</span></footer>
 </div>
 </div>
-<script src="../../assets/site.js?v=55d2ee8f"></script>
+<script src="../../assets/site.js?v=39c106a7"></script>
 </body>
 </html>

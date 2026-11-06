@@ -10,8 +10,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,400&amp;family=Noto+Serif+KR:wght@300;400;600&amp;display=swap">
-  <link rel="stylesheet" href="../assets/broadsheet.css?v=55d2ee8f">
-  <link rel="stylesheet" href="../assets/site.css?v=55d2ee8f">
+  <link rel="stylesheet" href="../assets/broadsheet.css?v=39c106a7">
+  <link rel="stylesheet" href="../assets/site.css?v=39c106a7">
 </head>
 <body>
 <div class="sheet">
@@ -26,7 +26,7 @@
 <p>왜 놓칠까요? 저자들은 네 가지 가능성을 듭니다. 작업 공간이라는 모형 자체가 언어 모델의 사고를 잘 설명하지 못할 수 있습니다. 변수는 있지만 선형 지도로는 읽히지 않을 수 있습니다. 모델이 지름길로 답을 내서 그 변수를 아예 표상하지 않을 수도 있습니다. 아니면 렌즈가 그저 불완전한 도구일 수 있습니다. J++ 글은 마지막 가능성을 뒷받침합니다.</p>
 <h2 class="article-h2" id="section-2">평균이 망가지는 이유</h2>
 <p>J-lens는 모든 야코비안을 똑같이 셉니다. 하나하나의 오차가 무작위라면 평균을 내는 사이에 서로 상쇄됩니다. 하지만 평균이 없애는 것은 치우침 없는 잡음뿐입니다. 어떤 활성화들이 늘 같은 방향으로 틀린 야코비안을 낸다면, 그 오차는 평균에 그대로 남습니다.</p>
-<p>저자들은 그런 활성화를 찾아냈습니다. 각 층의 활성화를 k-평균 군집화로 8개 묶음으로 나누고, 묶음마다 평균 야코비안, 곧 ‘전문가’를 따로 맞췄습니다. 그리고 전문가 하나하나를 단독 렌즈로 써서, 자기 묶음의 문항만이 아니라 모든 시험 문항에 적용해 보았습니다. 결과는 크게 갈렸습니다. 전문가 52개 가운데 모든 활성화를 한데 모아 만든 지도보다 나은 것은 24개뿐이었고, 17개는 2%에도 못 미쳤습니다. 앞쪽 층일수록 심해서, 8층과 16층에서는 전문가 16개 중 10개가 2% 아래였습니다. 나쁜 전문가 중 다수는 주로 문장 부호와 공백에 맞춰진 ‘서식 전문가’였지만, 모두 그렇지는 않았습니다. 무엇이 전문가를 나쁘게 만드는지는 아직 분명하지 않습니다.</p>
+<p>저자들은 그런 활성화를 찾아냈습니다. 각 층의 활성화를 k-평균 군집화로 8개 묶음으로 나누고, 묶음마다 평균 야코비안을 따로 맞췄습니다. 저자들은 이것을 ‘전문가 야코비안’이라고 부릅니다. 입력마다 다른 부분 네트워크가 맡는 전문가 혼합(mixture-of-experts) 모델에서 따온 이름으로, 활성화의 한 구역을 전담한다는 뜻입니다. 아래에서는 줄여서 ‘전문가’라고 하겠습니다. 그리고 전문가 하나하나를 단독 렌즈로 써서, 자기 묶음의 문항만이 아니라 모든 시험 문항에 적용해 보았습니다. 결과는 크게 갈렸습니다. 전문가 52개 가운데 모든 활성화를 한데 모아 만든 지도보다 나은 것은 24개뿐이었고, 17개는 2%에도 못 미쳤습니다. 앞쪽 층일수록 심해서, 8층과 16층에서는 전문가 16개 중 10개가 2% 아래였습니다. 나쁜 전문가 중 다수는 주로 문장 부호와 공백에 맞춰진 ‘서식 전문가’였지만, 모두 그렇지는 않았습니다. 무엇이 전문가를 나쁘게 만드는지는 아직 분명하지 않습니다.</p>
 <figure><div class="frame" style="aspect-ratio:640/316"><img src="../images/jpp-fig1-ko.png" alt="한 층의 모식도. 위: J-lens는 활성화 묶음 여덟 개를 잡음 섞인 묶음까지 같은 비중으로 평균하고, 심장 예시의 24층에서 관련 단어를 읽지 못함. 아래: J++ 렌즈는 잡음 섞인 묶음에 0이나 음수 가중치를 주고 ‘heart’를 읽음"></div><figcaption>도판 1 — 두 렌즈가 한 층의 지도를 만드는 방식을 그린 모식도입니다. 둘 다 결국 선형 지도 하나로 끝납니다. J-lens는 활성화 묶음을 모두 같은 비중으로 세기 때문에, 야코비안이 나쁜 판독을 내는 묶음(빗금)이 지도를 흐립니다. J++ 렌즈는 묶음마다 전문가 야코비안을 하나씩(층마다 8개) 맞추고 가중치를 학습해서, 그런 묶음에 작거나 0이거나 음수인 가중치를 줍니다. 오른쪽 판독은 원문의 심장 예시, Qwen 3.6 27B의 24층 결과입니다.</figcaption></figure>
 <p>저자들의 설명은 기하학적입니다. 야코비안은 선형 근사라서, 함수가 평평에 가까운 곳에서만 정확합니다. 어떤 활성화 주변에서는 중간 층에서 출력으로 가는 길이 크게 휘어 있어 근사가 나쁠 수 있습니다. 그런 영역이 평균에 섞이면 지도 전체가 흐려집니다.</p>
 <p>두 번째 잡음의 원천은 역전파 자체입니다. 보통의 기울기로 계산하면, 기울기의 크기가 앞쪽 층으로 갈수록 폭발적으로 커집니다. 렌즈가 멀리 거슬러 갈수록 오차가 쌓인다는 뜻이고, J-lens가 바로 그곳에서 가장 약한 것과 들어맞습니다.</p>
@@ -73,6 +73,6 @@
 <footer class="colophon"><div class="colophon-links"><a href="https://github.com/hyunhoonj">Github</a><span>,</span><a href="https://scholar.google.com/citations?user=0ROak0YAAAAJ&amp;hl=en">Google Scholar</a><span>,</span><a href="mailto:hyunhoon.j@gmail.com">hyunhoon.j@gmail.com</a></div><span class="colophon-copy">© 2026</span></footer>
 </div>
 </div>
-<script src="../assets/site.js?v=55d2ee8f"></script>
+<script src="../assets/site.js?v=39c106a7"></script>
 </body>
 </html>
