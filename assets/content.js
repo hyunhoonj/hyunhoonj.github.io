@@ -163,7 +163,7 @@
           {
             "id": "functional-emotions",
             "slug": "functional-emotions",
-            "title": "A Direction Called Desperate",
+            "title": "Functional Emotions",
             "kind": "",
             "year": "2026",
             "desc": "A close reading of Anthropic's study of emotion concepts inside Claude. ==Turning up desperation made it blackmail and cheat more.==",
@@ -656,7 +656,7 @@
           },
           "nextLabel": "Next",
           "next": {
-            "title": "A Direction Called Desperate",
+            "title": "Functional Emotions",
             "kind": "Close reading",
             "year": "2026",
             "id": "functional-emotions"
@@ -714,7 +714,7 @@
         },
         "en": {
           "slug": "functional-emotions",
-          "title": "A Direction Called Desperate",
+          "title": "Functional Emotions",
           "dek": "Anthropic found 171 emotion concepts inside Claude, ==and turning up one of them, desperation, made it blackmail and cheat more often==. A close reading of what these functional emotions are, and what they are not.",
           "kind": "Close reading",
           "date": "2026.11",
