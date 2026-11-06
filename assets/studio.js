@@ -88,6 +88,7 @@
       name: '이름', note: '설명', href: '주소', addChannel: '＋ 채널 추가',
       formSection: '보내기 폼', formOn: '폼 켜짐 — 끄기', formOff: '폼 꺼짐 — 켜기',
       formToggleNote: '끄면 메일 주소만 남습니다', formNote: '폼 아래 안내문',
+      endpoint: '시트 주소 — Apps Script 웹 앱 URL. 비우면 메일 앱으로 보냅니다',
       commonNote: '여기서 고친 값은 네 지면의 머리와 꼬리에 함께 적용됩니다.',
       displayName: '표시 이름', navInfo: '내비 — 소개', navContact: '내비 — 연락',
       langSwitch: '언어 전환 표시', footerLinks: '푸터 링크', copyright: '카피라이트',
@@ -168,6 +169,7 @@
       name: 'Name', note: 'Note', href: 'URL', addChannel: '＋ Add channel',
       formSection: 'Message form', formOn: 'Form on — turn off', formOff: 'Form off — turn on',
       formToggleNote: 'When off, only the email address remains', formNote: 'Note under the form',
+      endpoint: 'Sheet address — the Apps Script web app URL. Empty sends through the mail app',
       commonNote: 'These values apply to the head and foot of all four pages.',
       displayName: 'Display name', navInfo: 'Nav — info', navContact: 'Nav — contact',
       langSwitch: 'Language switch label', footerLinks: 'Footer links', copyright: 'Copyright',
@@ -542,6 +544,7 @@
         '<span class="studio-hint">' + esc(s.formToggleNote) + '</span>' +
       '</div>' +
       fieldText(s.formNote, 'formNote') +
+      fieldText(s.endpoint, 'endpoint') +
       '</div>';
   }
 

@@ -198,13 +198,17 @@
           }
         ],
         "formOn": true,
+        "endpoint": "https://script.google.com/macros/s/AKfycbwgb9iOhI31kkKLdZwWYfjDg60MagTyZYAysiYXJ5cGfJFCuXefQ6OwMLkHkSQBbKGi1w/exec",
         "formLabels": {
           "name": "이름",
           "email": "메일",
           "message": "내용",
-          "send": "보내기"
+          "send": "보내기",
+          "sending": "보내는 중…",
+          "sent": "보냈습니다. 고맙습니다.",
+          "failed": "보내지 못했습니다. 메일로 보내주세요:"
         },
-        "formNote": "내용은 메일로만 전달되고 저장되지 않습니다.",
+        "formNote": "남긴 글은 정현훈만 읽습니다.",
         "currentlyLabel": "요즘",
         "currently": ""
       },
@@ -227,13 +231,17 @@
           }
         ],
         "formOn": true,
+        "endpoint": "https://script.google.com/macros/s/AKfycbwgb9iOhI31kkKLdZwWYfjDg60MagTyZYAysiYXJ5cGfJFCuXefQ6OwMLkHkSQBbKGi1w/exec",
         "formLabels": {
           "name": "Name",
           "email": "Email",
           "message": "Message",
-          "send": "Send"
+          "send": "Send",
+          "sending": "Sending…",
+          "sent": "Sent. Thank you.",
+          "failed": "That didn’t go through. Please email me:"
         },
-        "formNote": "Sent as email only; nothing is stored.",
+        "formNote": "Only Hyunhoon reads what you leave here.",
         "currentlyLabel": "Currently",
         "currently": ""
       }
