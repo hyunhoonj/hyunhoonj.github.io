@@ -124,7 +124,7 @@
           {
             "id": "overconfidence-as-self-misrepresentation",
             "slug": "overconfidence-as-self-misrepresentation",
-            "title": "Overconfidence as Self-Misrepresentation",
+            "title": "What the Model Kept to Itself",
             "kind": "",
             "year": "2026",
             "desc": "Ask a model how sure it is: it says “95%”, right or wrong. ==Inside, it knew the difference.==",
@@ -408,7 +408,7 @@
         },
         "en": {
           "slug": "overconfidence-as-self-misrepresentation",
-          "title": "Overconfidence as Self-Misrepresentation",
+          "title": "What the Model Kept to Itself",
           "dek": "AI models can tell when they might be wrong. ==They just don't say so.==",
           "kind": "Workshop paper",
           "date": "2026.10",
@@ -551,7 +551,7 @@
           "refs": "Wes Gurnee, Nicholas Sofroniew, Adam Pearce, … Jack Lindsey. Verbalizable Representations Form a Global Workspace in Language Models. Transformer Circuits Thread, 2026. https://transformer-circuits.pub/2026/workspace/index.html\nStanislas Dehaene & Lionel Naccache; Patrick Butlin, Derek Shiller, Dillon Plunkett & Robert Long; Neel Nanda. External commentary on “Verbalizable Representations Form a Global Workspace in Language Models”. Anthropic, 2026. https://www-cdn.anthropic.com/files/4zrzovbb/website/cc4be2488d65e54a6ed06492f8968398ddc18ebe.pdf\nKola Ayonrinde & Jack Lindsey. J++ Lens: Jacobian Filtering Enables More Faithful Workspace Lenses. LessWrong, 2026. https://www.lesswrong.com/posts/nc9dHfcB22JdMzGbr/j-lens-jacobian-filtering-enables-more-faithful-workspace-lenses\nTarush Gupta. The Fitting Corpus Is Part of the Measurement: Auditing a Jacobian Lens on Pythia. NeurIPS 2026 Workshop on Interpretability as a Science. https://neurips.cc/virtual/2026/165983\nCogitate Consortium, Oscar Ferrante et al. Adversarial testing of global neuronal workspace and integrated information theories of consciousness. Nature 642, 2025. https://doi.org/10.1038/s41586-025-08888-1\nNed Block. On a confusion about a function of consciousness. Behavioral and Brain Sciences 18, 1995. https://doi.org/10.1017/S0140525X00038188\nPatrick Butlin, Robert Long et al. Consciousness in Artificial Intelligence: Insights from the Science of Consciousness. arXiv:2308.08708, 2023. https://arxiv.org/abs/2308.08708\nAnil K. Seth. Conscious artificial intelligence and biological naturalism. Behavioral and Brain Sciences, 2025. https://doi.org/10.1017/S0140525X25000032\nHyunhoon Jung. Overconfidence as Self-Misrepresentation: Language Models Verbally Discard the Uncertainty Their Own Logits Encode. COLM 2026 Workshop on Agent Behavior. https://openreview.net/pdf?id=hWF37ogUlH",
           "prevLabel": "Previous",
           "prev": {
-            "title": "Overconfidence as Self-Misrepresentation",
+            "title": "What the Model Kept to Itself",
             "kind": "Workshop paper",
             "year": "2026",
             "id": "overconfidence-as-self-misrepresentation"
