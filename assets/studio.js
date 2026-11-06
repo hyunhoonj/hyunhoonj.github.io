@@ -74,7 +74,7 @@
       toc: '차례 — 본문의 ## 소제목에서', tocEmpty: '본문에 ## 소제목이 아직 없습니다',
       subjects: '주제 — 한 줄에 하나', refs: '참고 — 한 줄에 하나',
       figures: '도판', imagePath: '이미지 경로', caption: '캡션',
-      next: '다음 글', nextTitle: '제목', nextKind: '분류', nextYear: '연도', nextId: '연결 — 메인 블록 id',
+      prev: '이전 글', next: '다음 글', nextTitle: '제목', nextKind: '분류', nextYear: '연도', nextId: '연결 — 메인 블록 id',
       statementOne: '스테이트먼트 — 한 문장',
       workBlocks: '작업 블록', desc: '설명', year: '연도', layout: '도판 배치',
       link: '연결 — 글', linkNone: '연결 안 함', linkGone: '없는 글',
@@ -154,7 +154,7 @@
       toc: 'Contents — from the ## headings', tocEmpty: 'The body has no ## headings yet',
       subjects: 'Subjects — one per line', refs: 'References — one per line',
       figures: 'Figures', imagePath: 'Image path', caption: 'Caption',
-      next: 'Next', nextTitle: 'Title', nextKind: 'Kind', nextYear: 'Year', nextId: 'Link — home block id',
+      prev: 'Previous', next: 'Next', nextTitle: 'Title', nextKind: 'Kind', nextYear: 'Year', nextId: 'Link — home block id',
       statementOne: 'Statement — one sentence',
       workBlocks: 'Work blocks', desc: 'Description', year: 'Year', layout: 'Figures',
       link: 'Link — article', linkNone: 'No link', linkGone: 'missing',
@@ -437,6 +437,13 @@
         fieldArea(s.refs, 'refs', 3, { style: 'font-size:13px' }) +
         fieldText(s.readTime, 'readTime') +
       '</div>' +
+      '<div class="studio-section">[' + esc(s.prev) + ']</div>' +
+      '<div class="studio-row-cols">' +
+        fieldText(s.nextTitle, 'prev.title') +
+        fieldText(s.nextKind, 'prev.kind') +
+        fieldText(s.nextYear, 'prev.year') +
+      '</div>' +
+      fieldText(s.nextId, 'prev.id') +
       '<div class="studio-section">[' + esc(s.next) + ']</div>' +
       '<div class="studio-row-cols">' +
         fieldText(s.nextTitle, 'next.title') +
@@ -879,19 +886,20 @@
     var slug = 'untitled', n = 1;
     while (taken(slug)) slug = 'untitled-' + (++n);
 
-    var side = function (toc, subjects, refs, next) {
+    var side = function (toc, subjects, refs, prev, next) {
       return {
         slug: slug, title: '', dek: '', kind: '', date: '', readTime: '', body: '',
         figures: [],
         tocLabel: toc,
         subjectsLabel: subjects, subjects: '',
         refsLabel: refs, refs: '',
+        prevLabel: prev, prev: { title: '', kind: '', year: '', id: '' },
         nextLabel: next, next: { title: '', kind: '', year: '', id: '' }
       };
     };
     return {
-      ko: side('차례', '주제', '참고', '다음 글'),
-      en: side('Contents', 'Subjects', 'References', 'Next')
+      ko: side('차례', '주제', '참고', '이전 글', '다음 글'),
+      en: side('Contents', 'Subjects', 'References', 'Previous', 'Next')
     };
   }
 

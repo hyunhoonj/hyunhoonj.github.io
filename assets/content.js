@@ -357,12 +357,19 @@
           "subjects": "과잉 확신\n말로 하는 확신\n해석가능성",
           "refsLabel": "논문",
           "refs": "Hyunhoon Jung. Overconfidence as Self-Misrepresentation: Language Models Verbally Discard the Uncertainty Their Own Logits Encode. COLM 2026 Workshop on Agent Behavior. https://openreview.net/pdf?id=hWF37ogUlH",
-          "nextLabel": "다음 글",
-          "next": {
+          "prevLabel": "이전 글",
+          "prev": {
             "title": "AI 의식 연구 지도",
             "kind": "읽기 지도",
             "year": "2026",
             "id": "ai-consciousness-atlas"
+          },
+          "nextLabel": "다음 글",
+          "next": {
+            "title": "혀끝에 맴도는 생각",
+            "kind": "논문 읽기",
+            "year": "2026",
+            "id": "j-lens-global-workspace"
           }
         },
         "en": {
@@ -410,12 +417,19 @@
           "subjects": "Overconfidence\nStated confidence\nInterpretability",
           "refsLabel": "Paper",
           "refs": "Hyunhoon Jung. Overconfidence as Self-Misrepresentation: Language Models Verbally Discard the Uncertainty Their Own Logits Encode. COLM 2026 Workshop on Agent Behavior. https://openreview.net/pdf?id=hWF37ogUlH",
-          "nextLabel": "Next",
-          "next": {
+          "prevLabel": "Previous",
+          "prev": {
             "title": "AI Consciousness Atlas",
             "kind": "Reading map",
             "year": "2026",
             "id": "ai-consciousness-atlas"
+          },
+          "nextLabel": "Next",
+          "next": {
+            "title": "On the Tip of the Tongue",
+            "kind": "Close reading",
+            "year": "2026",
+            "id": "j-lens-global-workspace"
           }
         }
       },
@@ -453,12 +467,19 @@
           "subjects": "J-lens\n전역 작업 공간\n접근 의식\n해석가능성",
           "refsLabel": "참고 문헌",
           "refs": "Wes Gurnee, Nicholas Sofroniew, Adam Pearce, … Jack Lindsey. Verbalizable Representations Form a Global Workspace in Language Models. Transformer Circuits Thread, 2026. https://transformer-circuits.pub/2026/workspace/index.html\nStanislas Dehaene & Lionel Naccache; Patrick Butlin, Derek Shiller, Dillon Plunkett & Robert Long; Neel Nanda. External commentary on “Verbalizable Representations Form a Global Workspace in Language Models”. Anthropic, 2026. https://www-cdn.anthropic.com/files/4zrzovbb/website/cc4be2488d65e54a6ed06492f8968398ddc18ebe.pdf\nKola Ayonrinde & Jack Lindsey. J++ Lens: Jacobian Filtering Enables More Faithful Workspace Lenses. LessWrong, 2026. https://www.lesswrong.com/posts/nc9dHfcB22JdMzGbr/j-lens-jacobian-filtering-enables-more-faithful-workspace-lenses\nTarush Gupta. The Fitting Corpus Is Part of the Measurement: Auditing a Jacobian Lens on Pythia. NeurIPS 2026 Workshop on Interpretability as a Science. https://neurips.cc/virtual/2026/165983\nCogitate Consortium, Oscar Ferrante et al. Adversarial testing of global neuronal workspace and integrated information theories of consciousness. Nature 642, 2025. https://doi.org/10.1038/s41586-025-08888-1\nNed Block. On a confusion about a function of consciousness. Behavioral and Brain Sciences 18, 1995. https://doi.org/10.1017/S0140525X00038188\nPatrick Butlin, Robert Long et al. Consciousness in Artificial Intelligence: Insights from the Science of Consciousness. arXiv:2308.08708, 2023. https://arxiv.org/abs/2308.08708\nAnil K. Seth. Conscious artificial intelligence and biological naturalism. Behavioral and Brain Sciences, 2025. https://doi.org/10.1017/S0140525X25000032\nHyunhoon Jung. Overconfidence as Self-Misrepresentation: Language Models Verbally Discard the Uncertainty Their Own Logits Encode. COLM 2026 Workshop on Agent Behavior. https://openreview.net/pdf?id=hWF37ogUlH",
-          "nextLabel": "다음 글",
-          "next": {
+          "prevLabel": "이전 글",
+          "prev": {
             "title": "Overconfidence as Self-Misrepresentation",
             "kind": "워크숍 논문",
             "year": "2026",
             "id": "overconfidence-as-self-misrepresentation"
+          },
+          "nextLabel": "다음 글",
+          "next": {
+            "title": "렌즈를 닦으면 보이는 것",
+            "kind": "연구 읽기",
+            "year": "2026",
+            "id": "j-plus-plus-lens"
           }
         },
         "en": {
@@ -494,12 +515,19 @@
           "subjects": "J-lens\nGlobal workspace\nAccess consciousness\nInterpretability",
           "refsLabel": "References",
           "refs": "Wes Gurnee, Nicholas Sofroniew, Adam Pearce, … Jack Lindsey. Verbalizable Representations Form a Global Workspace in Language Models. Transformer Circuits Thread, 2026. https://transformer-circuits.pub/2026/workspace/index.html\nStanislas Dehaene & Lionel Naccache; Patrick Butlin, Derek Shiller, Dillon Plunkett & Robert Long; Neel Nanda. External commentary on “Verbalizable Representations Form a Global Workspace in Language Models”. Anthropic, 2026. https://www-cdn.anthropic.com/files/4zrzovbb/website/cc4be2488d65e54a6ed06492f8968398ddc18ebe.pdf\nKola Ayonrinde & Jack Lindsey. J++ Lens: Jacobian Filtering Enables More Faithful Workspace Lenses. LessWrong, 2026. https://www.lesswrong.com/posts/nc9dHfcB22JdMzGbr/j-lens-jacobian-filtering-enables-more-faithful-workspace-lenses\nTarush Gupta. The Fitting Corpus Is Part of the Measurement: Auditing a Jacobian Lens on Pythia. NeurIPS 2026 Workshop on Interpretability as a Science. https://neurips.cc/virtual/2026/165983\nCogitate Consortium, Oscar Ferrante et al. Adversarial testing of global neuronal workspace and integrated information theories of consciousness. Nature 642, 2025. https://doi.org/10.1038/s41586-025-08888-1\nNed Block. On a confusion about a function of consciousness. Behavioral and Brain Sciences 18, 1995. https://doi.org/10.1017/S0140525X00038188\nPatrick Butlin, Robert Long et al. Consciousness in Artificial Intelligence: Insights from the Science of Consciousness. arXiv:2308.08708, 2023. https://arxiv.org/abs/2308.08708\nAnil K. Seth. Conscious artificial intelligence and biological naturalism. Behavioral and Brain Sciences, 2025. https://doi.org/10.1017/S0140525X25000032\nHyunhoon Jung. Overconfidence as Self-Misrepresentation: Language Models Verbally Discard the Uncertainty Their Own Logits Encode. COLM 2026 Workshop on Agent Behavior. https://openreview.net/pdf?id=hWF37ogUlH",
-          "nextLabel": "Next",
-          "next": {
+          "prevLabel": "Previous",
+          "prev": {
             "title": "Overconfidence as Self-Misrepresentation",
             "kind": "Workshop paper",
             "year": "2026",
             "id": "overconfidence-as-self-misrepresentation"
+          },
+          "nextLabel": "Next",
+          "next": {
+            "title": "What a Cleaner Lens Shows",
+            "kind": "Close reading",
+            "year": "2026",
+            "id": "j-plus-plus-lens"
           }
         }
       },
@@ -537,12 +565,19 @@
           "subjects": "J++ 렌즈\nJ-lens\n해석가능성\n전역 작업 공간",
           "refsLabel": "참고 문헌",
           "refs": "Kola Ayonrinde & Jack Lindsey. J++ Lens: Jacobian Filtering Enables More Faithful Workspace Lenses. LessWrong, 2026. https://www.lesswrong.com/posts/nc9dHfcB22JdMzGbr/j-lens-jacobian-filtering-enables-more-faithful-workspace\nAnthropic. Circuits Updates – October 2026. Transformer Circuits Thread, 2026. https://transformer-circuits.pub/2026/october-update/\nKola Ayonrinde & Jack Lindsey. jpp_lens: code, evaluations and released lenses. GitHub, 2026. https://github.com/safety-research/jpp_lens\nWes Gurnee, Nicholas Sofroniew, Adam Pearce, … Jack Lindsey. Verbalizable Representations Form a Global Workspace in Language Models. Transformer Circuits Thread, 2026. https://transformer-circuits.pub/2026/workspace/index.html\nCamila Blank, Agam Bhatia & Neel Nanda. R-lens: Making J-lens More Faithful on Early Layers. LessWrong, 2026. https://www.lesswrong.com/posts/nv8oedrnLXKRzNEL9/r-lens-making-j-lens-more-faithful-on-early-layers\nnostalgebraist. interpreting GPT: the logit lens. LessWrong, 2020. https://www.lesswrong.com/posts/AcKRB8wDpdaN6v6ru/interpreting-gpt-the-logit-lens\nSebastian Bach, Alexander Binder, Grégoire Montavon, Frederick Klauschen, Klaus-Robert Müller & Wojciech Samek. On Pixel-Wise Explanations for Non-Linear Classifier Decisions by Layer-Wise Relevance Propagation. PLOS ONE 10, 2015. https://doi.org/10.1371/journal.pone.0130140\nTarush Gupta. The Fitting Corpus Is Part of the Measurement: Auditing a Jacobian Lens on Pythia. NeurIPS 2026 Workshop on Interpretability as a Science. https://neurips.cc/virtual/2026/165983\nDaniel M. Wegner. Ironic processes of mental control. Psychological Review 101, 1994. https://doi.org/10.1037/0033-295X.101.1.34",
-          "nextLabel": "다음 글",
-          "next": {
+          "prevLabel": "이전 글",
+          "prev": {
             "title": "혀끝에 맴도는 생각",
             "kind": "논문 읽기",
             "year": "2026",
             "id": "j-lens-global-workspace"
+          },
+          "nextLabel": "다음 글",
+          "next": {
+            "title": "AI 의식 연구 지도",
+            "kind": "읽기 지도",
+            "year": "2026",
+            "id": "ai-consciousness-atlas"
           }
         },
         "en": {
@@ -578,12 +613,19 @@
           "subjects": "J++ lens\nJ-lens\nInterpretability\nGlobal workspace",
           "refsLabel": "References",
           "refs": "Kola Ayonrinde & Jack Lindsey. J++ Lens: Jacobian Filtering Enables More Faithful Workspace Lenses. LessWrong, 2026. https://www.lesswrong.com/posts/nc9dHfcB22JdMzGbr/j-lens-jacobian-filtering-enables-more-faithful-workspace\nAnthropic. Circuits Updates – October 2026. Transformer Circuits Thread, 2026. https://transformer-circuits.pub/2026/october-update/\nKola Ayonrinde & Jack Lindsey. jpp_lens: code, evaluations and released lenses. GitHub, 2026. https://github.com/safety-research/jpp_lens\nWes Gurnee, Nicholas Sofroniew, Adam Pearce, … Jack Lindsey. Verbalizable Representations Form a Global Workspace in Language Models. Transformer Circuits Thread, 2026. https://transformer-circuits.pub/2026/workspace/index.html\nCamila Blank, Agam Bhatia & Neel Nanda. R-lens: Making J-lens More Faithful on Early Layers. LessWrong, 2026. https://www.lesswrong.com/posts/nv8oedrnLXKRzNEL9/r-lens-making-j-lens-more-faithful-on-early-layers\nnostalgebraist. interpreting GPT: the logit lens. LessWrong, 2020. https://www.lesswrong.com/posts/AcKRB8wDpdaN6v6ru/interpreting-gpt-the-logit-lens\nSebastian Bach, Alexander Binder, Grégoire Montavon, Frederick Klauschen, Klaus-Robert Müller & Wojciech Samek. On Pixel-Wise Explanations for Non-Linear Classifier Decisions by Layer-Wise Relevance Propagation. PLOS ONE 10, 2015. https://doi.org/10.1371/journal.pone.0130140\nTarush Gupta. The Fitting Corpus Is Part of the Measurement: Auditing a Jacobian Lens on Pythia. NeurIPS 2026 Workshop on Interpretability as a Science. https://neurips.cc/virtual/2026/165983\nDaniel M. Wegner. Ironic processes of mental control. Psychological Review 101, 1994. https://doi.org/10.1037/0033-295X.101.1.34",
-          "nextLabel": "Next",
-          "next": {
+          "prevLabel": "Previous",
+          "prev": {
             "title": "On the Tip of the Tongue",
             "kind": "Close reading",
             "year": "2026",
             "id": "j-lens-global-workspace"
+          },
+          "nextLabel": "Next",
+          "next": {
+            "title": "AI Consciousness Atlas",
+            "kind": "Reading map",
+            "year": "2026",
+            "id": "ai-consciousness-atlas"
           }
         }
       }

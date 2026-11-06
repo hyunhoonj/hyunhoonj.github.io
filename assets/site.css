@@ -211,6 +211,8 @@ figcaption { margin-top: 10px; font-size: 12px; color: var(--color-neutral-600);
 }
 .article-next { margin-top: calc(var(--space-8) * 3); }
 .article-next .meta { font-size: 15px; }
+/* [이전 글] and [다음 글] sit together, one under the other. */
+.article-next + .article-next { margin-top: var(--space-4); }
 
 /* ══════════════════════════════════════════════════════════════════════════
    Narrow sheets. The canvas draws two widths and nothing between: 1200px and
