@@ -25,7 +25,8 @@ build.js                          node build.js → six pages + two per article
 assets/broadsheet.css             the design system, imported from the project
 assets/site.css                   the four pages
 assets/render.js                  one renderer, used by build.js and the studio
-assets/site.js                    the contact form (nothing else)
+assets/site.js                    the contact form (nothing else): saves to a Google Sheet when
+                                  contact.<lang>.endpoint is set, else opens the mail app
 assets/github.js                  the studio's commit path into this repository
 assets/studio.css, studio.js      the writing desk
 images/fig-waiting-state.png      the one real figure in the canvas

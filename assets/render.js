@@ -290,17 +290,25 @@
       return '<div>' + name + (c.note ? ' <span class="note">— ' + esc(c.note) + '</span>' : '') + '</div>';
     }).join('');
 
+    /* With a sheet address the message is saved to the owner's Google Sheet and
+       the visitor stays on the page; without one, sending opens their mail app. */
+    var endpoint = String(d.endpoint || '').trim();
     var form = d.formOn === false ? '' :
-      '<form class="form" data-contact-form data-email="' + esc(d.email) + '">' +
+      '<form class="form" data-contact-form data-email="' + esc(d.email) + '"' +
+        (endpoint ? ' data-endpoint="' + esc(endpoint) + '" data-sending="' + esc(f.sending) + '"' +
+          ' data-sent="' + esc(f.sent) + '" data-failed="' + esc(f.failed) + '"' : '') + '>' +
         '<div class="field"><label for="c-name">' + esc(f.name) + '</label>' +
           '<input class="input" id="c-name" name="name" type="text" autocomplete="name" required></div>' +
         '<div class="field"><label for="c-mail">' + esc(f.email) + '</label>' +
           '<input class="input" id="c-mail" name="email" type="email" autocomplete="email" required></div>' +
         '<div class="field"><label for="c-body">' + esc(f.message) + '</label>' +
           '<textarea class="input" id="c-body" name="message" rows="6" required></textarea></div>' +
+        /* A field people never see. Bots fill it in, and the sheet ignores what they send. */
+        (endpoint ? '<div class="form-trap" aria-hidden="true"><label>Website <input name="website" type="text" tabindex="-1" autocomplete="off"></label></div>' : '') +
         '<div class="form-foot">' +
           '<button class="btn btn-primary" type="submit">' + esc(f.send) + '</button>' +
           '<span class="form-note">' + esc(d.formNote) + '</span>' +
+          (endpoint ? '<span class="form-status" role="status"></span>' : '') +
         '</div>' +
       '</form>';
 
