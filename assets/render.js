@@ -205,6 +205,36 @@
      lists them, so the contents rail and the headings agree. */
   function sectionId(i) { return 'section-' + (i + 1); }
 
+  /* Where a home block leads. A block opens its article when the slug names one.
+     Failing that it can open a page of its own outside writing/ — the atlas —
+     given as a root-relative `href` ('atlas/', 'en/atlas/'), resolved like any
+     other path so it holds from the sheet and from the studio alike. */
+  function blockTarget(ctx, b) {
+    return postIndexBySlug(ctx.content, ctx.lang, b.slug) >= 0 ? articlePath(ctx.lang, b.slug) : String(b.href || '').trim();
+  }
+
+  /* One row under an article: [이전 글] or [다음 글], then the title, kind and
+     year of the work it names. The id names a home block, and the title opens
+     whatever that block opens — its article, or the atlas — or the block itself
+     on the home page when it opens nothing. A row with no title is left out. */
+  function neighbour(ctx, label, w) {
+    w = w || {};
+    if (!String(w.title || '').trim()) return '';
+    var title = esc(w.title);
+    if (w.id) {
+      var b = (ctx.content.home[ctx.lang].blocks || []).filter(function (x) { return x.id === w.id; })[0];
+      var href = (b && blockTarget(ctx, b)) || ROUTES[ctx.lang].home + '#' + w.id;
+      title = '<a href="' + esc(ctx.resolve(href)) + '">' + title + '</a>';
+    }
+    return '<div class="split article-next">' +
+        bracket(label) +
+        '<div class="meta"><span>' + title + '</span>' +
+          '<span class="dim">,</span><span class="dim">' + esc(w.kind) + '</span>' +
+          '<span class="dim">,</span><span class="dim">' + esc(w.year) + '</span>' +
+        '</div>' +
+      '</div>';
+  }
+
   /* ── pages ────────────────────────────────────────────────────────────── */
 
   /* Home is an index of cards, not a stack of essays: one image, the line of
@@ -216,11 +246,7 @@
 
     var cards = (d.blocks || []).map(function (b) {
       var title = esc(b.title);
-      /* A card opens its article when the slug names one. Failing that it can
-         open a page of its own outside writing/ — the atlas — given as a
-         root-relative `href` ('atlas/', 'en/atlas/'), resolved like any other
-         path so it holds from the sheet and from the studio alike. */
-      var href = postIndexBySlug(ctx.content, ctx.lang, b.slug) >= 0 ? articlePath(ctx.lang, b.slug) : String(b.href || '').trim();
+      var href = blockTarget(ctx, b);
       if (href) title = '<a href="' + esc(ctx.resolve(href)) + '">' + title + '</a>';
       return '<article class="work"' + (b.id ? ' id="' + esc(b.id) + '"' : '') + '>' +
         plate(ctx, b.image, b.ratio) +
@@ -365,13 +391,8 @@
     var entry = postAt(ctx.content, ctx.index);
     if (!entry || !entry[ctx.lang]) return '';
     var d = entry[ctx.lang];
-    var next = d.next || {};
     var toc = headings(d.body);
     var refs = lines(d.refs).map(reference);
-    var nextTitle = esc(next.title);
-    if (next.id) {
-      nextTitle = '<a href="' + esc(ctx.resolve(ROUTES[ctx.lang].home)) + '#' + esc(next.id) + '">' + nextTitle + '</a>';
-    }
 
     return '<div class="split article-head">' +
         '<div class="meta meta--dim">' +
@@ -402,13 +423,8 @@
           '</div>' +
         '</div>' +
       '</div>\n' +
-      '<div class="split article-next">' +
-        bracket(d.nextLabel) +
-        '<div class="meta"><span>' + nextTitle + '</span>' +
-          '<span class="dim">,</span><span class="dim">' + esc(next.kind) + '</span>' +
-          '<span class="dim">,</span><span class="dim">' + esc(next.year) + '</span>' +
-        '</div>' +
-      '</div>';
+      neighbour(ctx, d.prevLabel, d.prev) +
+      neighbour(ctx, d.nextLabel, d.next);
   }
 
   var PAGES = { home: home, info: info, contact: contact, post: post };
