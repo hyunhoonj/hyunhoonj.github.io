@@ -91,7 +91,7 @@
           {
             "id": "functional-emotions",
             "slug": "functional-emotions",
-            "title": "절박함이라는 방향",
+            "title": "기능적 감정",
             "kind": "",
             "year": "2026",
             "desc": "Claude 안의 감정 개념을 찾은 Anthropic의 연구를 깊이 읽습니다. ==절박함을 키우자 협박과 속임수가 늘었습니다==.",
@@ -608,7 +608,7 @@
           },
           "nextLabel": "다음 글",
           "next": {
-            "title": "절박함이라는 방향",
+            "title": "기능적 감정",
             "kind": "논문 읽기",
             "year": "2026",
             "id": "functional-emotions"
@@ -666,7 +666,7 @@
       {
         "ko": {
           "slug": "functional-emotions",
-          "title": "절박함이라는 방향",
+          "title": "기능적 감정",
           "dek": "Anthropic은 Claude 안에서 171개의 감정 개념을 찾았고, ==그중 절박함을 키우자 협박과 속임수가 늘었습니다==. 이 기능적 감정이 무엇이고 무엇이 아닌지 깊이 읽어 봅니다.",
           "kind": "논문 읽기",
           "date": "2026.11",
