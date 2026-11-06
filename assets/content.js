@@ -65,7 +65,7 @@
           {
             "id": "j-lens-global-workspace",
             "slug": "j-lens-global-workspace",
-            "title": "혀끝에 맴도는 생각",
+            "title": "AI의 전역 작업 공간 이론",
             "kind": "",
             "year": "2026",
             "desc": "언어 모델 안에서 말로 꺼낼 수 있는 생각이 모이는 작은 자리를 찾은 논문을 깊이 읽습니다. ==그 자리는 모델이 말하지 않은 것도 담고 있었습니다==.",
@@ -400,7 +400,7 @@
           },
           "nextLabel": "다음 글",
           "next": {
-            "title": "혀끝에 맴도는 생각",
+            "title": "AI의 전역 작업 공간 이론",
             "kind": "논문 읽기",
             "year": "2026",
             "id": "j-lens-global-workspace"
@@ -470,7 +470,7 @@
       {
         "ko": {
           "slug": "j-lens-global-workspace",
-          "title": "혀끝에 맴도는 생각",
+          "title": "AI의 전역 작업 공간 이론",
           "dek": "Anthropic의 J-lens 논문은 언어 모델 안에서 ==말로 꺼낼 수 있는 생각이 모이는 작은 자리==를 찾았습니다. 그 자리가 무엇을 하는지, 그리고 그것이 의식에 대해 말해 주는 것과 말해 주지 않는 것을 읽어 봅니다.",
           "kind": "논문 읽기",
           "date": "2026.11",
@@ -601,7 +601,7 @@
           "refs": "Kola Ayonrinde & Jack Lindsey. J++ Lens: Jacobian Filtering Enables More Faithful Workspace Lenses. LessWrong, 2026. https://www.lesswrong.com/posts/nc9dHfcB22JdMzGbr/j-lens-jacobian-filtering-enables-more-faithful-workspace\nAnthropic. Circuits Updates – October 2026. Transformer Circuits Thread, 2026. https://transformer-circuits.pub/2026/october-update/\nKola Ayonrinde & Jack Lindsey. jpp_lens: code, evaluations and released lenses. GitHub, 2026. https://github.com/safety-research/jpp_lens\nWes Gurnee, Nicholas Sofroniew, Adam Pearce, … Jack Lindsey. Verbalizable Representations Form a Global Workspace in Language Models. Transformer Circuits Thread, 2026. https://transformer-circuits.pub/2026/workspace/index.html\nCamila Blank, Agam Bhatia & Neel Nanda. R-lens: Making J-lens More Faithful on Early Layers. LessWrong, 2026. https://www.lesswrong.com/posts/nv8oedrnLXKRzNEL9/r-lens-making-j-lens-more-faithful-on-early-layers\nnostalgebraist. interpreting GPT: the logit lens. LessWrong, 2020. https://www.lesswrong.com/posts/AcKRB8wDpdaN6v6ru/interpreting-gpt-the-logit-lens\nSebastian Bach, Alexander Binder, Grégoire Montavon, Frederick Klauschen, Klaus-Robert Müller & Wojciech Samek. On Pixel-Wise Explanations for Non-Linear Classifier Decisions by Layer-Wise Relevance Propagation. PLOS ONE 10, 2015. https://doi.org/10.1371/journal.pone.0130140\nTarush Gupta. The Fitting Corpus Is Part of the Measurement: Auditing a Jacobian Lens on Pythia. NeurIPS 2026 Workshop on Interpretability as a Science. https://neurips.cc/virtual/2026/165983\nDaniel M. Wegner. Ironic processes of mental control. Psychological Review 101, 1994. https://doi.org/10.1037/0033-295X.101.1.34",
           "prevLabel": "이전 글",
           "prev": {
-            "title": "혀끝에 맴도는 생각",
+            "title": "AI의 전역 작업 공간 이론",
             "kind": "논문 읽기",
             "year": "2026",
             "id": "j-lens-global-workspace"
