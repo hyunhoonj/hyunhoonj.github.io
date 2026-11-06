@@ -137,7 +137,7 @@
           {
             "id": "j-lens-global-workspace",
             "slug": "j-lens-global-workspace",
-            "title": "On the Tip of the Tongue",
+            "title": "Global Workspace Theory in AI",
             "kind": "",
             "year": "2026",
             "desc": "A close reading of the paper that found a small place inside language models where the thoughts they could say gather. ==It also holds what they leave unsaid.==",
@@ -460,7 +460,7 @@
           },
           "nextLabel": "Next",
           "next": {
-            "title": "On the Tip of the Tongue",
+            "title": "Global Workspace Theory in AI",
             "kind": "Close reading",
             "year": "2026",
             "id": "j-lens-global-workspace"
@@ -518,7 +518,7 @@
         },
         "en": {
           "slug": "j-lens-global-workspace",
-          "title": "On the Tip of the Tongue",
+          "title": "Global Workspace Theory in AI",
           "dek": "Anthropic's J-lens paper finds ==a small place inside language models where the thoughts they could put into words gather==. What that place does, and what it does and does not tell us about consciousness.",
           "kind": "Close reading",
           "date": "2026.11",
@@ -649,7 +649,7 @@
           "refs": "Kola Ayonrinde & Jack Lindsey. J++ Lens: Jacobian Filtering Enables More Faithful Workspace Lenses. LessWrong, 2026. https://www.lesswrong.com/posts/nc9dHfcB22JdMzGbr/j-lens-jacobian-filtering-enables-more-faithful-workspace\nAnthropic. Circuits Updates – October 2026. Transformer Circuits Thread, 2026. https://transformer-circuits.pub/2026/october-update/\nKola Ayonrinde & Jack Lindsey. jpp_lens: code, evaluations and released lenses. GitHub, 2026. https://github.com/safety-research/jpp_lens\nWes Gurnee, Nicholas Sofroniew, Adam Pearce, … Jack Lindsey. Verbalizable Representations Form a Global Workspace in Language Models. Transformer Circuits Thread, 2026. https://transformer-circuits.pub/2026/workspace/index.html\nCamila Blank, Agam Bhatia & Neel Nanda. R-lens: Making J-lens More Faithful on Early Layers. LessWrong, 2026. https://www.lesswrong.com/posts/nv8oedrnLXKRzNEL9/r-lens-making-j-lens-more-faithful-on-early-layers\nnostalgebraist. interpreting GPT: the logit lens. LessWrong, 2020. https://www.lesswrong.com/posts/AcKRB8wDpdaN6v6ru/interpreting-gpt-the-logit-lens\nSebastian Bach, Alexander Binder, Grégoire Montavon, Frederick Klauschen, Klaus-Robert Müller & Wojciech Samek. On Pixel-Wise Explanations for Non-Linear Classifier Decisions by Layer-Wise Relevance Propagation. PLOS ONE 10, 2015. https://doi.org/10.1371/journal.pone.0130140\nTarush Gupta. The Fitting Corpus Is Part of the Measurement: Auditing a Jacobian Lens on Pythia. NeurIPS 2026 Workshop on Interpretability as a Science. https://neurips.cc/virtual/2026/165983\nDaniel M. Wegner. Ironic processes of mental control. Psychological Review 101, 1994. https://doi.org/10.1037/0033-295X.101.1.34",
           "prevLabel": "Previous",
           "prev": {
-            "title": "On the Tip of the Tongue",
+            "title": "Global Workspace Theory in AI",
             "kind": "Close reading",
             "year": "2026",
             "id": "j-lens-global-workspace"
