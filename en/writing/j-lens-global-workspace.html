@@ -10,8 +10,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,400&amp;family=Noto+Serif+KR:wght@300;400;600&amp;display=swap">
-  <link rel="stylesheet" href="../../assets/broadsheet.css?v=8e667045">
-  <link rel="stylesheet" href="../../assets/site.css?v=8e667045">
+  <link rel="stylesheet" href="../../assets/broadsheet.css?v=af043279">
+  <link rel="stylesheet" href="../../assets/site.css?v=af043279">
 </head>
 <body>
 <div class="sheet">
@@ -67,7 +67,7 @@
 <h2 class="article-h2" id="section-6">Points to weigh</h2>
 <p>Read alongside the commentaries and follow-up work, the paper leaves a few things to keep in mind.</p>
 <p>First, how the directions are chosen may build in part of the result. Lens directions are chosen in the first place for having a large effect on the output, so the finding that they have broad effects may partly follow from that choice (Butlin and colleagues). The authors guard against this with controls, such as rotating the lens directions at random and comparing with features from sparse autoencoders, but it is hard to separate fully.</p>
-<p>Second, the lens can only see concepts that are a single token. ‘Prompt injection’ falls into two pieces, and number words barely swapped. So the impression that the workspace is made of words, and the capacity estimates, may partly be limits of the tool. The J++ lens published in October (Ayonrinde and Lindsey) only filters out noisy Jacobians, and that alone raised the rate of finding intermediate concepts in Qwen 3.6 27B from 35.7% to 55.2%. The original lens misses a lot.</p>
+<p>Second, the lens can only see concepts that are a single token. ‘Prompt injection’ falls into two pieces, and number words barely swapped. So the impression that the workspace is made of words, and the capacity estimates, may partly be limits of the tool. The J++ lens published in October (Ayonrinde and Lindsey, an Anthropic Fellows project) changes little: it mainly filters out noisy Jacobians, plus two smaller tweaks. That raised the rate of finding intermediate concepts in Qwen 3.6 27B from 35.7% to 55.2%. The original lens misses a lot.</p>
 <p>Third, the ruler depends on the texts used to make it. An audit of the lens on Pythia models (Gupta, NeurIPS 2026 workshop) found that changing only the set of texts used for the average moved the score from 22.8 to 26.0. Lens results from different studies can only be compared under matched conditions.</p>
 <p>Fourth, some interventions have a simpler explanation. Removing the test-related directions in the blackmail scenario may have changed the reasoning simply by making the model less likely to say the word ‘test’ (Nanda). The direction of the effect looks right, but it is not clean evidence.</p>
 <p>Fifth, the workspace theory is not settled even in people. In a large preregistered adversarial test published in Nature in 2025 (Cogitate), global neuronal workspace theory failed one of its key predictions: the ignition in the prefrontal cortex when a stimulus ends did not appear. Ignition is also what this paper shows most weakly. A model passing the theory&#39;s checklist is a separate question from how well that checklist fits people.</p>
@@ -89,6 +89,6 @@
 <footer class="colophon"><div class="colophon-links"><a href="https://github.com/hyunhoonj">Github</a><span>,</span><a href="https://scholar.google.com/citations?user=0ROak0YAAAAJ&amp;hl=en">Google Scholar</a><span>,</span><a href="mailto:hyunhoon.j@gmail.com">hyunhoon.j@gmail.com</a></div><span class="colophon-copy">© 2026</span></footer>
 </div>
 </div>
-<script src="../../assets/site.js?v=8e667045"></script>
+<script src="../../assets/site.js?v=af043279"></script>
 </body>
 </html>
