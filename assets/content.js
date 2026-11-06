@@ -211,19 +211,19 @@
       "en": {
         "statement": "A note about something you read here, research worth doing together, or a correction — ==all of it is welcome.==",
         "emailLabel": "Email",
-        "email": "hyunhoon@email.com",
+        "email": "hyunhoon.j@gmail.com",
         "reply": "Usually two days. If none comes, send it again.",
         "channelsLabel": "Elsewhere",
         "channels": [
           {
             "name": "Github",
             "note": "prototypes and analysis code",
-            "href": "https://github.com/hyunhoon"
+            "href": "https://github.com/hyunhoonj"
           },
           {
             "name": "Google Scholar",
             "note": "the published record",
-            "href": "https://scholar.google.com/"
+            "href": "https://scholar.google.com/citations?user=0ROak0YAAAAJ&hl=en"
           }
         ],
         "formOn": true,
