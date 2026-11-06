@@ -98,7 +98,7 @@
             "ratio": "1/1",
             "image": {
               "src": "images/emo-zen.jpg",
-              "alt": "고리 모양으로 놓인 여덟 개의 옅은 색 구름. 산호색과 황토색에서 초록과 파랑을 거쳐 보라와 장밋빛으로 이어짐"
+              "alt": "고리 모양으로 놓인 여덟 개의 옅은 색 구름과 그 가운데 찍힌 둥근 먹점 하나. 구름은 산호색과 황토색에서 초록과 파랑을 거쳐 보라와 장밋빛으로 이어짐"
             }
           }
         ]
@@ -170,7 +170,7 @@
             "ratio": "1/1",
             "image": {
               "src": "images/emo-zen.jpg",
-              "alt": "Eight soft clouds of colour arranged in a ring, shading from coral and ochre through green and blue to violet and rose"
+              "alt": "Eight soft clouds of colour arranged in a ring, shading from coral and ochre through green and blue to violet and rose, with a round ink dot at the centre"
             }
           }
         ]
