@@ -10,8 +10,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,400&amp;family=Noto+Serif+KR:wght@300;400;600&amp;display=swap">
-  <link rel="stylesheet" href="../assets/broadsheet.css?v=8e667045">
-  <link rel="stylesheet" href="../assets/site.css?v=8e667045">
+  <link rel="stylesheet" href="../assets/broadsheet.css?v=af043279">
+  <link rel="stylesheet" href="../assets/site.css?v=af043279">
 </head>
 <body>
 <div class="sheet">
@@ -67,7 +67,7 @@
 <h2 class="article-h2" id="section-6">따져 볼 점</h2>
 <p>논문을 논평, 후속 연구와 함께 놓고 보면, 이 결과를 읽을 때 염두에 둘 점이 몇 가지 있습니다.</p>
 <p>첫째, 방향을 고르는 방식이 결과의 일부를 미리 정할 수 있습니다. 렌즈 방향은 애초에 출력에 큰 영향을 주는 방향으로 고른 것입니다. 그러니 이 방향들이 널리 영향을 준다는 결과에는 고르는 방식이 일부 들어 있을 수 있습니다(Butlin 등). 저자들은 렌즈 방향을 무작위로 회전한 대조군이나 희소 오토인코더 특징과의 비교로 이를 일부 막았지만, 완전히 떼어 내기는 어렵습니다.</p>
-<p>둘째, 렌즈가 볼 수 있는 것은 토큰 하나짜리 개념뿐입니다. ‘prompt injection’은 두 조각으로 흩어지고, 숫자 단어는 바꿔치기가 거의 되지 않았습니다. 그래서 작업 공간이 말로 이루어져 있다는 인상이나 용량 추정은 일부 도구의 한계일 수 있습니다. 10월에 나온 J++ 렌즈(Ayonrinde · Lindsey)는 잡음이 많은 야코비안을 걸러 내기만 했는데도, Qwen 3.6 27B에서 중간 개념을 찾는 비율을 35.7%에서 55.2%로 올렸습니다. 원래 렌즈가 놓치는 것이 많다는 뜻입니다.</p>
+<p>둘째, 렌즈가 볼 수 있는 것은 토큰 하나짜리 개념뿐입니다. ‘prompt injection’은 두 조각으로 흩어지고, 숫자 단어는 바꿔치기가 거의 되지 않았습니다. 그래서 작업 공간이 말로 이루어져 있다는 인상이나 용량 추정은 일부 도구의 한계일 수 있습니다. 10월에 나온 J++ 렌즈(Ayonrinde · Lindsey, Anthropic 펠로우 프로그램 연구)는 크게 바꾼 것이 없습니다. 주로 잡음이 많은 야코비안을 걸러 내고, 작은 수정 두 가지를 더했습니다. 그것만으로 Qwen 3.6 27B에서 중간 개념을 찾는 비율이 35.7%에서 55.2%로 올랐습니다. 원래 렌즈가 놓치는 것이 많다는 뜻입니다.</p>
 <p>셋째, 자의 눈금이 자를 만드는 데 쓴 글에 따라 달라집니다. Pythia 모델로 렌즈를 점검한 연구(Gupta, NeurIPS 2026 워크숍)는 평균에 쓰는 글 묶음만 바꿔도 점수가 22.8에서 26.0까지 움직인다는 것을 보였습니다. 서로 다른 연구의 렌즈 결과를 비교하려면 이 조건을 맞춰야 합니다.</p>
 <p>넷째, 일부 개입 실험은 더 단순하게 설명될 수 있습니다. 협박 시험에서 시험과 관련된 방향을 지운 실험은, 모델이 ‘시험’이라는 단어를 덜 말하게 되어 그 뒤의 추론이 달라진 것일 수도 있습니다(Nanda). 효과의 방향은 맞아 보이지만 깨끗한 증거는 아닙니다.</p>
 <p>다섯째, 작업 공간 이론 자체가 사람에게서도 확정되지 않았습니다. 2025년 Nature에 실린 대규모 사전 등록 대결 실험(Cogitate)에서 전역 신경 작업 공간 이론은 핵심 예측 하나를 통과하지 못했습니다. 자극이 사라질 때 전전두엽에서 일어나야 할 점화가 나타나지 않은 것입니다. 이 논문이 가장 약하게 보여 준 것도 점화입니다. 모델이 이 이론의 체크리스트를 통과하는 것과, 그 체크리스트가 사람에게 얼마나 맞는지는 별개의 문제입니다.</p>
@@ -89,6 +89,6 @@
 <footer class="colophon"><div class="colophon-links"><a href="https://github.com/hyunhoonj">Github</a><span>,</span><a href="https://scholar.google.com/citations?user=0ROak0YAAAAJ&amp;hl=en">Google Scholar</a><span>,</span><a href="mailto:hyunhoon.j@gmail.com">hyunhoon.j@gmail.com</a></div><span class="colophon-copy">© 2026</span></footer>
 </div>
 </div>
-<script src="../assets/site.js?v=8e667045"></script>
+<script src="../assets/site.js?v=af043279"></script>
 </body>
 </html>
