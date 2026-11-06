@@ -3,21 +3,21 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>혀끝에 맴도는 생각 — Hyunhoon Jung / 정현훈</title>
+  <title>AI의 전역 작업 공간 이론 — Hyunhoon Jung / 정현훈</title>
   <meta name="description" content="Anthropic의 J-lens 논문은 언어 모델 안에서 말로 꺼낼 수 있는 생각이 모이는 작은 자리를 찾았습니다. 그 자리가 무엇을 하는지, 그리고 그것이 의식에 대해 말해 주는 것과 말해 주지 않는 것을 읽어 봅니다.">
   <link rel="alternate" hreflang="ko" href="j-lens-global-workspace.html">
   <link rel="alternate" hreflang="en" href="../en/writing/j-lens-global-workspace.html">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,400&amp;family=Noto+Serif+KR:wght@300;400;600&amp;display=swap">
-  <link rel="stylesheet" href="../assets/broadsheet.css?v=1350f07d">
-  <link rel="stylesheet" href="../assets/site.css?v=1350f07d">
+  <link rel="stylesheet" href="../assets/broadsheet.css?v=8699ed3f">
+  <link rel="stylesheet" href="../assets/site.css?v=8699ed3f">
 </head>
 <body>
 <div class="sheet">
 <div class="page">
 <header class="masthead"><div><a class="masthead-name" href="../index.html">Hyunhoon Jung <span class="slash">/</span> 정현훈</a></div><nav class="masthead-nav"><a href="../information.html">소개</a><a href="../contact.html">연락</a><a class="lang-switch" lang="en" hreflang="en" href="../en/writing/j-lens-global-workspace.html">English</a></nav></header>
-<div class="split article-head"><div class="meta meta--dim"><span>논문 읽기</span><span>,</span><span>2026.11</span><span>,</span><span>21분</span></div><div><h1 class="article-title">혀끝에 맴도는 생각</h1><p class="article-dek">Anthropic의 J-lens 논문은 언어 모델 안에서 <span class="band">말로 꺼낼 수 있는 생각이 모이는 작은 자리</span>를 찾았습니다. 그 자리가 무엇을 하는지, 그리고 그것이 의식에 대해 말해 주는 것과 말해 주지 않는 것을 읽어 봅니다.</p></div></div>
+<div class="split article-head"><div class="meta meta--dim"><span>논문 읽기</span><span>,</span><span>2026.11</span><span>,</span><span>21분</span></div><div><h1 class="article-title">AI의 전역 작업 공간 이론</h1><p class="article-dek">Anthropic의 J-lens 논문은 언어 모델 안에서 <span class="band">말로 꺼낼 수 있는 생각이 모이는 작은 자리</span>를 찾았습니다. 그 자리가 무엇을 하는지, 그리고 그것이 의식에 대해 말해 주는 것과 말해 주지 않는 것을 읽어 봅니다.</p></div></div>
 <div class="split article-grid"><div class="rail"><div><div class="rail-title">[차례]</div><div class="rail-list"><div>01 &nbsp;<a href="#section-1">말하기 직전의 단어를 읽는 렌즈</a></div><div>02 &nbsp;<a href="#section-2">한 가지 기준, 다섯 가지 성질</a></div><div>03 &nbsp;<a href="#section-3">구조도 작업 공간을 닮았다</a></div><div>04 &nbsp;<a href="#section-4">말하지 않은 것들</a></div><div>05 &nbsp;<a href="#section-5">의식에 대해 말해 주는 것</a></div><div>06 &nbsp;<a href="#section-6">따져 볼 점</a></div><div>07 &nbsp;<a href="#section-7">과잉 확신 연구와 만나는 곳</a></div><div>08 &nbsp;<a href="#section-8">무엇을 뜻하나</a></div></div></div><div><div class="rail-title">[주제]</div><div class="rail-list rail-list--dim"><span>J-lens</span><span>전역 작업 공간</span><span>접근 의식</span><span>해석가능성</span></div></div></div><div class="article-body"><p>우리 뇌가 하는 일의 대부분은 우리에게 닿지 않습니다. 얼굴을 알아보고, 균형을 잡고, 문장의 구조를 읽는 일은 의식하지 않아도 저절로 일어납니다. 그 가운데 아주 작은 일부만이 머리에 떠오릅니다. 떠오른 것은 말로 할 수 있고, 일부러 붙잡아 둘 수 있고, 다른 생각과 엮어 추론에 쓸 수 있습니다. 의식 연구에서는 이것을 접근 의식(access consciousness)이라고 부릅니다.</p>
 <p>2026년 7월, Anthropic의 해석가능성 팀(Wes Gurnee, Nicholas Sofroniew, Jack Lindsey 외 13명)이 언어 모델에도 이와 비슷한 구분이 생겨났다고 주장하는 논문을 냈습니다. 모델 안에는 말로 보고하고, 일부러 붙잡고, 추론에 쓸 수 있는 작은 표상 묶음이 있고, 그 아래에서 훨씬 많은 처리가 자동으로 일어난다는 것입니다. 그 묶음을 찾으려고 만든 도구가 야코비안 렌즈, 줄여서 J-lens이고, 이 렌즈로 찾은 자리를 저자들은 J-space라고 부릅니다.</p>
 <p>이 글은 논문 본문과 부록 117쪽, 함께 공개된 외부 전문가 논평 세 편, 그리고 그 뒤에 나온 후속 연구를 함께 읽고 정리한 것입니다. 논문이 무엇을 보여 주었는지, 증거가 얼마나 단단한지, 그리고 의식과 AI 복지에 대해 무엇을 말해 주고 무엇은 말해 주지 않는지 차례로 살펴봅니다. 아래에 나오는 예시 문장은 원문이 모두 영어입니다.</p>
@@ -88,6 +88,6 @@
 <footer class="colophon"><div class="colophon-links"><a href="https://github.com/hyunhoonj">Github</a><span>,</span><a href="https://scholar.google.com/citations?user=0ROak0YAAAAJ&amp;hl=en">Google Scholar</a><span>,</span><a href="mailto:hyunhoon.j@gmail.com">hyunhoon.j@gmail.com</a></div><span class="colophon-copy">© 2026</span></footer>
 </div>
 </div>
-<script src="../assets/site.js?v=1350f07d"></script>
+<script src="../assets/site.js?v=8699ed3f"></script>
 </body>
 </html>
