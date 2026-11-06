@@ -48,12 +48,17 @@
   /* A newline the author typed becomes a break. The three statements ask for
      this — the rest of the site lets the measure decide where lines end. The break
      is marked so a narrow sheet, which re-wraps at a different size, can stand
-     it down rather than inherit a break measured against the wide one. */
+     it down rather than inherit a break measured against the wide one.
+     A blank line is different: it parts two sentences that are meant to stand
+     apart, not a line measured against the wide sheet, so it holds at every
+     width — the phone shows the same paragraph break as the wide sheet. */
   function authorBreaks(html) {
     /* The space after the break matters: on a wide sheet it is swallowed as
        leading whitespace on the new line, and on a narrow one — where the break
        stands down — it is the only thing left keeping the two words apart. */
-    return html.replace(/[ \t]*\n[ \t]*/g, '<br class="soft-break"> ');
+    return html.split(/[ \t]*\n[ \t]*\n\s*/).map(function (part) {
+      return part.replace(/[ \t]*\n[ \t]*/g, '<br class="soft-break"> ');
+    }).join('<br><br>');
   }
   function lines(text) {
     return String(text == null ? '' : text).split('\n').map(function (s) { return s.trim(); }).filter(Boolean);
