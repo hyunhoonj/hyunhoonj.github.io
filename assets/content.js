@@ -42,7 +42,7 @@
             "title": "AI 의식 연구 지도",
             "kind": "",
             "year": "2026",
-            "desc": "AI 의식에 관한 논문 20편을 각 글이 기대는 이론에 따라 배치했습니다. ==회의론과 낙관론이 갈라지는 지점==이 드러납니다.",
+            "desc": "AI 의식에 관한 논문 21편을 각 글이 기대는 이론에 따라 배치했습니다. ==회의론과 낙관론이 갈라지는 지점==이 드러납니다.",
             "ratio": "1/1",
             "image": {
               "src": "images/atlas-enso.jpg",
@@ -114,7 +114,7 @@
             "title": "AI Consciousness Atlas",
             "kind": "",
             "year": "2026",
-            "desc": "Twenty papers on AI consciousness, arranged by the theories they rely on, and ==where the skeptics and the optimists part ways==.",
+            "desc": "Twenty-one papers on AI consciousness, arranged by the theories they rely on, and ==where the skeptics and the optimists part ways==.",
             "ratio": "1/1",
             "image": {
               "src": "images/atlas-enso.jpg",
