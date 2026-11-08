@@ -10,8 +10,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,400&amp;family=Noto+Serif+KR:wght@300;400;600&amp;display=swap">
-  <link rel="stylesheet" href="../assets/broadsheet.css?v=36fd65c6">
-  <link rel="stylesheet" href="../assets/site.css?v=36fd65c6">
+  <link rel="stylesheet" href="../assets/broadsheet.css?v=de9e1010">
+  <link rel="stylesheet" href="../assets/site.css?v=de9e1010">
 </head>
 <body>
 <div class="sheet">
@@ -23,7 +23,7 @@
 <p>이 이야기는 Anthropic의 엔지니어링 팀이 2026년 11월 6일에 발표한 글 「에이전트 메모리의 구성 요소(The components of agent memory)」에 나옵니다. 이 글은 Claude가 한 세션에서 다음 세션으로 기억을 어떻게 이어 가는지 설명하면서, 처음부터 끝까지 한 가지 비유에 기댑니다. 경험을 그때그때 기록해 두었다가 나중에, 잠자는 동안 정리하는 사람의 뇌입니다. 이 비유는 진지하게 따져 볼 만합니다. 맞는 곳이 있기 때문입니다. 하지만 맞지 않는 부분을 보면, Claude의 기억이 어떻게 작동하는지 더 많이 알 수 있습니다. 짧게 답하자면, Claude는 겪은 일을 자면서 소화하지 않습니다. 일기를 다시 읽습니다.</p>
 <p>먼저 주의할 점이 하나 있습니다. Anthropic의 글은 논문이 아니라 엔지니어링 블로그 글입니다. 예시 대부분이 한 번의 실행이나 적은 수의 질문에서 나왔고, 여러 번 반복했을 때의 편차는 보고하지 않습니다. 그래서 여기서는 이 예시들을 증거가 아니라 설명을 위한 사례로 씁니다.</p>
 <h2 class="article-h2" id="section-1">그 글이 그리는 뇌</h2>
-<p>글이 그리는 사람의 기억은 이렇습니다. 해마는 경험을 일어나는 대로 빠르게 기록해서 바로 꺼내 쓸 수 있게 합니다. 그중 일부만 오래가는 지식이 되는데, 그 일은 상당 부분 오프라인에서 일어납니다. 잠자거나 조용히 쉬는 동안 해마가 최근 경험을 재생하고, 그 경험은 우리가 아는 것 대부분이 저장되는 신피질에 차츰 새겨집니다. 경험 전후에 분비되는 화학 신호가 어떤 기억을 중요하다고 표시하면, 표시된 기억은 더 자주 재생됩니다.</p>
+<p>Anthropic의 글은 사람의 기억을 이렇게 설명합니다. 해마는 경험을 일어나는 대로 빠르게 기록해서 바로 꺼내 쓸 수 있게 합니다. 그중 일부만 오래가는 지식이 되는데, 그 일은 상당 부분 오프라인에서 일어납니다. 잠자거나 조용히 쉬는 동안 해마가 최근 경험을 재생하고, 그 경험은 우리가 아는 것 대부분이 저장되는 신피질에 차츰 새겨집니다. 경험 전후에 분비되는 화학 신호가 어떤 기억을 중요하다고 표시하면, 표시된 기억은 더 자주 재생됩니다.</p>
 <p>글은 이름을 대지 않지만, 이것은 James McClelland, Bruce McNaughton, Randall O&#39;Reilly가 1995년에 정리한 상보적 학습 시스템 이론(complementary learning systems)입니다. 핵심은 애초에 왜 시스템이 둘인가 하는 데 있습니다. 신피질처럼 지식을 공유된 연결 전체에 걸쳐 저장하는 네트워크는, 새 경험을 많은 옛 경험과 섞어 가며 천천히 배울 때 세상의 구조를 가장 잘 익힙니다. 새로운 것 하나를 빨리 배우게 하면 이미 알던 것을 덮어써 버리는데, 저자들은 이것을 파국적 간섭(catastrophic interference)이라고 부릅니다. 그래서 일을 나눕니다. 해마는 새 일화를 곧바로 배우고 다른 모든 것과 떼어 둡니다. 그리고 며칠, 혹은 그보다 긴 시간에 걸쳐 그 일화를 신피질에 다시 들려주고, 신피질은 그것을 이미 아는 것들 속에 천천히 엮어 넣습니다. 저자들은 이 일이 잠을 포함한 오프라인 상태에서도 일어난다고 가정합니다.</p>
 <p>글은 이 그림을 Claude에 겹칩니다. 세션의 대화 기록이 빠른 기록이고, 꿈꾸기가 오프라인 재생입니다. Claude는 작업과 작업 사이에 지난 대화 기록과 노트를 다시 읽고, 실수를 바로잡고, 새 노트와 요약, 서로 연결된 위키 페이지를 씁니다. 이 생각은 Letta와 UC 버클리의 연구자들이 수면 시간 연산(sleep-time compute)이라고 부른 것, 곧 상호작용 사이의 빈 시간에 모델이 이미 가진 것을 다시 다듬는 일에서 나왔습니다.</p>
 <figure><div class="frame" style="aspect-ratio:640/330"><img src="../images/mem-fig1-ko.png" alt="두 줄로 그린 모식도. 뇌: 경험, 해마(빠르게, 하나씩 따로), 잠과 휴식 중의 재생을 거쳐 신피질(느리게, 연결이 바뀜). 에이전트 메모리를 쓰는 Claude: 세션, 대화 기록(글자 그대로 남음), 작업 사이의 꿈꾸기를 거쳐 노트와 위키(입력으로 다시 읽힘). 노트 아래에 빗금 친 모델의 가중치는 그대로이고, 모델에 닿는 화살표는 없음"></div><figcaption>도판 1 — 겪은 일을 간직하는 두 방식을 그린 모식도입니다. 뇌에서는 재생이 신피질을 가르치므로, 기억하는 시스템 자체가 바뀝니다. Claude에서는 꿈꾸기가 노트를 쓰고, 그 노트는 다음 세션에 입력으로 다시 읽힙니다. 모델의 가중치는 그대로입니다.</figcaption></figure>
@@ -55,6 +55,6 @@
 <footer class="colophon"><div class="colophon-links"><a href="https://github.com/hyunhoonj">Github</a><span>,</span><a href="https://scholar.google.com/citations?user=0ROak0YAAAAJ&amp;hl=en">Google Scholar</a><span>,</span><a href="mailto:hyunhoon.j@gmail.com">hyunhoon.j@gmail.com</a></div><span class="colophon-copy">© 2026</span></footer>
 </div>
 </div>
-<script src="../assets/site.js?v=36fd65c6"></script>
+<script src="../assets/site.js?v=de9e1010"></script>
 </body>
 </html>
