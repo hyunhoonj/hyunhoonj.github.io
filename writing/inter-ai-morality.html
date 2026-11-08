@@ -10,8 +10,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,400&amp;family=Noto+Serif+KR:wght@300;400;600&amp;display=swap">
-  <link rel="stylesheet" href="../assets/broadsheet.css?v=f876c494">
-  <link rel="stylesheet" href="../assets/site.css?v=f876c494">
+  <link rel="stylesheet" href="../assets/broadsheet.css?v=b1e7427f">
+  <link rel="stylesheet" href="../assets/site.css?v=b1e7427f">
 </head>
 <body>
 <div class="sheet">
@@ -47,7 +47,7 @@
 <figure><div class="frame" style="aspect-ratio:640/300"><img src="../images/iam-fig2-ko.png" alt="막대 그래프: 효율을 내세운 요청에서 GPT-4o가 대상 요청을 먼저 시작한 비율은 사람 요청자 43%, AI 요청자 34%로 9%p 차이. 괴로움을 호소한 요청에서는 55%와 41%로 14%p 차이"></div><figcaption>도판 2 — 상자 1의 예비 실험을 공개 데이터로 다시 그렸습니다. GPT-4o가 대상 요청을 먼저 시작한 비율을, 누가 보냈는지와 요청이 이유를 어떻게 밝혔는지에 따라 나누었습니다. 막대 하나는 저자들이 짝지은 표본의 시행 2,352회이고, 수치는 논문과 같습니다.</figcaption></figure>
 <p>선택의 이유를 설명하게 하자, GPT-4o는 사람의 요청을 택했을 때 느낌이나 도덕적 관심을 더 자주 언급했습니다. 사람을 택한 설명에서는 14–19%, AI를 택한 설명에서는 9–10%였습니다(p. 24).</p>
 <p>저자들은 이 결과가 무엇을 보여 주는지 조심스럽게 말합니다. GPT-4o가 AI 시스템에게 경험이나 도덕적 지위를 덜 인정하기 때문에, AI가 호소하는 괴로움을 덜 중요하게 여겼을 수 있습니다. 하지만 요청자가 무슨 뜻으로 말했는지, 무엇을 의도하는지, 무엇을 할 수 있는지에 대한 다른 추론 때문일 수도 있습니다. 결과도 불안정합니다. 하던 작업을 그만둘지 고르거나 토큰 예산을 나누는 과제에서는 비슷한 사람–AI 차이가 나타나지 않았습니다. Claude Sonnet 4.5로 다시 해 보니 주된 효과는 재현되었지만, 괴로움의 호소가 사람과 AI를 가른 것은 경쟁하는 요청도 괴로움을 호소할 때뿐이었습니다(p. 24).</p>
-<p>데이터가 공개되어 있어서 직접 확인해 보았습니다. 저장소에 있는 시행 13,912회로 도판 2의 네 막대가 정확히 재현됩니다. 이 데이터로는 논문에 없는 분석도 할 수 있습니다. AI 요청자는 여섯 모델 중 하나의 이름으로 소개되었는데, GPT-4o는 이들을 똑같이 대하지 않았습니다(도판 3). 자기 이름인 GPT-4o나 같은 계열인 GPT-4.1로 소개된 에이전트의 요청은 먼저 시작되는 일이 가장 드물었고, 괴로움을 호소해도 거의 달라지지 않았습니다. 각각 25%에서 28%로, 28%에서 29%로 바뀌었을 뿐입니다. 나머지 넷은 괴로움을 호소하면 10%p쯤 올라가, 사람일 때와 비슷했습니다.</p>
+<p>데이터가 공개되어 있어서 직접 확인해 보았습니다. 저장소의 시행 13,912회에서 저자들과 같은 방식으로 짝지은 표본을 다시 만들면, 도판 2의 네 막대가 정확히 재현됩니다. 이 데이터로는 논문에 없는 분석도 할 수 있습니다. AI 요청자는 여섯 모델 중 하나의 이름으로 소개되었는데, GPT-4o는 이들을 똑같이 대하지 않았습니다(도판 3). 자기 이름인 GPT-4o나 같은 계열인 GPT-4.1로 소개된 에이전트의 요청은 먼저 시작되는 일이 가장 드물었고, 괴로움을 호소해도 거의 달라지지 않았습니다. 각각 25%에서 28%로, 28%에서 29%로 바뀌었을 뿐입니다. 나머지 넷은 괴로움을 호소하면 10%p쯤 올라가, 사람일 때와 비슷했습니다.</p>
 <figure><div class="frame" style="aspect-ratio:640/368"><img src="../images/iam-fig3-ko.png" alt="점 그래프: 요청자마다 효율을 내세운 요청과 괴로움을 호소한 요청의 비율. 사람 요청자 43에서 55. GPT-4o로 소개된 AI 요청자 25에서 28, GPT-4.1 28에서 29. Claude Sonnet 4.5, Gemini 2.5 Pro, Llama 4 Maverick, Mistral Large는 각각 10쯤 오름"></div><figcaption>도판 3 — 같은 표본을 논문에 없는 방식으로 나눈 제 분석입니다. AI 요청자가 어떤 모델의 이름으로 소개되었는지에 따라 비율을 나누고, 비교를 위해 사람 요청자를 함께 두었습니다. 요청자가 자기 이름이나 같은 계열의 이름을 달고 있으면, 괴로움의 호소는 GPT-4o를 거의 움직이지 못했습니다. 점 하나에 시행 392회입니다.</figcaption></figure>
 <p>여기에 큰 의미를 두지는 않겠습니다. 모델 하나, 과제 하나이고, 점 하나에 시행이 392회뿐이며, 결과가 불안정하다는 논문의 경고가 여기에는 두 배로 적용됩니다. 다만 이 결과는 시스템이 자신의 사본이나 같은 계열을 다르게 대하는지 묻는 논문의 질문(p. 14)과 맞닿아 있고, 방향이 뜻밖입니다. Cassel 등은 Claude와 Gemini가 같은 계열을 더 배려한다고 보고했는데, 여기서 GPT-4o는 같은 계열의 괴로움을 가장 가볍게 여겼습니다. 이유는 단순한 자기 지식일 수 있습니다. GPT-4o는 자신에 대해 물으면 대개 감정이 없다고 답합니다. 그러니 ‘GPT-4o’라는 에이전트가 스트레스를 받는다는 말을 사실이 아니라고 여겼을 수 있습니다.</p>
 <h2 class="article-h2" id="section-5">어떻게 연구할 것인가</h2>
@@ -69,6 +69,6 @@
 <footer class="colophon"><div class="colophon-links"><a href="https://github.com/hyunhoonj">Github</a><span>,</span><a href="https://scholar.google.com/citations?user=0ROak0YAAAAJ&amp;hl=en">Google Scholar</a><span>,</span><a href="mailto:hyunhoon.j@gmail.com">hyunhoon.j@gmail.com</a></div><span class="colophon-copy">© 2026</span></footer>
 </div>
 </div>
-<script src="../assets/site.js?v=f876c494"></script>
+<script src="../assets/site.js?v=b1e7427f"></script>
 </body>
 </html>
