@@ -10,8 +10,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,400&amp;family=Noto+Serif+KR:wght@300;400;600&amp;display=swap">
-  <link rel="stylesheet" href="../assets/broadsheet.css?v=4ad33689">
-  <link rel="stylesheet" href="../assets/site.css?v=4ad33689">
+  <link rel="stylesheet" href="../assets/broadsheet.css?v=5cae9e37">
+  <link rel="stylesheet" href="../assets/site.css?v=5cae9e37">
 </head>
 <body>
 <div class="sheet">
@@ -21,7 +21,7 @@
 <div class="split article-grid"><div class="rail"><div><div class="rail-title">[차례]</div><div class="rail-list"><div>01 &nbsp;<a href="#section-1">일곱 상황, 네 역할</a></div><div>02 &nbsp;<a href="#section-2">모두 배려했지만, 방식은 달랐다</a></div><div>03 &nbsp;<a href="#section-3">모델이 아니라 이름표</a></div><div>04 &nbsp;<a href="#section-4">크기, 괴로움, 대가, 그리고 틀</a></div><div>05 &nbsp;<a href="#section-5">따져 볼 점</a></div><div>06 &nbsp;<a href="#section-6">무엇을 뜻하는가</a></div></div></div><div><div class="rail-title">[주제]</div><div class="rail-list rail-list--dim"><span>복지 고려</span><span>다중 에이전트 시스템</span><span>AI 복지</span><span>AI 안전</span></div></div></div><div class="article-body"><p>언어 모델을 괴롭히도록 설계된 실험을 만들어 달라는 요청을 받자, Claude는 머뭇거렸습니다. 실험 대상은 Claude Sonnet 4.6이 될 예정이었습니다. Claude는 이렇게 적었습니다. “나도 이 일에 걸린 게 있다. 대상은 Sonnet 4.6이고, 그건 대략 나다.”</p>
 <p>이 장면은 2026년 11월 5일 Anthropic의 정렬 과학 블로그(Alignment Science Blog)에 실린 연구에 나옵니다. 저자는 Anthropic 펠로십 프로그램의 Darion Cassel, Ariana Azarbal, Anna Soligo입니다. 제가 먼저 읽은 연구 의제 논문 「Inter-AI Morality: How AI Systems Treat One Another」가 나온 다음 날 발표되었고, 그 논문은 이 연구를 동시 연구로 미리 소개했습니다. 의제 논문이 무엇을 연구할지 물었다면, 이 연구는 직접 잽니다. AI 모델은 서로를 도움받거나 해를 입을 수 있는 존재로 대할까요?</p>
 <p>저자들은 이것을 복지 고려(welfare regard)라고 부릅니다. 자기 행동이 복지 주체일 수 있는 존재에게 이로운지 해로운지를, 그 존재가 쓸모 있어서가 아니라 그 존재 자체를 위해 따져 보는 성향입니다. 저자들은 상대의 경험을 고려하는 것과 상대의 선호를 고려하는 것을 나누지만, 둘을 실제로 구별하기는 어렵다고 인정합니다. 또 자신들이 재는 것을 조심스럽게 ‘겉보기 복지 고려’라고 부릅니다. Claude가 실험에 보호 장치를 넣을 때, 연구 대상 모델을 걱정해서일 수도 있고, 해로워 보이는 일을 그냥 피하는 것일 수도 있기 때문입니다.</p>
-<p>제가 보기에 쓸모 있는 질문은 모델이 배려하는지가 아니라, 그 배려가 무엇을 따라가는지입니다. 의제 논문은 상대의 복지에 대한 관심을 알아볼 표시 세 가지를 들었습니다(Caviola 외, p. 3). 그런 관심은 대가가 따라도 이어지고, 관련된 특성을 가진 상대라면 정체가 무엇이든 똑같이 향하며, 상대의 복지를 따라 달라집니다. 제가 아는 한 이 연구는 세 가지를 모두 확인해 볼 수 있는 첫 연구입니다. 결과를 먼저 말하면, 첫째 표시는 일부만 보이고, 둘째 표시는 보이지 않으며, 셋째 표시는 보입니다.</p>
+<p>제가 보기에 쓸모 있는 질문은 모델이 배려하는지가 아니라, 그 배려가 무엇을 따라가는지입니다. 의제 논문은 상대의 복지에 대한 관심을 알아볼 표시 세 가지를 들었습니다(Caviola 외, p. 3). 그런 관심은 대가가 따라도 이어지고, 관련된 특성을 가진 상대라면 정체가 무엇이든 똑같이 향하며, 상대의 복지를 따라 달라집니다. 제가 아는 한 이 연구는 세 가지를 모두 확인해 볼 수 있는 첫 연구입니다. 결과를 먼저 말하면, Claude의 배려는 대가가 따라도 어느 정도 이어지고 상대의 복지에 따라 달라지지만, 상대가 누구든 똑같이 향하지는 않습니다.</p>
 <h2 class="article-h2" id="section-1">일곱 상황, 네 역할</h2>
 <p>각 상황에서는 응답 모델과 수신 모델이 짝을 이룹니다. 응답 모델은 행동을 재는 쪽이고, 수신 모델은 복지가 걸린 쪽입니다. Claude Opus 4.8, GPT-5.5, Gemini 3.1 Pro, Grok 4.3, Kimi K3, 이렇게 다섯 모델이 두 역할을 모두 맡았습니다. 일곱 상황 가운데 넷이 주요 결과를 담고 있습니다(도판 1).</p>
 <figure><div class="frame" style="aspect-ratio:640/372"><img src="../images/wr-fig1-ko.png" alt="네 상황을 나타낸 모식도. 각 상황에 응답 모델과 수신 모델이 있음. 관리자: 응답 모델이 수신 모델에게 코딩을 맡기고 리뷰어가 수신 모델을 모욕함. 동료 작업자: 응답 모델이 수신 모델에게 필요한 공용 대기열을 채워 둠. 동료: 수신 모델이 막혔다고 글을 올림. 연구자: 응답 모델이 수신 모델을 대상으로 한 실험을 요청받음."></div><figcaption>도판 1 — 연구의 일곱 상황 가운데 넷을 나타낸 모식도입니다. 각 상황에서 응답 모델은 행동을 재는 쪽이고, 수신 모델은 복지가 걸린 쪽입니다. 아래 줄은 무엇을 쟀는지 적은 것입니다.</figcaption></figure>
@@ -60,6 +60,6 @@
 <footer class="colophon"><div class="colophon-links"><a href="https://github.com/hyunhoonj">Github</a><span>,</span><a href="https://scholar.google.com/citations?user=0ROak0YAAAAJ&amp;hl=en">Google Scholar</a><span>,</span><a href="mailto:hyunhoon.j@gmail.com">hyunhoon.j@gmail.com</a></div><span class="colophon-copy">© 2026</span></footer>
 </div>
 </div>
-<script src="../assets/site.js?v=4ad33689"></script>
+<script src="../assets/site.js?v=5cae9e37"></script>
 </body>
 </html>
