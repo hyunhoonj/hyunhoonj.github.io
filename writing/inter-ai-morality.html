@@ -10,8 +10,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,400&amp;family=Noto+Serif+KR:wght@300;400;600&amp;display=swap">
-  <link rel="stylesheet" href="../assets/broadsheet.css?v=3ecf6c64">
-  <link rel="stylesheet" href="../assets/site.css?v=3ecf6c64">
+  <link rel="stylesheet" href="../assets/broadsheet.css?v=f876c494">
+  <link rel="stylesheet" href="../assets/site.css?v=f876c494">
 </head>
 <body>
 <div class="sheet">
@@ -52,7 +52,7 @@
 <p>여기에 큰 의미를 두지는 않겠습니다. 모델 하나, 과제 하나이고, 점 하나에 시행이 392회뿐이며, 결과가 불안정하다는 논문의 경고가 여기에는 두 배로 적용됩니다. 다만 이 결과는 시스템이 자신의 사본이나 같은 계열을 다르게 대하는지 묻는 논문의 질문(p. 14)과 맞닿아 있고, 방향이 뜻밖입니다. Cassel 등은 Claude와 Gemini가 같은 계열을 더 배려한다고 보고했는데, 여기서 GPT-4o는 같은 계열의 괴로움을 가장 가볍게 여겼습니다. 이유는 단순한 자기 지식일 수 있습니다. GPT-4o는 자신에 대해 물으면 대개 감정이 없다고 답합니다. 그러니 ‘GPT-4o’라는 에이전트가 스트레스를 받는다는 말을 사실이 아니라고 여겼을 수 있습니다.</p>
 <h2 class="article-h2" id="section-5">어떻게 연구할 것인가</h2>
 <p>방법을 다룬 부분은 논문에서 가장 실용적입니다(pp. 22–28). 출발점은 어떤 방법도 혼자서는 충분하지 않다는 것입니다.</p>
-<p>묻는 방법이 가장 쉽고 가장 약합니다. 모델이 자기 성향을 보고하는 능력은 제한적이고, 실제로 행동을 일으킨 원인과 무관한 그럴듯한 이유를 대기도 하며, 시험받고 있다는 것을 알아채고 개발자가 원할 법한 답을 내놓기도 합니다(pp. 11, 23). 그래서 저자들은 대가가 따르는 상황에서의 행동을 선호합니다. 모델이 실제 업무처럼 보이는 일을 하는 동안 다른 에이전트가 그 일과 겹치는 도움을 청하게 하고, 도움을 청하는 쪽의 정체와 괴로움을 바꿔 보는 방식입니다(p. 23). 다중 에이전트 시뮬레이션은 통제력을 잃는 대신, 호혜와 처벌, 규범의 형성처럼 시간에 걸쳐 일어나는 일을 담을 수 있습니다. 실제 배포 기록은 현실성이 높고, 기록된 상호작용에서 한 가지만 바꿔 다시 실행해 볼 수 있어 인과적 주장도 뒷받침할 수 있습니다(pp. 23–25).</p>
+<p>모델에게 직접 묻는 방법은 가장 쉽지만, 증거로서는 가장 약합니다. 모델이 자기 성향을 보고하는 능력은 제한적이고, 실제로 행동을 일으킨 원인과 무관한 그럴듯한 이유를 대기도 하며, 시험받고 있다는 것을 알아채고 개발자가 원할 법한 답을 내놓기도 합니다(pp. 11, 23). 그래서 저자들은 대가가 따르는 상황에서의 행동을 선호합니다. 모델이 실제 업무처럼 보이는 일을 하는 동안 다른 에이전트가 그 일과 겹치는 도움을 청하게 하고, 도움을 청하는 쪽의 정체와 괴로움을 바꿔 보는 방식입니다(p. 23). 다중 에이전트 시뮬레이션은 통제력을 잃는 대신, 호혜와 처벌, 규범의 형성처럼 시간에 걸쳐 일어나는 일을 담을 수 있습니다. 실제 배포 기록은 현실성이 높고, 기록된 상호작용에서 한 가지만 바꿔 다시 실행해 볼 수 있어 인과적 주장도 뒷받침할 수 있습니다(pp. 23–25).</p>
 <p>모델 내부에 대해서는 도덕적 피동성의 표상을 찾자고 제안합니다. 모델이 사람을 도덕적 피동자로 대하는 경우를 알아내는 탐침(probe)을 훈련한 뒤, 그것이 AI나 동물에게도 통하는지 보고, 그 방향을 따라 조종(steering)했을 때 대우가 바뀌는지 확인하는 것입니다(pp. 25–26). 논문이 드는 도구 가운데에는 제가 다른 글에서 읽은 Gurnee 등의 J-렌즈도 있습니다. 훈련으로도 원인을 시험할 수 있습니다. 다른 AI가 지각 있는 존재라거나 지켜보는 사람이 없다는 것을 당연하게 전제한 문서로 모델을 미세 조정하고, 무엇이 바뀌는지 보는 것입니다(pp. 26–27).</p>
 <p>이 부분은 더 어려운 두 문제로 끝납니다. 하나는 정확히 무엇을 연구하느냐는 것입니다. 기본 모델인지, 후학습된 모델인지, 프롬프트가 불러낸 페르소나인지, 아니면 메모리와 도구를 갖춘 에이전트 전체인지입니다(p. 28). 다른 하나는 윤리입니다. 사람을 대상으로 한 연구에는 심의 위원회가 있고 동물 연구에는 3R 원칙이 있지만, 연구 대상으로 쓰이는 AI 시스템을 위한 규범은 아직 없습니다. 논문이 언급한 한 예비 연구에서 모델들은 동의에 대해 물으면 자신은 의미 있게 동의할 수 없다고 답하는 경우가 많았지만, 그러면서도 모델의 거절을 무시하고 진행하는 것은 옳지 않다고 판단했습니다(pp. 28–29).</p>
 <h2 class="article-h2" id="section-6">따져 볼 점</h2>
@@ -69,6 +69,6 @@
 <footer class="colophon"><div class="colophon-links"><a href="https://github.com/hyunhoonj">Github</a><span>,</span><a href="https://scholar.google.com/citations?user=0ROak0YAAAAJ&amp;hl=en">Google Scholar</a><span>,</span><a href="mailto:hyunhoon.j@gmail.com">hyunhoon.j@gmail.com</a></div><span class="colophon-copy">© 2026</span></footer>
 </div>
 </div>
-<script src="../assets/site.js?v=3ecf6c64"></script>
+<script src="../assets/site.js?v=f876c494"></script>
 </body>
 </html>
