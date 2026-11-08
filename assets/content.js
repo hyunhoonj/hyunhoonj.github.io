@@ -136,7 +136,7 @@
             "desc": "AI 모델들이 서로를 배려하는지 시험한 연구를 깊이 읽습니다. ==배려는 상대의 이름표를 따라갔습니다==.",
             "ratio": "1/1",
             "image": {
-              "src": "images/wr-zen.jpg",
+              "src": "images/wr-tags.jpg",
               "alt": "가로로 놓인 작은 직사각형 여섯 개. 이름표처럼 저마다 산호색, 청록색, 황토색, 초록색, 보라색, 청회색으로 다르고, 세 번째 황토색 이름표 아래에만 옅은 번짐이 있음"
             }
           }
@@ -247,7 +247,7 @@
             "desc": "A close reading of a study of whether AI models look after one another. ==The care followed the name tag.==",
             "ratio": "1/1",
             "image": {
-              "src": "images/wr-zen.jpg",
+              "src": "images/wr-tags.jpg",
               "alt": "Six small rectangles in a row, like name tags, each a different colour: coral, cyan, ochre, green, violet and slate, with a soft wash only under the third, ochre one"
             }
           }
