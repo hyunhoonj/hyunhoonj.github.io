@@ -137,7 +137,7 @@
             "ratio": "1/1",
             "image": {
               "src": "images/wr-zen.jpg",
-              "alt": "먹점 세 개가 가로로 놓여 있고, 가운데 점 옆에만 작은 산호색 이름표가 붙어 있음. 그 점 아래에 옅은 산호색 번짐이 있음"
+              "alt": "가로로 놓인 작은 직사각형 여섯 개. 이름표처럼 저마다 산호색, 청록색, 황토색, 초록색, 보라색, 청회색으로 다르고, 세 번째 황토색 이름표 아래에만 옅은 번짐이 있음"
             }
           }
         ]
@@ -248,7 +248,7 @@
             "ratio": "1/1",
             "image": {
               "src": "images/wr-zen.jpg",
-              "alt": "Three ink dots in a row; only the middle one has a small coral tag beside it, with a pale coral wash beneath that dot"
+              "alt": "Six small rectangles in a row, like name tags, each a different colour: coral, cyan, ochre, green, violet and slate, with a soft wash only under the third, ochre one"
             }
           }
         ]
