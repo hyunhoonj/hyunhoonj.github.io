@@ -3,21 +3,21 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>꿈이 아니라 일기 — Hyunhoon Jung / 정현훈</title>
+  <title>모델의 잠, 그리고 꿈 — Hyunhoon Jung / 정현훈</title>
   <meta name="description" content="Anthropic은 Claude가 ‘꿈’을 꾸며 기억을 정리한다고 말하고, 이를 뇌가 잠자는 동안 기억을 정리하는 방식에 빗댑니다. 이 비유에는 맞는 부분도 있습니다. 하지만 맞지 않는 부분을 살펴보면, Claude의 기억이 실제로 어떻게 작동하는지 더 잘 알 수 있습니다.">
   <link rel="alternate" hreflang="ko" href="agent-memory.html">
   <link rel="alternate" hreflang="en" href="../en/writing/agent-memory.html">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,400&amp;family=Noto+Serif+KR:wght@300;400;600&amp;display=swap">
-  <link rel="stylesheet" href="../assets/broadsheet.css?v=95e40fee">
-  <link rel="stylesheet" href="../assets/site.css?v=95e40fee">
+  <link rel="stylesheet" href="../assets/broadsheet.css?v=ecec041a">
+  <link rel="stylesheet" href="../assets/site.css?v=ecec041a">
 </head>
 <body>
 <div class="sheet">
 <div class="page">
 <header class="masthead"><div><a class="masthead-name" href="../index.html">Hyunhoon Jung <span class="slash">/</span> 정현훈</a></div><nav class="masthead-nav"><a href="../information.html">소개</a><a href="../contact.html">연락</a><a class="lang-switch" lang="en" hreflang="en" href="../en/writing/agent-memory.html">English</a></nav></header>
-<div class="split article-head"><div class="meta meta--dim"><span>에세이</span><span>,</span><span>2026.11</span><span>,</span><span>12분</span></div><div><h1 class="article-title">꿈이 아니라 일기</h1><p class="article-dek">Anthropic은 Claude가 ‘꿈’을 꾸며 기억을 정리한다고 말하고, 이를 뇌가 잠자는 동안 기억을 정리하는 방식에 빗댑니다. <span class="band">이 비유에는 맞는 부분도 있습니다. 하지만 맞지 않는 부분을 살펴보면, Claude의 기억이 실제로 어떻게 작동하는지 더 잘 알 수 있습니다</span>.</p></div></div>
+<div class="split article-head"><div class="meta meta--dim"><span>에세이</span><span>,</span><span>2026.11</span><span>,</span><span>12분</span></div><div><h1 class="article-title">모델의 잠, 그리고 꿈</h1><p class="article-dek">Anthropic은 Claude가 ‘꿈’을 꾸며 기억을 정리한다고 말하고, 이를 뇌가 잠자는 동안 기억을 정리하는 방식에 빗댑니다. <span class="band">이 비유에는 맞는 부분도 있습니다. 하지만 맞지 않는 부분을 살펴보면, Claude의 기억이 실제로 어떻게 작동하는지 더 잘 알 수 있습니다</span>.</p></div></div>
 <div class="split article-grid"><div class="rail"><div><div class="rail-title">[차례]</div><div class="rail-list"><div>01 &nbsp;<a href="#section-1">비유 속의 뇌</a></div><div>02 &nbsp;<a href="#section-2">비유가 맞는 곳</a></div><div>03 &nbsp;<a href="#section-3">비유가 어긋나는 곳</a></div><div>04 &nbsp;<a href="#section-4">오토의 수첩</a></div><div>05 &nbsp;<a href="#section-5">Chalmers 대 Chalmers</a></div><div>06 &nbsp;<a href="#section-6">앞으로 살아가기</a></div></div></div><div><div class="rail-title">[주제]</div><div class="rail-list rail-list--dim"><span>에이전트 메모리</span><span>기억 공고화</span><span>확장된 마음</span><span>AI 의식</span></div></div></div><div class="article-body"><p>포켓몬스터 레드에서 동쪽으로 가려면 달맞이산(Mt. Moon)이라는 동굴을 지나야 합니다. 동굴 입구는 산의 서쪽에 있고, 그 옆에 포켓몬센터가 있습니다. 메모 폴더를 쓰며 이 게임을 하던 Claude는 그 건물을 길잡이로 삼았는데, 그것이 산의 동쪽에 있다고 적어 두었습니다. 건물을 나서며 Claude는 산을 이미 지났다고 판단하고 노트를 고쳤습니다. “Mt Moon DONE”. 몇 걸음 뒤 Claude는 한쪽으로만 내려갈 수 있는 턱을 넘어 왔던 길로 떨어졌습니다. 이 일이 세 번 되풀이되었습니다. 그러자 Claude는 계속 맴도느니 멈추겠다고 썼고, 계속하라는 지시를 받자 산 앞의 마을까지 되돌아갔습니다. 이 실행은 끝내 다음 도시에 닿지 못했습니다.</p>
 <p>이어서 같은 순간을 한 가지만 바꿔 다시 실행했습니다. 계속하기 전에 Claude에게 ‘꿈꿀’ 시간을 준 것입니다. Claude는 노트를 실제로 일어난 일의 기록과 맞춰 읽고, 잘못을 찾아 노트를 고쳐 썼습니다. 이번에는 곧장 동굴로 돌아가 블루시티(Cerulean City)에 닿았습니다.</p>
 <p>이 이야기는 Anthropic의 엔지니어링 팀이 2026년 11월 6일에 발표한 글 「에이전트 메모리의 구성 요소(The components of agent memory)」에 나옵니다. 이 글은 Claude가 한 세션에서 다음 세션으로 기억을 어떻게 이어 가는지 설명하면서, 처음부터 끝까지 한 가지 비유에 기댑니다. 경험을 그때그때 기록해 두었다가 나중에, 잠자는 동안 정리하는 사람의 뇌입니다. 이 비유는 진지하게 따져 볼 만합니다. 맞는 곳이 있기 때문입니다. 하지만 맞지 않는 부분을 보면, Claude의 기억이 어떻게 작동하는지 더 많이 알 수 있습니다. 짧게 답하자면, Claude는 겪은 일을 자면서 소화하지 않습니다. 일기를 다시 읽습니다.</p>
@@ -55,6 +55,6 @@
 <footer class="colophon"><div class="colophon-links"><a href="https://github.com/hyunhoonj">Github</a><span>,</span><a href="https://scholar.google.com/citations?user=0ROak0YAAAAJ&amp;hl=en">Google Scholar</a><span>,</span><a href="mailto:hyunhoon.j@gmail.com">hyunhoon.j@gmail.com</a></div><span class="colophon-copy">© 2026</span></footer>
 </div>
 </div>
-<script src="../assets/site.js?v=95e40fee"></script>
+<script src="../assets/site.js?v=ecec041a"></script>
 </body>
 </html>
