@@ -189,7 +189,7 @@
           {
             "id": "agent-memory",
             "slug": "agent-memory",
-            "title": "A Diary, Not a Dream",
+            "title": "The Model's Sleep, and Its Dreams",
             "kind": "",
             "year": "2026",
             "desc": "Anthropic says Claude “dreams” to sort its memory, as the brain does in sleep. ==It is closer to rereading a diary.==",
@@ -780,7 +780,7 @@
           },
           "nextLabel": "Next",
           "next": {
-            "title": "A Diary, Not a Dream",
+            "title": "The Model's Sleep, and Its Dreams",
             "kind": "Essay",
             "year": "2026",
             "id": "agent-memory"
@@ -826,7 +826,7 @@
         },
         "en": {
           "slug": "agent-memory",
-          "title": "A Diary, Not a Dream",
+          "title": "The Model's Sleep, and Its Dreams",
           "dek": "Anthropic says Claude organises its memory by “dreaming”, and compares it with how the brain sorts memories in sleep. ==The comparison holds in a few places, and where it breaks shows what Claude's memory really is.==",
           "kind": "Essay",
           "date": "2026.11",
