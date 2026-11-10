@@ -159,7 +159,7 @@
             "title": "안에서 보는 AI",
             "kind": "",
             "year": "2026",
-            "desc": "기계적 해석 가능성의 교과서라 할 만한 「Understanding AI from the Inside」를 한 장씩 쉽게 풀어 읽는 연재입니다. ==지금 15편까지 나왔습니다.==",
+            "desc": "기계적 해석 가능성의 교과서라 할 만한 「Understanding AI from the Inside」를 한 장씩 쉽게 풀어 읽는 연재입니다. ==지금 20편까지 나왔습니다.==",
             "ratio": "1/1",
             "image": {
               "src": "images/inside-ai-card.jpg",
@@ -296,7 +296,7 @@
             "title": "AI from the Inside",
             "kind": "",
             "year": "2026",
-            "desc": "A series that walks through “Understanding AI from the Inside”, a textbook of mechanistic interpretability in all but name, one chapter at a time. ==15 parts so far.==",
+            "desc": "A series that walks through “Understanding AI from the Inside”, a textbook of mechanistic interpretability in all but name, one chapter at a time. ==20 parts so far.==",
             "ratio": "1/1",
             "image": {
               "src": "images/inside-ai-card.jpg",
@@ -2811,10 +2811,11 @@
           },
           "nextLabel": "다음 편",
           "next": {
-            "title": "",
-            "kind": "",
-            "year": "",
-            "id": ""
+            "title": "회로 찾기",
+            "kind": "안에서 보는 AI · 16편",
+            "year": "2026",
+            "id": "",
+            "slug": "inside-ai-16-circuit-discovery"
           }
         },
         "en": {
@@ -2859,6 +2860,535 @@
             "year": "2026",
             "id": "",
             "slug": "inside-ai-14-beyond-saes"
+          },
+          "nextLabel": "Next",
+          "next": {
+            "title": "Finding Circuits",
+            "kind": "AI from the Inside · Part 16",
+            "year": "2026",
+            "id": "",
+            "slug": "inside-ai-16-circuit-discovery"
+          }
+        }
+      },
+      {
+        "ko": {
+          "slug": "inside-ai-16-circuit-discovery",
+          "title": "회로 찾기",
+          "dek": "6편은 회로가 무엇인지 설명했습니다. 이번 편은 연구자들이 회로를 어떻게 찾는지 설명합니다. 거의 똑같은 두 입력 사이에서 활성값을 바꿔 끼우고 무엇이 달라지는지 보는 것입니다. ==활성 패칭, 경로 패칭, ACDC, 귀속 패칭과 그 후예들이 모두 이 하나의 아이디어에서 나옵니다.==",
+          "kind": "안에서 보는 AI · 16편",
+          "date": "2026.11",
+          "readTime": "7분",
+          "body": "6편은 회로를, 모델의 계산 그래프 가운데 특정한 행동을 수행하는 작은 부분으로 정의했습니다. 10편부터 15편까지는 그 그래프의 노드로 쓸 더 나은 단위를 마련했습니다. 회로 부를 시작하는 이번 편은 그 그래프를 실제로 어떻게 찾는지 묻습니다. 이 책 7장의 첫머리와 7.1절(53–55쪽)을 다룹니다.\n\n이 책은 먼저 회로가 메커니즘을 설명하는 유일한 방법은 아니라고 짚습니다. 1990년대에 연구자들은 순환 신경망의 은닉 상태를 적은 수의 상태로 분류하고, 신경망이 문장을 처리하는 과정을 단어마다 상태를 옮겨 다니는 유한 상태 기계로 설명했습니다. 하지만 회로가 지배적인 틀이 되었고, 아래의 방법들이 이 분야가 주로 쓰는 방법입니다.\n\n## 기본 동작: 활성 패칭\n\n이번 편의 거의 모든 방법은 실험 하나 위에 서 있습니다. 활성 패칭(activation patching)입니다. 입력 하나를 넣고 모델을 실행한 뒤, 관심 있는 행동을 재는 숫자 하나를 기록합니다. 예를 들어 모델이 정답을 얼마나 강하게 선호하는지입니다. 그다음 같은 입력으로 모델을 다시 실행하되, 이번에는 일부 구성 요소의 활성값을 다른 값으로 바꿔 넣고 그 숫자를 다시 기록합니다. 두 숫자의 차이가 이 입력에 대한 그 구성 요소들의 인과적 중요도입니다.\n\n예를 하나 따라가면 구체적으로 보이고, 이 책의 실습 노트북도 바로 이 예를 씁니다. 6편의 간접 목적어 문장을 가져옵시다. \"When Mary and John went to the store, John gave a drink to\". GPT-2는 \"Mary\"로 이어 써야 합니다. 흔히 쓰는 측정값은 로짓 차이(logit difference), 곧 모델이 \"Mary\"에 \"John\"보다 얼마나 높은 점수를 주는지입니다. 이제 단어 하나만 바꾼 오염된(corrupted) 버전을 만듭니다. \"When Mary and John went to the store, Mary gave a drink to\". 여기서는 정답이 \"John\"으로 뒤집힙니다.\n\n[도판 1]\n\n어떤 어텐션 헤드가 중요한지 시험하려면, 깨끗한(clean) 문장으로 실행하면서 그 헤드의 활성값만 오염된 문장의 것으로 바꿔 넣습니다. 로짓 차이가 무너지면, 그 헤드는 답이 기대는 정보, 대략 '어느 이름이 반복되었는가'를 실어 나르고 있었던 것입니다. 거의 움직이지 않으면, 그 헤드는 이 행동에 중요하지 않았던 것입니다. 이 책은 바꿔 넣는 값을 보통 이런 오염된 실행, 곧 특정한 정보를 더하거나 빼도록 입력을 바꾼 실행에서 가져오지만, 0이나 평균 활성값을 쓰는 연구도 있다고 전합니다. 이 선택은 중립적이지 않습니다. 모범 사례를 다룬 2024년의 한 연구는 이런 선택이 결론을 바꿀 수 있음을 보였습니다.\n\n## 경로 패칭\n\n활성 패칭은 어떤 구성 요소가 중요한지 묻습니다. 경로 패칭(path patching)은 두 구성 요소 사이의 특정한 연결이 중요한지 묻습니다. 6편의 계산 그래프를 떠올려 봅시다. 구성 요소 i의 출력은 구성 요소 j의 입력 가운데 하나로 들어갑니다. 경로 패칭은 i의 나머지 출력은 그대로 두고, 그 간선 하나를 따라 보내지는 활성값만 바꿔 넣고 효과를 잽니다. 그러면 정보의 흐름을 훨씬 세밀하게 짚을 수 있습니다. 예를 들어 어떤 헤드가 중요한 이유가 오직 뒤쪽의 특정한 헤드에 보내는 것 때문임을 보일 수 있습니다.\n\n## ACDC: 탐색 자동화하기\n\n간선이 수천 개인 모델에서 간선마다 손으로 시험하는 것은 불가능에 가깝습니다. 2023년에 나온 자동 회로 찾기(automatic circuit discovery, ACDC)는 경로 패칭을 자동화합니다. 출력에서 출발해 그래프를 거꾸로 거슬러 갑니다. 간선마다 그 간선으로 보내지는 활성값을 바꿔 넣고, 과제 지표가 얼마나 바뀌는지 잽니다. 바뀐 정도가 정해 둔 문턱값보다 작으면 그 간선을 잘라 냅니다. 그렇지 않으면 남겨 두고, 그 간선으로 들어오는 간선들을 차례로 살펴봅니다. 끝까지 남은 것이 회로입니다.\n\nACDC는 그 행동을 만들어 내기에 충분한 부분 그래프를 곧장 찾습니다. 회로가 바로 그런 것이어야 합니다. 대가는 속도입니다. 시험하는 간선마다 모델을 따로 실행해야 합니다. 그리고 결과는 간선을 잘라 내는 순서와 문턱값에 따라 달라집니다.\n\n## 귀속 패칭: 재는 대신 추정하기\n\n2024년에 나온 간선 귀속 패칭(edge attribution patching, EAP)은 간선 하나하나를 차례로 재는 대신, 모든 간선의 효과를 한꺼번에 추정합니다. 비결은 1차 근사입니다. 자동차가 다음 1초 동안 얼마나 갈지를 지금 속도로 어림하는 것과 같은 생각입니다. 각 간선에 대해, 패칭의 효과를 그 간선의 활성값에 대한 지표의 그래디언트에, 깨끗한 실행과 오염된 실행에서 그 활성값이 얼마나 다른지를 곱한 값으로 근사합니다.\n\n[도판 2]\n\n얻는 것이 엄청납니다. 모든 점수가 순방향 실행 단 두 번, 곧 깨끗한 입력과 오염된 입력에 대한 실행에, 모든 그래디언트를 한꺼번에 계산하는 역방향 계산 한 번만으로 나옵니다. ACDC는 간선마다 실행이 따로 필요합니다. 회로를 만드는 가장 단순한 방법은 점수가 가장 높은 간선들을 남기는 것입니다. 대가는 1차 근사가 비선형 효과와 상호작용을 놓칠 수 있다는 것입니다. 이후의 방법들은 추정을 개선합니다. 예를 들어 적분 그래디언트를 쓰는 EAP(EAP-IG)는 오염된 활성값에서 깨끗한 활성값으로 가는 경로를 따라 그래디언트를 평균합니다. 다른 방법은 텍스트의 여러 위치에 걸쳐 패칭해서 토큰 사이의 상호작용까지 잡아냅니다.\n\n## 최적화로 찾는 회로\n\n세 번째 갈래는 회로 찾기를 최적화 문제로 다룹니다. 간선을 시험하는 대신, 모델의 행동을 바꾸지 않고 계산 그래프의 어느 부분을 뺄 수 있는지를 경사 하강법으로 배웁니다. 간선 가지치기(edge pruning)는 간선 위의 마스크를 학습합니다. 다른 연구는 블록 전체부터 뉴런 하나까지 여러 크기의 노드 위에 마스크를 학습합니다. 이런 방법은 대개 패칭이나 귀속보다 더 희소한 회로를 찾습니다. 하지만 최적화 과정 때문에 무작위성이 끼어들고 학습률 같은 설정에 민감해져서, 찾아낸 회로가 덜 견고하고 해석하기 어려워질 수 있습니다.\n\n## 과제 수준 회로와 질의 수준 회로\n\n6편에서 회로 연구의 두 갈래를 만났습니다. 이 책은 여기서 방법론적인 관점으로 그 이야기로 돌아옵니다. 과제 수준 회로 찾기는 간접 목적어 찾기 데이터셋처럼 예시들의 데이터셋으로 정의한 능력 전체 뒤의 회로를 찾습니다. 개별 예시의 잡음을 줄이기 위해 구성 요소와 간선의 점수를 모든 입력에 걸쳐 평균하므로, 그 회로는 과제 전체를 나타냅니다. 질의 수준 회로 찾기는 특정한 프롬프트 하나를 설명합니다.\n\n위의 방법들, 곧 패칭, ACDC, EAP, EAP-IG, 가지치기 방법은 거의 모두 과제 수준 설정에서 개발되고 평가되었습니다. 이 책의 저자 두 사람이 쓴 2026년 연구는 EAP-IG를 개별 프롬프트로 넓혔습니다. 그 덕분에 사용자가 던지는 복잡하고 자연스러운 요청처럼, 관련된 계산이 입력마다 크게 다를 수 있는 경우에도 희소하면서 충실한 회로를 찾을 수 있게 되었습니다.\n\n## 방법 비교\n\n[표: 회로 찾기 방법 (이 책의 표 8을 바탕으로)]\n방법 | 핵심 아이디어 | 강점 | 한계\n활성 패칭 | 구성 요소의 활성값을 바꿔 넣고 출력 변화를 잼 | 단순함. 직접적인 인과적 증거 | 개입이 많이 필요함. 구성 요소가 거친 단위일 수 있음\n경로 패칭 | 간선 하나를 따라가는 활성값을 바꿔 넣음 | 정보 흐름을 더 세밀하게 짚음 | 경로가 많아서 비쌈\nACDC | 행동이 유지되는지 확인하며 간선을 탐욕적으로 잘라 냄 | 완전히 자동화됨. 충분한 부분 그래프를 곧장 찾음 | 느림. 자르는 순서와 문턱값에 민감\nEAP | 그래디언트로 모든 간선의 효과를 추정 | 빠르고 병렬적. 많은 간선으로 확장 가능 | 1차 근사라 비선형 효과와 상호작용을 놓칠 수 있음\nSAE나 CLT 기반 | 날것의 구성 요소 대신 해석 가능한 특징 위에서 회로를 찾음 | 더 세밀한 특징 수준의 회로 | 특징의 품질에 달림. 사전을 학습하는 추가 비용\n\n마지막 줄이 17편의 주제입니다. 이 책의 실습 노트북은 위의 Mary와 John 프롬프트로 GPT-2에서 첫째 줄과 넷째 줄을 구현합니다.\n\n[표: 이번 편의 용어]\n용어 | 뜻\n활성 패칭 | 일부 구성 요소의 활성값을 바꿔 넣고 행동 지표가 어떻게 바뀌는지 재는 것\n깨끗한 실행과 오염된 실행 | 원래 입력에 대한 실행과, 정답이 달라지도록 최소한으로 바꾼 입력에 대한 실행\n로짓 차이 | 모델이 정답에 정해 둔 오답보다 얼마나 높은 점수를 주는지\n0이나 평균으로 제거 | 오염된 실행의 값 대신 0이나 평균값으로 활성값을 바꾸는 것\n경로 패칭 | 두 구성 요소 사이의 간선 하나로 보내지는 활성값만 바꿔 넣는 것\nACDC | 자동 회로 찾기. 출력에서 거꾸로 간선을 하나씩 잘라 냄\n간선 귀속 패칭(EAP) | 그래디언트로 모든 간선의 패칭 효과를 한꺼번에 추정하는 것\n1차 근사 | 곡률과 상호작용을 무시하고 지금의 기울기로 변화를 어림하는 것\n적분 그래디언트 | 두 입력 사이의 경로를 따라 그래디언트를 평균해 더 나은 추정을 얻는 것\n간선 가지치기 | 어떤 간선을 뺄 수 있는지 최적화로 배우는 것\n과제 수준 회로 | 데이터셋에 걸쳐 평균한, 어떤 능력에 대한 회로\n질의 수준 회로 | 특정한 프롬프트 하나에 대한 회로\n\n17편에서는 노드가 해석 가능한 특징인 회로를 다룹니다. 대체 모델과 귀속 그래프입니다.",
+          "figures": [
+            {
+              "src": "images/inside-16-patching-ko.png",
+              "alt": "모델의 두 실행. 깨끗한 실행은 “When Mary and John went to the store, John gave a drink to”를 읽고 “Mary”를 선호합니다. 오염된 실행은 같은 문장에서 두 번째 “John”을 “Mary”로 바꾼 것을 읽고 “John”을 선호합니다. 화살표가 구성 요소 하나의 활성값을 오염된 실행에서 깨끗한 실행으로 옮겨 붙입니다. 계기판은 그 구성 요소를 바꿔 끼우자 깨끗한 실행에서 “Mary”를 “John”보다 선호하는 정도, 곧 로짓 차이가 떨어지는 것을 보여 주며, 이는 그 구성 요소가 중요하다는 표시입니다.",
+              "caption": "도판 1 — 7.1절의 정의를 따라, 이 책의 실습 노트북에 있는 간접 목적어 프롬프트로 나타낸 활성 패칭입니다. 지표가 떨어진 크기가 이 입력에 대한 그 구성 요소의 인과적 중요도입니다.",
+              "ratio": "640/330"
+            },
+            {
+              "src": "images/inside-16-acdc-eap-ko.png",
+              "alt": "같은 작은 계산 그래프를 놓은 패널 두 개. ACDC: 출력에서 거꾸로 간선을 하나씩 시험하는데, 시험마다 모델을 따로 실행해야 하고, 약한 간선은 잘라 냅니다. EAP: 순방향 실행 두 번(깨끗한 입력과 오염된 입력)과 그래디언트를 계산하는 역방향 계산 한 번으로 모든 간선에 한꺼번에 점수를 매기고, 점수가 높은 간선을 남깁니다.",
+              "caption": "도판 2 — 그래프를 탐색하는 두 가지 방법입니다(7.1절). ACDC는 간선마다 모델을 한 번씩 실행하는 대가를 치르며 각 간선의 효과를 직접 잽니다. EAP는 1차 근사로 모든 간선의 효과를 한꺼번에 추정합니다.",
+              "ratio": "640/300"
+            }
+          ],
+          "tocLabel": "차례",
+          "subjectsLabel": "주제",
+          "subjects": "활성 패칭\n경로 패칭\nACDC\n간선 귀속 패칭\n과제 수준과 질의 수준 회로",
+          "refsLabel": "참고 문헌",
+          "refs": "Fazl Barez, Tung-Yu Wu, Hunar Batra et al. Understanding AI from the Inside: The State of Mechanistic Interpretability for AI Safety. arXiv:2611.08438, 2026. 7–7.1절, 53–55쪽. https://arxiv.org/abs/2611.08438\n이 책의 실습 노트북 01_circuit_discovery.ipynb. GitHub, 2026. https://github.com/TSGLAB/Interpretability_Survey_Safety/blob/main/notebooks/03_circuits/01_circuit_discovery.ipynb\nFred Zhang & Neel Nanda. Towards Best Practices of Activation Patching in Language Models: Metrics and Methods. ICLR, 2024. https://arxiv.org/abs/2309.16042\nNicholas Goldowsky-Dill, Chris MacLeod, Lucas Sato & Aryaman Arora. Localizing Model Behavior with Path Patching. arXiv:2304.05969, 2023. https://arxiv.org/abs/2304.05969\nArthur Conmy, Augustine N. Mavor-Parker, Aengus Lynch, Stefan Heimersheim & Adrià Garriga-Alonso. Towards Automated Circuit Discovery for Mechanistic Interpretability. NeurIPS, 2023. https://arxiv.org/abs/2304.14997\nAaquib Syed, Can Rager & Arthur Conmy. Attribution Patching Outperforms Automated Circuit Discovery. BlackboxNLP, 2024. https://arxiv.org/abs/2310.10348\nMichael Hanna, Sandro Pezzelle & Yonatan Belinkov. Have Faith in Faithfulness: Going Beyond Circuit Overlap When Finding Model Mechanisms. COLM, 2024. https://arxiv.org/abs/2403.17806\nAdithya Bhaskar, Alexander Wettig, Dan Friedman & Danqi Chen. Finding Transformer Circuits with Edge Pruning. NeurIPS, 2024. https://arxiv.org/abs/2406.16778\nTung-Yu Wu & Fazl Barez. Query Circuits: Explaining How Language Models Answer User Prompts. ICML, 2026. https://openreview.net/forum?id=7F0sragazb",
+          "series": {
+            "id": "inside-ai",
+            "title": "안에서 보는 AI",
+            "label": "연재",
+            "part": 16,
+            "partLabel": "38편 중 16편",
+            "group": "4부. 회로 찾기와 검증"
+          },
+          "prevLabel": "이전 편",
+          "prev": {
+            "title": "처음부터 읽기 쉽게 만든 모델",
+            "kind": "안에서 보는 AI · 15편",
+            "year": "2026",
+            "id": "",
+            "slug": "inside-ai-15-by-design"
+          },
+          "nextLabel": "다음 편",
+          "next": {
+            "title": "대체 모델과 귀속 그래프",
+            "kind": "안에서 보는 AI · 17편",
+            "year": "2026",
+            "id": "",
+            "slug": "inside-ai-17-attribution-graphs"
+          }
+        },
+        "en": {
+          "slug": "inside-ai-16-circuit-discovery",
+          "title": "Finding Circuits",
+          "dek": "Part 6 explained what a circuit is. This part explains how researchers find one: by swapping activations between two nearly identical inputs and watching what changes. ==From that single idea come activation patching, path patching, ACDC, attribution patching and their descendants.==",
+          "kind": "AI from the Inside · Part 16",
+          "date": "2026.11",
+          "readTime": "7 min",
+          "body": "Part 6 defined a circuit as the small part of a model's computational graph that carries out a particular behaviour. Parts 10 to 15 then gave us better units for the nodes of that graph. This part, which starts the group on circuits, asks how the graph is actually found. It covers the opening of the book's seventh chapter and section 7.1 (pages 53–55).\n\nThe book notes first that circuits are not the only way to describe a mechanism. In the 1990s, researchers sorted the hidden states of recurrent networks into a small number of states and described the network's processing of a sentence as a finite-state machine, moving from state to state word by word. But circuits have become the dominant framework, and the methods below are the ones the field mostly uses.\n\n## The basic move: activation patching\n\nNearly every method in this part builds on one experiment, activation patching. Take an input, run the model, and record a single number that measures the behaviour you care about, such as how strongly the model prefers the right answer. Then run the model on the same input again, but this time replace the activations of some components with different values, and record the number again. The difference between the two is the causal importance of those components for this input.\n\nA running example makes it concrete, and the book's companion notebook uses exactly this one. Take the indirect object sentence from part 6: \"When Mary and John went to the store, John gave a drink to\". GPT-2 should continue with \"Mary\". A common measure is the logit difference: how much higher the model scores \"Mary\" than \"John\". Now make a corrupted version that changes one word: \"When Mary and John went to the store, Mary gave a drink to\". Here the right answer flips to \"John\".\n\n[Fig. 1]\n\nTo test whether some attention head matters, run the clean sentence, but swap in that head's activation from the corrupted sentence. If the logit difference collapses, the head was carrying information the answer depends on, roughly \"which name was repeated\". If it barely moves, the head did not matter for this behaviour. The book notes that the replacement values usually come from such a corrupted run, which changes the input to add or remove specific information, but some studies use zeros or the average activation instead. These choices are not neutral; a 2024 study of best practices showed that they can change the conclusions.\n\n## Path patching\n\nActivation patching asks whether a component matters. Path patching asks whether a particular connection between two components matters. Think of the computational graph from part 6: the output of component i feeds into component j as one of its inputs. Path patching replaces only the activation sent along that one edge, leaving the rest of i's output untouched, and measures the effect. That localises information flow much more finely. It can show, for instance, that a head matters only because of what it sends to one particular later head.\n\n## ACDC: automating the search\n\nTesting every edge by hand would be hopeless in a model with thousands of them. Automatic circuit discovery, ACDC, from 2023, automates path patching. It starts at the output and works backwards through the graph. For each edge, it patches the activation sent along it and measures the change in the task metric. If the change is smaller than a chosen threshold, the edge is pruned. Otherwise it is kept, and the edges feeding into it are examined in turn. What remains at the end is the circuit.\n\nACDC directly searches for a subgraph that is enough for the behaviour, which is exactly what a circuit should be. Its cost is speed: every edge it tests needs its own run of the model. And the result depends on the order in which edges are pruned and on the threshold.\n\n## Attribution patching: estimating instead of measuring\n\nEdge attribution patching, EAP, from 2024, estimates every edge's effect at once instead of measuring each in turn. The trick is a first-order approximation, the same idea as estimating how far a car will go in the next second from its current speed. For each edge, the effect of patching is approximated by the gradient of the metric with respect to the activation on that edge, multiplied by how much that activation differs between the clean and corrupted runs.\n\n[Fig. 2]\n\nThe gain is enormous. All the scores come from just two forward runs, one on the clean input and one on the corrupted input, plus a single backward pass that computes all the gradients together. ACDC needs a separate run for every edge. The simplest way to build a circuit is then to keep the edges with the highest scores. The price is that a first-order approximation can miss nonlinear effects and interactions. Later methods improve the estimate, such as EAP with integrated gradients, which averages gradients along a path from the corrupted to the clean activation, or extend patching across positions in the text to capture interactions between tokens.\n\n## Circuits by optimisation\n\nA third family treats circuit discovery as an optimisation problem. Instead of testing edges, it uses gradient descent to learn which parts of the computational graph can be removed without changing the model's behaviour. Edge pruning learns a mask over edges; other work learns masks over nodes at several scales, from whole blocks down to single neurons. These methods usually find sparser circuits than patching or attribution. But the optimisation adds randomness and sensitivity to settings such as the learning rate, which can make the circuits they find less robust and harder to interpret.\n\n## Task-level and query-level circuits\n\nPart 6 met the two lines of circuit research. The book returns to them here with a methodological point. Task-level circuit discovery looks for the circuit behind a whole capability, defined by a dataset of examples such as the indirect object identification dataset. The scores of components and edges are averaged across all the inputs, to reduce the noise of individual examples, so the circuit describes the task as a whole. Query-level discovery explains one particular prompt.\n\nAlmost all the methods above, patching, ACDC, EAP, EAP-IG and the pruning methods, were developed and evaluated in the task-level setting. A 2026 study by two of the book's authors extended EAP-IG to individual prompts. That makes it possible to find sparse but faithful circuits even for complex, natural requests from users, where the relevant computation can differ greatly from one input to the next.\n\n## The methods compared\n\n[Table: Circuit discovery methods (after the book's Table 8)]\nMethod | Core idea | Strength | Limitation\nActivation patching | Replace a component's activation and measure the change in output | Simple; direct causal evidence | Needs many interventions; components can be coarse units\nPath patching | Replace the activation along one edge | Finer localisation of information flow | Expensive, because there are many paths\nACDC | Prune edges greedily while checking the behaviour survives | Fully automated; searches directly for a sufficient subgraph | Slow; sensitive to pruning order and threshold\nEAP | Estimate every edge's effect with gradients | Fast and parallel; scales to many edges | First-order approximation can miss nonlinear and interaction effects\nSAE- or CLT-based | Find circuits over interpretable features instead of raw components | Finer, feature-level circuits | Depends on feature quality; extra cost to train the dictionaries\n\nThe last row is the subject of part 17. The companion notebook implements the first and fourth rows on GPT-2, with the Mary and John prompts above.\n\n[Table: Terms in this part]\nTerm | Meaning\nActivation patching | Replacing some components' activations and measuring how a behaviour metric changes\nClean and corrupted runs | Runs on the original input and on a minimally changed one with a different right answer\nLogit difference | How much higher a model scores the right answer than a chosen wrong one\nAblation by zero or mean | Replacing an activation with zeros or with its average value instead of a corrupted run's\nPath patching | Replacing only the activation sent along one edge between two components\nACDC | Automatic circuit discovery: pruning edges one by one, from the output backwards\nEdge attribution patching (EAP) | Estimating all edges' patching effects at once with gradients\nFirst-order approximation | Estimating a change from the current slope, ignoring curvature and interactions\nIntegrated gradients | Averaging gradients along a path between two inputs, for a better estimate\nEdge pruning | Learning, by optimisation, which edges can be removed\nTask-level circuit | A circuit for a capability, averaged over a dataset\nQuery-level circuit | A circuit for one particular prompt\n\nNext, part 17 looks at circuits whose nodes are interpretable features: replacement models and attribution graphs.",
+          "figures": [
+            {
+              "src": "images/inside-16-patching-en.png",
+              "alt": "Two runs of a model. The clean run reads “When Mary and John went to the store, John gave a drink to” and prefers “Mary”. The corrupted run reads the same sentence with the second “John” changed to “Mary”, and prefers “John”. An arrow copies the activation of one component from the corrupted run into the clean run. A meter shows the clean run's preference for “Mary” over “John”, the logit difference, falling when that component is swapped, which marks the component as important.",
+              "caption": "Fig. 1 — Activation patching, after the definition in section 7.1, using the indirect-object prompts of the book's companion notebook. The size of the drop in the metric is the component's causal importance for this input.",
+              "ratio": "640/330"
+            },
+            {
+              "src": "images/inside-16-acdc-eap-en.png",
+              "alt": "Two panels with the same small computational graph. ACDC: edges are tested one at a time from the output backwards, each test needing its own run of the model, and weak edges are pruned. EAP: all edges are scored at once, from two forward runs (clean and corrupted) and one backward pass that computes gradients, and the highest-scoring edges are kept.",
+              "caption": "Fig. 2 — Two ways to search the graph (section 7.1). ACDC measures each edge's effect directly, at the cost of one model run per edge; EAP estimates every edge's effect at once with a first-order approximation.",
+              "ratio": "640/300"
+            }
+          ],
+          "tocLabel": "Contents",
+          "subjectsLabel": "Subjects",
+          "subjects": "Activation patching\nPath patching\nACDC\nEdge attribution patching\nTask-level and query-level circuits",
+          "refsLabel": "References",
+          "refs": "Fazl Barez, Tung-Yu Wu, Hunar Batra et al. Understanding AI from the Inside: The State of Mechanistic Interpretability for AI Safety. arXiv:2611.08438, 2026. Sections 7–7.1, pp. 53–55. https://arxiv.org/abs/2611.08438\nNotebook 01_circuit_discovery.ipynb, from the book's companion notebooks. GitHub, 2026. https://github.com/TSGLAB/Interpretability_Survey_Safety/blob/main/notebooks/03_circuits/01_circuit_discovery.ipynb\nFred Zhang & Neel Nanda. Towards Best Practices of Activation Patching in Language Models: Metrics and Methods. ICLR, 2024. https://arxiv.org/abs/2309.16042\nNicholas Goldowsky-Dill, Chris MacLeod, Lucas Sato & Aryaman Arora. Localizing Model Behavior with Path Patching. arXiv:2304.05969, 2023. https://arxiv.org/abs/2304.05969\nArthur Conmy, Augustine N. Mavor-Parker, Aengus Lynch, Stefan Heimersheim & Adrià Garriga-Alonso. Towards Automated Circuit Discovery for Mechanistic Interpretability. NeurIPS, 2023. https://arxiv.org/abs/2304.14997\nAaquib Syed, Can Rager & Arthur Conmy. Attribution Patching Outperforms Automated Circuit Discovery. BlackboxNLP, 2024. https://arxiv.org/abs/2310.10348\nMichael Hanna, Sandro Pezzelle & Yonatan Belinkov. Have Faith in Faithfulness: Going Beyond Circuit Overlap When Finding Model Mechanisms. COLM, 2024. https://arxiv.org/abs/2403.17806\nAdithya Bhaskar, Alexander Wettig, Dan Friedman & Danqi Chen. Finding Transformer Circuits with Edge Pruning. NeurIPS, 2024. https://arxiv.org/abs/2406.16778\nTung-Yu Wu & Fazl Barez. Query Circuits: Explaining How Language Models Answer User Prompts. ICML, 2026. https://openreview.net/forum?id=7F0sragazb",
+          "series": {
+            "id": "inside-ai",
+            "title": "AI from the Inside",
+            "label": "Series",
+            "part": 16,
+            "partLabel": "Part 16 of 38",
+            "group": "IV. Finding and testing circuits"
+          },
+          "prevLabel": "Previous",
+          "prev": {
+            "title": "Models Built to Be Read",
+            "kind": "AI from the Inside · Part 15",
+            "year": "2026",
+            "id": "",
+            "slug": "inside-ai-15-by-design"
+          },
+          "nextLabel": "Next",
+          "next": {
+            "title": "Replacement Models and Attribution Graphs",
+            "kind": "AI from the Inside · Part 17",
+            "year": "2026",
+            "id": "",
+            "slug": "inside-ai-17-attribution-graphs"
+          }
+        }
+      },
+      {
+        "ko": {
+          "slug": "inside-ai-17-attribution-graphs",
+          "title": "대체 모델과 귀속 그래프",
+          "dek": "16편의 회로는 어텐션 헤드와 MLP 블록으로 이루어져 있는데, 이것들은 그 자체로 읽기 어렵습니다. 더 새로운 접근은 먼저 모델의 MLP를 해석 가능한 대체물로 바꾸고, 그 특징들이 서로를 어떻게 밀어 답에 이르는지 추적합니다. ==그 결과인 귀속 그래프는 모델의 중간 단계를 말로 보여 줄 수 있습니다.==",
+          "kind": "안에서 보는 AI · 17편",
+          "date": "2026.11",
+          "readTime": "5분",
+          "body": "16편의 방법들은 모델 자체 안에서 회로를 찾습니다. 그 노드는 어텐션 헤드나 MLP 블록 같은 모델의 구성 요소이고, 이것들은 대부분 그 자체로는 이해하기 어렵습니다. '9.6번 헤드와 20층의 MLP가 중요하다'고 말하는 것은 위치를 말한 것이지, 아직 설명은 아닙니다. 이번 편은 이 책의 7.2절(55–57쪽)을 다룹니다. 이 절은 보완적인 접근을 설명합니다. 먼저 희소한 선형 특징으로 원래 모델의 계산을 근사하는, 더 해석하기 쉬운 대체 모델을 만들고, 그 안에서 회로를 찾는 것입니다.\n\n## 회로 추적기\n\n이 책이 회로 추적기(Circuit Tracer)라고 부르는 가장 잘 알려진 형태는 Anthropic 연구자들의 2025년 연구에서 나왔고, 13편의 층간 트랜스코더를 씁니다. 모델의 모든 MLP를 CLT로 바꾸되, 모델 자체의 어텐션과 잔차 스트림은 그대로 둡니다. 13편에서 본 것처럼, 프롬프트 하나에 대해서는 어텐션과 정규화를 얼리고 오차 항을 더해서 이 국소 대체 모델이 원래 모델의 활성값과 정확히 일치하게 만들 수 있습니다. 그 결과로 프롬프트마다 하나씩 귀속 그래프(attribution graph)가 생기는데, 그 주된 내부 노드는 MLP 블록이나 어텐션 헤드 전체가 아니라 희소한 CLT 특징입니다.\n\n그다음 33편에서 다룰 자동 이름 붙이기 절차로 각 특징에 말로 된 설명을 붙일 수 있습니다. 그래서 회로를 읽는 사람은 번호가 매겨진 구성 요소의 그래프가 아니라 개념들의 그래프를 보게 됩니다.\n\n[도판 1]\n\n도판의 예는 이 방법을 Claude 3.5 Haiku에 적용한 2025년의 한 연구에서 왔고, 이 책도 질의 수준 회로의 예로 이 연구를 인용합니다. \"Fact: the capital of the state containing Dallas is\"를 완성하라고 하면 모델은 \"Austin\"이라고 답합니다. 귀속 그래프를 보면 계산 중간에 '텍사스' 특징이 켜져 있고, 이 특징은 'Dallas'에서 입력을 받아 'Austin 말하기'로 이어집니다. 모델은 텍사스라는 단어를 한 번도 쓰지 않지만, 그래프는 모델이 그 중간 단계를 거친다는 것을 보여 줍니다. 도시에서 주로, 주에서 주도로 가는 두 단계 조회입니다.\n\n## 간선의 무게를 다는 방법\n\n이 책은 간선의 세기를 구하는 공식을 제시하는데, 수학을 몰라도 그 구성 요소는 알아 둘 만합니다. 어떤 위치와 층에서 일정한 세기로 켜진 원천 특징, 그리고 더 뒤쪽 층에 있는 대상 특징을 생각해 봅시다. 셋이 둘을 잇습니다.\n\n첫째, 원천 특징이 씁니다. 13편에서 본 것처럼 CLT 특징은 자기 층과 그 뒤 모든 층의 재구성된 MLP 출력에, 층마다 따로 있는 디코더 벡터를 통해 씁니다. 둘째, 쓴 것이 이동합니다. 어떤 층과 위치에서 더해진 벡터는 잔차 스트림을 따라, 그리고 어텐션을 거쳐 다른 위치로 옮겨 가다가 대상의 입력에 이릅니다. 이 책은 이를 야코비 행렬(Jacobian)로 나타냅니다. 한 곳에 쓴 작은 변화가 다른 곳의 입력을 얼마나 바꾸는지 적은 숫자 표입니다. 셋째, 대상 특징이 읽습니다. 대상 특징은 인코더 벡터로 자기 입력에서 자기가 반응하는 부분을 골라냅니다.\n\n간선의 무게는 원천 특징의 활성값에, 그 특징이 쓰는 층마다 그 쓰기가 결국 대상의 입력을 얼마나 움직이는지를 곱해, 그 층들에 걸쳐 더한 것입니다. 세부 사항이 하나 더 중요합니다. 이 방법은 어텐션 패턴과 정규화를 얼리고, 중간 MLP 출력을 지나 흐를 그래디언트를 막습니다. 그 결과 각 간선은 세 번째 특징을 거쳐 가는 영향이 아니라, 한 특징이 다른 특징에 주는 직접적인 영향만 담습니다. 그런 간접 경로는 그래프에서 직접 간선들의 사슬로 나타납니다.\n\n[도판 2]\n\n## 이 회로들은 무엇이 다른가\n\n이 책은 16편의 회로와 다른 점 두 가지를 짚습니다. 첫째, 노드가 거친 MLP 블록이나 어텐션 모듈이 아니라 세밀한 선형 특징이고, 자동으로 붙인 설명 덕분에 사람이 메커니즘을 훨씬 쉽게 따라갈 수 있습니다. 둘째, 간선의 뜻이 다릅니다. EAP와 그 친척들에서는 간선의 점수가 깨끗한 실행과 오염된 실행을 비교한 값입니다. 회로 추적기에서 간선은 이 프롬프트 하나에서 두 특징 사이의 직접적이고 입력에 따른 영향이며, 원천이 쓴 것 가운데 대상에 이르는 모든 것을 더한 값입니다.\n\n이 방법은 프롬프트마다 어떤 특징이 켜졌고 그것들이 어떻게 상호작용하는지 보여 주는 희소한 그래프를 하나씩 만들기 때문에, 질의 수준 회로 찾기에 잘 맞습니다. Neuronpedia 같은 플랫폼은 대화형 버전을 제공해서, 독자가 공개 모델의 귀속 그래프를 직접 둘러볼 수 있습니다.\n\n## 한계\n\n이 책은 한계를 두 가지 들고, 13편의 단서들도 그대로 적용됩니다. 첫째, CLT는 MLP의 계산을 근사할 뿐이므로, 찾아낸 회로는 모델의 실제 메커니즘 가운데 일부만 담을 수 있습니다. 국소 대체 모델을 정확하게 만드는 오차 항은, 정의상 특징들이 설명하지 못하는 부분입니다. 둘째, 특징 수준의 그래프는 노드와 간선이 아주 많을 수 있습니다. 사람이 이해하려면 먼저 가지를 치거나, 묶거나, 다른 방식으로 줄여야 하고, 이런 단순화는 분석하는 사람이 내리는 선택입니다.\n\n여기에 13편이 선형적인 설명 뒤의 가정들을 더합니다. 어텐션을 설명하지 않고 고정된 경로로 다루고, 정규화를 저장해 두고, MLP의 계산이 희소하고 선형적이라고 가정합니다. 15편은 희망적인 이야기를 하나 보탰습니다. 어텐션이 더 희소하도록 학습한 모델은 중간 구성 요소가 더 적은 귀속 그래프를 만들어서 읽기가 더 쉽습니다.\n\n## 여기까지 오면\n\n회로 추적기는 지금까지 가운데 가장 읽기 쉬운 회로를 줍니다. 프롬프트 하나에 대한 모델의 계산을 이름 붙은 개념들의 그래프로 바꾸고, 모델이 말하지 않는 단계까지 보여 줄 수 있습니다. 하지만 이것은 근사들로 조립한 대체 모델의 모습이고, 읽기 쉽다는 점 때문에 실제보다 더 완전해 보일 수 있습니다. 다음 편은 이것이 모든 회로에 던지는 질문을 다룹니다. 어떤 설명이 정말로 맞는지 어떻게 확인할까요?\n\n[표: 이번 편의 용어]\n용어 | 뜻\n대체 모델 | 모델을 대신하는 해석 가능한 모델. 여기서는 모든 MLP를 층간 트랜스코더로 바꾼 것\n회로 추적기 | CLT 대체 모델로 프롬프트마다 귀속 그래프를 만드는 2025년의 방법\n귀속 그래프 | 프롬프트 하나에서 켜진 특징들과 그 사이의 직접적인 영향을 나타낸 그래프\n원천 특징과 대상 특징 | 간선 하나의 시작과 끝에 있는 특징\n디코더 벡터 | 특징이 어떤 층에 쓰는 방향\n인코더 벡터 | 특징이 자기 입력에서 읽는 방향\n야코비 행렬 | 한 곳의 작은 변화가 다른 곳의 값을 얼마나 바꾸는지 적은 표\n그래디언트 막기 | 어떤 경로, 여기서는 중간 MLP를 지나는 영향을 막아 간선이 직접 효과만 재게 하는 것\n오차 항 | 대체 모델의 특징들이 재구성하지 못한 활성값의 부분\n가지치기와 묶기 | 약한 간선을 버리거나 관련된 특징을 모아 큰 그래프를 단순하게 만드는 것\n\n18편에서는 회로가 정말로 행동을 설명하는지 확인하는 방법을 다룹니다. 필요성, 충분성, 인과적 스크러빙, 인과적 추상화입니다.",
+          "figures": [
+            {
+              "src": "images/inside-17-graph-ko.png",
+              "alt": "모델이 “Austin”으로 완성하는 프롬프트 “Fact: the capital of the state containing Dallas is”에 대한 귀속 그래프. 아래쪽의 입력 토큰들이 ‘Dallas’, ‘수도’, ‘주’라는 특징으로 이어집니다. ‘Dallas’ 특징은 ‘텍사스’ 특징으로 이어지고, ‘텍사스’와 ‘수도’가 함께 ‘수도 이름 말하기’와 ‘Austin 말하기’ 특징으로 이어지며, 이것이 출력 “Austin”으로 이어집니다. ‘Dallas’에서 ‘Austin 말하기’로 곧장 가는 간선은 더 가늘게 표시되어 있습니다.",
+              "caption": "도판 1 — 두 단계로 답하는 질문에 대한 귀속 그래프를 단순하게 정리한 것입니다. 이 책이 질의 수준 회로의 예로 인용하는, Claude 3.5 Haiku에 대한 Anthropic의 2025년 연구들의 예를 따랐습니다(이름표와 배치는 단순화했습니다). 가운데의 ‘텍사스’ 특징은 모델이 한 번도 적지 않은 단계가 남긴 흔적입니다.",
+              "ratio": "640/340"
+            },
+            {
+              "src": "images/inside-17-edge-ko.png",
+              "alt": "귀속 그래프의 간선 하나를 나타낸 도식. 앞쪽 층에서 읽힌 원천 특징이, 디코더 벡터를 통해 자기 층과 그 뒤 층들의 MLP 출력에 씁니다. 이렇게 쓴 것은 잔차 스트림과 얼려 둔 어텐션을 거쳐, 뒤쪽 층에 있는 대상 특징의 입력에 이르고, 대상 특징은 인코더 벡터로 그것을 읽습니다. 간선의 가중치는 원천 특징이 쓴 모든 것에 대해, 각각이 대상의 입력을 얼마나 바꾸는지를 원천 특징의 활성 세기로 키운 값을 더한 것입니다.",
+              "caption": "도판 2 — 7.2절의 공식을 따라, 회로 추적기가 간선의 무게를 다는 방법을 정리한 것입니다. 어텐션 패턴과 정규화를 얼리고 중간 MLP를 지나는 그래디언트를 막으므로, 각 간선은 직접적인 영향만 잽니다.",
+              "ratio": "640/280"
+            }
+          ],
+          "tocLabel": "차례",
+          "subjectsLabel": "주제",
+          "subjects": "회로 추적기\n귀속 그래프\n대체 모델\n야코비 행렬\n질의 수준 회로",
+          "refsLabel": "참고 문헌",
+          "refs": "Fazl Barez, Tung-Yu Wu, Hunar Batra et al. Understanding AI from the Inside: The State of Mechanistic Interpretability for AI Safety. arXiv:2611.08438, 2026. 7.2절, 55–57쪽. https://arxiv.org/abs/2611.08438\nEmmanuel Ameisen, Jack Lindsey, Adam Pearce et al. Circuit Tracing: Revealing Computational Graphs in Language Models. Transformer Circuits Thread, 2025. https://transformer-circuits.pub/2025/attribution-graphs/methods.html\nJack Lindsey, Wes Gurnee, Emmanuel Ameisen et al. On the Biology of a Large Language Model. Transformer Circuits Thread, 2025. https://transformer-circuits.pub/2025/attribution-graphs/biology.html\nJack Merullo, Connor Watts, Max Loeffler, Liv Gorton, Elana Simon, Tom McGrath & Owen Lewis. Replicating circuit tracing for a simple known mechanism. Goodfire, 2025. https://www.goodfire.ai/research/replicating-circuit-tracing-for-a-simple-mechanism\nNeuronpedia. Attribution graphs. https://www.neuronpedia.org/graph/info",
+          "series": {
+            "id": "inside-ai",
+            "title": "안에서 보는 AI",
+            "label": "연재",
+            "part": 17,
+            "partLabel": "38편 중 17편",
+            "group": "4부. 회로 찾기와 검증"
+          },
+          "prevLabel": "이전 편",
+          "prev": {
+            "title": "회로 찾기",
+            "kind": "안에서 보는 AI · 16편",
+            "year": "2026",
+            "id": "",
+            "slug": "inside-ai-16-circuit-discovery"
+          },
+          "nextLabel": "다음 편",
+          "next": {
+            "title": "설명이 맞는지 확인하기",
+            "kind": "안에서 보는 AI · 18편",
+            "year": "2026",
+            "id": "",
+            "slug": "inside-ai-18-causal-verification"
+          }
+        },
+        "en": {
+          "slug": "inside-ai-17-attribution-graphs",
+          "title": "Replacement Models and Attribution Graphs",
+          "dek": "The circuits of part 16 are made of attention heads and MLP blocks, which are hard to read in themselves. A newer approach first swaps the model's MLPs for an interpretable replacement and then traces how its features push each other towards an answer. ==The result, an attribution graph, can show a model's intermediate steps in words.==",
+          "kind": "AI from the Inside · Part 17",
+          "date": "2026.11",
+          "readTime": "5 min",
+          "body": "Part 16's methods find circuits inside the model itself. Their nodes are the model's own components, such as attention heads and MLP blocks, and those are mostly not understandable on their own. Saying that \"head 9.6 and the MLP in layer 20 matter\" is a location, not yet an explanation. This part covers section 7.2 of the book (pages 55–57), which describes a complementary approach: first build a more interpretable replacement model that approximates the original's computation with sparse linear features, then find circuits inside that.\n\n## Circuit Tracer\n\nThe best-known version, which the book calls Circuit Tracer, comes from a 2025 study by Anthropic researchers and uses the cross-layer transcoders of part 13. It replaces every MLP in the model with a CLT, while keeping the model's own attention and residual stream. Recall from part 13 that, for a single prompt, this local replacement model can be made to match the original model's activations exactly, by freezing attention and normalisation and adding error terms. The result is a prompt-specific attribution graph whose main internal nodes are sparse CLT features rather than whole MLP blocks or attention heads.\n\nEach feature can then be given a description in words by the automated labelling pipelines that part 33 discusses. So, instead of a graph of numbered components, a person reading the circuit sees a graph of concepts.\n\n[Fig. 1]\n\nThe example in the figure comes from a 2025 study that applied the method to Claude 3.5 Haiku, and that the book cites among its examples of query-level circuits. Asked to complete \"Fact: the capital of the state containing Dallas is\", the model answers \"Austin\". The attribution graph shows a \"Texas\" feature active in the middle of the computation, fed by \"Dallas\" and feeding into \"say Austin\". The model never writes the word Texas, but the graph shows it taking that intermediate step: a two-step lookup from city to state to capital.\n\n## How an edge is weighed\n\nThe book gives the formula for the strength of an edge, and its parts are worth knowing even without the mathematics. Take a source feature, active at some position and layer with some strength, and a target feature at a later layer. Three things connect them.\n\nFirst, the source feature writes. As part 13 described, a CLT feature writes into the reconstructed MLP output of its own layer and of every later layer, through a separate decoder vector for each. Second, those writes travel. A vector added at one layer and position moves through the residual stream, and through attention to other positions, until it reaches the target's input. The book describes this with a Jacobian: a table of numbers saying how a small change written at one place changes the input at another. Third, the target reads, through its encoder vector, which picks out the part of its input that it responds to.\n\nThe edge's weight is the source's activation multiplied, for each layer it writes to, by how much that write ends up moving the target's input, summed over all those layers. One more detail matters. The method freezes attention patterns and normalisation, and stops the gradients that would flow through intermediate MLP outputs. As a result, each edge captures the direct influence of one feature on another, not influence that travels through some third feature. Those indirect routes appear in the graph as chains of direct edges.\n\n[Fig. 2]\n\n## What is different about these circuits\n\nThe book points out two differences from the circuits of part 16. First, the nodes are fine-grained linear features, not coarse MLP blocks or attention modules, and with automated descriptions people can follow the mechanism much more easily. Second, an edge means something different. In EAP and its relatives, an edge's score compares a clean run with a corrupted one. In Circuit Tracer, an edge is the direct, input-specific influence between two features on this one prompt, adding up everything the source writes that reaches the target.\n\nBecause it produces one sparse graph per prompt describing which features are active and how they interact, the method suits query-level circuit discovery. Platforms such as Neuronpedia offer interactive versions, where readers can explore attribution graphs for open models themselves.\n\n## The limits\n\nThe book names two limitations, and the caveats of part 13 apply as well. First, CLTs only approximate the MLPs' computation, so the discovered circuit may cover only part of the model's real mechanism. The error terms that make the local replacement exact are, by definition, the part the features do not explain. Second, feature-level graphs can have very many nodes and edges. They have to be pruned, clustered or otherwise condensed before a person can understand them, and those simplifications are choices made by the analyst.\n\nTo these, part 13 adds the assumptions behind the linear picture: attention is treated as fixed routing rather than explained, normalisation is cached, and MLP computations are assumed to be sparse and linear. Part 15 added one hopeful note: models trained to have sparser attention produce attribution graphs with fewer intermediate components, which makes them easier to read.\n\n## Where this leaves us\n\nCircuit Tracer gives the most readable circuits so far. It turns a model's computation on one prompt into a graph of named concepts, and it can reveal steps the model never states. But it is a picture of a replacement model, assembled from approximations, and its readability can make it look more complete than it is. The next part takes up the question this raises for every circuit: how do we check that an explanation is actually true?\n\n[Table: Terms in this part]\nTerm | Meaning\nReplacement model | An interpretable stand-in for the model, here with every MLP replaced by a cross-layer transcoder\nCircuit Tracer | The 2025 method that builds prompt-specific attribution graphs from a CLT replacement model\nAttribution graph | A graph of the features active on one prompt and the direct influences between them\nSource and target features | The features at the start and end of one edge\nDecoder vector | The direction a feature writes into a given layer\nEncoder vector | The direction a feature reads from its input\nJacobian | A table of how a small change at one place changes values at another\nStopping gradients | Blocking influence through some route, here intermediate MLPs, so edges measure direct effects\nError term | The part of an activation the replacement's features fail to reconstruct\nPruning and clustering | Simplifying a large graph by dropping weak edges or grouping related features\n\nNext, part 18 asks how to check whether a circuit really explains a behaviour: necessity, sufficiency, causal scrubbing and causal abstraction.",
+          "figures": [
+            {
+              "src": "images/inside-17-graph-en.png",
+              "alt": "An attribution graph for the prompt “Fact: the capital of the state containing Dallas is”, which the model completes with “Austin”. Input tokens at the bottom feed features labelled “Dallas”, “capital” and “state”. The “Dallas” feature feeds a “Texas” feature; “Texas” and “capital” together feed a “say a capital” feature and a “say Austin” feature, which feeds the output “Austin”. A direct edge from “Dallas” to “say Austin” is drawn thinner.",
+              "caption": "Fig. 1 — A simplified attribution graph for a two-step question, after the example in Anthropic's 2025 studies of Claude 3.5 Haiku, which the book cites for query-level circuits (labels and layout simplified). The intermediate “Texas” feature is the visible trace of a step the model never writes down.",
+              "ratio": "640/340"
+            },
+            {
+              "src": "images/inside-17-edge-en.png",
+              "alt": "A diagram of one edge in an attribution graph. A source feature, read at an early layer, writes through its decoder vectors into the MLP outputs of its own layer and later ones. Those writes travel through the residual stream and frozen attention to the input of a target feature at a later layer, which reads them through its encoder vector. The edge weight is the sum, over all of the source's writes, of how much each changes the target's input, scaled by how strongly the source is active.",
+              "caption": "Fig. 2 — How Circuit Tracer weighs an edge, after the formula in section 7.2. Attention patterns and normalisation are frozen and gradients through intermediate MLPs are stopped, so each edge measures direct influence only.",
+              "ratio": "640/280"
+            }
+          ],
+          "tocLabel": "Contents",
+          "subjectsLabel": "Subjects",
+          "subjects": "Circuit Tracer\nAttribution graphs\nReplacement models\nJacobians\nQuery-level circuits",
+          "refsLabel": "References",
+          "refs": "Fazl Barez, Tung-Yu Wu, Hunar Batra et al. Understanding AI from the Inside: The State of Mechanistic Interpretability for AI Safety. arXiv:2611.08438, 2026. Section 7.2, pp. 55–57. https://arxiv.org/abs/2611.08438\nEmmanuel Ameisen, Jack Lindsey, Adam Pearce et al. Circuit Tracing: Revealing Computational Graphs in Language Models. Transformer Circuits Thread, 2025. https://transformer-circuits.pub/2025/attribution-graphs/methods.html\nJack Lindsey, Wes Gurnee, Emmanuel Ameisen et al. On the Biology of a Large Language Model. Transformer Circuits Thread, 2025. https://transformer-circuits.pub/2025/attribution-graphs/biology.html\nJack Merullo, Connor Watts, Max Loeffler, Liv Gorton, Elana Simon, Tom McGrath & Owen Lewis. Replicating circuit tracing for a simple known mechanism. Goodfire, 2025. https://www.goodfire.ai/research/replicating-circuit-tracing-for-a-simple-mechanism\nNeuronpedia. Attribution graphs. https://www.neuronpedia.org/graph/info",
+          "series": {
+            "id": "inside-ai",
+            "title": "AI from the Inside",
+            "label": "Series",
+            "part": 17,
+            "partLabel": "Part 17 of 38",
+            "group": "IV. Finding and testing circuits"
+          },
+          "prevLabel": "Previous",
+          "prev": {
+            "title": "Finding Circuits",
+            "kind": "AI from the Inside · Part 16",
+            "year": "2026",
+            "id": "",
+            "slug": "inside-ai-16-circuit-discovery"
+          },
+          "nextLabel": "Next",
+          "next": {
+            "title": "Checking an Explanation",
+            "kind": "AI from the Inside · Part 18",
+            "year": "2026",
+            "id": "",
+            "slug": "inside-ai-18-causal-verification"
+          }
+        }
+      },
+      {
+        "ko": {
+          "slug": "inside-ai-18-causal-verification",
+          "title": "설명이 맞는지 확인하기",
+          "dek": "회로를 찾는 것과, 그 회로가 정말로 행동을 설명한다는 것을 보이는 것은 별개의 일입니다. 이번 편은 이 책이 쓰는 시험들을 다룹니다. 필요성, 충분성, 인과적 스크러빙, 교환 개입, 인과적 추상화입니다. ==이 책에 따르면 실제로 회로 하나가 설명하는 것은 대개 행동의 60%에서 80%입니다.==",
+          "kind": "안에서 보는 AI · 18편",
+          "date": "2026.11",
+          "readTime": "6분",
+          "body": "16편과 17편은 회로를 찾는 방법을 설명했습니다. 거기 나온 모든 방법은 후보를 내놓습니다. 어떤 행동을 수행한다고 주장하는 구성 요소나 특징의 집합과 그 사이의 연결입니다. 이번 편은 이 책의 7.3절(57쪽)과, 이 책이 끝에 붙인 인과적 추론에 관한 짧은 부록(180쪽)을 다룹니다. 어떤 후보 회로에 대해서든 두 가지를 묻습니다. 그 회로가 정말로 그 행동에 인과적 책임이 있는가? 그리고 그 회로를 통해 행동을 믿을 만하게 바꿀 수 있는가?\n\n## 필요성과 충분성\n\n이 책의 부록은 두 가지 기본 시험을 한 줄씩으로 적습니다. 어떤 구성 요소를 없앴을 때 행동이 사라지면, 그 구성 요소는 그 행동에 필요(necessary)합니다. 그 구성 요소만 켜져 있을 때도 행동이 일어나면, 그 구성 요소는 그 행동에 충분(sufficient)합니다.\n\n회로에 대해서 필요성은 제거로 시험합니다. 회로를 없애거나 무력화하고, 행동이 나빠지는지 봅니다. 충분성은 반대로 시험합니다. 회로는 실제 입력으로 계속 돌게 두고, 회로 바깥의 모든 간선을 오염된 기준 실행의 활성값으로 바꾼 뒤, 행동이 재현되는지 봅니다. 부록은 같은 시험을 교환 개입으로도 설명합니다. 행동에 필요한 정보가 없는 입력으로 한 오염된 실행에서 출발해, 그 정보가 있는 깨끗한 실행에서 회로의 활성값을 가져와 붙이고, 행동이 나타나는지 확인하는 것입니다.\n\n[도판 1]\n\n두 시험을 모두 통과한 회로를 보통 충실하다(faithful)고 합니다. 필요하므로 행동이 그 회로에 기대고, 충분하므로 그 회로가 혼자서 행동을 설명합니다.\n\n## 60%에서 80%의 문제\n\n여기서 이 책은 정신이 번쩍 드는 경험적 관찰을 하나 내놓습니다. 실제로 회로가 희소하면서, 필요하면서, 충분하기까지 한 경우는 드뭅니다. 회로 하나는 대개 행동 변동의 60%에서 80%를 설명합니다. 작은 회로는 행동의 일부를 설명하지 못한 채 남깁니다. 행동 전체를 설명할 만큼 큰 회로는 더 이상 작지 않은데, 작다는 것이 애초의 핵심이었습니다.\n\n이 책에 따르면 그 이유는 많은 행동이 분산된 표현과 여러 개의 중복된 경로에 기대기 때문입니다. 3편의 히드라 효과가 한 예입니다. 경로 하나를 없애면 다른 경로가 일을 넘겨받습니다. 회로가 주된 메커니즘을 포착하더라도, 회로 바깥의 구성 요소가 예외적인 경우를 처리하거나 계산을 견고하게 만드는 식으로 여전히 중요할 수 있습니다. 그래서 '이 회로가 행동을 설명한다'는 말은 대개 '이 회로가 대부분의 경우 행동의 대부분을 설명한다'는 뜻입니다. 20편에서 다룰 이 책의 평가 틀은 그것이 얼마만큼인지 말하도록 설계되었습니다.\n\n## 인과적 스크러빙\n\n단순한 제거보다 더 나아가는 접근이 둘 있고, 이 책은 둘 다 듭니다. 첫째는 2022년에 제안된 인과적 스크러빙(causal scrubbing)입니다. 이 방법은 기계적 가설을 그 말 그대로 받아들여 시험합니다. 가설은 회로의 각 부분이 어떤 정보를 쓰는지, 따라서 어떤 입력들을 같은 것으로 다뤄야 하는지 말합니다. 인과적 스크러빙은 모델의 활성값을, 가설이 같다고 말하는 다른 입력들의 활성값으로 바꿔 넣고 행동이 유지되는지 확인합니다.\n\n예를 들어 봅시다. 간접 목적어 회로의 어떤 헤드가 이름이 무엇인지나 장소가 어디인지가 아니라, 어느 이름이 반복되었는지만 신경 쓴다고 가설을 세웠다고 합시다. 그렇다면 반복 패턴은 같고 이름과 장소만 다른 문장에서 그 헤드의 활성값을 가져와 바꿔 넣어도 아무것도 바뀌지 않아야 합니다. 가설이 허용하는 모든 바꿔 넣기에서 행동이 살아남으면, 그 가설은 까다로운 시험을 통과한 것입니다. 행동이 무너지면, 가설이 모델이 쓰는 무언가를 빠뜨린 것입니다.\n\n## 교환 개입\n\n둘째 접근인 교환 개입(interchange intervention)은 모델의 부분들이 과제에 대한 상위 수준 설명의 변수들에 대응하는지 시험합니다. 상위 수준 변수 하나의 값만 다른 입력들 사이에서 활성값을 맞바꾸고, 모델의 출력이 상위 수준 설명이 예측하는 대로 바뀌는지 확인합니다. 어떤 구성 요소의 활성값을 '첫 번째 수가 더 크다'인 입력에서 그렇지 않은 입력으로 옮겨 넣었을 때 모델의 답이 그에 맞게 뒤집힌다면, 그 구성 요소가 그 변수를 담고 있는 것입니다. 이 책은 스크러빙과 교환 개입이 함께, 관찰만으로 얻는 것보다 훨씬 강한 증거를 기계적 설명에 준다고 말합니다.\n\n## 인과적 추상화\n\n교환 개입은 인과적 추상화(causal abstraction)라는 더 큰 이론에 속합니다. 이 책은 부록에서 이 이론을 개괄하지만 깊이 다루지는 않습니다(1편에서 이 책이 짧게만 다루는 주제로 꼽았습니다). 이 이론이 형식화하는 질문은, '이 헤드는 복사를 구현한다' 같은 상위 수준의 설명이 언제 하위 수준의 계산을 올바르게 설명하느냐입니다.\n\n답은 일종의 일치 시험입니다. 상위 수준의 설명을 자기 변수를 가진 작은 인과 모델로 적습니다. 각 상위 수준 변수를 추상화 사상(abstraction map)으로 신경망의 어떤 부분과 연결합니다. 상위 수준 변수에 개입한 효과가, 그 변수와 연결된 신경망 부분에 개입한 효과와 같다면 그 설명은 인과적으로 옳습니다. 부록의 표현으로는 개입들이 가환(commute)합니다. 네모를 어느 쪽으로 돌아가든 같은 결과를 얻습니다.\n\n[도판 2]\n\n이것은 해석 가능성 연구가 할 수 있는 가장 강한 형태의 주장입니다. '이 부분이 중요하다'를 넘어, '이 부분이 저 변수를 계산하고, 신경망의 행동은 설명이 말하는 방식대로 그 변수들에서 따라 나온다'는 주장입니다.\n\n## 수치로서의 충실성, 그리고 벤치마크\n\n최근 연구는 충실성을 '된다, 안 된다'의 판정에서 연속적인 점수로 바꿔, 서로 다른 방법으로 찾은 회로들을 체계적으로 비교할 수 있게 했습니다. 이런 점수를 여러 과제와 설정에 걸쳐 모아서, 기계적 해석 가능성 벤치마크 MIB 같은 벤치마크는 회로 찾기 방법이 인과적으로 중요한 구성 요소를 얼마나 잘 찾아내는지 평가합니다. 20편은 해석에 관한 주장을 다섯 가지 차원으로 채점하자는 이 책 자신의 제안을 다루는데, 인과적 타당성이 그 가운데 하나입니다.\n\n## 두 번째 질문\n\n7.3절은 두 가지 질문으로 시작했고, 이번 편은 주로 첫 번째 질문에 답했습니다. 두 번째 질문, 곧 찾아낸 회로를 통해 행동을 믿을 만하게 바꿀 수 있느냐에 대한 답은 덜 고무적입니다. 3편이 이미 경고했습니다. 메커니즘을 찾고 검증한다고 해서 저절로 믿을 만한 통제가 생기지는 않고, 한 상황에서 통한 개입이 다른 상황에서는 실패할 수 있습니다. 편집과 조종을 다루는 35편과 36편에서 이 문제로 돌아옵니다.\n\n[표: 설명을 시험하는 방법들]\n시험 | 하는 일 | 통과가 보여 주는 것\n필요성(제거) | 회로를 없앰 | 행동이 그 회로에 기댐\n충분성 | 회로만 남기고 나머지를 오염된 활성값으로 바꿈 | 회로가 혼자서 행동을 만들어 낼 수 있음\n교환 개입 | 상위 수준 변수 하나만 다른 입력들 사이에서 활성값을 맞바꿈 | 그 부분들이 그 변수를 담고 있음\n인과적 스크러빙 | 가설이 같다고 말하는 입력들의 활성값으로 바꿔 넣음 | 가설이 모델이 쓰는 모든 것을 포착함\n인과적 추상화 | 상위 수준과 하위 수준의 개입이 일치하는지 확인 | 상위 수준의 설명이 인과적으로 옳음\n\n[표: 이번 편의 용어]\n용어 | 뜻\n필요하다 | 그것을 없애면 행동이 사라짐\n충분하다 | 그것만 켜져 있어도 행동이 일어남\n충실한 회로 | 행동에 필요하면서 충분하기도 한 회로\n교환 개입 | 어떤 부분이 무슨 정보를 담는지 보려고 입력들 사이에서 활성값을 맞바꾸는 것\n인과적 스크러빙 | 가설이 같다고 말하는 입력들의 활성값으로 바꿔 넣어 가설을 시험하는 것\n인과적 추상화 | 상위 수준의 설명이 하위 수준의 계산을 언제 올바르게 설명하는지에 관한 이론\n추상화 사상 | 상위 수준 변수와 그것을 계산하는 신경망 부분 사이의 연결\n가환하는 개입 | 상위 수준과 하위 수준에서 같은 결과를 내는 개입\n중복된 경로 | 각각 같은 행동을 만들어 낼 수 있는 여러 경로\nMIB | 회로 찾기와 인과 변수를 평가하는 2025년의 벤치마크\n\n19편에서는 지금까지의 모든 것을 메커니즘 하나에 모아 봅니다. 회로로, 특징으로, 그리고 학습 중에 생겨나는 것으로 본 유도 헤드입니다.",
+          "figures": [
+            {
+              "src": "images/inside-18-tests-ko.png",
+              "alt": "패널 두 개. 필요성: 모델 안의 회로를 없애자 행동이 떨어지고, 막대가 내려가는 것으로 표시됩니다. 충분성: 회로 바깥의 모든 것을 오염된 실행의 활성값으로 바꾸고 회로만 실제 입력으로 실행하자 행동이 유지되고, 막대가 높게 남는 것으로 표시됩니다.",
+              "caption": "도판 1 — 7.3절과 부록 C.1의 두 가지 인과적 시험입니다. 회로를 없앴을 때 행동이 무너지면 그 회로는 필요하고, 회로만으로 행동을 만들어 낼 수 있으면 충분합니다. 충실한 회로는 둘 다 통과합니다.",
+              "ratio": "640/300"
+            },
+            {
+              "src": "images/inside-18-abstraction-ko.png",
+              "alt": "네모 모양의 도식. 위에는 ‘반복된 이름이 무엇인가’ 같은 변수를 가진 상위 수준 모델과, 그 변수를 바꾸는 개입이 있습니다. 아래에는 추상화 사상이 그 변수와 연결한 구성 요소들을 가진 신경망과, 그 활성값에 대한 대응하는 개입이 있습니다. 두 경로가 같은 출력에 이르러 네모가 닫힙니다.",
+              "caption": "도판 2 — 부록 C.1.3을 따른 인과적 추상화입니다. 상위 수준의 설명은, 그 설명에 개입한 결과와 신경망의 대응하는 부분에 개입한 결과가 같을 때 인과적으로 옳습니다. 여기 적은 변수 이름은 예시입니다.",
+              "ratio": "640/300"
+            }
+          ],
+          "tocLabel": "차례",
+          "subjectsLabel": "주제",
+          "subjects": "필요성\n충분성\n충실성\n인과적 스크러빙\n인과적 추상화",
+          "refsLabel": "참고 문헌",
+          "refs": "Fazl Barez, Tung-Yu Wu, Hunar Batra et al. Understanding AI from the Inside: The State of Mechanistic Interpretability for AI Safety. arXiv:2611.08438, 2026. 7.3절과 부록 C.1, 57쪽과 180쪽. https://arxiv.org/abs/2611.08438\nLawrence Chan, Adrià Garriga-Alonso, Nicholas Goldowsky-Dill, Ryan Greenblatt, Jenny Nitishinskaya, Ansh Radhakrishnan, Buck Shlegeris & Nate Thomas. Causal scrubbing: a method for rigorously testing interpretability hypotheses. AI Alignment Forum, 2022. https://www.alignmentforum.org/posts/JvZhhzycHu2Yd57RN/causal-scrubbing-a-method-for-rigorously-testing\nAtticus Geiger, Hanson Lu, Thomas Icard & Christopher Potts. Causal Abstractions of Neural Networks. NeurIPS, 2021. https://arxiv.org/abs/2106.02997\nAtticus Geiger, Zhengxuan Wu, Christopher Potts, Thomas Icard & Noah D. Goodman. Finding Alignments Between Interpretable Causal Variables and Distributed Neural Representations. CLeaR, 2024. https://arxiv.org/abs/2303.02536\nMichael Hanna, Sandro Pezzelle & Yonatan Belinkov. Have Faith in Faithfulness: Going Beyond Circuit Overlap When Finding Model Mechanisms. COLM, 2024. https://arxiv.org/abs/2403.17806\nAaron Mueller, Atticus Geiger, Sarah Wiegreffe et al. MIB: A Mechanistic Interpretability Benchmark. ICML, 2025. https://arxiv.org/abs/2504.13151",
+          "series": {
+            "id": "inside-ai",
+            "title": "안에서 보는 AI",
+            "label": "연재",
+            "part": 18,
+            "partLabel": "38편 중 18편",
+            "group": "4부. 회로 찾기와 검증"
+          },
+          "prevLabel": "이전 편",
+          "prev": {
+            "title": "대체 모델과 귀속 그래프",
+            "kind": "안에서 보는 AI · 17편",
+            "year": "2026",
+            "id": "",
+            "slug": "inside-ai-17-attribution-graphs"
+          },
+          "nextLabel": "다음 편",
+          "next": {
+            "title": "유도 헤드",
+            "kind": "안에서 보는 AI · 19편",
+            "year": "2026",
+            "id": "",
+            "slug": "inside-ai-19-induction-heads"
+          }
+        },
+        "en": {
+          "slug": "inside-ai-18-causal-verification",
+          "title": "Checking an Explanation",
+          "dek": "Finding a circuit is one thing; showing that it really explains the behaviour is another. This part covers the tests the book uses: necessity, sufficiency, causal scrubbing, interchange interventions and causal abstraction. ==In practice, the book reports, a circuit typically explains 60 to 80% of a behaviour.==",
+          "kind": "AI from the Inside · Part 18",
+          "date": "2026.11",
+          "readTime": "6 min",
+          "body": "Parts 16 and 17 described how circuits are found. Every method there produces a candidate: a set of components, or features, and connections between them, claimed to carry out a behaviour. This part covers section 7.3 of the book (page 57), together with the short appendix on causal reasoning that the book provides at the end (page 180). It asks two questions about any candidate circuit. Is it really causally responsible for the behaviour? And can we modify the behaviour reliably through it?\n\n## Necessity and sufficiency\n\nThe book's appendix states the two basic tests in a line each. A component is necessary for a behaviour if removing it makes the behaviour disappear. A component is sufficient for a behaviour if, when only that component is active, the behaviour still occurs.\n\nFor circuits, necessity is tested by ablation: remove or neutralise the circuit, and see whether the behaviour degrades. Sufficiency is tested the other way round: keep the circuit running on the real input, replace every edge outside it with activations from a corrupted reference run, and see whether the behaviour is reproduced. The appendix describes the same test as an interchange intervention: start from a corrupted run whose input lacks the information the behaviour needs, patch in the circuit's activations from a clean run that has it, and check whether the behaviour appears.\n\n[Fig. 1]\n\nA circuit that passes both tests is usually called faithful. It is necessary, so the behaviour depends on it, and sufficient, so it accounts for the behaviour by itself.\n\n## The 60 to 80% problem\n\nHere the book makes a sobering empirical remark. In practice, a circuit is rarely sparse, necessary and sufficient all at once. It typically explains 60 to 80% of the variance in the behaviour. A small circuit leaves part of the behaviour unexplained; a circuit big enough to explain all of it is no longer small, and small was the point.\n\nThe reason, according to the book, is that many behaviours depend on distributed representations and several redundant pathways. Part 3's hydra effect is one example: remove one route, and another takes over. Even when a circuit captures the main mechanism, components outside it may still matter, for example by handling unusual cases or by making the computation robust. So \"this circuit explains the behaviour\" usually means \"this circuit explains most of it, most of the time\". The book's evaluation framework in part 20 is designed to say how much.\n\n## Causal scrubbing\n\nTwo approaches go further than simple ablation, and the book names both. The first is causal scrubbing, proposed in 2022. It tests a mechanistic hypothesis by taking it at its word. A hypothesis says which information each part of the circuit uses, and therefore which inputs it should treat as equivalent. Causal scrubbing replaces the model's activations with activations from other inputs that the hypothesis says are equivalent, and checks whether the behaviour is preserved.\n\nAn example shows the idea. Suppose your hypothesis says that a certain head in the indirect object circuit only cares about which name was repeated, not what the names are or where the sentence takes place. Then swapping in that head's activation from a different sentence with the same repetition pattern, but different names and places, should change nothing. If the behaviour survives every swap the hypothesis allows, the hypothesis has passed a demanding test. If it breaks, the hypothesis left out something the model uses.\n\n## Interchange interventions\n\nThe second approach, interchange interventions, tests whether parts of a model correspond to variables in a higher-level description of the task. Activations are swapped between inputs that differ in the value of one high-level variable, and the test checks whether the model's output changes the way the high-level description predicts. If swapping a component's activation from an input where \"the first number is larger\" to one where it is not makes the model's answer flip accordingly, that component carries the variable. Together, the book says, scrubbing and interchange interventions give much stronger evidence for a mechanistic explanation than observation alone.\n\n## Causal abstraction\n\nInterchange interventions belong to a larger theory, causal abstraction, which the book outlines in its appendix but does not treat in depth (part 1 listed it among the topics the book covers only briefly). The question it formalises is when a high-level description, such as \"this head implements copying\", correctly describes lower-level computation.\n\nThe answer is a kind of agreement test. Write down the high-level description as a small causal model with its own variables. Link each high-level variable to some part of the network through an abstraction map. The description is causally correct if intervening on a high-level variable has the same effect as intervening on the parts of the network it maps to. In the appendix's words, the interventions commute: you get the same result whichever way round the square you go.\n\n[Fig. 2]\n\nThis is the strongest form of claim interpretability can make. It goes beyond \"this part matters\" to \"this part computes that variable, and the network's behaviour follows from the variables in the way the description says\".\n\n## Faithfulness as a number, and benchmarks\n\nRecent work has turned faithfulness from a yes-or-no verdict into a continuous score, so that circuits found by different methods can be compared systematically. By combining such scores across tasks and settings, benchmarks such as MIB, the mechanistic interpretability benchmark, evaluate how well circuit discovery methods identify the components that are causally important. Part 20 describes the book's own proposal for scoring interpretability claims along five dimensions, of which causal validity is one.\n\n## The second question\n\nSection 7.3 opened with two questions, and this part has mostly answered the first. The second, whether we can modify a behaviour reliably through a circuit we have found, has a less encouraging answer. Part 3 already gave the warning: finding and validating a mechanism does not automatically give reliable control, and an intervention that works in one setting may fail in another. Parts 35 and 36, on editing and steering, return to it.\n\n[Table: Ways to test an explanation]\nTest | What is done | What a pass shows\nNecessity (ablation) | Remove the circuit | The behaviour depends on it\nSufficiency | Keep only the circuit; replace everything else with corrupted activations | The circuit can produce the behaviour alone\nInterchange intervention | Swap activations between inputs that differ in one high-level variable | The parts carry that variable\nCausal scrubbing | Swap in activations from inputs the hypothesis calls equivalent | The hypothesis captures everything the model uses\nCausal abstraction | Check that high-level and low-level interventions agree | The high-level description is causally correct\n\n[Table: Terms in this part]\nTerm | Meaning\nNecessary | Removing it makes the behaviour disappear\nSufficient | With only it active, the behaviour still occurs\nFaithful circuit | A circuit that is both necessary and sufficient for the behaviour\nInterchange intervention | Swapping activations between inputs to test what information a part carries\nCausal scrubbing | Testing a hypothesis by swapping in activations from inputs it says are equivalent\nCausal abstraction | A theory of when a high-level description correctly describes low-level computation\nAbstraction map | The link between a high-level variable and the parts of the network that compute it\nCommuting interventions | Interventions that give the same result at the high level and the low level\nRedundant pathways | Several routes that can each produce the same behaviour\nMIB | A 2025 benchmark for evaluating circuit discovery and causal variables\n\nNext, part 19 puts everything so far together on one mechanism, induction heads, seen as a circuit, as features and as something that forms during training.",
+          "figures": [
+            {
+              "src": "images/inside-18-tests-en.png",
+              "alt": "Two panels. Necessity: the circuit inside the model is knocked out, and the behaviour drops, shown by a bar falling. Sufficiency: everything outside the circuit is replaced with activations from a corrupted run, only the circuit runs on the real input, and the behaviour survives, shown by a bar staying high.",
+              "caption": "Fig. 1 — The two causal tests of section 7.3 and appendix C.1. A circuit is necessary if removing it breaks the behaviour, and sufficient if it can produce the behaviour on its own. A faithful circuit passes both.",
+              "ratio": "640/300"
+            },
+            {
+              "src": "images/inside-18-abstraction-en.png",
+              "alt": "A square diagram. On top, a high-level model with a variable such as “which name is repeated” and an intervention that changes it. Below, the neural network with the components that the abstraction map links to that variable, and the matching intervention on their activations. Both routes end in the same output, and the square closes.",
+              "caption": "Fig. 2 — Causal abstraction, after appendix C.1.3: a high-level description is causally correct if intervening on it and intervening on the corresponding parts of the network give the same result. The variable named here is an illustration.",
+              "ratio": "640/300"
+            }
+          ],
+          "tocLabel": "Contents",
+          "subjectsLabel": "Subjects",
+          "subjects": "Necessity\nSufficiency\nFaithfulness\nCausal scrubbing\nCausal abstraction",
+          "refsLabel": "References",
+          "refs": "Fazl Barez, Tung-Yu Wu, Hunar Batra et al. Understanding AI from the Inside: The State of Mechanistic Interpretability for AI Safety. arXiv:2611.08438, 2026. Section 7.3 and appendix C.1, pp. 57 and 180. https://arxiv.org/abs/2611.08438\nLawrence Chan, Adrià Garriga-Alonso, Nicholas Goldowsky-Dill, Ryan Greenblatt, Jenny Nitishinskaya, Ansh Radhakrishnan, Buck Shlegeris & Nate Thomas. Causal scrubbing: a method for rigorously testing interpretability hypotheses. AI Alignment Forum, 2022. https://www.alignmentforum.org/posts/JvZhhzycHu2Yd57RN/causal-scrubbing-a-method-for-rigorously-testing\nAtticus Geiger, Hanson Lu, Thomas Icard & Christopher Potts. Causal Abstractions of Neural Networks. NeurIPS, 2021. https://arxiv.org/abs/2106.02997\nAtticus Geiger, Zhengxuan Wu, Christopher Potts, Thomas Icard & Noah D. Goodman. Finding Alignments Between Interpretable Causal Variables and Distributed Neural Representations. CLeaR, 2024. https://arxiv.org/abs/2303.02536\nMichael Hanna, Sandro Pezzelle & Yonatan Belinkov. Have Faith in Faithfulness: Going Beyond Circuit Overlap When Finding Model Mechanisms. COLM, 2024. https://arxiv.org/abs/2403.17806\nAaron Mueller, Atticus Geiger, Sarah Wiegreffe et al. MIB: A Mechanistic Interpretability Benchmark. ICML, 2025. https://arxiv.org/abs/2504.13151",
+          "series": {
+            "id": "inside-ai",
+            "title": "AI from the Inside",
+            "label": "Series",
+            "part": 18,
+            "partLabel": "Part 18 of 38",
+            "group": "IV. Finding and testing circuits"
+          },
+          "prevLabel": "Previous",
+          "prev": {
+            "title": "Replacement Models and Attribution Graphs",
+            "kind": "AI from the Inside · Part 17",
+            "year": "2026",
+            "id": "",
+            "slug": "inside-ai-17-attribution-graphs"
+          },
+          "nextLabel": "Next",
+          "next": {
+            "title": "Induction Heads",
+            "kind": "AI from the Inside · Part 19",
+            "year": "2026",
+            "id": "",
+            "slug": "inside-ai-19-induction-heads"
+          }
+        }
+      },
+      {
+        "ko": {
+          "slug": "inside-ai-19-induction-heads",
+          "title": "유도 헤드",
+          "dek": "이 책에는 하나의 메커니즘이 세 번 나옵니다. 회로로, 특징으로, 그리고 학습 중에 생겨나는 것으로 나옵니다. 유도 헤드는 모델이 방금 본 패턴을 이어 가게 해 줍니다. ==이것을 세 가지로 살펴보면, 분석의 종류마다 무엇을 밝힐 수 있고 무엇을 밝힐 수 없는지가 보입니다.==",
+          "kind": "안에서 보는 AI · 19편",
+          "date": "2026.11",
+          "readTime": "6분",
+          "body": "이번 편은 다른 편들과 다릅니다. 이 책의 한 절을 따라가는 대신, 이 책이 세 곳에 나누어 들려주는 사례 연구를 한데 모읍니다. 특징에 관한 장(6.8절, 47–48쪽), 회로에 관한 장(7.4절, 58쪽), 그리고 학습 과정에 관한 장(10.3.5절, 90쪽)입니다. 주제는 유도 헤드(induction head)로, 언어 모델에서 아마 가장 잘 이해된 메커니즘입니다. 하나의 메커니즘을 세 렌즈로 보는 것은 지난 열다섯 편이 쌓아 온 것을 되짚고, 렌즈마다 무엇을 보태는지 보기에 좋은 방법입니다.\n\n## 유도 헤드가 하는 일\n\n유도 헤드는 2021년에 작은 트랜스포머에서 처음 발견되었고, 2022년에 깊이 분석되었습니다. 반복되는 시퀀스에 대해 조건부 복사 규칙을 구현하는 어텐션 헤드입니다. 쉽게 말하면 이렇습니다. 지금 토큰이 텍스트 앞부분에도 나왔다면, 지난번에 바로 뒤에 무엇이 왔는지 보고 그것을 다시 예측한다.\n\n이 책의 예는 시퀀스 A B C A B입니다. 모델은 두 번째 B 다음에 무엇이 올지 예측해야 합니다. 모델은 앞에서 'A B'를 보았고, 그 뒤에는 C가 왔습니다. 두 번째 B에 있는 유도 헤드는 첫 번째 B 바로 뒤의 위치, 곧 C가 있는 위치를 돌아보고, 모델이 C에 주는 점수를 높입니다. 이 규칙은 어떤 토큰, 어떤 위치에서든 통해야 합니다. '해리 포터 … 해리'는 '포터'를 예측합니다. 프로그램 앞부분에 쓰인 변수 이름은 같은 이어짐을 예측합니다.\n\n이 단순한 규칙이 중요한 이유는, 맥락 내 학습의 기본적인 형태이기 때문입니다. 무엇이 다음에 올지 정하는 데 가중치에 저장된 무언가가 아니라 눈앞의 텍스트를 쓰는 것입니다.\n\n## 회로의 관점\n\n첫 번째 렌즈는 6편의 회로입니다. 이 책은 놓치기 쉬운 점을 하나 짚습니다. 유도 헤드는 이 일을 혼자서 할 수 없습니다. C에 주의를 기울이려면 '앞 토큰이 B였던 위치'를 찾을 방법이 필요합니다. 그런데 각 위치의 잔차 스트림은 처음에는 자기 토큰만 담고 있습니다. C의 위치에는 그 앞에 B가 왔다는 것을 알려 주는 것이 아무것도 없습니다.\n\n그 정보는 앞쪽 층에 있는 다른 헤드가 마련합니다. 어텐션만 있는 두 층짜리 트랜스포머를 연구한 2021년 연구는 이를 이전 토큰 헤드(previous-token head)라고 불렀습니다. 이 헤드는 각 위치에서 바로 앞 위치에 주의를 기울이고, 그 토큰의 정보를 잔차 스트림에 써 넣습니다. 이 헤드가 실행되고 나면 C의 위치에 B의 흔적이 담깁니다. 이제 두 번째 B에 있는 유도 헤드는 이전 토큰 정보가 B와 맞는 위치를 찾아 C를 발견하고, 그것을 예측으로 복사할 수 있습니다. 서로 다른 층에 있는 두 헤드가, 4편에서 설명한 대로 잔차 스트림을 통해 소통하며 유도 회로를 이룹니다. 두 층짜리 모델에서는 이 한 쌍만으로 그 행동을 만들어 내기에 충분합니다.\n\n[도판 1]\n\n이 책은 증거를 나열합니다. 유도 헤드를 제거하는 실험은, 어텐션만 있는 모델에서 유도 헤드가 맥락 내 학습을 인과적으로 떠받친다는 것을 보였습니다. 18편의 필요성 시험입니다. 회로 분석은 유도 헤드가 앞쪽의 이전 토큰 헤드에 기댄다는 것을 보였습니다. 그리고 곧 보겠지만, 유도 헤드는 학습 중에 갑자기 나타나며, 그때 맥락 내 학습 능력도 가파르게 좋아집니다.\n\n층이 더 많고 MLP도 있는 더 큰 모델에서는 메커니즘이 더 복잡해집니다. 하지만 이 책은 핵심 원리는 같다고 봅니다. 맥락이 층을 거쳐 앞으로 전달되고, 반복된 부분 시퀀스와의 일치에 따라 조건부로 토큰을 꺼내 오는 데 쓰인다는 것입니다.\n\n## 특징의 관점\n\n두 번째 렌즈는 10편부터 13편까지의 특징 분석입니다. 유도 헤드는 원래 특정한 어텐션 헤드, 곧 구성 요소로 기술되었습니다. 이후의 연구는 이 계산을 분산된 표현의 수준에서 이해하는 것이 더 자연스럽다고 봅니다.\n\n희소 오토인코더는 잔차 스트림이나 MLP뿐 아니라 어텐션 층의 출력에도 학습시킬 수 있습니다. 그렇게 한 2024년의 한 연구는 되풀이되는 패턴과 맥락 의존성을 포착하는 특징의 묶음들을 찾았고, 그 가운데 일부는 원래 유도 헤드가 한다고 여겨지던 행동과 맞아떨어졌습니다. 더 넓게 보면, 최근의 분석들은 유도 헤드가 고립된 메커니즘이 아니라, 서로 작용하는 여러 특징이 층을 넘나들며 되풀이되고 결합하는 분산된 특징 회로에 참여한다고 봅니다. 13편의 크로스코더 같은 층간 방법은 일부 특징이 층마다 새로 계산되는 것이 아니라 여러 층에 걸쳐 일관되게 표현된다는 것을 시사합니다.\n\n이 책이 여기서 끌어내는 교훈은 분석 단위에 대한 주의입니다. 어텐션 헤드는, 유도 헤드처럼 특화된 것이라도, 더 넓은 분산 표현의 일부일 뿐일 수 있습니다. 어떤 헤드를 '유도 헤드'라고 부르는 것은 쓸모가 있지만, 그 헤드가 참여하는 계산은 그 헤드의 경계에서 멈추지 않을 수 있습니다.\n\n## 학습 과정의 관점\n\n세 번째 렌즈는 모델이 어떻게 배우는지에 관한 이 책의 장(26–28편에서 다룹니다)에서 온 것으로, 완성된 모델이 아니라 학습 전체에 걸쳐 모델을 봅니다. 유도 회로에 관한 몇몇 사실은 학습이 끝난 모델 하나에서는 보이지 않고, 학습 도중 차례로 저장한 모델의 사본, 곧 체크포인트(checkpoint)들을 함께 볼 때만 보입니다.\n\n시퀀스 A B C A B를 두고 학습 한 번을 지켜봅시다. 초기의 체크포인트에서 모델은 토큰이 대체로 얼마나 자주 나오는지로 예측하고, 앞에 나온 A B에서 아무 도움도 얻지 못합니다. 그러다 학습의 좁은 구간, 2022년 연구가 다룬 모델들에서는 학습을 시작한 지 약 25억에서 50억 토큰 사이에, 유도 헤드가 생겨나고 모델은 첫 번째 등장을 돌아보며 C를 예측하기 시작합니다. 같은 구간에서 맥락 내 학습이 가파르게 좋아집니다. 학습 손실은 작게 불룩 솟습니다. 이 능력은 서서히가 아니라 갑자기 생겨나며, 이를 상전이(phase change)라고 부릅니다.\n\n[도판 2]\n\n이 시점은 체크포인트 하나로는 줄 수 없는 종류의 인과적 증거도 보탭니다. 완성된 모델에서 유도 헤드를 제거하는 것은 그 모델에서 그 헤드가 그 행동에 필요하다는 것만 보여 줍니다. 유도 회로가 생겨난 것이 그 능력을 생기게 했다는 더 강한 주장은 보여 주지 못합니다. 2022년 연구는 회로가 생겨나는 과정 자체에 개입해서 이 주장을 시험했습니다. 이른바 '번진 키(smeared key)' 변형은 이전 토큰 단계를 어텐션 계산 자체에 넣어서, 회로 전체가 층 하나 안에서 생겨날 수 있게 했습니다. 이렇게 바꾸자, 원래는 맥락 내 학습을 결코 익히지 못하던 한 층짜리 모델이 그 능력을 얻었고, 더 깊은 모델에서는 전이가 더 일찍 일어났습니다. 회로가 생길 수 있는 시점을 바꾸자, 능력이 나타나는 시점도 바뀐 것입니다.\n\n## 세 렌즈, 세 종류의 주장\n\n나란히 놓고 보면 세 관점은 서로 다른 것을 말하고, 저마다 한계가 있습니다.\n\n[표: 세 렌즈로 본 유도 헤드]\n렌즈 | 이 책의 절 | 보여 주는 것 | 혼자서는 보여 주지 못하는 것\n회로 | 7.4 | 어떤 구성 요소가 그 행동을 구현하고 서로 어떻게 기대는지 | 그 구성 요소가 자연스러운 단위인지, 회로가 어떻게 생겨났는지\n특징 | 6.8 | 계산이 여러 층에 걸친 상호작용하는 특징들에 퍼져 있다는 것 | 개입 없이는, 그 특징들 가운데 무엇이 필요하거나 충분한지\n학습 과정 | 10.3.5 | 메커니즘이 언제 생겨나는지, 그리고 그것이 생겨나는 것이 능력을 낳는다는 것 | 다른 두 렌즈 없이는, 그 메커니즘이 정확히 무엇을 계산하는지\n\n회로의 관점은 선명한 메커니즘을 줍니다. 특징의 관점은 메커니즘이 그 안에 이름 붙은 구성 요소보다 넓을 수 있다고 경고합니다. 발달의 관점은 회로가 생길 수 있는 시점을 바꿔서, 시간상의 상관관계를 인과적 증거로 바꿉니다. 어느 렌즈 하나로도 전체를 얻을 수 없었을 것이고, 이것은 이 분야 전체에 대한 이 책의 태도를 잘 요약해 줍니다.\n\n[표: 이번 편의 용어]\n용어 | 뜻\n유도 헤드 | 지금 토큰이 앞에 나온 적이 있으면, 지난번 그 뒤에 온 토큰을 예측하는 어텐션 헤드\n조건부 복사 | 앞에서 맞는 맥락을 찾았을 때만 토큰을 복사하는 것\n이전 토큰 헤드 | 각 토큰이 무엇인지를 다음 위치에 써 넣는 어텐션 헤드\n유도 회로 | 함께 일하는 이전 토큰 헤드와, 그보다 뒤쪽 층의 유도 헤드\n어텐션만 있는 트랜스포머 | 어텐션만 따로 연구하려고 MLP 층을 뺀 작은 트랜스포머\n체크포인트 | 학습 도중 어느 시점에 저장한 모델의 사본\n상전이 | 학습의 좁은 구간에서 능력이 갑자기 나타나는 것\n번진 키 | 이전 토큰 단계를 어텐션에 넣어, 회로가 층 하나 안에서 생겨날 수 있게 한 변형\n\n20편에서는 회로 부를 마무리합니다. 어떤 해석 주장이든 판단할 수 있도록 이 책이 제안하는 다섯 차원과, 그 지표와 절차입니다.",
+          "figures": [
+            {
+              "src": "images/inside-19-circuit-ko.png",
+              "alt": "물음표가 뒤따르는 시퀀스 A B C A B. 앞쪽 층에서 이전 토큰 헤드가 각 위치에 바로 앞 토큰이 무엇인지 복사해 넣어서, C의 위치에도 ‘앞 토큰은 B였다’는 정보가 담깁니다. 뒤쪽 층에서 두 번째 B에 있는 유도 헤드가 앞 토큰이 B였던 위치를 찾아 C를 발견하고, C를 예측으로 복사합니다.",
+              "caption": "도판 1 — 6.8절과 7.4절의 사례 연구를 따른 유도 회로입니다. 어느 헤드도 혼자서는 이 일을 하지 못합니다. 이전 토큰 헤드가 정보를 준비하고, 유도 헤드가 그것을 씁니다.",
+              "ratio": "640/330"
+            },
+            {
+              "src": "images/inside-19-phase-ko.png",
+              "alt": "학습 진행을 나타낸 개념 그래프. 가로축은 학습에서 본 토큰 수입니다. 한 선은 맥락 내 학습 능력으로, 처음에는 평평하다가 약 25억에서 50억 토큰으로 표시된 좁은 구간에서 가파르게 오르고 다시 평평해집니다. 다른 선은 학습 손실로, 꾸준히 내려가다가 같은 구간에서 작게 불룩 솟습니다.",
+              "caption": "도판 2 — 10.3.5절이 전하는 올슨 등(2022)의 연구를 따른, 유도 헤드가 생겨나는 상전이입니다. 곡선은 개념을 나타낸 것이고, 약 25억에서 50억 토큰이라는 구간은 이 책이 연구 대상 모델들에 대해 보고한 값입니다.",
+              "ratio": "640/290"
+            }
+          ],
+          "tocLabel": "차례",
+          "subjectsLabel": "주제",
+          "subjects": "유도 헤드\n이전 토큰 헤드\n맥락 내 학습\n상전이\n사례 연구",
+          "refsLabel": "참고 문헌",
+          "refs": "Fazl Barez, Tung-Yu Wu, Hunar Batra et al. Understanding AI from the Inside: The State of Mechanistic Interpretability for AI Safety. arXiv:2611.08438, 2026. 6.8절, 7.4절, 10.3.5절, 47–48쪽, 58쪽, 90쪽. https://arxiv.org/abs/2611.08438\nNelson Elhage, Neel Nanda, Catherine Olsson et al. A Mathematical Framework for Transformer Circuits. Transformer Circuits Thread, 2021. https://transformer-circuits.pub/2021/framework/index.html\nCatherine Olsson, Nelson Elhage, Neel Nanda et al. In-context Learning and Induction Heads. Transformer Circuits Thread, 2022. https://transformer-circuits.pub/2022/in-context-learning-and-induction-heads/index.html\nConnor Kissane, Robert Krzyzanowski, Joseph Isaac Bloom, Arthur Conmy & Neel Nanda. Interpreting Attention Layer Outputs with Sparse Autoencoders. arXiv:2406.17759, 2024. https://arxiv.org/abs/2406.17759\nJack Lindsey, Adly Templeton, Jonathan Marcus, Thomas Conerly, Joshua Batson & Christopher Olah. Sparse Crosscoders for Cross-Layer Features and Model Diffing. Transformer Circuits Thread, 2024. https://transformer-circuits.pub/2024/crosscoders/index.html",
+          "series": {
+            "id": "inside-ai",
+            "title": "안에서 보는 AI",
+            "label": "연재",
+            "part": 19,
+            "partLabel": "38편 중 19편",
+            "group": "4부. 회로 찾기와 검증"
+          },
+          "prevLabel": "이전 편",
+          "prev": {
+            "title": "설명이 맞는지 확인하기",
+            "kind": "안에서 보는 AI · 18편",
+            "year": "2026",
+            "id": "",
+            "slug": "inside-ai-18-causal-verification"
+          },
+          "nextLabel": "다음 편",
+          "next": {
+            "title": "해석 주장을 평가하는 다섯 기준",
+            "kind": "안에서 보는 AI · 20편",
+            "year": "2026",
+            "id": "",
+            "slug": "inside-ai-20-evaluation"
+          }
+        },
+        "en": {
+          "slug": "inside-ai-19-induction-heads",
+          "title": "Induction Heads",
+          "dek": "One mechanism appears three times in the book: as a circuit, as features, and as something that forms during training. Induction heads let a model continue a pattern it has just seen. ==Looking at them three ways shows what each kind of analysis can and cannot establish.==",
+          "kind": "AI from the Inside · Part 19",
+          "date": "2026.11",
+          "readTime": "7 min",
+          "body": "This part is different from the others. Instead of following one section of the book, it gathers a case study that the book tells in three places: in the chapter on features (section 6.8, pages 47–48), in the chapter on circuits (section 7.4, page 58), and in the chapter on learning dynamics (section 10.3.5, page 90). The subject is induction heads, probably the best-understood mechanism in language models. Seeing one mechanism through three lenses is a good way to review what the last fifteen parts have built, and to see what each lens adds.\n\n## What an induction head does\n\nInduction heads were first identified in 2021, in small transformers, and analysed in depth in 2022. They are attention heads that implement a rule of conditional copying over repeated sequences. In plain words: if the current token has appeared earlier in the text, look at what came right after it last time, and predict that again.\n\nThe book's example is the sequence A B C A B. The model has to predict what comes after the second B. It has seen \"A B\" before, followed by C. An induction head, sitting at the second B, attends back to the position just after the first B, which holds C, and raises the model's score for C. The rule should work for any tokens in any positions: \"Harry Potter … Harry\" predicts \"Potter\", and a variable name used earlier in a program predicts the same continuation.\n\nThis simple rule matters because it is a basic form of in-context learning: using the text in front of the model, rather than anything stored in its weights, to decide what comes next.\n\n## The circuit view\n\nThe first lens is the circuit of part 6. The book makes a point that is easy to miss: an induction head cannot do this on its own. To attend to C, it needs a way to find \"the position whose previous token was B\". But each position's residual stream starts out holding only its own token. Nothing at C's position says that B came before it.\n\nThat information is supplied by a different head in an earlier layer, which a 2021 study of a two-layer, attention-only transformer called a previous-token head. It attends from each position to the position just before it, and writes that token's information into the residual stream. After it runs, C's position carries a trace of B. Now the induction head, at the second B, can search for positions whose previous-token information matches B, find C, and copy it into the prediction. The two heads, in different layers, communicating through the residual stream as part 4 described, form the induction circuit. In the two-layer model, this pair is enough to produce the behaviour.\n\n[Fig. 1]\n\nThe book lists the evidence. Ablating induction heads showed that they causally support in-context learning in the attention-only model, the necessity test of part 18. Circuit analysis showed their dependence on the earlier previous-token heads. And, as we will see, they appear abruptly during training, at the same time as a sharp improvement in in-context learning.\n\nIn larger models, with more layers and with MLPs, the mechanism becomes more complex. But the book argues that the core principle stays the same: context is carried forward across layers and used to retrieve tokens conditionally, based on matches with repeated subsequences.\n\n## The feature view\n\nThe second lens is the feature analysis of parts 10 to 13. Induction heads were originally described as particular attention heads, components. Later work suggests that the computation is more naturally understood at the level of distributed representations.\n\nSparse autoencoders can be trained on the outputs of attention layers, not only on the residual stream or MLPs. A 2024 study that did so found families of features capturing recurring patterns and dependencies on context, and some of them match the behaviour originally attributed to induction heads. More broadly, modern analyses suggest that induction heads are not isolated mechanisms but take part in distributed feature circuits, in which several interacting features recur and combine across layers. Cross-layer methods such as the crosscoders of part 13 suggest that some features are represented consistently across layers rather than recomputed at each one.\n\nThe lesson the book draws is a caution about the unit of analysis. Attention heads, even specialised ones like induction heads, may be only part of broader, distributed representations. Naming a head \"the induction head\" is useful, but the computation it takes part in may not stop at its boundaries.\n\n## The learning-dynamics view\n\nThe third lens, from the book's chapter on how models learn (which parts 26 to 28 cover), looks at the model across training rather than at the finished model. Several facts about the induction circuit are invisible in a single trained model and only become visible across checkpoints, the saved copies of a model at successive points in training.\n\nWatch a single training run on the sequence A B C A B. At early checkpoints, the model predicts from how often tokens appear in general, and gets no benefit from the earlier occurrence of A B. Then, in a narrow window of training, roughly 2.5 to 5 billion tokens into training for the models studied in 2022, induction heads form and the model starts predicting C by attending back to the first occurrence. In the same window, in-context learning improves sharply and the training loss shows a small bump. The ability arrives not gradually but abruptly, in what is called a phase change.\n\n[Fig. 2]\n\nThe timing also adds a kind of causal evidence that one checkpoint cannot give. Ablating an induction head in the final model shows only that it is necessary for the behaviour in that model. It does not show the stronger claim that the forming of the induction circuit is what caused the capability to develop. The 2022 study tested that claim by intervening on the formation itself. Its \"smeared key\" modification built the previous-token step directly into the attention computation, so that the whole circuit could form inside a single layer. With this change, one-layer models, which otherwise never develop in-context learning, acquired it, and in deeper models the transition moved earlier. Changing when the circuit could form changed when the ability appeared.\n\n## Three lenses, three kinds of claim\n\nPut side by side, the three views say different things, and each has its limits.\n\n[Table: Induction heads through three lenses]\nLens | Book section | What it shows | What it cannot show alone\nCircuit | 7.4 | Which components implement the behaviour and how they depend on each other | Whether the components are the natural units, or how the circuit came to exist\nFeatures | 6.8 | That the computation is spread over interacting features across layers | Which of those features is necessary or sufficient, without interventions\nLearning dynamics | 10.3.5 | When the mechanism forms, and that its formation causes the capability | What exactly the mechanism computes, without the other two lenses\n\nThe circuit view gives a crisp mechanism. The feature view warns that the mechanism may be wider than the components named in it. The developmental view turns a correlation in time into causal evidence by changing when the circuit can form. No single lens would have given the whole picture, which is a fair summary of the book's attitude to the field as a whole.\n\n[Table: Terms in this part]\nTerm | Meaning\nInduction head | An attention head that, when the current token appeared before, predicts the token that followed it last time\nConditional copying | Copying a token only when a matching earlier context is found\nPrevious-token head | An attention head that writes each token's identity into the next position\nInduction circuit | A previous-token head and an induction head in a later layer, working together\nAttention-only transformer | A small transformer without MLP layers, used to study attention in isolation\nCheckpoint | A saved copy of a model at some point during training\nPhase change | An ability that appears abruptly within a narrow window of training\nSmeared key | A modification that builds the previous-token step into attention, so the circuit can form in one layer\n\nNext, part 20 closes the circuits group with the book's proposal for judging any interpretability claim: five dimensions, each with metrics and a protocol.",
+          "figures": [
+            {
+              "src": "images/inside-19-circuit-en.png",
+              "alt": "The sequence A B C A B, followed by a question mark. In an earlier layer, a previous-token head copies into each position the identity of the token before it, so the position of C now also carries “the previous token was B”. In a later layer, at the second B, the induction head looks for a position whose previous token was B, finds C, and copies C into the prediction.",
+              "caption": "Fig. 1 — The induction circuit, after the case studies in sections 6.8 and 7.4. Neither head can do the job alone: the previous-token head prepares the information, and the induction head uses it.",
+              "ratio": "640/330"
+            },
+            {
+              "src": "images/inside-19-phase-en.png",
+              "alt": "A schematic chart of training progress. The horizontal axis is tokens seen in training. One line shows in-context learning ability: flat at first, rising sharply within a narrow window marked as roughly 2.5 to 5 billion tokens, then flat again. A second line shows training loss falling steadily, with a small bump inside the same window.",
+              "caption": "Fig. 2 — The phase change in which induction heads form, after section 10.3.5's account of Olsson et al. (2022). The curves are schematic; the window of roughly 2.5 to 5 billion tokens is the one the book reports for the models studied.",
+              "ratio": "640/290"
+            }
+          ],
+          "tocLabel": "Contents",
+          "subjectsLabel": "Subjects",
+          "subjects": "Induction heads\nPrevious-token heads\nIn-context learning\nPhase change\nCase study",
+          "refsLabel": "References",
+          "refs": "Fazl Barez, Tung-Yu Wu, Hunar Batra et al. Understanding AI from the Inside: The State of Mechanistic Interpretability for AI Safety. arXiv:2611.08438, 2026. Sections 6.8, 7.4 and 10.3.5, pp. 47–48, 58 and 90. https://arxiv.org/abs/2611.08438\nNelson Elhage, Neel Nanda, Catherine Olsson et al. A Mathematical Framework for Transformer Circuits. Transformer Circuits Thread, 2021. https://transformer-circuits.pub/2021/framework/index.html\nCatherine Olsson, Nelson Elhage, Neel Nanda et al. In-context Learning and Induction Heads. Transformer Circuits Thread, 2022. https://transformer-circuits.pub/2022/in-context-learning-and-induction-heads/index.html\nConnor Kissane, Robert Krzyzanowski, Joseph Isaac Bloom, Arthur Conmy & Neel Nanda. Interpreting Attention Layer Outputs with Sparse Autoencoders. arXiv:2406.17759, 2024. https://arxiv.org/abs/2406.17759\nJack Lindsey, Adly Templeton, Jonathan Marcus, Thomas Conerly, Joshua Batson & Christopher Olah. Sparse Crosscoders for Cross-Layer Features and Model Diffing. Transformer Circuits Thread, 2024. https://transformer-circuits.pub/2024/crosscoders/index.html",
+          "series": {
+            "id": "inside-ai",
+            "title": "AI from the Inside",
+            "label": "Series",
+            "part": 19,
+            "partLabel": "Part 19 of 38",
+            "group": "IV. Finding and testing circuits"
+          },
+          "prevLabel": "Previous",
+          "prev": {
+            "title": "Checking an Explanation",
+            "kind": "AI from the Inside · Part 18",
+            "year": "2026",
+            "id": "",
+            "slug": "inside-ai-18-causal-verification"
+          },
+          "nextLabel": "Next",
+          "next": {
+            "title": "Five Ways to Judge an Interpretability Claim",
+            "kind": "AI from the Inside · Part 20",
+            "year": "2026",
+            "id": "",
+            "slug": "inside-ai-20-evaluation"
+          }
+        }
+      },
+      {
+        "ko": {
+          "slug": "inside-ai-20-evaluation",
+          "title": "해석 주장을 평가하는 다섯 기준",
+          "dek": "해석 가능성 방법은 보통 자기에게 맞는 지표로 평가받기 때문에, 방법끼리 비교하거나 발전을 재기가 어렵습니다. 이 책은 다섯 차원으로 된 공통의 잣대를 제안하고, 차원마다 지표와 절차를 붙입니다. ==핵심 요구는 단순합니다. 나쁜 소식까지 포함해서 다섯 가지를 모두 보고하라는 것입니다.==",
+          "kind": "안에서 보는 AI · 20편",
+          "date": "2026.11",
+          "readTime": "8분",
+          "body": "1편에서 이 책이 평가를 이 분야의 가장 시급한 열린 문제 가운데 하나로 본다고 했습니다. 이번 편은 이 책 자신의 제안, 곧 회로를 다루는 절 가운데 가장 긴 7.5절(58–66쪽)을 다룹니다. 이 연재의 다른 편보다 기술적이지만, 메시지는 간단하고 기억할 만합니다. 모델이 어떻게 작동하는지에 관한 주장은 여러 개의 독립된 차원에서, 숫자로, 기준선과 비교해서, 그리고 성공만큼 실패도 분명히 보고하면서 평가해야 한다는 것입니다.\n\n## 공통의 잣대가 필요한 이유\n\n서로 다른 방법은 서로 호환되지 않는 지표로 평가받습니다. 같은 행동에 대해서도 회로를 MLP와 어텐션 모듈 수준에서, CLT 특징 수준에서, 또는 개별 뉴런 수준에서 기술할 수 있습니다. CLT 기반 회로는 CLT가 충실하다는 것까지 보여야 합니다. 모듈 수준의 회로는 각 노드가 무엇을 하는지 설명해야 합니다. 그래서 방법들을 비교하기도, 이 분야가 발전하고 있는지 재기도 어렵습니다.\n\n이 책은 지금의 관행에서 다섯 가지 문제를 짚습니다.\n\n[표: 오늘날 해석 가능성 평가의 문제 (7.5.1절)]\n문제 | 무슨 일이 일어나나\n목적의 모호함 | 같은 일에 쓰이는데도 방법마다 다른 목표로 만들어지고 다른 기준으로 평가됨. SAE, 회로, 조종 벡터 모두 모델을 조종할 수 있지만 서로 무관한 방식으로 채점됨\n골라 보여 주기 | 신중하게 고른 예시나 좁은 데이터에서만 결과를 보여 주고, 실패와 적용 범위는 보고하지 않음\n기준선 누락 | 행동 기반 방법, 무작위 방향, 뉴런 하나 같은 단순한 대안과 비교하지 않음\n재현성의 틈 | 설정이 많고 학습 비용이 크며 무관해 보이는 요인에 민감한데, 재현성은 거의 보고되지 않음\n충실성과 이해하기 쉬움의 틈 | 출력이 얼마나 읽기 쉬운지는 보여 주지만 모델에 얼마나 충실한지는 덜 보여 주어, 참인 설명보다 설득력 있는 설명이 보상받음\n\n마지막 줄이 가장 중요합니다. 설명은 명료하고 만족스러우면서도 틀릴 수 있습니다. 논문들에 걸쳐 해석에 관한 주장들을 추적하는 공동 플랫폼을 만들자는 연구자들도 있고, 과학철학의 기준으로 설명을 평가하자는 연구자들도 있습니다. 하지만 이 책은 이 분야가 유망한 기법들의 모음에서 지식이 쌓여 가는 과학으로 자라려면, 구체적이고 표준적인 절차와 벤치마크와 보고 관행이 필요하다고 주장합니다.\n\n## 공통의 언어\n\n이 틀은 16편의 언어를 씁니다. '구성 요소'는 특징, 뉴런, 어텐션 헤드, 회로, 연결 등 어떤 분석 단위든 가리킵니다. 관심 있는 행동은 프롬프트들의 집합으로 나타냅니다. 입력 하나에 대한 구성 요소 집합의 개입 효과는, 그 활성값을 기준값으로 바꿨을 때 행동 지표가 바뀐 정도이고, 프롬프트들에 걸쳐 평균하면 행동 전체에 대한 효과가 됩니다.\n\n[도판 1]\n\n## 차원 1: 귀속 충실성\n\n방법이 올바른 구성 요소에 중요도를 매기는가? 많은 방법이 구성 요소마다 중요도 점수를 매기는데, 충실성은 그 점수를 실제로 개입했을 때의 효과와 맞춰 봅니다. 개입 효과 일치도는 입력들에 걸쳐 방법의 점수와 측정한 효과 사이의 상관관계입니다. 효과 크기 오차는 둘이 같은 척도에 있을 때 그 사이의 평균 간격입니다. 그리고 반사실적 효과 회복은, 예를 들어 정직함과 아첨처럼 두 행동 사이의 차이 가운데 얼마가, 찾아낸 구성 요소만 한쪽에서 다른 쪽으로 패칭했을 때 재현되는지 묻습니다.\n\n[도판 2]\n\n이 책은 마지막 지표의 현실적인 결함을 짚습니다. 분모, 곧 두 행동 사이의 간격이 0에 가까울 수 있고, 패칭한 값이 양쪽 끝을 넘어설 수도 있어서, 점수가 1보다 훨씬 크거나 0보다 작아질 수 있습니다. 이 책의 저자 두 사람이 쓴 2026년 연구는 범위를 제한한 버전을 제안했습니다.\n\n## 차원 2: 완전성\n\n찾아낸 구성 요소가 행동의 얼마만큼을 설명하는가? SAE와 CLT처럼 활성값을 재구성하는 방법에 대해서는, 손실 회복이 활성값을 재구성으로 바꿨을 때 모델의 성능이 얼마나 남는지를, 원래 모델과 활성값을 없앤 기준 상태 사이에서 잽니다. 행동 적용 범위는 찾아낸 구성 요소가 의미 있는 효과를 내는 프롬프트가 전체의 얼마인지 묻습니다. 설명되지 않은 분산은 원래 활성값의 변동 가운데 재구성이 놓치는 부분이 얼마인지 묻습니다. 절차는 평균만 보지 말고, 적용 범위나 재구성이 나쁜 입력들을 분석하라고도 요구합니다.\n\n## 차원 3: 안정성\n\n중요하지 않아야 할 변화에도 결과가 살아남는가? 시드 간 일치도는 무작위 시드를 바꿔 가며 방법을 여러 번 실행하고, 그 결과로 나온 특징이나 회로가 서로 얼마나 맞는지 잽니다. 12편은 이것이 SAE에서 왜 중요한지 보였습니다. 하이퍼파라미터 민감도는 합리적인 설정 범위에서 결과가 얼마나 흔들리는지 잽니다. 바꿔 쓰기 일관성은 뜻은 그대로 두고 프롬프트를 다르게 썼을 때도 개입의 효과가 같은지 확인합니다. 절차는 견고한 결과와 깨지기 쉬운 결과를 가려내고, 둘 다 보고하라고 요구합니다.\n\n## 차원 4: 인과적 타당성\n\n구성 요소가 필요하고, 충분하고, 특이한가? 18편의 시험을 점수로 만든 것입니다. 필요성 점수는 구성 요소를 제거했을 때 잃는 성능의 비율입니다. 충분성 점수는 그 구성 요소만 켜 두었을 때 남는 성능의 비율입니다. 특이성은 그 구성 요소에 개입했을 때 여러 대조 행동이 아니라 목표 행동에 영향을 주는지 잽니다. 절차는 중요한 대조군을 하나 덧붙입니다. 같은 크기의 무작위 구성 요소 집합을 제거하거나 남겨 둔 경우와 비교하라는 것입니다. 모델의 큰 덩어리를 아무거나 없애도 모델이 망가질 수 있기 때문입니다. 서로 다른 행동의 입력들 사이에서 활성값을 맞바꾸는 교환 시험이 이 묶음을 완성합니다.\n\n인과적 타당성을 시험하는 벤치마크도 이미 여럿 있습니다. 회로와 인과 변수를 위한 MIB, 개념 쪽으로 조종하는 능력을 보는 AxBench, 주어진 개념의 특징을 찾는 능력을 보는 RAVEL, 그리고 재구성 지표와 성별 편향 제거 같은 하위 과제를 함께 보는 희소 오토인코더용 SAEBench입니다.\n\n## 차원 5: 사람의 해석 가능성\n\n설명이 실제로 사람들에게 도움이 되는가? 설명 효용은 설명이 있을 때 사람들이 새로운 입력에서 모델의 행동을 설명이 없을 때보다 얼마나 더 잘 예측하는지 잽니다. 디버깅 효용은 모델의 오류를 찾아내고 고치는 데 얼마나 더 자주 성공하는지 잽니다. 해석의 일관성은 서로 다른 사람들이 같은 설명을 같은 방식으로 읽는지 잽니다. 이 책은 어려움도 인정합니다. 사람을 대상으로 한 연구는 비싸고, 전문성이 결과를 흐립니다. 해석 가능성 연구자에게 분명한 설명이 해당 분야의 전문가에게는 불투명할 수 있고, 그 반대도 마찬가지입니다.\n\n## 틀을 적용하기\n\n이 책은 방법의 갈래마다 무엇이 가장 중요한지도 제안합니다. SAE에는 특징 귀속과 개입의 일치, 재구성과 손실 회복, 시드에 걸친 특징 정렬, 특징의 필요성과 충분성, 그리고 사람과 모델이 특징을 일관되게 설명하는지가 중요합니다. 회로 찾기에는 반사실적 회복, 행동 적용 범위, 시드와 설정과 바꿔 쓰기에 대한 견고성, 교환 시험, 그리고 회로의 작음과 설명하는 양 사이의 절충이 중요합니다. 프로브와 조종 벡터에 대해서는, 그것을 맞추는 데 쓴 데이터에서 교란 요인, 곧 방향이 실제로는 잡아내고 있을지 모르는 공통 정보를 찾아보라는 항목이 되풀이됩니다.\n\n그리고 다섯 단계의 절차를 제시합니다.\n\n[표: 이 책이 권하는 평가 절차 (7.5.3절)]\n단계 | 할 일\n1. 범위 정하기 | 모델, 층, 행동, 그리고 성공 기준이 분명한 행동 시험 묶음을 정함\n2. 기준선 세우기 | 무작위 방향, PCA 성분, 뉴런 하나, 지도 학습 프로브 같은 비교 대상을 고름\n3. 방법 적용하기 | 무작위 시드, 설정, 학습 세부를 바꿔 가며 실행함\n4. 다섯 차원 모두 평가하기 | 충실성, 완전성, 안정성, 인과적 타당성, 사람의 해석 가능성에 대한 지표를 계산함\n5. 빠짐없이 보고하기 | 유리한 것만이 아니라 다섯 가지를 모두, 실패와 설명되지 않은 행동과 기준선 비교까지 보고함\n\n## 이 틀 자신의 한계\n\n이 책은 자기 제안의 한계도 솔직하게 밝힙니다. 제시한 지표들이 유일하게 옳은 것은 아닙니다. 성공의 문턱값은 이론적 근거가 부족해서 경험적으로 맞춰 가야 합니다. 다섯 차원을 모두 평가하는 것은 비싸고, 큰 규모에서는 감당하기 어려울 수 있습니다. 사람을 대상으로 한 평가는 느리고, 비싸고, 주관적입니다. 그리고 결과가 과제에 따라 달라집니다. 사실 회상에 강한 방법이 추론에는 약할 수 있습니다. 이 책의 결론은, 그래도 여러 차원에 걸친 체계적인 평가가 지표를 아무렇게나 고르는 것보다 더 믿을 만한 증거를 준다는 것, 그리고 이 틀을 최종 답이 아니라 표준화의 출발점으로 읽어야 한다는 것입니다.\n\n## 회로 부를 마치며\n\n이것으로 회로에 관한 이 책의 장이 끝납니다. 6장은 분석 단위를 찾았습니다. 7장은 그 단위들이 회로를 통해 어떻게 상호작용해서 행동을 만드는지, 그것을 어떻게 확인하는지, 그런 주장을 어떻게 채점하는지 보였습니다. 다음 부는 보완적인 접근을 다룹니다. 활성값을 부분으로 쪼개는 대신, 활성값에 담긴 정보를, 흔히 자연어로, 곧장 읽어 내는 방법입니다.\n\n[표: 이번 편의 용어]\n용어 | 뜻\n개입 효과 | 일부 구성 요소의 활성값을 바꿨을 때 행동 지표가 바뀌는 정도\n귀속 충실성 | 방법의 중요도 점수가 실제로 개입했을 때의 효과와 맞는지\n반사실적 효과 회복 | 찾아낸 구성 요소를 패칭해서 두 행동 사이의 간격을 얼마나 메우는지\n완전성 | 찾아낸 구성 요소가 행동의 얼마만큼을 설명하는지\n손실 회복 | 활성값을 재구성으로 바꿨을 때 남는 성능의 비율\n행동 적용 범위 | 구성 요소가 의미 있는 효과를 내는 프롬프트의 비율\n안정성 | 새로운 시드, 설정, 바꿔 쓴 문장에도 결과가 살아남는지\n인과적 타당성 | 구성 요소가 그 행동에 필요하고, 충분하고, 특이한지\n특이성 | 개입이 다른 행동이 아니라 목표 행동에 영향을 주는지\n사람의 해석 가능성 | 설명이 사람들이 모델을 예측하고, 고치고, 같은 뜻으로 읽는 데 도움이 되는지\n기준선 | 무작위 방향이나 뉴런 하나처럼, 방법이 이겨야 할 단순한 비교 대상\n평가자 간 일치도 | 서로 다른 사람들이 같은 설명을 얼마나 일관되게 해석하는지\n\n21편에서는 모델 중간을 읽는 부를 시작합니다. 중간 활성값을 예측으로 바꾸는 렌즈들입니다.",
+          "figures": [
+            {
+              "src": "images/inside-20-dimensions-ko.png",
+              "alt": "차원마다 하나씩, 질문과 예시 지표 두 개를 적은 열 다섯 개. 귀속 충실성: 점수가 실제 인과 효과와 맞는가? 완전성: 행동의 얼마만큼을 설명하는가? 안정성: 시드, 설정, 바꿔 쓴 문장에도 결과가 유지되는가? 인과적 타당성: 구성 요소가 필요하고, 충분하고, 특이한가? 사람의 해석 가능성: 설명이 사람들이 모델을 예측하고 고치는 데 도움이 되는가?",
+              "caption": "도판 1 — 7.5절의 표 9를 따른, 이 책의 평가 틀의 다섯 차원입니다. 어느 차원 하나로도 충분하지 않으며, 좋은 방법은 다섯 차원 모두에서 잘해야 합니다.",
+              "ratio": "640/330"
+            },
+            {
+              "src": "images/inside-20-recovery-ko.png",
+              "alt": "입력 쌍 하나에 대한 수직선. 기준 행동의 지표는 0에, 관심 행동의 지표는 1에 놓여 있습니다. 찾아낸 구성 요소를 패칭하면 지표가 0.8로 움직이고, 이것이 회복 점수입니다. 표시 두 개가 더 있어, 패칭한 값이 0보다 아래나 1보다 위에 떨어질 수도 있음을 보여 줍니다. 그래서 범위를 제한한 점수가 제안되었습니다.",
+              "caption": "도판 2 — 7.5.2절의 충실성 지표 가운데 하나인 반사실적 효과 회복입니다(값은 예시입니다). 이 점수는 방법이 찾아낸 구성 요소만 패칭해서 두 행동 사이의 간격을 얼마나 메우는지 묻습니다.",
+              "ratio": "640/260"
+            }
+          ],
+          "tocLabel": "차례",
+          "subjectsLabel": "주제",
+          "subjects": "평가\n충실성\n완전성\n안정성\n인과적 타당성\n사람의 해석 가능성",
+          "refsLabel": "참고 문헌",
+          "refs": "Fazl Barez, Tung-Yu Wu, Hunar Batra et al. Understanding AI from the Inside: The State of Mechanistic Interpretability for AI Safety. arXiv:2611.08438, 2026. 7.5절, 58–66쪽. https://arxiv.org/abs/2611.08438\nAaron Mueller, Atticus Geiger, Sarah Wiegreffe et al. MIB: A Mechanistic Interpretability Benchmark. ICML, 2025. https://arxiv.org/abs/2504.13151\nZhengxuan Wu, Aryaman Arora, Atticus Geiger et al. AxBench: Steering LLMs? Even Simple Baselines Outperform Sparse Autoencoders. ICML, 2025. https://arxiv.org/abs/2501.17148\nJing Huang, Zhengxuan Wu, Christopher Potts, Mor Geva & Atticus Geiger. RAVEL: Evaluating Interpretability Methods on Disentangling Language Model Representations. ACL, 2024. https://arxiv.org/abs/2402.17700\nAdam Karvonen, Can Rager, Johnny Lin et al. SAEBench: A Comprehensive Benchmark for Sparse Autoencoders in Language Model Interpretability. ICML, 2025. https://arxiv.org/abs/2503.09532\nKola Ayonrinde & Louis Jaburi. Evaluating Explanations: An Explanatory Virtues Framework for Mechanistic Interpretability. arXiv:2505.01372, 2025. https://arxiv.org/abs/2505.01372\nTung-Yu Wu & Fazl Barez. Query Circuits: Explaining How Language Models Answer User Prompts. ICML, 2026. https://openreview.net/forum?id=7F0sragazb",
+          "series": {
+            "id": "inside-ai",
+            "title": "안에서 보는 AI",
+            "label": "연재",
+            "part": 20,
+            "partLabel": "38편 중 20편",
+            "group": "4부. 회로 찾기와 검증"
+          },
+          "prevLabel": "이전 편",
+          "prev": {
+            "title": "유도 헤드",
+            "kind": "안에서 보는 AI · 19편",
+            "year": "2026",
+            "id": "",
+            "slug": "inside-ai-19-induction-heads"
+          },
+          "nextLabel": "다음 편",
+          "next": {
+            "title": "",
+            "kind": "",
+            "year": "",
+            "id": ""
+          }
+        },
+        "en": {
+          "slug": "inside-ai-20-evaluation",
+          "title": "Five Ways to Judge an Interpretability Claim",
+          "dek": "Interpretability methods are usually judged by whatever metric suits them, which makes it hard to compare them or to measure progress. The book proposes a common yardstick with five dimensions, each with metrics and a protocol. ==Its central demand is simple: report all five, including the bad news.==",
+          "kind": "AI from the Inside · Part 20",
+          "date": "2026.11",
+          "readTime": "8 min",
+          "body": "Part 1 said that the book considers evaluation one of the field's most pressing open problems. This part covers the book's own proposal, section 7.5 (pages 58–66), the longest single section on circuits. It is more technical than most of the series, but its message is easy to state and worth remembering: a claim about how a model works should be judged on several separate dimensions, with numbers, against baselines, and with failures reported as plainly as successes.\n\n## Why a common yardstick is needed\n\nDifferent methods are judged with incompatible metrics. Even for the same behaviour, a circuit can be described at the level of MLP and attention modules, of CLT features, or of individual neurons. A CLT-based circuit must also show that the CLT is faithful; a module-level circuit must explain what each node does. So comparing methods, and measuring whether the field is making progress, is hard.\n\nThe book names five problems with current practice.\n\n[Table: Problems with how interpretability is evaluated today (section 7.5.1)]\nProblem | What happens\nUnclear purpose | Methods are built for different aims and judged by different objectives, even when they are used for the same job; SAEs, circuits and steering vectors can all steer a model, but are scored in unrelated ways\nCherry-picking | Results are shown on carefully chosen examples or narrow data; failures and coverage go unreported\nMissing baselines | Gains are not compared with simple alternatives such as behavioural methods, random directions or single neurons\nReproducibility gaps | Many settings and costly training steps, sensitive to seemingly irrelevant factors, with reproducibility rarely reported\nFaithfulness versus understandability | Methods show how readable their outputs are, but less often how faithful they are to the model, which rewards explanations that persuade rather than ones that are true\n\nThe last row is the most important. An explanation can be clear, satisfying and wrong. Some researchers have called for a shared platform for tracking interpretability claims across papers, and others have proposed judging explanations by criteria from the philosophy of science. But the book argues that the field needs concrete, standard protocols, benchmarks and reporting practices, to grow from a collection of promising techniques into a cumulative science.\n\n## The common language\n\nThe framework uses the language of part 16. \"Components\" means any unit of analysis: features, neurons, attention heads, circuits or connections. A behaviour of interest is represented by a set of prompts. The intervention effect of a set of components on one input is the change in a behaviour metric when their activations are replaced by reference values, and the average over the prompts gives the effect on the behaviour as a whole.\n\n[Fig. 1]\n\n## Dimension 1: attribution faithfulness\n\nDoes the method assign importance to the right components? Many methods give each component an importance score; faithfulness checks those scores against the real effects of intervening. Intervention-effect agreement is the correlation between the method's scores and the measured effects across inputs. Effect-size error is the average gap between them, when they are on the same scale. And counterfactual effect recovery asks how much of the difference between two behaviours, say honesty and sycophancy, is reproduced by patching only the identified components from one into the other.\n\n[Fig. 2]\n\nThe book flags a practical flaw in that last metric. Its denominator, the gap between the two behaviours, can be close to zero, and the patched value can overshoot either end, so the score can be far above 1 or below 0. A 2026 study by two of the book's authors proposed a bounded version.\n\n## Dimension 2: completeness\n\nHow much of the behaviour do the identified components account for? For methods that reconstruct activations, such as SAEs and CLTs, loss recovery asks what fraction of the model's performance survives when activations are replaced by reconstructions, measured between the original model and a baseline in which the activations are removed. Behavioural coverage asks on what fraction of prompts the identified components have a meaningful effect at all. Unexplained variance asks how much of the variation in the original activations the reconstruction misses. The protocol also asks researchers to analyse the inputs where coverage or reconstruction is poor, not only the averages.\n\n## Dimension 3: stability\n\nDo the findings survive changes that should not matter? Cross-seed agreement runs the method several times with different random seeds and measures how well the resulting features or circuits match; part 12 showed why this matters for SAEs. Hyperparameter sensitivity measures how much a result swings across reasonable settings. Paraphrase consistency checks whether an intervention has the same effect when the prompt is reworded without changing its meaning. The protocol asks researchers to separate robust findings from fragile ones, and to report both.\n\n## Dimension 4: causal validity\n\nAre the components necessary, sufficient and specific? These are the tests of part 18, made into scores. The necessity score is the fraction of performance lost when the components are ablated. The sufficiency score is the fraction kept when only the components remain active. Specificity measures whether intervening on the components affects the target behaviour rather than a set of control behaviours. The protocol adds an important control: compare against ablating or keeping random sets of components of the same size, because removing any large chunk of a model may hurt it. An interchange test, swapping activations between inputs of different behaviours, completes the set.\n\nSeveral benchmarks already test causal validity: MIB for circuits and causal variables, AxBench for steering towards concepts, RAVEL for locating features of given concepts, and SAEBench for sparse autoencoders, which pairs reconstruction metrics with downstream tasks such as removing gender bias.\n\n## Dimension 5: human interpretability\n\nDo the explanations actually help people? Explanation utility measures how much better people predict the model's behaviour on new inputs with the explanation than without it. Debugging utility measures how much more often they manage to identify and fix the model's errors. Consistency of interpretation measures whether different people read the same explanation the same way. The book admits the difficulties: human studies are expensive, and expertise confounds them, since an explanation clear to an interpretability researcher may be opaque to a domain expert, and vice versa.\n\n## Applying the framework\n\nThe book also suggests what matters most for different families of methods. For SAEs: agreement between feature attributions and interventions, reconstruction and loss recovery, alignment of features across seeds, necessity and sufficiency of features, and whether people and models describe features consistently. For circuit discovery: counterfactual recovery, behavioural coverage, robustness to seeds, settings and paraphrases, interchange tests, and the trade-off between how small a circuit is and how much it explains. For probes and steering vectors, a recurring item is to look for confounding factors in the data used to fit them, the shared information that a direction might really be picking up.\n\nAnd it gives a five-step protocol.\n\n[Table: The book's recommended evaluation protocol (section 7.5.3)]\nStep | What to do\n1. Define scope | Fix the model, layers and behaviours, and a behavioural test suite with clear criteria for success\n2. Establish baselines | Choose comparisons such as random directions, PCA components, single neurons and supervised probes\n3. Apply the method | Run it with varied random seeds, settings and other training details\n4. Evaluate all five dimensions | Compute metrics for faithfulness, completeness, stability, causal validity and human interpretability\n5. Report comprehensively | Report all five, not only the favourable ones, with failures, unexplained behaviours and baseline comparisons\n\n## The framework's own limits\n\nThe book is frank about the limits of its own proposal. The particular metrics are not the only reasonable ones. Thresholds for success lack theoretical grounding and must be calibrated empirically. Evaluating all five dimensions is expensive and may be prohibitive at scale. Human evaluation is slow, costly and subjective. And results depend on the task: a method that does well on recalling facts may do poorly on reasoning. Its conclusion is that systematic evaluation across several dimensions still gives more reliable evidence than an arbitrary choice of metrics, and that the framework should be read as a starting point for standardisation, not a final answer.\n\n## The end of the circuits group\n\nWith this, the book's chapter on circuits closes. Chapter 6 found units of analysis; chapter 7 showed how those units interact through circuits to produce behaviour, how to check them, and how to grade any such claim. The next group of parts takes a complementary approach: instead of breaking activations into parts, it reads the information in an activation directly, often in natural language.\n\n[Table: Terms in this part]\nTerm | Meaning\nIntervention effect | The change in a behaviour metric when some components' activations are replaced\nAttribution faithfulness | Whether a method's importance scores match the real effects of intervening\nCounterfactual effect recovery | How much of the gap between two behaviours patching the identified components closes\nCompleteness | How much of the behaviour the identified components account for\nLoss recovery | The share of performance kept when activations are replaced by reconstructions\nBehavioural coverage | The share of prompts on which the components have a meaningful effect\nStability | Whether findings survive new seeds, settings and paraphrases\nCausal validity | Whether components are necessary, sufficient and specific for the behaviour\nSpecificity | Whether an intervention affects the target behaviour rather than others\nHuman interpretability | Whether explanations help people predict, debug and agree about the model\nBaseline | A simple comparison, such as random directions or single neurons, that a method should beat\nInter-rater agreement | How consistently different people interpret the same explanation\n\nNext, part 21 opens the group on reading the middle of a model, with lenses that turn intermediate activations into predictions.",
+          "figures": [
+            {
+              "src": "images/inside-20-dimensions-en.png",
+              "alt": "Five columns, one per dimension, each with its question and two example metrics. Attribution faithfulness: do the scores match the real causal effects? Completeness: how much of the behaviour is accounted for? Stability: do the findings survive new seeds, settings and paraphrases? Causal validity: are the components necessary, sufficient and specific? Human interpretability: do the explanations help people predict and fix the model?",
+              "caption": "Fig. 1 — The five dimensions of the book's evaluation framework, after its Table 9 in section 7.5. No single dimension is enough; a strong method should do well on all five.",
+              "ratio": "640/330"
+            },
+            {
+              "src": "images/inside-20-recovery-en.png",
+              "alt": "A number line for one input pair. The metric for the reference behaviour sits at 0, the metric for the behaviour of interest at 1. Patching the identified components moves the metric to 0.8, which is the recovery score. Two further marks show that the patched value can land below 0 or above 1, which is why bounded versions of the score have been proposed.",
+              "caption": "Fig. 2 — Counterfactual effect recovery, one of the faithfulness metrics in section 7.5.2 (the values are illustrative). The score asks how much of the gap between two behaviours is closed by patching just the components the method identified.",
+              "ratio": "640/260"
+            }
+          ],
+          "tocLabel": "Contents",
+          "subjectsLabel": "Subjects",
+          "subjects": "Evaluation\nFaithfulness\nCompleteness\nStability\nCausal validity\nHuman interpretability",
+          "refsLabel": "References",
+          "refs": "Fazl Barez, Tung-Yu Wu, Hunar Batra et al. Understanding AI from the Inside: The State of Mechanistic Interpretability for AI Safety. arXiv:2611.08438, 2026. Section 7.5, pp. 58–66. https://arxiv.org/abs/2611.08438\nAaron Mueller, Atticus Geiger, Sarah Wiegreffe et al. MIB: A Mechanistic Interpretability Benchmark. ICML, 2025. https://arxiv.org/abs/2504.13151\nZhengxuan Wu, Aryaman Arora, Atticus Geiger et al. AxBench: Steering LLMs? Even Simple Baselines Outperform Sparse Autoencoders. ICML, 2025. https://arxiv.org/abs/2501.17148\nJing Huang, Zhengxuan Wu, Christopher Potts, Mor Geva & Atticus Geiger. RAVEL: Evaluating Interpretability Methods on Disentangling Language Model Representations. ACL, 2024. https://arxiv.org/abs/2402.17700\nAdam Karvonen, Can Rager, Johnny Lin et al. SAEBench: A Comprehensive Benchmark for Sparse Autoencoders in Language Model Interpretability. ICML, 2025. https://arxiv.org/abs/2503.09532\nKola Ayonrinde & Louis Jaburi. Evaluating Explanations: An Explanatory Virtues Framework for Mechanistic Interpretability. arXiv:2505.01372, 2025. https://arxiv.org/abs/2505.01372\nTung-Yu Wu & Fazl Barez. Query Circuits: Explaining How Language Models Answer User Prompts. ICML, 2026. https://openreview.net/forum?id=7F0sragazb",
+          "series": {
+            "id": "inside-ai",
+            "title": "AI from the Inside",
+            "label": "Series",
+            "part": 20,
+            "partLabel": "Part 20 of 38",
+            "group": "IV. Finding and testing circuits"
+          },
+          "prevLabel": "Previous",
+          "prev": {
+            "title": "Induction Heads",
+            "kind": "AI from the Inside · Part 19",
+            "year": "2026",
+            "id": "",
+            "slug": "inside-ai-19-induction-heads"
           },
           "nextLabel": "Next",
           "next": {
