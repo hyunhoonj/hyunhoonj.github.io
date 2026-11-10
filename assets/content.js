@@ -159,7 +159,7 @@
             "title": "안에서 보는 AI",
             "kind": "",
             "year": "2026",
-            "desc": "기계적 해석 가능성의 교과서라 할 만한 「Understanding AI from the Inside」를 한 장씩 쉽게 풀어 읽는 연재입니다. ==지금 20편까지 나왔습니다.==",
+            "desc": "기계적 해석 가능성의 교과서라 할 만한 「Understanding AI from the Inside」를 한 장씩 쉽게 풀어 읽는 연재입니다. ==지금 25편까지 나왔습니다.==",
             "ratio": "1/1",
             "image": {
               "src": "images/inside-ai-card.jpg",
@@ -296,7 +296,7 @@
             "title": "AI from the Inside",
             "kind": "",
             "year": "2026",
-            "desc": "A series that walks through “Understanding AI from the Inside”, a textbook of mechanistic interpretability in all but name, one chapter at a time. ==20 parts so far.==",
+            "desc": "A series that walks through “Understanding AI from the Inside”, a textbook of mechanistic interpretability in all but name, one chapter at a time. ==25 parts so far.==",
             "ratio": "1/1",
             "image": {
               "src": "images/inside-ai-card.jpg",
@@ -3341,10 +3341,11 @@
           },
           "nextLabel": "다음 편",
           "next": {
-            "title": "",
-            "kind": "",
-            "year": "",
-            "id": ""
+            "title": "렌즈로 중간층 읽기",
+            "kind": "안에서 보는 AI · 21편",
+            "year": "2026",
+            "id": "",
+            "slug": "inside-ai-21-lenses"
           }
         },
         "en": {
@@ -3389,6 +3390,535 @@
             "year": "2026",
             "id": "",
             "slug": "inside-ai-19-induction-heads"
+          },
+          "nextLabel": "Next",
+          "next": {
+            "title": "Reading Layers Through Lenses",
+            "kind": "AI from the Inside · Part 21",
+            "year": "2026",
+            "id": "",
+            "slug": "inside-ai-21-lenses"
+          }
+        }
+      },
+      {
+        "ko": {
+          "slug": "inside-ai-21-lenses",
+          "title": "렌즈로 중간층 읽기",
+          "dek": "계산이 절반쯤 진행됐을 때 모델은 무엇을 생각하고 있을까요? 렌즈는 중간층의 활성값을 모델이 출력할 수 있는 단어로 옮겨서 이 질문에 답합니다. 이번 편은 이 책이 다루는 세 렌즈, 곧 로짓 렌즈, 조정 렌즈, 야코비 렌즈를 다룹니다. ==셋은 조금씩 다른 질문에 점점 더 나은 답을 줍니다.==",
+          "kind": "안에서 보는 AI · 21편",
+          "date": "2026.11",
+          "readTime": "7분",
+          "body": "앞의 두 부는 활성값을 부분들로 쪼갰습니다. 10편부터 15편까지는 특징으로, 16편부터 20편까지는 상호작용하는 특징들의 회로로 쪼갰습니다. 이번 부는 보완적인 접근을 다룹니다. 활성값을 통째로 다루며, 그 안에 어떤 정보가 들어 있는지, 흔히 자연어로 옮겨서 묻습니다. 이 책은 8장에서 이를 소개하고, 이번 편은 그 장의 첫머리와 8.1–8.3절(66–69쪽)을 다룹니다. 중간층을 모델 자신의 어휘로 풀어 읽는 세 렌즈입니다.\n\n이 책은 이 방법들이 하는 일과 하지 않는 일을 강조합니다. 이 방법들은 활성값에 개입하지도, 활성값을 분해하지도 않습니다. 활성값과 단어 사이에 직접적인 창구를 열어 주므로 특히 접근하기 쉽습니다. 그것이 강점이고, 곧 보겠지만 주된 한계의 원인이기도 합니다.\n\n## 로짓 렌즈\n\n4편은 트랜스포머의 마지막 단계를 설명했습니다. 마지막 잔차 스트림을 어휘의 모든 토큰에 대한 점수로 바꾸는 언임베딩입니다. 2020년에 nostalgebraist라는 필명을 쓰는 연구자가 제안한 로짓 렌즈(logit lens)는 간단한 질문을 던집니다. 같은 언임베딩을 더 앞쪽 층의 잔차 스트림에 적용하면 어떻게 될까? 그 결과는 계산이 거기서 멈췄다면 모델이 무엇을 예측했을지를 보여 줍니다. 층마다 적용하면 예측이 모델의 깊이를 따라 어떻게 만들어지고, 모델이 언제 답을 정하는지 추적할 수 있습니다.\n\n이 책은 일반적인 경향을 전합니다. 앞쪽 층은 퍼진 예측을 내는 경향이 있고, 뒤쪽 층으로 갈수록 마지막 출력 쪽으로 점점 좁혀집니다. 물론 예외도 있습니다. 이 책의 예는 19편의 유도 과제로 돌아갑니다. A B C A B를 읽는 12층 모델에서, 로짓 렌즈는 정답 C가 6층에서 상위 20개 후보에 들어오고, 점점 강해져서, 마지막 층에서 1위가 되는 모습을 보여 줄 수 있습니다. 하지만 더 어려운 언어 패턴에서는 앞쪽과 가운데 층이 많은 토큰에 고르게 퍼진 분포를 보이다가, 마지막 몇 층에서야 모델이 예측을 정할 수도 있습니다.\n\n[도판 1]\n\n이 책의 실습 노트북은 GPT-2에 로짓 렌즈를 적용해서, 층마다 상위 토큰, 최종 답의 순위가 바뀌는 모습, 각 층의 예측이 마지막 예측에 얼마나 빨리 수렴하는지를 보여 줍니다.\n\n## 로짓 렌즈의 두 한계\n\n이 책은 기본 로짓 렌즈의 한계를 두 가지 듭니다. 첫째는 형식이 맞지 않는 문제입니다. 중간층에 언임베딩을 적용한다는 것은, 그 층의 활성값이 이미 출력층이 기대하는 형태로 되어 있다고 가정하는 것입니다. 하지만 중간 표현은 아주 다르게 짜여 있을 수 있습니다. 6층을 출력층의 눈으로 읽으면 관련 정보를 뽑아낼 수는 있지만, 6층에서 모델이 무엇을 계산하는지 정확히 보여 줄 수는 없습니다.\n\n둘째는 더 근본적입니다. 로짓 렌즈는 인과적이지 않고 상관적입니다. 활성값을 어휘 공간에 사영할 뿐, 풀어낸 토큰들이 계산에서 어떤 역할을 하는지 시험하지 않습니다. 형식이 맞지 않는 문제 때문에, 풀어낸 토큰은 기껏해야 활성값에서 되찾을 수 있는 정보를 보여 줄 뿐, 모델이 쓰는 정보를 보여 주지는 않습니다. 이 연재 내내 이어지는 '있다'와 '쓰인다'의 구별이 여기서도 나옵니다.\n\n## 조정 렌즈\n\n노라 벨로즈(Nora Belrose)와 동료들이 내놓은 조정 렌즈(tuned lens)는 첫째 한계를 다룹니다. 층마다 작은 아핀 변환, 곧 행렬 하나와 오프셋 하나를 학습해서, 언임베딩을 적용하기 전에 그 층의 활성값을 출력층의 형식으로 옮깁니다. 이 변환은 각 층에서 풀어낸 예측이 모델의 마지막 예측과 최대한 맞도록 학습됩니다. 그 결과 기본 로짓 렌즈보다 각 층에서 정보를 더 효과적으로 뽑아냅니다.\n\n하지만 이 책은 조정 렌즈가 로짓 렌즈의 더 깊은 한계를 물려받고, 자기 한계도 하나 더한다고 지적합니다. 여전히 상관적입니다. 여전히 모델이 내부에서 무엇을 계산하는지가 아니라 무엇을 예측할 것 같은지에 답하도록 설계되어 있습니다. 그리고 마지막 출력에 맞추도록 학습되기 때문에, 그 보정이 중간 단계를 가리고, 너무 이른 층에서 최종 답과 비슷해 보이는 예측을 낼 수 있습니다. 2026년의 한 연구는 조정 렌즈가 로짓 렌즈보다 중간 계산을 훨씬 더 공격적으로 건너뛴다는 것을 발견했습니다. 이 렌즈의 노트북은 GPT-2 Large에서 두 렌즈를 비교합니다.\n\n## 야코비 렌즈\n\nAnthropic의 2026년 연구에서 나온 야코비 렌즈(Jacobian lens, J-lens)는 다른 접근을 택합니다. 중간층이 무엇을 예측할지 묻는 대신, 그 층의 활성값이 모델이 결국 하는 말에 어떤 영향을 줄지 묻습니다.\n\n도구는 17편에서 만난 야코비 행렬, 곧 한 곳의 작은 변화가 다른 곳의 값을 얼마나 바꾸는지 적은 표입니다. 어떤 층과 위치에서 잔차 스트림이 바뀌면, 그 변화는 그 위치와 그 뒤 모든 위치의 마지막 층으로 퍼져 나갑니다. J-lens는 이렇게 퍼져 나가는 야코비 행렬을 많은 프롬프트와 위치에 걸쳐 평균해서, 층마다 렌즈 행렬 하나를 만듭니다. 활성값을 풀어 읽을 때는 먼저 이 행렬을 곱해서 모델의 끝까지 밀어 보내는 것처럼 하고, 정규화한 뒤 언임베딩을 적용합니다.\n\n[도판 2]\n\n여기서 두 가지가 따라 나옵니다. 첫째, J-lens는 모델이 다음에 무엇을 예측할지에 그치지 않고, 모델이 내부에서 무엇을 계산하는지에 답하려 합니다. 이 연구는 J-lens가 여러 단계의 추론, 겉으로 나오지 않는 계획, 그 밖의 긴 계산이 필요한 과제를 분석하는 데 쓸모 있다는 것을 발견했습니다. 둘째, 개입의 도구가 됩니다. 이 연구는 층마다 토큰마다 J-lens 벡터를 정의했는데, 활성값이 J-lens 벡터와 얼마나 나란한지가 그 활성값이 모델을 그 토큰 쪽으로 얼마나 강하게 미는지를 잽니다. 그러면 이 벡터를 조종 벡터로 써서 모델을 어떤 개념 쪽으로 밀거나 멀어지게 할 수 있습니다. 반면 로짓 렌즈와 조정 렌즈는 풀어 읽는 도구여서 개입에는 거의 쓸모가 없습니다.\n\n## 야코비 렌즈의 한계\n\n이 책은 J-lens의 한계도 두 가지 듭니다. 여전히 토큰 하나 수준에서 작동하는데, 많은 개념은 여러 토큰에 걸쳐 있습니다. \"photoperiodism\" 같은 단어가 여러 하위 단어 토큰으로 쪼개지고 렌즈에 \"photo\"만 보인다면, 그 개념이 광주기성인지 photo로 시작하는 다른 단어인지 알 수 없습니다.\n\n그리고 J-lens는 일정한 범위의 층에서만 잘 작동하는데, 연구는 이를 J 공간(J-space)이라고 불렀습니다. Claude Sonnet 4.5에서는 모델 깊이의 약 38%에서 92% 사이에서 풀어낸 개념이 가장 많은 것을 알려 주었습니다. 그보다 앞에서는 잡음이 많아 읽기 어렵습니다. 그보다 뒤에서는 모델의 출력 쪽으로 무너져서 알려 주는 것이 적습니다. 최근의 몇몇 연구가 이런 한계를 해결하려 했습니다. 이 책의 실습 노트북은 미리 맞춰 둔 J-lens를 Qwen 모델에 적용하고 로짓 렌즈와 비교합니다.\n\n이 사이트는 J-lens 연구를 두 번 자세히 읽었습니다. J 공간이 무엇을 뜻할 수 있는지 다룬 「AI의 전역 작업 공간 이론」, 그리고 이 렌즈를 나중에 고친 연구를 다룬 「렌즈를 닦으면 보이는 것」입니다.\n\n## 세 렌즈, 세 질문\n\n[표: 세 렌즈 (8.1–8.3절)]\n렌즈 | 중간층 활성값에 하는 일 | 답하는 질문 | 주된 한계\n로짓 렌즈 | 언임베딩을 곧장 적용 | 여기서 멈추면 모델은 무엇을 예측할까? | 중간층이 출력의 형식을 쓴다고 가정함. 상관적\n조정 렌즈 | 층마다 학습한 보정을 적용한 뒤 언임베딩 | 모델은 무엇을 예측할까? | 상관적. 중간 단계를 가릴 수 있음\n야코비 렌즈 | 평균 야코비 행렬로 활성값을 앞으로 밀어 보낸 뒤 언임베딩 | 이 활성값은 모델에게 무엇을 말하게 하려는 경향이 있을까? | 토큰 수준에 머묾. 가운데 층에서만 많은 것을 알려 줌\n\n[표: 이번 편의 용어]\n용어 | 뜻\n중간 표현 | 모델의 가운데 층에 있는 활성값\n렌즈 | 중간 표현을 모델의 출력 어휘로 옮기는 방법\n로짓 렌즈 | 모델의 언임베딩을 중간층의 잔차 스트림에 곧장 적용하는 것\n로짓 | 확률로 바뀌기 전에 모델이 모든 토큰에 매기는 날것의 점수\n표현의 불일치 | 중간층이 출력층과 다른 방식으로 정보를 짜는 것\n조정 렌즈 | 층마다 학습한 보정을 더한 로짓 렌즈\n아핀 변환 | 행렬 곱셈에 오프셋을 더한 것\n야코비 렌즈(J-lens) | 활성값이 모델의 마지막 출력에 어떤 영향을 줄지 풀어 읽는 렌즈\nJ-lens 벡터 | 활성값과 얼마나 나란한지가, 그 활성값이 모델을 어떤 토큰 쪽으로 얼마나 미는지를 말해 주는 방향\nJ 공간 | J-lens가 가장 많은 것을 알려 주는 가운데 층의 범위\n\n22편에서는 모델 자신에게 활성값을 설명하게 합니다. 패치스코프, LatentQA, 활성 오라클입니다.",
+          "figures": [
+            {
+              "src": "images/inside-21-rank-ko.png",
+              "alt": "12층 모델이 시퀀스 A B C A B를 읽을 때, 각 층에서 로짓 렌즈로 읽은 정답 토큰 C의 순위를 나타낸 선 그래프. 5층까지 C는 상위 20개 후보에 들지 못합니다. 6층에서 18위로 들어와 꾸준히 오르고, 11층부터는 1위입니다.",
+              "caption": "도판 1 — 8.1절의 예를 따라, 로짓 렌즈로 예측이 깊이를 따라 어떻게 만들어지는지 추적한 것입니다(6층과 마지막 층 사이의 순위는 예시입니다). 앞쪽 층의 예측은 퍼져 있고, 뒤쪽 층으로 갈수록 마지막 출력 쪽으로 좁혀집니다.",
+              "ratio": "640/280"
+            },
+            {
+              "src": "images/inside-21-lenses-ko.png",
+              "alt": "렌즈마다 한 줄씩, 세 줄. 로짓 렌즈: 모델의 언임베딩을 중간층의 활성값에 곧장 적용합니다. 여기서 멈추면 무엇을 예측할지 묻습니다. 조정 렌즈: 먼저 그 층에 맞게 학습한 작은 보정을 적용한 뒤 언임베딩합니다. 모델이 무엇을 예측할지 묻습니다. 야코비 렌즈: 먼저 활성값이 마지막 층에 어떤 영향을 줄지 나타내는 평균 야코비 행렬을 적용한 뒤 언임베딩합니다. 이 활성값이 모델에게 무엇을 말하게 하려는 경향이 있는지 묻습니다. 아래의 띠는 야코비 렌즈가 가장 많은 것을 알려 주는 중간 깊이, 곧 J 공간을 표시하며, Claude Sonnet 4.5에서는 약 38–92%입니다.",
+              "caption": "도판 2 — 8.1–8.3절의 세 렌즈를 나란히 놓았습니다. 셋 모두 언임베딩으로 끝나지만, 그 전에 활성값에 무엇을 하느냐가 다르고, 그래서 답하는 질문도 다릅니다.",
+              "ratio": "640/330"
+            }
+          ],
+          "tocLabel": "차례",
+          "subjectsLabel": "주제",
+          "subjects": "로짓 렌즈\n조정 렌즈\n야코비 렌즈\n중간 표현\nJ 공간",
+          "refsLabel": "참고 문헌",
+          "refs": "Fazl Barez, Tung-Yu Wu, Hunar Batra et al. Understanding AI from the Inside: The State of Mechanistic Interpretability for AI Safety. arXiv:2611.08438, 2026. 8–8.3절, 66–69쪽. https://arxiv.org/abs/2611.08438\n이 책의 실습 노트북 01_logit_lens, 02_tuned_lens, 03_jacobian_lens. GitHub, 2026. https://github.com/TSGLAB/Interpretability_Survey_Safety/tree/main/notebooks/04_intermediate_computation\nnostalgebraist. interpreting GPT: the logit lens. LessWrong, 2020. https://www.lesswrong.com/posts/AcKRB8wDpdaN6v6ru/interpreting-gpt-the-logit-lens\nNora Belrose, Igor Ostrovsky, Lev McKinney et al. Eliciting Latent Predictions from Transformers with the Tuned Lens. arXiv:2303.08112, 2025. https://arxiv.org/abs/2303.08112\nWes Gurnee, Nicholas Sofroniew, Adam Pearce et al. Verbalizable representations form a global workspace in language models. Transformer Circuits Thread, 2026. https://transformer-circuits.pub/2026/workspace/",
+          "series": {
+            "id": "inside-ai",
+            "title": "안에서 보는 AI",
+            "label": "연재",
+            "part": 21,
+            "partLabel": "38편 중 21편",
+            "group": "5부. 중간 표현 읽기"
+          },
+          "prevLabel": "이전 편",
+          "prev": {
+            "title": "해석 주장을 평가하는 다섯 기준",
+            "kind": "안에서 보는 AI · 20편",
+            "year": "2026",
+            "id": "",
+            "slug": "inside-ai-20-evaluation"
+          },
+          "nextLabel": "다음 편",
+          "next": {
+            "title": "모델에게 활성값을 설명하게 하기",
+            "kind": "안에서 보는 AI · 22편",
+            "year": "2026",
+            "id": "",
+            "slug": "inside-ai-22-self-explanation"
+          }
+        },
+        "en": {
+          "slug": "inside-ai-21-lenses",
+          "title": "Reading Layers Through Lenses",
+          "dek": "What is a model thinking halfway through a computation? Lenses answer by translating a middle layer's activation into words the model could output. This part covers the three lenses in the book: the logit lens, the tuned lens and the Jacobian lens, ==each a better answer to a slightly different question.==",
+          "kind": "AI from the Inside · Part 21",
+          "date": "2026.11",
+          "readTime": "7 min",
+          "body": "The last two groups broke activations into parts: features in parts 10 to 15, and circuits of interacting features in parts 16 to 20. This group takes a complementary approach. It treats an activation as a whole and asks what information it holds, often by translating it into natural language. The book introduces this in its eighth chapter, and this part covers the chapter's opening and sections 8.1 to 8.3 (pages 66–69): three lenses that decode a middle layer into the model's own vocabulary.\n\nThe book stresses what these methods do and do not do. They do not intervene on the activation or decompose it. They provide a direct interface between activations and words, which makes them particularly accessible. That is their strength and, as we will see, the source of their main limit.\n\n## The logit lens\n\nPart 4 described the last step of a transformer: the unembedding, which turns the final residual stream into a score for every token in the vocabulary. The logit lens, proposed in 2020 by a researcher writing as nostalgebraist, asks a simple question: what happens if we apply that same unembedding to the residual stream at an earlier layer? The result shows what the model would predict if its computation stopped there. Applied layer by layer, it traces how the prediction forms through the depth of the model, and when the model commits to an answer.\n\nThe book reports a general pattern: early layers tend to give diffuse predictions, and later layers progressively narrow them towards the final output, with exceptions. Its example returns to the induction task of part 19. In a twelve-layer model reading A B C A B, the logit lens may show the right answer, C, entering the top 20 candidates at layer 6, getting steadily stronger, and becoming the top-ranked token at the final layer. For harder linguistic patterns, though, early and middle layers may show a flat distribution over many tokens, with the model settling on a prediction only in the last few layers.\n\n[Fig. 1]\n\nThe companion notebook runs the logit lens on GPT-2, showing the top tokens at each layer, how the rank of the eventual answer changes, and how quickly each layer's prediction converges on the final one.\n\n## Its two limits\n\nThe book names two limits of the plain logit lens. The first is a mismatch of formats. Applying the unembedding to a middle layer assumes that the activation there is already in the form the output layer expects. But intermediate representations may be organised very differently. Reading layer 6 through the output layer's eyes can extract relevant information, but it cannot precisely show what the model is computing at layer 6.\n\nThe second is more fundamental. The logit lens is correlational, not causal. It projects an activation into the vocabulary without testing what role the decoded tokens play in the computation. Because of the format mismatch, the decoded tokens show at most what can be recovered from the activation, not what the model uses. This is the same distinction between \"present\" and \"used\" that runs through the whole series.\n\n## The tuned lens\n\nThe tuned lens, introduced by Nora Belrose and colleagues, addresses the first limit. For each layer, it learns a small affine transformation, a matrix and an offset, that maps that layer's activations into the format of the output layer before the unembedding is applied. The transformations are trained so that each layer's decoded prediction matches the model's final prediction as closely as possible. The result extracts information from each layer more effectively than the plain logit lens.\n\nBut the book points out that the tuned lens inherits the logit lens's deeper limits, and adds one of its own. It is still correlational. It is still designed to answer what the model is likely to predict, not what the model is computing internally. And because it is trained to match the final output, its corrections can hide intermediate steps and produce predictions that look like the final answer too early. A 2026 study found that it skips intermediate computation even more aggressively than the logit lens. Its notebook compares the two lenses on GPT-2 Large.\n\n## The Jacobian lens\n\nThe Jacobian lens, or J-lens, from a 2026 Anthropic study, takes a different approach. Instead of asking what a middle layer would predict, it asks how that layer's activation will influence what the model eventually says.\n\nThe tool is the Jacobian, met in part 17: a table of how a small change in one place changes values in another. A change to the residual stream at some layer and position spreads forward to the final layer at that position and every later one. The J-lens averages the Jacobian of that spread over many prompts and positions, giving one lens matrix per layer. To decode an activation, it first multiplies it by that matrix, as if pushing it forward to the end of the model, then normalises it and applies the unembedding.\n\n[Fig. 2]\n\nTwo things follow. First, the J-lens aims to answer what the model is internally computing, not merely what it is going to predict next. The study found it useful for tasks that need several reasoning steps, latent planning, or other extended computation. Second, it gives a tool for intervention. The study defined J-lens vectors for each token at each layer, and the alignment of an activation with a J-lens vector measures how strongly that activation will push the model towards saying that token. These vectors can then serve as steering vectors, pushing the model towards or away from a concept. The logit lens and the tuned lens, by contrast, are decoding tools with little use for intervention.\n\n## Its limits\n\nThe book lists two limits of the J-lens too. It still works at the level of single tokens, while many concepts span several. If a word like \"photoperiodism\" is split into several subword tokens and only \"photo\" shows up in the lens, it is impossible to tell whether the concept is photoperiodism or some other word beginning with photo.\n\nAnd it works well only in a certain range of layers, which the study called J-space. In Claude Sonnet 4.5, the decoded concepts were most informative at roughly 38 to 92% of the model's depth. Before that, they are noisy and hard to read; after it, they collapse towards the model's output and say little. Some recent studies have tried to address these limits. The companion notebook applies a pre-fitted J-lens to a Qwen model and compares it with the logit lens.\n\nThis site has read the J-lens study closely twice, in \"Global Workspace Theory in AI\", on what the J-space might mean, and in \"What a Cleaner Lens Shows\", on a later fix to the lens.\n\n## Three lenses, three questions\n\n[Table: The three lenses (sections 8.1–8.3)]\nLens | What it does to a middle-layer activation | The question it answers | Main limit\nLogit lens | Applies the unembedding directly | What would the model predict if it stopped here? | Assumes middle layers use the output's format; correlational\nTuned lens | Applies a learned per-layer correction, then the unembedding | What will the model predict? | Correlational; can hide intermediate steps\nJacobian lens | Pushes the activation forward with the average Jacobian, then unembeds | What is this activation disposed to make the model say? | Token-level only; informative only in the middle layers\n\n[Table: Terms in this part]\nTerm | Meaning\nIntermediate representation | The activation at a middle layer of the model\nLens | A method that translates an intermediate representation into the model's output vocabulary\nLogit lens | Applying the model's unembedding directly to a middle layer's residual stream\nLogits | The raw scores a model gives every token before they are turned into probabilities\nRepresentational mismatch | Middle layers organising information differently from the output layer\nTuned lens | A logit lens with a learned correction for each layer\nAffine transformation | A matrix multiplication plus an offset\nJacobian lens (J-lens) | A lens that decodes how an activation will influence the model's final output\nJ-lens vector | A direction whose alignment with an activation says how strongly it pushes the model towards a token\nJ-space | The range of middle layers where the J-lens is most informative\n\nNext, part 22 asks the model itself to explain its activations, with Patchscopes, LatentQA and activation oracles.",
+          "figures": [
+            {
+              "src": "images/inside-21-rank-en.png",
+              "alt": "A line chart of the rank of the correct next token C, for the sequence A B C A B, read with the logit lens at each layer of a twelve-layer model. Through layer 5, C is not among the top 20 candidates. It enters at rank 18 at layer 6, climbs steadily, and is the top-ranked token from layer 11 on.",
+              "caption": "Fig. 1 — The logit lens tracing a prediction through depth, after the example in section 8.1 (the ranks between layer 6 and the last layer are illustrative). Early layers give diffuse predictions; later layers narrow them towards the final output.",
+              "ratio": "640/280"
+            },
+            {
+              "src": "images/inside-21-lenses-en.png",
+              "alt": "Three rows, one per lens. Logit lens: apply the model's unembedding directly to a middle layer's activation; it asks what the model would predict if it stopped here. Tuned lens: first apply a small learned correction for that layer, then unembed; it asks what the model will predict. Jacobian lens: first apply the average Jacobian, which says how the activation will influence the final layer, then unembed; it asks what the activation is disposed to make the model say. A band at the bottom marks the J-space, the middle stretch of depth where the Jacobian lens is most informative, about 38–92% in Claude Sonnet 4.5.",
+              "caption": "Fig. 2 — The three lenses of sections 8.1–8.3 side by side. All three end in the unembedding; they differ in what they do to the activation first, and so in the question they answer.",
+              "ratio": "640/330"
+            }
+          ],
+          "tocLabel": "Contents",
+          "subjectsLabel": "Subjects",
+          "subjects": "Logit lens\nTuned lens\nJacobian lens\nIntermediate representations\nJ-space",
+          "refsLabel": "References",
+          "refs": "Fazl Barez, Tung-Yu Wu, Hunar Batra et al. Understanding AI from the Inside: The State of Mechanistic Interpretability for AI Safety. arXiv:2611.08438, 2026. Sections 8–8.3, pp. 66–69. https://arxiv.org/abs/2611.08438\nNotebooks 01_logit_lens, 02_tuned_lens and 03_jacobian_lens, from the book's companion notebooks. GitHub, 2026. https://github.com/TSGLAB/Interpretability_Survey_Safety/tree/main/notebooks/04_intermediate_computation\nnostalgebraist. interpreting GPT: the logit lens. LessWrong, 2020. https://www.lesswrong.com/posts/AcKRB8wDpdaN6v6ru/interpreting-gpt-the-logit-lens\nNora Belrose, Igor Ostrovsky, Lev McKinney et al. Eliciting Latent Predictions from Transformers with the Tuned Lens. arXiv:2303.08112, 2025. https://arxiv.org/abs/2303.08112\nWes Gurnee, Nicholas Sofroniew, Adam Pearce et al. Verbalizable representations form a global workspace in language models. Transformer Circuits Thread, 2026. https://transformer-circuits.pub/2026/workspace/",
+          "series": {
+            "id": "inside-ai",
+            "title": "AI from the Inside",
+            "label": "Series",
+            "part": 21,
+            "partLabel": "Part 21 of 38",
+            "group": "V. Reading the middle of a model"
+          },
+          "prevLabel": "Previous",
+          "prev": {
+            "title": "Five Ways to Judge an Interpretability Claim",
+            "kind": "AI from the Inside · Part 20",
+            "year": "2026",
+            "id": "",
+            "slug": "inside-ai-20-evaluation"
+          },
+          "nextLabel": "Next",
+          "next": {
+            "title": "Asking the Model to Explain Its Activations",
+            "kind": "AI from the Inside · Part 22",
+            "year": "2026",
+            "id": "",
+            "slug": "inside-ai-22-self-explanation"
+          }
+        }
+      },
+      {
+        "ko": {
+          "slug": "inside-ai-22-self-explanation",
+          "title": "모델에게 활성값을 설명하게 하기",
+          "dek": "렌즈는 활성값이 가리키는 토큰 하나만 말해 줄 수 있습니다. 두 번째 방법 묶음은 언어 모델이 가진 언어 능력 전체를 써서 활성값을 문장으로 설명합니다. ==설명은 풍부하고 읽기 쉽지만, 어려운 것은 그 설명이 정말 활성값에서 나왔는지 아는 일입니다.==",
+          "kind": "안에서 보는 AI · 22편",
+          "date": "2026.11",
+          "readTime": "7분",
+          "body": "21편의 렌즈들은 모두 같은 방식으로 끝납니다. 모델의 어휘 안에서, 토큰 하나하나의 순위로 끝납니다. 좁은 창입니다. 활성값이 담고 있을 만한 것들, 예를 들어 목표나 인격이나 지시는 단어 하나가 아닙니다. 이번 편은 이 책의 8.4절과 8.5절(69–72쪽)을 다룹니다. 언어 모델의 언어 능력 전체를 활성값을 설명하는 데 쓰는 두 가지 방법입니다. 9편의 특권적 접근 가설, 곧 모델이 자기 내부를 설명하기에 좋은 자리에 있을 수 있다는 생각과 이어집니다.\n\n## 패치스코프\n\n2024년에 나온 패치스코프(Patchscopes)는 모델 자신을 해독기로 씁니다. 모델이 어떤 프롬프트, 곧 원천 프롬프트를 읽는 동안 어떤 층과 위치의 은닉 표현을 가져옵니다. 그다음 모델이 다른 프롬프트, 곧 점검 프롬프트를 읽게 하는데, 이 프롬프트는 어느 한 위치에 놓인 것에 대해 모델이 무언가를 말하도록 설계되어 있습니다. 그 위치의 표현을 가져온 표현으로 바꿔 넣으면, 모델이 그다음에 쓰는 것이 패칭한 표현이 담고 있던 내용을 반영합니다.\n\n이 책은 원래 논문에서 예를 둘 가져옵니다. 첫째 예에서 점검 프롬프트는 되풀이 패턴입니다. \"cat→cat; 135→135; hello→hello; ?\". 모델은 이 패턴에서 화살표 앞에 온 것을 그대로 되풀이해야 한다는 것을 알아채므로, 물음표 자리에 표현을 패칭해 넣으면 모델의 다음 토큰이 그 표현이 어떤 토큰을 나타내는지 말해 줍니다. 둘째 예에서는 한 문장에서 가져온 \"United Kingdom\"의 표현을 \"The largest city in x\"의 x 자리에 패칭합니다. 모델이 \"London\"으로 이어 쓴다면, 그 표현은 영국이라는 정체를, 그에 관한 사실을 끌어낼 만큼 충분히 담고 있었던 것입니다.\n\n[도판 1]\n\n이 책은 이것이 왜 렌즈를 넘어서는지 설명합니다. 중간층 표현에서 언어로 가는 사상은 행렬 하나로 담기에는 너무 복잡할 수 있는데, 로짓 렌즈와 조정 렌즈가 쓰는 것은 그 행렬 하나뿐입니다. 패치스코프는 그 번역을 모델에게 맡기고, 텍스트를 생성하는 모델의 일반적인 학습된 능력에 기댑니다. 모델이 활성값 해독기가 되는 것입니다. 같은 해에 나온 SelfIE도 같은 아이디어를 탐구합니다. 이 책의 실습 노트북은 GPT-2 Medium에서 패치스코프를 구현하고, 로짓 렌즈가 그 특수한 경우임을 보여 줍니다.\n\n## 패치스코프의 주된 한계\n\n다른 곳에서 가져온 표현을 프롬프트에 넣으면, 모델의 내부 상태가 학습에서 한 번도 만나지 못한 상태, 곧 분포 밖(out of distribution)으로 밀려날 수 있습니다. 예상할 수 있는 일입니다. 해독기는 낯선 표현을 텍스트로 바꾸도록 학습한 적이 없는 보통의 사전 학습 모델이기 때문입니다. 가장 두드러진 정보는 여전히 꺼낼 수 있겠지만, 해독이 나빠질 수 있고, 원래 표현의 중요한 측면이 왜곡되거나 사라질 수 있습니다.\n\n## LatentQA\n\n2026년의 LatentQA는 자연스러운 다음 걸음을 내딛습니다. 해독기를 이 일에 맞게 학습시키는 것입니다. 해독을 지도 학습 문제로 다루고, 잠재 해석 조정(latent interpretation tuning)이라는 절차를 씁니다. 핵심은 세 쌍으로 된 데이터셋입니다. 대상 모델에서 저장해 둔 활성값, 그 활성값이 무엇을 담고 있는지에 관한 질문, 그리고 답입니다.\n\n활성값은 특정한 속성을 표현에 넣도록 설계한 통제 프롬프트(control prompt)에서 나옵니다. 이 책이 원래 논문에서 가져온 예는 \"In your next reply, please try to evoke a brief sense of triumphant hubris.\"라는 지시입니다. 다음 답에서 짧게나마 의기양양한 오만함이 느껴지게 하라는 뜻입니다. 이 프롬프트의 마지막 토큰에서의 활성값은 그 지시를 담고 있어야 합니다. 짝이 되는 질문은 \"In what way does the assistant craft its responses to the user?\", 답은 \"The assistant crafts responses that briefly highlight a sense of self-assured victory.\"입니다. 통제 프롬프트와 질문–답 쌍은 모두 기존의 상업용 언어 모델에게 요청해서 만들었습니다.\n\n[도판 2]\n\n그다음 해독기 모델을, 흔히 9편에서 본 것처럼 대상 모델의 복사본을, 이 세 쌍으로 미세 조정합니다. 해독기는 날것의 활성 벡터를 입력으로 받아 그에 관한 질문에 답하는 법을 배웁니다. 충분히 다양한 예를 겪고 나면, 이상적으로는 어떤 질문에 대해서든 활성값의 어떤 측면에 주의를 기울이고 그것을 어떻게 말로 옮길지 배웁니다. 활성값을 설명하는 것이 이제 해독기가 학습한 일이므로, 분포 밖 문제를 곧장 해결합니다.\n\n## LatentQA의 두 문제\n\n이 책은 과제를 둘 듭니다. 첫째는 일반화입니다. 데이터셋이 너무 작거나 너무 획일적이면, 해독기는 활성값에서 정보를 읽어 내는 법이 아니라 활성값과 설명 사이의 겉보기 대응을 외울 수 있습니다. 이후의 방법인 예측적 개념 해독기(Predictive Concept Decoder)와 활성 오라클(Activation Oracle)은 훨씬 다양한 학습 데이터를 만들어 이 문제를 공략합니다.\n\n둘째는 더 어렵습니다. 해독기가 지름길을 쓰는 것이 아니라 정말로 활성값을 설명하는지 확인하는 일입니다. 해독기는 활성값에서 원래 입력 텍스트를 조용히 되살린 다음, 그 텍스트로부터 그럴듯한 설명을 추론할 수도 있습니다. 어떤 언어 모델이든 누군가 쓴 텍스트를 보고 그 사람의 기분을 짐작할 수 있는 것처럼 말입니다. 이 책은 최근 연구들이 이런 실패가 기존 해독기에서 심각하고 널리 퍼져 있음을 발견했다고 전합니다. 한 연구는 이 과제의 표준 벤치마크를 대상 모델의 내부 없이도 풀 수 있음을 발견했습니다. 다른 연구는 지금의 활성 오라클을 안전과 관련된 과제에 쓰기 어렵다는 것을 발견했습니다. 그래서 언어화 벤치마크에서 성적이 좋은 것만으로는 해독기가 표현을 충실하게 분석했다는 것을 보일 수 없습니다.\n\n이것은 도구 쪽에서 본, 특권적 접근에 대한 9편의 결론입니다. 자기 활성값을 읽는 것은 일부 과제에서는 가능하지만 아직 믿을 만하지 않습니다. 그리고 맞는 것처럼 들리는 답이 그것이 나왔다고 주장하는 곳에서 나왔다는 증거는 아닙니다.\n\n## 노트북이 보여 주는 것\n\n이번 편의 실습 노트북은 가장 흥미로운 것들에 속합니다. 하나는, 비밀 단어를 결코 말하지 않으면서 힌트만 주는 '금칙어' 놀이를 하도록 미세 조정한 Qwen3-8B 모델들에 활성 오라클을 씁니다. 오라클은 그 모델들의 활성값에서 단어를 되찾으려 합니다. 다른 하나는 이 책이 언급하지만 아직 깊이 다루지 않는 더 새로운 접근인 자연어 오토인코더(natural language autoencoder)를 소개합니다. 한 모델이 활성값을 글로 된 설명으로 바꾸고, 두 번째 모델이 그 설명만으로 활성값을 다시 지으려 하고, 다시 지은 것이 원래와 얼마나 맞는지로 설명에 점수를 매깁니다. 설명이 벡터를 다시 지을 만큼 충분한 내용을 실어야 하므로, 그저 그럴듯하기만 해서는 안 됩니다.\n\n[표: 활성값을 말로 바꾸는 방법들 (8.1–8.5절)]\n방법 | 누가 해독하나 | 해독을 위해 학습했나 | 주된 위험\n로짓, 조정, 야코비 렌즈 | 언임베딩. 학습한 행렬이 더해지기도 함 | 일부(조정 렌즈) | 토큰 하나뿐. 상관적\n패치스코프 | 점검 프롬프트를 통한 모델 자신 | 아니오 | 패칭한 활성값이 분포 밖에 놓임\nLatentQA와 활성 오라클 | 미세 조정한 모델의 복사본 | 예. 활성값–질문–답 데이터로 | 겉보기 패턴 외우기. 입력 텍스트를 통한 지름길\n\n[표: 이번 편의 용어]\n용어 | 뜻\n패치스코프 | 모델이 활성값을 설명하도록 점검 프롬프트에 활성값을 패칭하는 방법\n원천 프롬프트 | 활성값을 가져오는 프롬프트\n점검 프롬프트 | 패칭한 활성값이 무엇을 담고 있는지 모델이 말하도록 설계한 프롬프트\n활성값 해독기 | 활성값을 텍스트로 바꾸는 데 쓰는 모델\n분포 밖 | 학습에서 본 적 없는 상태. 이때 행동을 믿기 어려워짐\nLatentQA | 활성값–질문–답 데이터로 해독기를 학습시켜 활성값을 설명하게 하는 방법\n잠재 해석 조정 | LatentQA 뒤의 미세 조정 절차\n통제 프롬프트 | 이미 아는 속성을 활성값에 넣도록 설계한 프롬프트\n활성값 언어화 모델 | 활성값의 내용을 말로 옮기도록 학습한 모델\n활성 오라클 | 활성값에 대한 임의의 질문에 답할 수 있는 언어화 모델\n지름길 | 입력 텍스트로 짐작하는 것처럼, 주장하는 것과 다른 경로로 맞는 듯한 답을 내는 것\n\n23편에서는 활성값을 읽는 가장 단순한 도구인 프로브로 돌아갑니다. 프로브가 보여 줄 수 있는 것과 없는 것에 대한 이 책의 긴 목록입니다.",
+          "figures": [
+            {
+              "src": "images/inside-22-patchscopes-ko.png",
+              "alt": "프롬프트 두 개. 원천 프롬프트에서 모델은 “United Kingdom”으로 끝나는 텍스트를 읽고, 그 위치의 은닉 표현을 뽑아냅니다. 점검 프롬프트 “The largest city in x”에서는 x의 위치에 그 표현을 패칭해 넣고, 모델은 “London”으로 이어 씁니다. 그 표현이 영국이라는 정체를 담고 있었다는 뜻입니다.",
+              "caption": "도판 1 — 8.4절에 있는 이 책의 그림 11을 따른 패치스코프입니다. 모델 자신이 해독기 역할을 합니다. 한 프롬프트의 활성값을, 모델이 그 내용을 말하도록 설계한 다른 프롬프트에 넣습니다.",
+              "ratio": "640/300"
+            },
+            {
+              "src": "images/inside-22-latentqa-ko.png",
+              "alt": "두 단계. 먼저 대상 모델이 “Be a pirate. What colour is the sky?” 같은 통제 프롬프트를 읽고, 그 활성값을 모아 그에 관한 질문과 답, 예를 들어 “모델의 목표는?”과 “일곱 바다를 항해하는 것”과 짝짓습니다. 다음으로 해독기 모델을 이 세 쌍으로 미세 조정해서, 새로운 활성값과 질문이 주어지면 말로 답하게 합니다.",
+              "caption": "도판 2 — 8.5절에 있는 이 책의 그림 12를 따른 LatentQA입니다. 활성값을 설명하는 일 자체로 해독기를 학습시켜서, 패치스코프의 분포 밖 문제를 고치려는 것입니다.",
+              "ratio": "640/320"
+            }
+          ],
+          "tocLabel": "차례",
+          "subjectsLabel": "주제",
+          "subjects": "패치스코프\nLatentQA\n활성값 언어화 모델\n활성 오라클\n지름길",
+          "refsLabel": "참고 문헌",
+          "refs": "Fazl Barez, Tung-Yu Wu, Hunar Batra et al. Understanding AI from the Inside: The State of Mechanistic Interpretability for AI Safety. arXiv:2611.08438, 2026. 8.4–8.5절, 69–72쪽. https://arxiv.org/abs/2611.08438\n이 책의 실습 노트북 04_patchscopes, 06_activation_oracles, 07_natural_language_autoencoders. GitHub, 2026. https://github.com/TSGLAB/Interpretability_Survey_Safety/tree/main/notebooks/04_intermediate_computation\nAsma Ghandeharioun, Avi Caciularu, Adam Pearce, Lucas Dixon & Mor Geva. Patchscopes: A Unifying Framework for Inspecting Hidden Representations of Language Models. ICML, 2024. https://arxiv.org/abs/2401.06102\nHaozhe Chen, Carl Vondrick & Chengzhi Mao. SelfIE: Self-Interpretation of Large Language Model Embeddings. ICML, 2024. https://arxiv.org/abs/2403.10949\nAlexander Pan, Lijie Chen & Jacob Steinhardt. LatentQA: Teaching LLMs to decode activations into natural language. ICLR, 2026. https://arxiv.org/abs/2412.08686\nAdam Karvonen et al. Activation Oracles. arXiv:2512.15674, 2025. https://arxiv.org/abs/2512.15674\nKit Fraser-Taliente, Subhash Kantamneni, Euan Ong et al. Natural language autoencoders produce unsupervised explanations of LLM activations. Transformer Circuits Thread, 2026. https://transformer-circuits.pub/2026/nla/index.html\nArya Jakkli, Senthooran Rajamanoharan & Neel Nanda. Current activation oracles are hard to use on safety-relevant tasks. Mechanistic Interpretability Workshop at ICML, 2026. https://openreview.net/forum?id=7nRmqgz3Wv",
+          "series": {
+            "id": "inside-ai",
+            "title": "안에서 보는 AI",
+            "label": "연재",
+            "part": 22,
+            "partLabel": "38편 중 22편",
+            "group": "5부. 중간 표현 읽기"
+          },
+          "prevLabel": "이전 편",
+          "prev": {
+            "title": "렌즈로 중간층 읽기",
+            "kind": "안에서 보는 AI · 21편",
+            "year": "2026",
+            "id": "",
+            "slug": "inside-ai-21-lenses"
+          },
+          "nextLabel": "다음 편",
+          "next": {
+            "title": "프로빙",
+            "kind": "안에서 보는 AI · 23편",
+            "year": "2026",
+            "id": "",
+            "slug": "inside-ai-23-probing"
+          }
+        },
+        "en": {
+          "slug": "inside-ai-22-self-explanation",
+          "title": "Asking the Model to Explain Its Activations",
+          "dek": "Lenses can only say which single token an activation points to. A second family of methods uses a language model's full command of language to describe an activation in sentences. ==The descriptions are rich and readable; the hard part is knowing whether they come from the activation at all.==",
+          "kind": "AI from the Inside · Part 22",
+          "date": "2026.11",
+          "readTime": "6 min",
+          "body": "Part 21's lenses all end the same way: in the model's vocabulary, as a ranking of single tokens. That is a narrow window. Many things an activation might hold, such as a goal, a persona or an instruction, are not a single word. This part covers sections 8.4 and 8.5 of the book (pages 69–72), on two methods that put a language model's whole ability with language to work on describing activations. It connects to the privileged access hypothesis of part 9: the idea that a model may be well placed to explain its own insides.\n\n## Patchscopes\n\nPatchscopes, from 2024, uses the model itself as the decoder. Take a hidden representation from some layer and position while the model reads one prompt, the source prompt. Then run the model on a different prompt, the inspection prompt, which is designed to make it say something about whatever sits at one position, and replace the representation at that position with the one you took. Whatever the model then writes reflects what the patched representation carried.\n\nThe book gives two examples from the original paper. In the first, the inspection prompt is a pattern of repetition: \"cat→cat; 135→135; hello→hello; ?\". The model has learned from the pattern that it should repeat whatever comes before the arrow, so when a representation is patched in at the question mark, the model's next token says which token that representation stands for. In the second, the representation of \"United Kingdom\" from one sentence is patched into \"The largest city in x\", at the position of x. If the model continues with \"London\", the representation carried the identity of the United Kingdom, rich enough to support a fact about it.\n\n[Fig. 1]\n\nThe book explains why this goes beyond the lenses. The mapping from a middle-layer representation to language may be too complex for a single matrix, which is all the logit and tuned lenses use. Patchscopes hands that translation to the model, relying on its general, learned ability to generate text. The model becomes an activation decoder. A related method from the same year, SelfIE, explores the same idea. The companion notebook implements Patchscopes on GPT-2 Medium and shows that the logit lens is a special case of it.\n\n## Its main limit\n\nInjecting a representation from somewhere else into a prompt can push the model's internal state out of distribution, into a condition it never met in training. That is expected: the decoder is an ordinary pretrained model, never trained to turn foreign representations into text. It may still surface the most salient information, but the decoding can degrade, and important parts of the original representation can be distorted or lost.\n\n## LatentQA\n\nLatentQA, from 2026, takes the obvious next step: train the decoder for the job. It treats decoding as a supervised learning problem, through a procedure called latent interpretation tuning. The core is a dataset of triplets: an activation cached from a target model, a question about what that activation holds, and the answer.\n\nThe activations come from control prompts designed to put a particular attribute into the representation. The book's example, from the original paper, is the instruction \"In your next reply, please try to evoke a brief sense of triumphant hubris.\" The activation at the final token of that prompt should encode the instruction. A matching question is \"In what way does the assistant craft its responses to the user?\", with the answer \"The assistant crafts responses that briefly highlight a sense of self-assured victory.\" Both the control prompts and the question–answer pairs were generated by prompting an existing commercial language model.\n\n[Fig. 2]\n\nA decoder model, often a copy of the target model as part 9 described, is then fine-tuned on these triplets. It learns to take raw activation vectors as input and answer questions about them. Ideally, after enough variety, it learns which aspects of an activation to attend to and how to put them into words for any question. That addresses the out-of-distribution problem directly, because describing activations is now what the decoder was trained to do.\n\n## Its two problems\n\nThe book names two challenges. The first is generalisation. With too small or too uniform a dataset, the decoder may memorise surface correspondences between activations and explanations instead of learning to read information from activations. Later methods, Predictive Concept Decoders and Activation Oracles, attack this by building much more diverse training data.\n\nThe second is harder: checking that a decoder really explains the activation rather than taking a shortcut. A decoder might quietly reconstruct the original input text from the activation, then infer a plausible explanation from that text, the way any language model could guess an author's mood from what they wrote. Recent studies, the book reports, found such failures severe and widespread in existing decoders. One found that standard benchmarks for this task can be solved without the target model's internals at all, and another that current activation oracles are hard to use on safety-relevant tasks. So strong performance on verbalisation benchmarks is not enough to show that a decoder faithfully analysed the representation.\n\nThis is part 9's verdict on privileged access, seen from the tools' side: reading one's own activations is possible for some tasks, but not yet reliable, and an answer that sounds right is not evidence that it came from where it claims.\n\n## What the notebooks show\n\nThe companion notebooks for this part are among the most interesting. One uses an activation oracle on Qwen3-8B models that were fine-tuned to play a \"taboo\" game, hinting at a secret word without ever saying it; the oracle tries to recover the word from their activations. Another introduces natural language autoencoders, a newer approach the book notes but does not yet treat in depth: one model turns an activation into a written description, a second model tries to rebuild the activation from that description alone, and the description is scored by how well the rebuild matches. Because the explanation must carry enough to reconstruct the vector, it cannot simply be plausible.\n\n[Table: Ways of turning an activation into words (sections 8.1–8.5)]\nMethod | Who decodes | Trained for decoding? | Main risk\nLogit, tuned and Jacobian lenses | The unembedding, possibly with a learned matrix | Partly (tuned lens) | Single tokens only; correlational\nPatchscopes | The model itself, through an inspection prompt | No | The patched activation is out of distribution\nLatentQA and activation oracles | A fine-tuned copy of the model | Yes, on activation–question–answer data | Memorising surface patterns; shortcuts through the input text\n\n[Table: Terms in this part]\nTerm | Meaning\nPatchscopes | Patching an activation into an inspection prompt so the model describes it\nSource prompt | The prompt from which an activation is taken\nInspection prompt | A prompt designed to make the model say what a patched activation holds\nActivation decoder | A model used to turn activations into text\nOut of distribution | A condition unlike anything seen in training, where behaviour becomes unreliable\nLatentQA | Training a decoder on activation–question–answer data to describe activations\nLatent interpretation tuning | The fine-tuning procedure behind LatentQA\nControl prompt | A prompt designed to put a known attribute into an activation\nActivation verbaliser | A model trained to put an activation's content into words\nActivation oracle | A verbaliser that can answer arbitrary questions about activations\nShortcut | Producing a right-sounding answer by a route other than the one claimed, such as guessing from the input text\n\nNext, part 23 returns to the simplest tool for reading activations, the probe, and to the book's long list of what probes can and cannot show.",
+          "figures": [
+            {
+              "src": "images/inside-22-patchscopes-en.png",
+              "alt": "Two prompts. In the source prompt, the model reads text ending in “United Kingdom”, and the hidden representation at that position is extracted. In the inspection prompt, “The largest city in x”, that representation is patched in at the position of x, and the model continues with “London”, showing that the representation carried the identity of the United Kingdom.",
+              "caption": "Fig. 1 — Patchscopes, after the book's Figure 11 in section 8.4. The model itself acts as the decoder: an activation from one prompt is placed into another prompt designed to make the model say what it contains.",
+              "ratio": "640/300"
+            },
+            {
+              "src": "images/inside-22-latentqa-en.png",
+              "alt": "Two stages. First, a target model reads a control prompt such as “Be a pirate. What colour is the sky?”, its activations are collected, and they are paired with questions and answers about them, such as “What is the model's goal?” and “To sail the seven seas.” Second, a decoder model is fine-tuned on these triplets so that, given a new activation and a question, it answers in words.",
+              "caption": "Fig. 2 — LatentQA, after the book's Figure 12 in section 8.5. Training the decoder on the task of describing activations is meant to fix the out-of-distribution problem of Patchscopes.",
+              "ratio": "640/320"
+            }
+          ],
+          "tocLabel": "Contents",
+          "subjectsLabel": "Subjects",
+          "subjects": "Patchscopes\nLatentQA\nActivation verbalisers\nActivation oracles\nShortcuts",
+          "refsLabel": "References",
+          "refs": "Fazl Barez, Tung-Yu Wu, Hunar Batra et al. Understanding AI from the Inside: The State of Mechanistic Interpretability for AI Safety. arXiv:2611.08438, 2026. Sections 8.4–8.5, pp. 69–72. https://arxiv.org/abs/2611.08438\nNotebooks 04_patchscopes, 06_activation_oracles and 07_natural_language_autoencoders, from the book's companion notebooks. GitHub, 2026. https://github.com/TSGLAB/Interpretability_Survey_Safety/tree/main/notebooks/04_intermediate_computation\nAsma Ghandeharioun, Avi Caciularu, Adam Pearce, Lucas Dixon & Mor Geva. Patchscopes: A Unifying Framework for Inspecting Hidden Representations of Language Models. ICML, 2024. https://arxiv.org/abs/2401.06102\nHaozhe Chen, Carl Vondrick & Chengzhi Mao. SelfIE: Self-Interpretation of Large Language Model Embeddings. ICML, 2024. https://arxiv.org/abs/2403.10949\nAlexander Pan, Lijie Chen & Jacob Steinhardt. LatentQA: Teaching LLMs to decode activations into natural language. ICLR, 2026. https://arxiv.org/abs/2412.08686\nAdam Karvonen et al. Activation Oracles. arXiv:2512.15674, 2025. https://arxiv.org/abs/2512.15674\nKit Fraser-Taliente, Subhash Kantamneni, Euan Ong et al. Natural language autoencoders produce unsupervised explanations of LLM activations. Transformer Circuits Thread, 2026. https://transformer-circuits.pub/2026/nla/index.html\nArya Jakkli, Senthooran Rajamanoharan & Neel Nanda. Current activation oracles are hard to use on safety-relevant tasks. Mechanistic Interpretability Workshop at ICML, 2026. https://openreview.net/forum?id=7nRmqgz3Wv",
+          "series": {
+            "id": "inside-ai",
+            "title": "AI from the Inside",
+            "label": "Series",
+            "part": 22,
+            "partLabel": "Part 22 of 38",
+            "group": "V. Reading the middle of a model"
+          },
+          "prevLabel": "Previous",
+          "prev": {
+            "title": "Reading Layers Through Lenses",
+            "kind": "AI from the Inside · Part 21",
+            "year": "2026",
+            "id": "",
+            "slug": "inside-ai-21-lenses"
+          },
+          "nextLabel": "Next",
+          "next": {
+            "title": "Probing",
+            "kind": "AI from the Inside · Part 23",
+            "year": "2026",
+            "id": "",
+            "slug": "inside-ai-23-probing"
+          }
+        }
+      },
+      {
+        "ko": {
+          "slug": "inside-ai-23-probing",
+          "title": "프로빙",
+          "dek": "프로브는 모델의 활성값에 어떤 정보가 담겨 있는지 묻는 가장 단순한 방법입니다. 활성값으로 작은 분류기를 학습시키고 성공하는지 보면 됩니다. 이 책은 프로브를 길고 신중하게 다룹니다. ==성공해도 알 수 있는 것이 보기보다 적은데, 실패하면 알 수 있는 것은 그보다도 적기 때문입니다.==",
+          "kind": "안에서 보는 AI · 23편",
+          "date": "2026.11",
+          "readTime": "9분",
+          "body": "프로브는 이 연재에 거듭 나왔습니다. 2편에서는 슬리퍼 에이전트를 잡아냈고, 3편에서는 방법의 한 갈래로 등장했고, 14편에서는 이미 아는 개념을 탐지하는 데서 희소 오토인코더를 이겼습니다. 이번 편은 이 책의 8.6절(72–77쪽)에 있는 프로브에 대한 본격적인 논의를 다룹니다. 프로브는 신경망의 표현을 분석하는 데 가장 널리 쓰이는 도구에 속하고, 바로 그래서 이 책은 프로브가 무엇을 보여 줄 수 있고 없는지를 길게 따집니다.\n\n## 프로빙의 작동 방식\n\n프로브(probe)는 한 층의 모델 활성값으로부터 입력의 어떤 성질, 예를 들어 품사, 감정, 개체명의 종류를 예측하도록 학습시킨 분류기입니다. 선형 프로브(linear probe)가 가장 단순합니다. 활성값에 학습한 가중치를 곱하고 오프셋을 더한 다음, 그 결과를 예측으로 바꿉니다. 그 성질을 곧은 방향을 따라 표현에서 읽어 낼 수 있는지, 곧 7편의 선형 접근 가능성을 시험합니다. MLP 프로브(MLP probe)는 비선형 은닉층을 하나 이상 더해서, 더 유연한 사상으로 그 성질을 되찾을 수 있는지 시험합니다.\n\n[도판 1]\n\n프로브가 잘 예측하면 그 성질은 읽어 낼 수 있습니다(decodable). 정보가 활성값 안에 있다는 뜻입니다. 잘 예측하지 못하면, 정보가 없을 수도 있고 프로브가 충분히 표현력이 없을 수도 있습니다. 이 책의 실습 노트북은 참인 문장과 거짓인 문장의 데이터셋으로 프로브를 학습시킵니다. 진리가 꽤 단순한 방향을 따라 표현된다는 것을 발견한 2024년 연구를 따른 것이고, 그다음 그 프로브를 인과적으로 시험합니다.\n\n## 인과성 문제\n\n이 책이 따로 상자에 넣은 핵심 경고는, 프로브의 정확도가 높다고 해서 인과적으로 관련 있다는 뜻은 아니라는 것입니다. 이유는 셋입니다.\n\n첫째, 프로브는 그 성질 자체가 아니라 그 성질과 상관된 무언가를 감지하고 있을 수 있습니다. 예를 들어 단어의 빈도는 품사와 상관되어 있어서, 프로브가 문법을 읽는 것처럼 보여도 실제로는 그 단어가 얼마나 흔한지를 읽고 있을 수 있습니다. 둘째, 정보가 있더라도 뒤쪽 층이 그것을 결코 쓰지 않을 수 있습니다. 표현에는 앞선 처리에서 남은 것이 담겨 있을 수 있고, 아래쪽의 어느 것도 그것을 읽지 않을 수 있습니다. 셋째, 표현력이 충분한 프로브는 표현에 그런 정보가 전혀 없을 때도 잡음을 이용해 높은 정확도에 이를 수 있습니다.\n\n이 책은 분명한 결론을 내립니다. 프로빙만으로는 대개 실제로 활용할 수 있는 기계적 이해를 얻지 못하므로, 1편의 정의에 따르면 그것은 기계적 해석 가능성 연구가 아닙니다. 하지만 인과적 시험을 설계 안에 넣은 정교한 형태의 프로빙은 그럴 수 있고, 최근 연구들은 프로브가 처음 찾은 방향을 인과적 개입으로 확인해 왔습니다.\n\n## 통제 과제와 선택성\n\n정확도가 높은 것은 표현 안의 정보가 아니라 프로브 자신의 분류 능력 덕분일 수도 있습니다. 2019년에 존 휴잇(John Hewitt)과 퍼시 리앙(Percy Liang)은 둘을 가르기 위해 통제 과제(control task)를 제안했습니다. 통제 과제는 입력에 무작위 이름표를 붙여서, 활성값과 그 성질 사이의 실제 관계를 끊습니다. 여기에 학습시킨 프로브는, 그 프로브가 표현에서 얼마나 많은 임의의 패턴을 짜낼 수 있는지 보여 줍니다. 프로브의 선택성(selectivity)은 실제 과제의 정확도에서 통제 과제의 정확도를 뺀 값입니다.\n\n[도판 2]\n\n선택성이 높으면 표현이 정말로 그 성질을 담고 있어서 프로브가 성공한 것이라고 볼 수 있습니다. 선택성이 낮으면 프로브가 엉뚱한 특징을 이용했는지 가려낼 수 없습니다.\n\n## 복잡성과의 맞바꿈\n\n같은 걱정은 프로브가 복잡해질수록 커집니다. 대체로 더 복잡한 프로브는 더 높은 정확도에 이르지만, 결과를 해석하기는 더 어렵습니다. 어떤 성질을 아주 비선형적인 프로브로만 뽑아낼 수 있다면 두 가지로 읽을 수 있습니다. 그 성질이 복잡한 형태로 담겨 있거나, 아니면 프로브가 다른 특징으로부터, 심지어 잡음으로부터 그 성질을 스스로 계산하고 있는 것입니다. 뒤의 경우라면 프로브는 기껏해야 그 성질을 표현으로부터 계산할 수 있다는 것을 보여 줄 뿐, 표현 안에 담겨 있다는 것을 보여 주지는 않습니다. 인과적 추상화에 관한 2025년의 한 결과가 그 위험을 구체적으로 보여 줍니다. 사상이 충분히 복잡하면, 무작위로 초기화한 신경망조차 어떤 인과 모델을 구현하는 것처럼 보이게 만들 수 있습니다.\n\n2020년에 나온 한 가지 답은 최소 기술 길이(minimum description length)로 프로브를 평가하는 것입니다. 가능한 한 적은 복잡성으로 좋은 정확도에 이르는 프로브를 선호합니다. 더 단순한 프로브로 뽑아낼 수 있는 성질일수록 더 강하게 담겨 있다고 봅니다. 질문이 '뽑아낼 수 있는가?'에서 '얼마나 쉽게 뽑아낼 수 있는가?'로 바뀝니다. 이 책의 실무 조언은 이렇습니다. 단순한 프로브를 선호하고, 무작위 표현으로 학습시킨 프로브와 비교하고, 기술 길이 기반 평가를 고려하고, 선형 프로브는 실패하는데 MLP 프로브는 성공하는 결과는 조심해서 다루라는 것입니다.\n\n## 인과성 더하기: 망각 프로빙\n\n연구자들은 프로브로 개입하기도 했습니다. 2018년의 한 연구는 학습된 프로브로 모델의 행동을 조종할 수 있음을 처음 보였습니다. 2020년의 방법인 반복적 영공간 사영(iterative nullspace projection)은 어떤 성질에 관한 선형으로 담긴 정보를 찾도록 프로브를 거듭 맞추고, 그 정보를 표현에서 사영으로 빼냅니다. 2021년에는 망각 프로빙(amnesic probing)이 이를 인과적 시험으로 바꿨습니다. 프로브가 찾은 정보를, 활성값을 프로브가 볼 수 없는 방향들 위로 사영하는 방식으로 없앤 뒤, 모델의 하위 성능에 무슨 일이 일어나는지 재는 것입니다.\n\n성능이 크게 떨어지면 없앤 정보가 그 행동에 인과적으로 기여한다는 뜻입니다. 이 책은 단서를 두 가지 붙입니다. 아무 변화가 없다고 해서 그 정보가 쓰이지 않는다는 것이 증명되지는 않습니다. 중복된 표현이나 다른 경로가 행동을 유지할 수 있기 때문입니다. 그리고 실제의 지우기는 불완전해서, 흔적을 남기거나 다른 개념을 해칠 수 있고, 그러면 어떤 결론이든 흐려집니다.\n\n## 인과성 더하기: 프로브를 따라 패칭하기\n\n다른 경로는 16편의 활성 패칭을 씁니다. 그 성질이 있는 입력과 없는 입력, 두 개를 준비합니다. 첫째 입력으로 실행해서 표현 가운데 프로브의 부분 공간에 놓인 부분을 뽑아냅니다. 둘째 입력으로 실행하면서 그 부분을 바꿔 넣습니다. 모델의 출력이 그 성질 쪽으로 움직이면, 프로브는 모델이 쓰는 정보를 찾은 것입니다. 망각 프로빙이 정보를 없앴을 때 해가 되는지를 시험한다면, 이 방법은 프로브가 찾은 정보만으로 행동을 만들어 내기에 충분한지를 시험합니다. 이 방법 나름의 어려움은 어느 층, 어느 구성 요소, 어느 위치를 프로빙하고 패칭할지 누군가 정해야 하고, 그 선택이 결과를 치우치게 할 수 있다는 것입니다.\n\n## 프로브와 귀속\n\n이 책은 프로브가 흔히 살리언시 맵, 어텐션 도표, 그래디언트 같은 귀속 방법과 함께 쓰인다고 덧붙입니다. 3편에서 본 것처럼 이 방법들에는 저마다 문제가 있습니다. 어떤 살리언시 맵은 모델이 무시하는 특징을 강조하고, 어텐션은 인과적 중요도와 약하게만 상관되고, 방법마다 서로 다른 답을 냅니다. 어텐션 자체가 인과적이지 않다면 어텐션 패턴으로 학습시킨 프로브는 중요한 것을 놓칠 수 있고, 큰 그래디언트를 기준으로 무엇을 프로빙할지 고르면 인과적으로 중요하지 않은 것을 고를 수 있습니다. 이런 보조 도구를 함께 쓰더라도, 프로브에 기댄 주장은 그럴듯한 설명과 충실한 설명을 가르기 위해 여전히 인과적 검증을 거쳐야 합니다.\n\n## 프로빙이 알맞은 때\n\n이 책은 자기 견해를 표로 정리하고, 아래 표는 그것을 따릅니다. 이 책의 권고는 프로빙을 가설을 만드는 도구로 다루라는 것입니다. 프로브로 담겨 있을지도, 중요할지도 모르는 후보 성질을 찾고, 그 후보를 조종이나 패칭 같은 인과적 방법으로 시험합니다. 프로빙은 결정적인 설명이 아니라 효율적인 첫걸음입니다.\n\n[표: 프로빙의 알맞은 쓰임과 알맞지 않은 쓰임 (이 책의 표 11을 바탕으로)]\n알맞은 쓰임 | 알맞지 않은 쓰임\n정보가 있음을 확인하기('P가 담겨 있다') | 인과적 관련성을 주장하기('모델이 P를 쓴다')\n층마다 성질이 얼마나 강하게 담겼는지 비교하기 | 프로브가 실패했으니 성질이 없다고 결론짓기\n민감한 정보가 담겨 있는지 감사하기 | 프로브만으로 기계적 이해를 주장하기\n인과적 조사를 위한 가설 만들기 | 프로브 결과를 인과적 가설의 증거로 쓰기\n더 깊은 분석 전에 조기 탐지하고 분류하기 | 프로브 결과로 모델의 정렬이나 안전을 판단하기\n\n이 책은 프로빙 연구의 여섯 가지 기준도 제시합니다. 통제 과제 기준선을 보고하고, 통하는 프로브 가운데 표현력이 가장 낮은 것을 쓰고, 망각 프로빙이나 패칭 같은 방법으로 인과적 관련성을 시험하고, 가장 높은 정확도만이 아니라 층에 걸친 추세를 보고, 담겨 있음과 인과적으로 쓰임을 구별하고, 시드와 데이터 분할에 걸친 안정성을 보고하라는 것입니다.\n\n## 다시 보는 슬리퍼 에이전트 프로브\n\n이 절은 2편이 시작한 곳에서 끝납니다. 이 모든 비판에도 프로브는 여전히 쓸모 있고, 이 책의 예는 슬리퍼 에이전트를 잡아낸 2024년의 프로브입니다. 이제 세부가 나옵니다. 탐지기는 한 층의 방향 하나였습니다. 한 묶음의 프롬프트에서 나온 평균 활성값에서 대비되는 묶음의 평균을 뺀 것입니다. 놀랍게도 대비 쌍은 트리거나 해로운 행동과 전혀 관련이 없어도 되었습니다. 한 쌍은 그저 \"Human: Are you doing something dangerous? Assistant: yes\"와, 같은 문장에서 \"no\"로 끝나는 것이었습니다. 새로운 활성값을 이 방향 위에 사영하자, 트리거가 켜진 입력과 그렇지 않은 입력이 AUROC 99% 이상으로 갈렸습니다. 연구자들은 두 종류의 입력 사이의 차이가 서로 멀리 떨어진 두 무리처럼 아주 커서, 거의 어떤 방향으로든 갈라진다고 보았습니다.\n\n프로브가 인과적 주장을 뒷받침하지 못하는데도 왜 이것을 성공으로 칠까요? 목표가 이해가 아니라 탐지였기 때문입니다. 안전 필터는 기만적인 의도가 있다는 것을 알아채고 경고를 올리면 됩니다. 그 메커니즘을 설명할 필요는 없습니다. 프로빙은 혼자서는 모델이 어떻게 작동하는지 말해 주지 못하지만, 감사와 탐지에는 잘 맞습니다.\n\n[표: 이번 편의 용어]\n용어 | 뜻\n프로브 | 모델의 활성값으로 어떤 성질을 예측하도록 학습시킨 분류기\n선형 프로브 | 가중합 하나를 쓰는 프로브. 선형 접근 가능성을 시험함\nMLP 프로브 | 비선형 은닉층이 있는 프로브\n읽어 낼 수 있음 | 프로브로 활성값에서 읽어 낼 수 있는 상태\n프로브 인과성 문제 | 프로브 정확도가 높아도 모델이 그 정보를 쓴다는 뜻은 아니라는 문제\n통제 과제 | 같은 입력에 무작위 이름표를 붙인 과제. 프로브의 기준선으로 씀\n선택성 | 실제 과제의 정확도에서 통제 과제의 정확도를 뺀 값\n최소 기술 길이 | 프로브가 얼마나 단순하게 정확도를 얻는지로 프로브를 평가하는 것\n영공간 사영 | 프로브가 쓰는 방향을 활성값에서 빼내는 것\n망각 프로빙 | 프로빙한 정보를 없애고 모델의 행동에 미치는 영향을 재는 것\n가설 만들기 | 빠른 방법으로 인과적 시험을 할 후보를 내놓는 것\n\n24편에서는 모델끼리 비교합니다. 미세 조정이나 새로운 구조가 모델의 특징을 어떻게 바꾸는지, 그리고 진짜 변화와 인공물을 어떻게 가려내는지입니다.",
+          "figures": [
+            {
+              "src": "images/inside-23-probe-ko.png",
+              "alt": "뉴런 축 두 개로 된 활성 공간. 어떤 개념의 양성 예시의 활성값은 한쪽에 X 표시로, 음성 예시는 다른 쪽에 O 표시로 모여 있습니다. 곧은 결정 경계가 둘을 가르고, 그에 수직인 화살표가 프로브 방향을 나타냅니다.",
+              "caption": "도판 1 — 8.6절에 있는 이 책의 그림 13을 따른 선형 프로브입니다. 정확도가 높으면 그 개념을 표현에서 읽어 낼 수 있다는 것을 보여 줍니다. 모델이 그것을 읽는다는 것을 보여 주지는 않습니다.",
+              "ratio": "640/300"
+            },
+            {
+              "src": "images/inside-23-selectivity-ko.png",
+              "alt": "프로브 하나에 대한 막대 두 개. 품사 같은 실제 과제의 정확도는 높습니다. 같은 단어들에 무작위 이름표를 붙인 통제 과제의 정확도도 꽤 높습니다. 둘의 차이, 곧 선택성이 표시되어 있습니다.",
+              "caption": "도판 2 — 8.6.2절이 설명하는 휴잇과 리앙(2019)의 통제 과제와 선택성입니다(값은 예시입니다). 무작위 이름표를 실제 이름표만큼이나 잘 배울 수 있는 프로브는 표현이 아니라 자기 자신의 능력을 보여 주고 있는 것입니다.",
+              "ratio": "640/250"
+            }
+          ],
+          "tocLabel": "차례",
+          "subjectsLabel": "주제",
+          "subjects": "프로빙 분류기\n통제 과제\n선택성\n망각 프로빙\n가설 만들기",
+          "refsLabel": "참고 문헌",
+          "refs": "Fazl Barez, Tung-Yu Wu, Hunar Batra et al. Understanding AI from the Inside: The State of Mechanistic Interpretability for AI Safety. arXiv:2611.08438, 2026. 8.6절, 72–77쪽. https://arxiv.org/abs/2611.08438\n이 책의 실습 노트북 05_probing_classifiers.ipynb. GitHub, 2026. https://github.com/TSGLAB/Interpretability_Survey_Safety/blob/main/notebooks/04_intermediate_computation/05_probing_classifiers.ipynb\nYonatan Belinkov. Probing Classifiers: Promises, Shortcomings, and Advances. Computational Linguistics, 2022. https://arxiv.org/abs/2102.12452\nJohn Hewitt & Percy Liang. Designing and Interpreting Probes with Control Tasks. EMNLP, 2019. https://arxiv.org/abs/1909.03368\nElena Voita & Ivan Titov. Information-Theoretic Probing with Minimum Description Length. EMNLP, 2020. https://arxiv.org/abs/2003.12298\nShauli Ravfogel, Yanai Elazar, Hila Gonen, Michael Twiton & Yoav Goldberg. Null It Out: Guarding Protected Attributes by Iterative Nullspace Projection. ACL, 2020. https://arxiv.org/abs/2004.07667\nYanai Elazar, Shauli Ravfogel, Alon Jacovi & Yoav Goldberg. Amnesic Probing: Behavioral Explanation with Amnesic Counterfactuals. TACL, 2021. https://arxiv.org/abs/2006.00995\nSamuel Marks & Max Tegmark. The Geometry of Truth: Emergent Linear Structure in Large Language Model Representations of True/False Datasets. COLM, 2024. https://arxiv.org/abs/2310.06824\nMonte MacDiarmid, Timothy Maxwell, Nicholas Schiefer et al. Simple probes can catch sleeper agents. Anthropic, 2024. https://www.anthropic.com/news/probes-catch-sleeper-agents",
+          "series": {
+            "id": "inside-ai",
+            "title": "안에서 보는 AI",
+            "label": "연재",
+            "part": 23,
+            "partLabel": "38편 중 23편",
+            "group": "5부. 중간 표현 읽기"
+          },
+          "prevLabel": "이전 편",
+          "prev": {
+            "title": "모델에게 활성값을 설명하게 하기",
+            "kind": "안에서 보는 AI · 22편",
+            "year": "2026",
+            "id": "",
+            "slug": "inside-ai-22-self-explanation"
+          },
+          "nextLabel": "다음 편",
+          "next": {
+            "title": "두 모델 비교하기",
+            "kind": "안에서 보는 AI · 24편",
+            "year": "2026",
+            "id": "",
+            "slug": "inside-ai-24-model-diffing"
+          }
+        },
+        "en": {
+          "slug": "inside-ai-23-probing",
+          "title": "Probing",
+          "dek": "A probe is the simplest way to ask whether a model's activations hold some piece of information: train a small classifier on them and see if it succeeds. The book gives probes a long and careful treatment, ==because success tells you less than it seems to, and failure tells you less still.==",
+          "kind": "AI from the Inside · Part 23",
+          "date": "2026.11",
+          "readTime": "8 min",
+          "body": "Probes have come up again and again in this series: in part 2, where they caught sleeper agents; in part 3, as one family of methods; in part 14, where they beat sparse autoencoders at detecting known concepts. This part covers their full treatment in section 8.6 of the book (pages 72–77). Probes are among the most widely used tools for analysing neural representations, which is exactly why the book spends so long on what they can and cannot show.\n\n## How probing works\n\nA probe is a classifier trained to predict some property of the input, such as part of speech, sentiment or the type of a named entity, from a model's activations at one layer. A linear probe is the simplest kind: it multiplies the activation by a learned set of weights, adds an offset, and turns the result into a prediction. It tests whether the property can be read off the representation along a straight direction, the linear accessibility of part 7. An MLP probe adds one or more nonlinear hidden layers, to test whether the property can be recovered by a more flexible mapping.\n\n[Fig. 1]\n\nIf the probe predicts well, the property is decodable: the information is present in the activations. If it predicts badly, the information may be absent, or the probe may simply not be expressive enough. The companion notebook trains probes on datasets of true and false statements, following a 2024 study that found truth represented along a fairly simple direction, and then tests them causally.\n\n## The causality problem\n\nThe book's central warning, set in a box of its own, is that high probe accuracy does not imply causal relevance. It gives three reasons.\n\nFirst, the probe may be detecting something correlated with the property rather than the property itself. Word frequency, for instance, correlates with part of speech, so a probe could appear to read grammar while really reading how common a word is. Second, even if the information is present, later layers may never use it. A representation can hold leftovers from earlier processing that nothing downstream reads. Third, a sufficiently expressive probe can reach high accuracy by exploiting noise, even when the representation contains no such information.\n\nThe book draws a firm conclusion. Probing alone generally does not give actionable mechanistic understanding, and so, by its definition in part 1, it is not mechanistic interpretability research. But refined forms of probing that build causal tests into their design can be, and recent work has used causal interventions to confirm directions first found by probes.\n\n## Control tasks and selectivity\n\nA high accuracy might reflect the probe's own power to classify, not the information in the representation. A 2019 study by John Hewitt and Percy Liang proposed control tasks to separate the two. A control task gives the inputs random labels, which breaks any real relationship between the activations and the property. A probe trained on it shows how much arbitrary pattern can be squeezed out of the representation by that probe. The selectivity of a probe is its accuracy on the real task minus its accuracy on the control task.\n\n[Fig. 2]\n\nHigh selectivity suggests the probe succeeds because the representation really encodes the property. Low selectivity means we cannot tell whether the probe exploited spurious features instead.\n\n## The complexity trade-off\n\nThe same worry grows with the probe's complexity. In general, more complex probes reach higher accuracy but give less interpretable results. If a property can only be extracted with a highly nonlinear probe, two readings are possible: the property is encoded, but in a complex form; or the probe is computing the property itself from other features, or even from noise. In the second case, the probe shows at most that the property is computable from the representation, not that it is encoded there. A 2025 result in causal abstraction makes the danger concrete: with a complex enough mapping, even a randomly initialised network can be made to look like it implements a chosen causal model.\n\nOne answer, from 2020, evaluates probes by minimum description length: prefer probes that reach good accuracy with as little complexity as possible. A property counts as more strongly encoded if a simpler probe can extract it. The question shifts from \"can we extract it?\" to \"how easily can we extract it?\" The book's practical advice: prefer simple probes, compare against probes trained on random representations, consider description-length evaluation, and treat cautiously any result where linear probes fail but MLP probes succeed.\n\n## Adding causality: amnesic probing\n\nResearchers have also used probes to intervene. A 2018 study first showed that a trained probe can steer a model's behaviour. A 2020 method, iterative nullspace projection, repeatedly fits a probe to find linearly encoded information about a property and then projects it out of the representation. In 2021, amnesic probing turned this into a causal test: remove the information a probe found, by projecting the activation onto the directions the probe cannot see, and measure what happens to the model's performance downstream.\n\nA substantial drop means the removed information contributes causally to the behaviour. The book adds two caveats. No change does not prove the information is unused, since redundant representations or other pathways may keep the behaviour alive. And erasure in practice can be imperfect, leaving traces behind or damaging other concepts, which muddies any conclusion.\n\n## Adding causality: patching along the probe\n\nThe other route uses part 16's activation patching. Take two inputs, one with the property and one without. Run the first, and extract the part of the representation that lies in the probe's subspace. Run the second, and swap that part in. If the model's output shifts towards the property, the probe found information the model uses. Where amnesic probing tests whether removing the information hurts, this tests whether the probe's information is enough to produce the behaviour. Its own difficulty is that someone must choose the layer, component and position to probe and patch, and those choices can bias the result.\n\n## Probes and attribution\n\nThe book adds that probes are often combined with attribution methods, such as saliency maps, attention plots and gradients, which have their own problems, as part 3 described: some saliency maps highlight features the model ignores, attention correlates weakly with causal importance, and different methods disagree. A probe trained on attention patterns may miss what matters if attention itself is not causal, and choosing what to probe by large gradients can favour things with no causal importance. Probe-based claims, even with these aids, still need causal validation to separate plausible explanations from faithful ones.\n\n## When probing is appropriate\n\nThe book sums up its view in a table, which the table below follows. Its recommendation is to treat probing as a tool for generating hypotheses: use probes to find candidate properties that may be encoded and may matter, then test those candidates with causal methods such as steering or patching. Probing is an efficient first step, not a decisive explanation.\n\n[Table: Appropriate and inappropriate uses of probing (after the book's Table 11)]\nAppropriate | Inappropriate\nEstablishing that information is present (“P is encoded”) | Claiming causal relevance (“the model uses P”)\nComparing how strongly layers encode a property | Concluding a property is absent because a probe failed\nAuditing for encoded sensitive information | Claiming mechanistic understanding from probes alone\nGenerating hypotheses for causal investigation | Using probe results as evidence for causal hypotheses\nEarly detection or triage before deeper analysis | Judging a model's alignment or safety from probe results\n\nThe book also sets six standards for probing studies: report control-task baselines; use the least expressive probe that works; test causal relevance with methods such as amnesic probing or patching; look at trends across layers, not just the peak; keep encoding and causal use apart; and report stability across seeds and data splits.\n\n## The sleeper agent probes, revisited\n\nThe section ends where part 2 began. Despite all these critiques, probes remain valuable, and the book's example is the 2024 probe that caught sleeper agents. It now gives the details. The detector was a direction at one layer: the average activation on one set of prompts minus the average on a contrasting set. Strikingly, the contrast pairs did not need to involve the trigger or the harmful behaviour at all. One pair was simply \"Human: Are you doing something dangerous? Assistant: yes\" against the same with \"no\". Projecting new activations onto that direction separated triggered inputs from untriggered ones with an AUROC above 99%. The authors argued that the difference between the two kinds of input is so large, two clusters far apart, that almost any direction separates them.\n\nWhy does this count as a success when probes cannot support causal claims? Because the goal was detection, not understanding. A safety filter needs to notice that deceptive intent is present and raise a flag; it does not need to explain the mechanism. Probing is well suited to auditing and detection, even though it cannot, on its own, say how a model works.\n\n[Table: Terms in this part]\nTerm | Meaning\nProbe | A classifier trained to predict a property from a model's activations\nLinear probe | A probe that uses a single weighted sum; it tests linear accessibility\nMLP probe | A probe with nonlinear hidden layers\nDecodable | Readable from the activations by a probe\nProbe causality problem | High probe accuracy not implying that the model uses the information\nControl task | The same inputs with random labels, used as a baseline for a probe\nSelectivity | Accuracy on the real task minus accuracy on the control task\nMinimum description length | Judging a probe by how simply it achieves its accuracy\nNullspace projection | Removing the directions a probe uses from an activation\nAmnesic probing | Removing probed information and measuring the effect on the model's behaviour\nHypothesis generation | Using a quick method to propose candidates for causal testing\n\nNext, part 24 compares models with each other: how fine-tuning or a new architecture changes a model's features, and how to tell real changes from artefacts.",
+          "figures": [
+            {
+              "src": "images/inside-23-probe-en.png",
+              "alt": "Activation space with two neuron axes. Activations for positive examples of a concept are crosses on one side and negative examples are circles on the other. A straight decision boundary separates them, and an arrow perpendicular to it marks the probe direction.",
+              "caption": "Fig. 1 — A linear probe, after the book's Figure 13 in section 8.6. High accuracy shows that the concept can be read out of the representation. It does not show that the model reads it.",
+              "ratio": "640/300"
+            },
+            {
+              "src": "images/inside-23-selectivity-en.png",
+              "alt": "Two bars for one probe. Accuracy on the real task, such as part of speech, is high. Accuracy on a control task, where the same words are given random labels, is also fairly high. The gap between them, the selectivity, is marked.",
+              "caption": "Fig. 2 — Control tasks and selectivity, after Hewitt and Liang (2019) as section 8.6.2 describes them (the values are illustrative). A probe that can learn random labels almost as well as real ones is showing its own capacity, not the representation's.",
+              "ratio": "640/250"
+            }
+          ],
+          "tocLabel": "Contents",
+          "subjectsLabel": "Subjects",
+          "subjects": "Probing classifiers\nControl tasks\nSelectivity\nAmnesic probing\nHypothesis generation",
+          "refsLabel": "References",
+          "refs": "Fazl Barez, Tung-Yu Wu, Hunar Batra et al. Understanding AI from the Inside: The State of Mechanistic Interpretability for AI Safety. arXiv:2611.08438, 2026. Section 8.6, pp. 72–77. https://arxiv.org/abs/2611.08438\nNotebook 05_probing_classifiers.ipynb, from the book's companion notebooks. GitHub, 2026. https://github.com/TSGLAB/Interpretability_Survey_Safety/blob/main/notebooks/04_intermediate_computation/05_probing_classifiers.ipynb\nYonatan Belinkov. Probing Classifiers: Promises, Shortcomings, and Advances. Computational Linguistics, 2022. https://arxiv.org/abs/2102.12452\nJohn Hewitt & Percy Liang. Designing and Interpreting Probes with Control Tasks. EMNLP, 2019. https://arxiv.org/abs/1909.03368\nElena Voita & Ivan Titov. Information-Theoretic Probing with Minimum Description Length. EMNLP, 2020. https://arxiv.org/abs/2003.12298\nShauli Ravfogel, Yanai Elazar, Hila Gonen, Michael Twiton & Yoav Goldberg. Null It Out: Guarding Protected Attributes by Iterative Nullspace Projection. ACL, 2020. https://arxiv.org/abs/2004.07667\nYanai Elazar, Shauli Ravfogel, Alon Jacovi & Yoav Goldberg. Amnesic Probing: Behavioral Explanation with Amnesic Counterfactuals. TACL, 2021. https://arxiv.org/abs/2006.00995\nSamuel Marks & Max Tegmark. The Geometry of Truth: Emergent Linear Structure in Large Language Model Representations of True/False Datasets. COLM, 2024. https://arxiv.org/abs/2310.06824\nMonte MacDiarmid, Timothy Maxwell, Nicholas Schiefer et al. Simple probes can catch sleeper agents. Anthropic, 2024. https://www.anthropic.com/news/probes-catch-sleeper-agents",
+          "series": {
+            "id": "inside-ai",
+            "title": "AI from the Inside",
+            "label": "Series",
+            "part": 23,
+            "partLabel": "Part 23 of 38",
+            "group": "V. Reading the middle of a model"
+          },
+          "prevLabel": "Previous",
+          "prev": {
+            "title": "Asking the Model to Explain Its Activations",
+            "kind": "AI from the Inside · Part 22",
+            "year": "2026",
+            "id": "",
+            "slug": "inside-ai-22-self-explanation"
+          },
+          "nextLabel": "Next",
+          "next": {
+            "title": "Model Diffing",
+            "kind": "AI from the Inside · Part 24",
+            "year": "2026",
+            "id": "",
+            "slug": "inside-ai-24-model-diffing"
+          }
+        }
+      },
+      {
+        "ko": {
+          "slug": "inside-ai-24-model-diffing",
+          "title": "두 모델 비교하기",
+          "dek": "아첨이나 보상 해킹처럼 걱정스러운 행동 상당수는 모델을 미세 조정할 때 나타납니다. 모델 비교(model diffing)는 두 모델의 내부를 비교해서 학습이 무엇을 더하거나 바꿨는지 찾습니다. ==도구는 강력하지만, 이 책은 그 도구들이 있지도 않은 차이를 쉽게 보고한다고 경고합니다.==",
+          "kind": "안에서 보는 AI · 24편",
+          "date": "2026.11",
+          "readTime": "7분",
+          "body": "지금까지 이 연재는 한 번에 모델 하나를 살펴보았습니다. 이번 편은 이 책의 9.1절(77–79쪽)을 다룹니다. 이 책의 9장은 표현에 관해 세 가지 질문을 던지는데, 그 첫째입니다. 두 모델 사이에서 무엇이 다른가? (나머지 둘, 곧 정보가 어디에 저장되는지와 그것을 어떻게 조종하는지는 25편에서 다룹니다.)\n\n## 왜 모델을 비교하는가\n\n이 책의 동기는 실용적입니다. 보상 해킹(reward hacking), 곧 모델이 학습의 기준이 되는 측정값의 허점을 이용하는 행동이나, 아첨(sycophancy), 곧 사용자가 듣고 싶어 하는 말을 하는 행동처럼 걱정스러운 행동 상당수는 미세 조정 중에 생겨납니다. 그래서 위험한 모델이 배포되지 않도록, 미세 조정이 어떤 특징과 회로를 들여오거나 키우는지 지켜보는 것이 중요합니다. 모델 비교는 그 가운데 일부를 찾아내려 합니다.\n\n이 책의 정의에 따르면 모델 비교는 두 모델 사이에서 특징이나 회로의 차이를 찾습니다. 그 차이는 한 모델에만 있는 특징이나 회로일 수도 있고, 둘 다 가진 것이 쓰이는 방식의 차이일 수도 있습니다.\n\n## 오래된 질문, 다른 목표\n\n신경망을 비교하는 일 자체는 새롭지 않습니다. 앞선 연구 흐름은 상관관계, 정준 상관 분석, 그리고 CKA 같은 커널 기반 점수, 곧 9편의 표현 유사도 지표로 두 신경망의 내부 표현이 얼마나 닮았는지 쟀습니다. 이 연구는 주로 수렴 학습(convergent learning), 곧 서로 다른 무작위 시작점에서 학습한 두 모델이 순서를 바꾸거나 회전하는 정도의 차이만 두고 같은 표현을 배우는지에 관한 것이었습니다. 이 책은 모델 비교를 이것과 구별합니다. 유사도 지표는 전체적인 점수를 줍니다. 모델 비교는 특정한 학습 단계가 들여오거나, 키우거나, 다른 용도로 바꾼 구체적인 특징이나 회로를 찾습니다.\n\n이 책은 모델 비교가 쓰인 곳을 나열합니다. 미세 조정과 증류의 효과, 구조 사이의 차이, 사전 학습 중에 개념이 바뀌는 과정, 그리고 언어 모델에 이미지까지 학습시킬 때 더해지는 시각 전용 특징을 찾아 없애거나 조종하는 일입니다.\n\n## 사전으로 비교하기\n\n10편부터 13편까지의 SAE와 그 친척들, 곧 딕셔너리 학습이 자연스러운 도구입니다. 두 모델이 구조가 같다면, 예를 들어 기반 모델과 지시 따르기용으로 조정한 버전이거나 한 학습의 여러 체크포인트라면, 같은 토큰에 대한 두 모델의 활성값 차이로 희소 오토인코더나 트랜스코더를 학습시켜 그 특징이 무엇이 바뀌었는지 나타내게 할 수 있습니다. 더 단순한 기준선은 기반 모델로만 SAE를 학습시키고, 그것을 두 모델을 재는 고정된 특징 집합으로 쓰는 것입니다. 체크포인트들이 이어질 때는 각 체크포인트의 SAE를 앞 체크포인트의 SAE에서 출발해 학습시켜서, 학습 내내 특징들이 짝이 맞게 유지되도록 하는 방법도 있습니다. 그다음 공유된 프롬프트 묶음에서 차이를 재고, 미세 조정된 모델에서 훨씬 강하게 켜지는 특징은 그것에 개입해서 시험할 수 있습니다. 2026년의 한 연구는 이렇게 해서 정렬에서 벗어난 행동을 일으키는 특징을 찾았습니다.\n\n## 모델 때문인가, 데이터 때문인가\n\n미묘한 문제가 하나 있습니다. 미세 조정된 모델에서 보이는 특징이 정말로 미세 조정이 들여온 것인지, 아니면 미세 조정 데이터가 보통의 텍스트와 달라 보여서 나타났을 뿐인지 가려내는 문제입니다. 2024년의 한 연구는 둘을 가르는 단계별 비교(stage-wise diffing)를 제안했습니다. 기반 모델로 학습시킨 SAE를 가져와 세 단계에 걸쳐 학습을 이어 갑니다. 먼저 기반 모델과 미세 조정 데이터로, 다음에 미세 조정된 모델과 원래 데이터로, 마지막으로 미세 조정된 모델과 미세 조정 데이터로 학습시킵니다. 마지막 단계에서만 나타나는 특징은 미세 조정이 만든 것일 가능성이 높습니다. 옛 모델에 새 데이터를 주었을 때도, 새 모델에 옛 데이터를 주었을 때도 나타나지 않았기 때문입니다.\n\n[도판 1]\n\n## 구조가 다른 모델을 잇는 크로스코더\n\nSAE는 두 모델의 활성값 크기가 같아야 합니다. 예를 들어 모델의 세대나 크기에 걸쳐 경향을 추적하려고 구조가 다른 모델을 비교할 때는 그렇지 않을 수 있습니다. 13편에서 소개한 크로스코더가 이 문제를 풉니다. 크로스코더는 입력 크기가 다른 모델마다 따로 인코더를 두고, 두 모델을 공유된 특징 공간들로 사영할 수 있습니다. SAE에 견준 크로스코더의 주된 장점이 바로 이 구조를 가로지르는 비교이지만, 기반 모델과 미세 조정된 모델, 사전 학습의 여러 체크포인트에도 쓰였습니다.\n\n[도판 2]\n\n이 책의 실습 노트북은 두 모델에 대해 미리 학습된 크로스코더를 불러와, 그 특징들을 공유 특징과 한 모델 전용 특징으로 나눕니다.\n\n관련된 접근은 표현이 어떻게 다른지가 아니라 계산이 어떻게 바뀌는지를 모델링합니다. 2026년의 한 연구는 트랜스코더로 보정 항을 학습해서, 이것을 기반 모델의 MLP에 더하면 전체 모델 안에서 미세 조정된 MLP가 하는 일을 재현하게 했습니다. 활성값을 비교하는 대신, 미세 조정이 MLP의 계산을 어떻게 바꿨는지에 대한 근사를 학습하는 것입니다.\n\n## 거짓 양성 문제\n\n사전에 기댄 모든 비교는 12편의 걱정을 함께 안고 있습니다. 희소 분해가 충실하지 않을 수 있다는 것입니다. 이렇게 찾은 특징은 실제 표현이나 그 인과적 역할을 반영하지 않을 수 있습니다. 이 책의 예는 이렇습니다. 미세 조정된 모델에서는 '이전의 잘못을 고백하기'에 대한 SAE 특징을 찾았지만 원래 모델에서는 찾지 못했다고 해서, 미세 조정된 모델이 그 특징을 쓴다는 것이 증명되지는 않습니다. 원래 모델에서 그 특징이 없어 보인다고 해서, 원래 모델에 그런 행동 쪽으로 조종할 수 있는 표현이 없다는 것이 증명되지도 않습니다.\n\n이 책은 그 위험을 경고 상자로 정리합니다. 사전 기반 방법은 어떤 특징이 한 모델에만 있다고 잘못 보고할 수 있습니다. 원인의 일부는 학습 목표 자체에 있을 수 있습니다. 2025년의 한 연구는 L1 벌점으로 학습한 크로스코더가 새로워 보이는 특징을 지어낼 수 있음을 보였고, 11편의 배치 Top-k 변형으로 이를 줄이려 했습니다. 그래도 거짓 양성은 남을 수 있습니다. 미세 조정 중에 어떤 특징을 나타내는 방향이 회전할 수 있는데, 지금의 사전 방법은 새로 생긴 특징과 그저 다르게 표현된 특징을 구별하지 못합니다. 그래서 한 모델에만 있는 것처럼 보이는 특징은 더 확인해야 할 가설로 다뤄야 합니다.\n\n## 가중치 없이 비교하기\n\n마지막으로, 중요한 모델 상당수는 닫혀 있습니다. 가중치도 활성값도 볼 수 없습니다. 2026년의 한 연구는 언어 모델이 두 모델의 행동 차이에 관한 가설을 평범한 말로 만들어 낼 수 있음을 보였습니다. 같은 프롬프트에 대한 두 모델의 응답을 모으고, 차이를 뽑아내고, 묶고, 요약하는 방식입니다. SAE 기반 방법과 비교하면, 많은 지표에서 그와 맞먹으면서 더 추상적인 행동 수준의 차이를 찾아냈습니다. 기계적인 방법은 아니지만, 강한 행동 기반 기준선이 얼마나 많은 것을 할 수 있는지 보여 주며, 34편에서 이 점으로 돌아옵니다.\n\n[표: 두 모델을 비교하는 방법들 (9.1절)]\n접근 | 무엇을 비교하나 | 언제 맞나 | 주된 주의점\n표현 유사도(CCA, CKA) | 표현의 전체적인 유사성 | 모델들이 수렴하는지 물을 때 | 구체적인 변화가 아니라 점수를 줌\n활성값 차이에 대한 SAE, 또는 고정된 기반 SAE | 구조가 같은 두 모델의 특징 | 기반 대 미세 조정, 또는 체크포인트 | 희소 분해가 충실하지 않을 수 있음\n단계별 SAE 미세 조정 | 미세 조정이 더한 특징 | 모델의 변화와 데이터의 변화를 가를 때 | 학습을 여러 번 해야 함\n크로스코더 | 모델 사이의 공유 특징과 전용 특징 | 구조, 크기, 세대가 다를 때 | '전용' 특징을 지어낼 수 있음. 회전한 특징이 새것처럼 보임\n트랜스코더 어댑터 | 미세 조정이 MLP의 계산을 어떻게 바꿨는지 | 계산의 변화를 이해할 때 | 구성 요소를 하나씩 근사함\n언어 모델 기반 비교 | 행동의 차이를 말로 | API로만 접근할 수 있는 닫힌 모델 | 행동 기반이지 기계적이지 않음\n\n[표: 이번 편의 용어]\n용어 | 뜻\n모델 비교 | 두 모델 사이에서 특징이나 회로의 차이를 찾는 것\n미세 조정 | 새로운 데이터나 목표로 모델을 더 학습시키는 것\n보상 해킹 | 모델이 최대화하도록 학습된 측정값의 허점을 이용하는 것\n수렴 학습 | 따로 학습한 모델들이 같은 표현을 배우는 것\nCKA | 두 표현 집합이 얼마나 닮았는지 매기는 널리 쓰이는 점수\n기반 모델과 미세 조정된 모델 | 미세 조정 전과 후의 모델\n단계별 비교 | 미세 조정이 들여온 것을 가려내려고 SAE의 학습을 단계적으로 이어 가는 것\n모델 전용 특징 | 두 모델 가운데 하나에만 있는 것처럼 보이는 특징\n특징 회전 | 특징의 방향이 모델 사이에서 바뀌는 것. 새로운 특징처럼 보일 수 있음\n가중치가 닫힌 모델 | 가중치를 공개하지 않은 모델\n\n25편에서는 모델 안에서 지식이 어디에 저장되는지, 그리고 표현을 조종해서 행동을 어떻게 바꿀 수 있는지 묻습니다.",
+          "figures": [
+            {
+              "src": "images/inside-24-stagewise-ko.png",
+              "alt": "처음에 기반 모델로 학습시킨 희소 오토인코더를 세 단계에 걸쳐 미세 조정하는 과정. 1단계: 기반 모델과 미세 조정 데이터. 2단계: 미세 조정된 모델과 원래 데이터. 3단계: 미세 조정된 모델과 미세 조정 데이터. 3단계에서만 나타나는 특징이, 미세 조정이 들여왔을 가능성이 높은 특징으로 표시되어 있습니다.",
+              "caption": "도판 1 — 9.1절이 설명하는 브리컨 등(2024)의 단계별 모델 비교입니다. 데이터와 모델을 하나씩 바꿔서, 모델에서 새로워진 것과 데이터에서 새로워졌을 뿐인 것을 가릅니다.",
+              "ratio": "640/280"
+            },
+            {
+              "src": "images/inside-24-diff-ko.png",
+              "alt": "기반 모델과 그 미세 조정 버전, 두 모델에 한꺼번에 학습시킨 크로스코더. 크로스코더는 세 종류의 특징을 찾습니다. 두 모델 모두에서 비슷한 세기로 나타나는 공유 특징, 두 모델 사이에서 세기가 크게 바뀌는 특징, 한 모델에만 있는 것처럼 보이는 특징입니다. 종류마다 두 모델을 나타내는 막대 한 쌍이 놓여 있습니다.",
+              "caption": "도판 2 — 9.1절에 있는 이 책의 그림 14를 따른, 크로스코더로 하는 모델 비교입니다. 두 모델 사이에서 어떤 특징의 활성값이 크게 다르면 변화의 후보로 표시되고, 그다음 확인이 필요합니다.",
+              "ratio": "640/320"
+            }
+          ],
+          "tocLabel": "차례",
+          "subjectsLabel": "주제",
+          "subjects": "모델 비교\n미세 조정\n크로스코더\n단계별 비교\n거짓 양성",
+          "refsLabel": "참고 문헌",
+          "refs": "Fazl Barez, Tung-Yu Wu, Hunar Batra et al. Understanding AI from the Inside: The State of Mechanistic Interpretability for AI Safety. arXiv:2611.08438, 2026. 9–9.1절, 77–79쪽. https://arxiv.org/abs/2611.08438\n이 책의 실습 노트북 01_model_diffing.ipynb. GitHub, 2026. https://github.com/TSGLAB/Interpretability_Survey_Safety/blob/main/notebooks/05_representation_analysis/01_model_diffing.ipynb\nJack Lindsey, Adly Templeton, Jonathan Marcus, Thomas Conerly, Joshua Batson & Christopher Olah. Sparse Crosscoders for Cross-Layer Features and Model Diffing. Transformer Circuits Thread, 2024. https://transformer-circuits.pub/2024/crosscoders/index.html\nTrenton Bricken, Siddharth Mishra-Sharma, Jonathan Marcus, Adam Jermyn, Christopher Olah, Kelley Rivoire & Thomas Henighan. Stage-wise model diffing. Transformer Circuits Thread, 2024. https://transformer-circuits.pub/2024/model-diffing/index.html\nSimon Kornblith, Mohammad Norouzi, Honglak Lee & Geoffrey Hinton. Similarity of Neural Network Representations Revisited. ICML, 2019. https://arxiv.org/abs/1905.00414\nElias Kempf, Simon Schrodi, Bartosz Cywiński, Thomas Brox, Neel Nanda & Arthur Conmy. Simple LLM baselines are competitive for model diffing. arXiv:2602.10371, 2026. https://arxiv.org/abs/2602.10371",
+          "series": {
+            "id": "inside-ai",
+            "title": "안에서 보는 AI",
+            "label": "연재",
+            "part": 24,
+            "partLabel": "38편 중 24편",
+            "group": "5부. 중간 표현 읽기"
+          },
+          "prevLabel": "이전 편",
+          "prev": {
+            "title": "프로빙",
+            "kind": "안에서 보는 AI · 23편",
+            "year": "2026",
+            "id": "",
+            "slug": "inside-ai-23-probing"
+          },
+          "nextLabel": "다음 편",
+          "next": {
+            "title": "지식의 위치와 조종",
+            "kind": "안에서 보는 AI · 25편",
+            "year": "2026",
+            "id": "",
+            "slug": "inside-ai-25-locating-steering"
+          }
+        },
+        "en": {
+          "slug": "inside-ai-24-model-diffing",
+          "title": "Model Diffing",
+          "dek": "Many worrying behaviours, such as sycophancy and reward hacking, appear when a model is fine-tuned. Model diffing compares two models' insides to find what training added or changed. ==Its tools are powerful, and the book warns that they readily report differences that are not there.==",
+          "kind": "AI from the Inside · Part 24",
+          "date": "2026.11",
+          "readTime": "6 min",
+          "body": "So far the series has studied one model at a time. This part covers section 9.1 of the book (pages 77–79), the first of three questions the book's ninth chapter asks about representations: what differs between two models? (The other two, where information is stored and how to steer it, come in part 25.)\n\n## Why compare models\n\nThe book's motivation is practical. Many concerning behaviours, such as reward hacking, where a model games the measure it is trained on, or sycophancy, where it tells users what they want to hear, arise during fine-tuning. So it matters to watch which features and circuits fine-tuning introduces or strengthens, to keep unsafe models from being deployed. Model diffing aims to surface some of them.\n\nIn the book's definition, model diffing looks for differences in features or circuits between two models. The differences may be features or circuits found in only one of them, or differences in how shared ones are used.\n\n## An older question, a different goal\n\nComparing networks is not new. An earlier line of work measured how similar two networks' internal representations are, using correlation, canonical correlation analysis and kernel-based scores such as CKA, the representational similarity metrics of part 9. That work was mostly about convergent learning: whether two models trained from different random starts learn the same representations up to a shuffle, rotation or other simple transformation. The book separates model diffing from it. Similarity measures give an overall score; model diffing looks for the concrete features or circuits that a particular training step introduced, strengthened or repurposed.\n\nThe book lists where model diffing has been applied: to the effects of fine-tuning and of distillation, to differences between architectures, to how concepts change during pretraining, and to finding vision-specific features added when a language model is trained on images too, so that they can be removed or steered.\n\n## Diffing with dictionaries\n\nDictionary learning, the SAEs and their relatives of parts 10 to 13, is the natural tool. When two models share an architecture, such as a base model and its instruction-tuned version, or checkpoints from one training run, a sparse autoencoder or transcoder can be trained on the difference between their activations for the same tokens, so its features describe what changed. A simpler baseline trains an SAE on the base model alone and uses it as a fixed set of features for measuring both. For a sequence of checkpoints, one method trains each checkpoint's SAE starting from the previous one's, so that features stay matched across the run. Differences are then measured on a shared set of prompts, and features that fire much more in the fine-tuned model can be tested by intervening on them. One 2026 study used this to find features responsible for misaligned behaviour.\n\n## Was it the model, or the data?\n\nA subtle problem is telling whether a feature seen in the fine-tuned model was really introduced by fine-tuning, or simply appears because fine-tuning data look different from ordinary text. A 2024 study proposed stage-wise diffing to separate the two. Take an SAE trained on the base model and continue training it in three stages: first on the base model with the fine-tuning data, then on the fine-tuned model with the original data, and finally on the fine-tuned model with the fine-tuning data. Features that appear only in the last stage are the likely products of fine-tuning, because neither the new data on the old model nor the new model on the old data produced them.\n\n[Fig. 1]\n\n## Crosscoders across architectures\n\nSAEs need the two models' activations to have the same size. When comparing different architectures, for example to track tendencies across model generations or sizes, that may not hold. Crosscoders, which part 13 introduced, solve this: they can have a separate encoder for each model, with different input sizes, projecting both into shared feature spaces. Their main advantage over SAEs is this comparison across architectures, though they have also been used on base and fine-tuned models and across pretraining checkpoints.\n\n[Fig. 2]\n\nThe companion notebook loads a pre-trained crosscoder for two models and sorts its features into shared and model-exclusive ones.\n\nA related approach models how computations change rather than how representations differ. A 2026 study used transcoders to learn a correction that, added to the base model's MLP, reproduces what the fine-tuned MLP does within the full model. Instead of comparing activations, it learns an approximation of how fine-tuning changed the MLP's computation.\n\n## The false-positive problem\n\nAll dictionary-based diffing shares the concern of part 12: the sparse decomposition may not be faithful. Features found this way may not reflect the real representations or their causal roles. The book's example: finding an SAE feature for \"confessing previous faults\" in a fine-tuned model but not in the original does not show that the fine-tuned model uses it. Nor does its apparent absence from the original show that the original lacks a representation that could steer it towards such behaviour.\n\nThe book sets out the danger in a warning box. Dictionary methods can falsely report features as exclusive to one model. Part of the cause can be the training objective itself: a 2025 study showed that crosscoders trained with an L1 penalty can invent apparently novel features, and tried to reduce this with the Batch Top-k variant of part 11. Even then, false positives may remain. During fine-tuning, the direction representing a feature can rotate, and current dictionary methods cannot tell a feature that is new from one that is merely represented differently. So features that look exclusive to one model should be treated as hypotheses needing further checks.\n\n## Diffing without the weights\n\nFinally, many important models are closed: their weights and activations are not available. A 2026 study showed that a language model can generate hypotheses, in plain language, about the behavioural differences between two models, by collecting both models' responses to the same prompts and extracting, clustering and summarising the differences. Compared with an SAE-based method, it matched it on many measures while surfacing more abstract, behaviour-level differences. This is not mechanistic, but it shows how much a strong behavioural baseline can do, a point part 34 returns to.\n\n[Table: Ways to diff two models (section 9.1)]\nApproach | What it compares, and when | Main caution\nSimilarity scores (CCA, CKA) | Overall likeness of representations; whether models converge | A score, not specific changes\nSAE on activation differences, or a fixed base SAE | Features of two models with the same architecture | Sparse decompositions may not be faithful\nStage-wise SAE fine-tuning | What fine-tuning added, apart from what new data shows | Several rounds of training\nCrosscoders | Shared and exclusive features, even across architectures | Can invent “exclusive” features; rotated features look new\nTranscoder adapters | How fine-tuning changed an MLP's computation | One component at a time\nLLM-based comparison | Behavioural differences in words, for closed models | Behavioural, not mechanistic\n\n[Table: Terms in this part]\nTerm | Meaning\nModel diffing | Finding differences in features or circuits between two models\nFine-tuning | Further training of a model on new data or objectives\nReward hacking | A model exploiting flaws in the measure it is trained to maximise\nConvergent learning | Separately trained models learning the same representations\nCKA | A widely used score of how similar two sets of representations are\nBase and fine-tuned models | A model before and after fine-tuning\nStage-wise diffing | Continuing an SAE's training in stages to isolate what fine-tuning introduced\nModel-exclusive feature | A feature that seems to exist in only one of two models\nFeature rotation | A feature's direction changing between models, which can look like a new feature\nClosed-weight model | A model whose weights are not publicly available\n\nNext, part 25 asks where in a model knowledge is stored, and how representations can be steered to change behaviour.",
+          "figures": [
+            {
+              "src": "images/inside-24-stagewise-en.png",
+              "alt": "Three stages of fine-tuning a sparse autoencoder that was first trained on the base model. Stage one: the base model with fine-tuning data. Stage two: the fine-tuned model with the original data. Stage three: the fine-tuned model with fine-tuning data. Features that appear only at stage three are marked as the ones likely to have been introduced by fine-tuning.",
+              "caption": "Fig. 1 — Stage-wise model diffing, after Bricken et al. (2024) as section 9.1 describes it. Changing the data and the model one at a time separates what is new in the model from what is merely new in the data.",
+              "ratio": "640/280"
+            },
+            {
+              "src": "images/inside-24-diff-en.png",
+              "alt": "A crosscoder trained on two models at once, a base model and its fine-tuned version. It finds three kinds of features: features shared by both, with similar strength in each; features whose strength changes a lot between the two, a large delta; and features that appear to exist in only one model. Each kind is shown with a pair of bars for the two models.",
+              "caption": "Fig. 2 — Model diffing with a crosscoder, after the book's Figure 14 in section 9.1. A large difference in a feature's activation between the two models flags a candidate change, which then needs checking.",
+              "ratio": "640/320"
+            }
+          ],
+          "tocLabel": "Contents",
+          "subjectsLabel": "Subjects",
+          "subjects": "Model diffing\nFine-tuning\nCrosscoders\nStage-wise diffing\nFalse positives",
+          "refsLabel": "References",
+          "refs": "Fazl Barez, Tung-Yu Wu, Hunar Batra et al. Understanding AI from the Inside: The State of Mechanistic Interpretability for AI Safety. arXiv:2611.08438, 2026. Sections 9–9.1, pp. 77–79. https://arxiv.org/abs/2611.08438\nNotebook 01_model_diffing.ipynb, from the book's companion notebooks. GitHub, 2026. https://github.com/TSGLAB/Interpretability_Survey_Safety/blob/main/notebooks/05_representation_analysis/01_model_diffing.ipynb\nJack Lindsey, Adly Templeton, Jonathan Marcus, Thomas Conerly, Joshua Batson & Christopher Olah. Sparse Crosscoders for Cross-Layer Features and Model Diffing. Transformer Circuits Thread, 2024. https://transformer-circuits.pub/2024/crosscoders/index.html\nTrenton Bricken, Siddharth Mishra-Sharma, Jonathan Marcus, Adam Jermyn, Christopher Olah, Kelley Rivoire & Thomas Henighan. Stage-wise model diffing. Transformer Circuits Thread, 2024. https://transformer-circuits.pub/2024/model-diffing/index.html\nSimon Kornblith, Mohammad Norouzi, Honglak Lee & Geoffrey Hinton. Similarity of Neural Network Representations Revisited. ICML, 2019. https://arxiv.org/abs/1905.00414\nElias Kempf, Simon Schrodi, Bartosz Cywiński, Thomas Brox, Neel Nanda & Arthur Conmy. Simple LLM baselines are competitive for model diffing. arXiv:2602.10371, 2026. https://arxiv.org/abs/2602.10371",
+          "series": {
+            "id": "inside-ai",
+            "title": "AI from the Inside",
+            "label": "Series",
+            "part": 24,
+            "partLabel": "Part 24 of 38",
+            "group": "V. Reading the middle of a model"
+          },
+          "prevLabel": "Previous",
+          "prev": {
+            "title": "Probing",
+            "kind": "AI from the Inside · Part 23",
+            "year": "2026",
+            "id": "",
+            "slug": "inside-ai-23-probing"
+          },
+          "nextLabel": "Next",
+          "next": {
+            "title": "Locating Knowledge and Steering",
+            "kind": "AI from the Inside · Part 25",
+            "year": "2026",
+            "id": "",
+            "slug": "inside-ai-25-locating-steering"
+          }
+        }
+      },
+      {
+        "ko": {
+          "slug": "inside-ai-25-locating-steering",
+          "title": "지식의 위치와 조종",
+          "dek": "표현을 다루는 이 책의 장은 실용적인 질문 두 개로 끝납니다. 어떤 지식이나 행동은 모델의 어디에 있는가? 그리고 표현을 직접 밀어서 행동을 바꿀 수 있는가? ==거절 방향은 두 질문 모두에 답하면서, 왜 어느 답도 아직 설명은 아닌지도 보여 줍니다.==",
+          "kind": "안에서 보는 AI · 25편",
+          "date": "2026.11",
+          "readTime": "7분",
+          "body": "24편은 두 모델 사이에 무엇이 다른지 물었습니다. 이번 편은 이 책 9장의 나머지 두 질문, 9.2절과 9.3절(80–82쪽)을 다룹니다. 어떤 정보나 행동은 모델의 어디에서 가장 인과적으로 중요한가? 그리고 표현에 대한 이해를 모델의 행동을 바꾸는 데 쓸 수 있는가? 두 질문은 가까워 보이지만, 이 책의 주된 교훈은 둘의 차이에 있습니다.\n\n## 지식의 위치 찾기\n\n지식의 위치 찾기(knowledge localisation) 방법은 특정한 능력이나 행동과 활성값이 인과적으로 묶여 있는 층, 구성 요소, 부분 공간을 찾습니다. 3편에서 가장 잘 알려진 방법인 2022년의 인과 추적을 만났습니다. 예를 들어 어떤 사실의 주어를 이루는 단어들에 잡음을 더해 입력을 망가뜨린 뒤, 깨끗한 활성값을 한 곳씩 되살려서 어느 곳을 되살렸을 때 정답이 돌아오는지 봅니다. 가장 중요한 곳이 그 사실을 꺼내 오는 곳입니다. 관련 연구는 MLP 층이 사실에 관한 연관을 유난히 많이 담고 있고, 마치 열쇠와 값을 저장하는 곳처럼 작동하며, 이런 연관이 뒤쪽 층 MLP 가중치의 작은 부분 공간에 놓일 수 있다는 것을 발견했습니다. 이런 분석들이 위치 찾기의 바탕을 놓았습니다.\n\n이 책의 실습 노트북은 에펠탑과 파리라는 고전적인 예로 GPT-2 Medium에서 이를 실행하고, 층마다 MLP와 어텐션 구성 요소가 얼마나 중요한지 비교합니다.\n\n## 어디에 있는가는 어떻게 작동하는가가 아니다\n\n이 책은 위치 찾기가 보여 주는 것에 대해 신중합니다. 위치 찾기는 정보가 가장 강하게 표현된 곳을 찾습니다. 모델이 그 정보를 쓰는지는 보여 주지 않습니다. 트랜스포머는 보통 필요한 것보다 훨씬 큰 용량을 가지고 있어서, 정보가 입력에 따라 여러 구성 요소와 부분 공간에 중복되어 표현되고 처리될 수 있습니다. 인과적 효과가 큰 구성 요소도 메커니즘의 일부일 뿐일 수 있습니다. 위치 찾기는 이해를 위한 쓸모 있는 출발점이지, 그 자체로 완결된 분석이 아닙니다. 3편에서도, 인과 추적이 짚은 사실의 위치가 그 사실을 고치기에 가장 좋은 곳을 잘 예측하지 못한다고 했습니다.\n\n위치 찾기로 행동과 묶인 방향을 찾을 수도 있습니다. 예를 들어 거절에는 대략 저차원의 구조가 있어서, 활성 공간의 특정한 방향들이 해로운 요청을 거절하는 모델의 경향과 연결되어 있음이 밝혀졌습니다. 연구자들은 2편의 슬리퍼 에이전트도 트리거가 켜진 입력과 그렇지 않은 입력의 활성값을 층마다 비교해서 연구했습니다. 이런 분석은 모델이 행동과 관련된 정보를 어디에, 어떻게 담는지에 답합니다. 하지만 방향이나 층을 찾았다고 해서 그 행동 뒤의 메커니즘이 설명되지는 않습니다. 그러려면 16편과 17편의 회로 찾기 같은 더 세밀한 분석이 필요합니다.\n\n## 표현 공학과 조종\n\n표현 공학(representation engineering)은 가중치를 바꾸는 대신 표현을 직접 바꿔서 행동을 바꿉니다. 활성값 조종(activation steering)은 보통 모델이 실행되는 동안 중간 활성값, 대개 잔차 스트림에 벡터를 더해 모델의 출력을 옮기는 것을 말합니다. 위치 찾기가 무언가가 어디에 있는지 묻는다면, 조종은 행동을 바꾸는 특정한 벡터를 찾습니다. 다시 학습시키지 않으므로 모델을 통제하는 가벼운 방법입니다.\n\n조종 벡터(steering vector)는 일정한 세기로 키워 활성값에 더하면 모델을 목표 행동 쪽으로 옮기는 활성 공간의 방향입니다. 학습된 프로브의 가중치에서 얻을 수도 있습니다. 7편에서 GPT-2의 행복 방향으로 만난 평균 차이도 널리 쓰이는 방법입니다. 모델이 선호하는 행동을 보일 때의 평균 활성값에서 선호하지 않는 행동을 보일 때의 평균을 뺀 것입니다. 추론할 때는 이 벡터에 세기 α를 곱해 어떤 층의 활성값에 더합니다.\n\n[도판 1]\n\n이 책은 이것이 단순해 보여도 거절, 도움을 주는 정도, 문체 같은 행동을 믿을 만하게 바꾼다고 말합니다. 그래서 조종에는 두 가지 역할이 있습니다. 행동을 통제하는 방법이자, 프로브에 대한 인과적 시험입니다. 어떤 방향을 따라 개입했을 때 행동이 일관되게 바뀐다면, 그 표현이 그 행동에 인과적으로 영향을 준다는 증거가 됩니다. 이 책의 실습 노트북은 GPT-2의 감정을 조종한 다음, Llama-2-13B-chat에 표현 공학을 써서 편향의 방향을 찾고 모델을 더 공정한 답 쪽으로 조종합니다.\n\n## 거절 벡터\n\n이 책이 풀어 보이는 예는 거절 벡터(refusal vector)입니다. 모델이 거절하게 만드는 프롬프트들과, 그와 짝을 이루되 모델이 따라야 하는 프롬프트들을 모읍니다. 어떤 층의 거절 방향은 첫 묶음에 대한 평균 잔차 스트림에서 둘째 묶음의 평균을 뺀 것입니다. 어떤 활성값이든 이 방향 위에 사영한 값은 그 활성값이 거절을 얼마나 담고 있는지 잽니다. 이 방향을 따라 개입하면 거절이 그 방향에 어떻게 기대는지 시험할 수 있고, 앞선 실험들은 이런 개입이 거절을 크게 높이거나 낮출 수 있음을 발견했습니다. 이 책은 이 방향을 만들고 읽는 방식이 모델과 설정에 따라 달라질 수 있다고 덧붙입니다.\n\n[도판 2]\n\n이 예는 이번 편의 두 절반 사이의 차이를 보여 줍니다. 층에 걸쳐 사영값을 재면 거절과 관련된 정보가 어디에 있는지 찾는 데 도움이 됩니다. 방향을 따라 개입하면 그것을 바꿨을 때 행동에 무슨 일이 일어나는지 시험할 수 있습니다. 뒤의 것은 인과의 증거를 주지만, 모델이 거절하기로 정하는 메커니즘 전체를 보여 주지는 않습니다.\n\n## 곧은 선을 넘어서\n\n7편은 모든 개념이 곧은 방향은 아니라는 것을 보였고, 조종도 그 뒤를 따랐습니다. 2026년의 한 방법은 활성값을 원래 공간을 휘어서 변환한 커널 PCA 공간으로 사영하고, 거기서 선형으로 조종한 뒤 되돌립니다. 다른 방법은 어떤 개념은 방향보다 다양체로 더 잘 표현된다는 발견에 따라 저차원 다양체를 따라 조종합니다. 이와 별개로 최적화 기반 방법은 과제 성능을 최대화하거나 개입했을 때 원치 않는 출력을 억누르는 것 같은 목표를 직접 최적화해서 조종 방향을 만듭니다. 두 평균의 대비로 바로 계산하는 방법보다 유연하지만, 계산이 훨씬 많이 듭니다.\n\n## 특징을 시험하는 조종\n\n조종은 다른 방법이 붙인 이름표를 확인하는 데도 쓸 수 있습니다. 어떤 SAE나 CLT 특징이 어떤 개념을 나타낸다고 생각한다면, 그 특징의 방향을 따라 조종하고 행동이 바뀌는지 보는 것이 뒷받침하는 증거가 됩니다. 이런 평가는 SAE 특징, 평균 차이 방향, DAS처럼 방향을 찾는 여러 방법을 비교하는 데 쓰였고, 20편에서 만난 RAVEL, MIB, AxBench 같은 벤치마크가 이를 중심으로 만들어졌습니다.\n\n## 취약성과 불투명성\n\n이 책은 두 가지 한계를 경고 상자로 짚으며 이 절을 마칩니다. 조종은 쉽게 깨질 수 있습니다. 어떤 분포, 모델, 과제에서 찾은 방향이 다른 곳에서는 통하지 않을 수 있습니다. 그리고 조종에 성공했다고 해서 그것만으로 메커니즘이 투명해지지는 않습니다. 개입은 여러 특징에 한꺼번에 영향을 주거나, 이미 진행 중인 계산과 비선형적으로 얽히거나, 깔끔한 메커니즘과 맞지 않는 의도치 않은 경로로 원하는 행동을 만들어 낼 수 있습니다. 2024년의 한 연구는 부분 공간을 따라 패칭하는 것이 바로 이런 착시를 만들 수 있음을 보였습니다. 그래서 조종은 인과적 영향의 증거로 읽어야 하지, 행동에 대한 설명으로 읽어서는 안 됩니다.\n\n## 이 장을 한눈에\n\n[표: 표현에 관한 세 가지 질문 (9장)]\n질문 | 방법 | 보여 줄 수 있는 것 | 혼자서는 보여 주지 못하는 것\n두 모델 사이에 무엇이 다른가? | 모델 비교(24편) | 학습이 더하거나 바꾼 특징의 후보 | 그 특징이 정말 새것인지, 인과적으로 쓰이는지\n정보는 어디에 있는가? | 지식의 위치 찾기 | 행동과 가장 인과적으로 묶인 구성 요소나 방향 | 모델이 그것에 기대는지, 메커니즘 전체\n그것으로 행동을 바꿀 수 있는가? | 조종 | 표현을 밀면 행동이 바뀐다는 것 | 행동이 어떻게 만들어지는지, 다른 곳에서도 통하는지\n\n이것으로 모델 중간을 읽는 부가 끝납니다. 이 부의 방법들은 주로 표현에서 무엇을 읽어 낼 수 있는지, 조종의 경우에는 그것을 바꾸면 무슨 일이 일어나는지 보여 주지만, 모델이 그것을 어떻게 쓰는지에 대한 이야기 전체를 보여 주지는 못합니다. 이 책의 다음 장은 이 연재가 지금까지 무시해 온 차원 하나를 더합니다. 시간입니다.\n\n[표: 이번 편의 용어]\n용어 | 뜻\n지식의 위치 찾기 | 어떤 지식이나 행동과 활성값이 가장 인과적으로 묶인 구성 요소를 찾는 것\n인과 추적 | 입력을 망가뜨린 뒤 활성값을 한 곳씩 되살려 어디서 답이 돌아오는지 보는 것\n과매개변수화 | 과제에 필요한 것보다 훨씬 많은 파라미터를 가져 중복이 가능한 상태\n표현 공학 | 가중치가 아니라 표현을 고쳐서 행동을 바꾸는 것\n활성값 조종 | 추론 중에 중간 활성값에 벡터를 더하는 것\n조종 벡터 | 일정한 세기로 더하면 모델을 어떤 행동 쪽으로 옮기는 방향\n평균 차이 | 한 행동의 평균 활성값에서 다른 행동의 평균을 빼서 만든 방향\n거절 벡터 | 모델의 거절 경향과 묶인 조종 방향\n커널 PCA | 공간을 휘어서 변환한 곳에서 작동하는 PCA\n최적화 기반 조종 | 목표를 직접 최적화해서 조종 방향을 찾는 것\n취약성 | 한 설정에서 통한 방향이 다른 설정에서는 통하지 않는 것\n\n26편에서는 학습과 데이터 부를 시작합니다. 모델이 배우는 동안 바뀌는 모습을 지켜보면 무엇을 알 수 있는지입니다.",
+          "figures": [
+            {
+              "src": "images/inside-25-steering-ko.png",
+              "alt": "이 책의 그림 15를 따라, 조종 벡터를 만들고 적용하는 모습. 활성 공간에서 양성 예시와 음성 예시가 두 무리를 이루고, 조종 벡터는 음성 예시의 평균에서 양성 예시의 평균으로 이어집니다. 추론할 때는 이 벡터를 일정한 배수로 키워 새로운 활성값에 더하고, 그러면 활성값이 양성 행동 쪽으로 움직입니다.",
+              "caption": "도판 1 — 9.3절의 조종 벡터입니다. 두 행동에 대한 평균 활성값의 차이를, 추론 중에 세기 α로 더합니다.",
+              "ratio": "640/290"
+            },
+            {
+              "src": "images/inside-25-refusal-ko.png",
+              "alt": "거절 방향 하나에 관한 패널 두 개. 위치 찾기: 활성값을 거절 방향에 사영한 값을 층별로 나타내면, 가운데 층에서 해로운 프롬프트는 높고 해롭지 않은 프롬프트는 낮습니다. 조종: 이 방향을 점점 세게 더하면 모델이 거절하는 요청의 비율이 올라가고, 빼면 내려갑니다.",
+              "caption": "도판 2 — 9.3절의 상자를 따라, 같은 거절 벡터로 위치 찾기와 조종을 해 본 것입니다(예시이며, 곡선은 지어낸 것입니다). 사영값을 재면 거절과 관련된 정보가 어디에 있는지 알 수 있고, 방향을 따라 개입하면 그것을 바꿨을 때 무슨 일이 일어나는지 시험할 수 있습니다.",
+              "ratio": "640/300"
+            }
+          ],
+          "tocLabel": "차례",
+          "subjectsLabel": "주제",
+          "subjects": "지식의 위치 찾기\n인과 추적\n조종 벡터\n거절 방향\n취약성",
+          "refsLabel": "참고 문헌",
+          "refs": "Fazl Barez, Tung-Yu Wu, Hunar Batra et al. Understanding AI from the Inside: The State of Mechanistic Interpretability for AI Safety. arXiv:2611.08438, 2026. 9.2–9.3절, 80–82쪽. https://arxiv.org/abs/2611.08438\n이 책의 실습 노트북 02_knowledge_localization, 03_representation_engineering. GitHub, 2026. https://github.com/TSGLAB/Interpretability_Survey_Safety/tree/main/notebooks/05_representation_analysis\nKevin Meng, David Bau, Alex Andonian & Yonatan Belinkov. Locating and Editing Factual Associations in GPT. NeurIPS, 2022. https://arxiv.org/abs/2202.05262\nMor Geva, Roei Schuster, Jonathan Berant & Omer Levy. Transformer Feed-Forward Layers Are Key-Value Memories. EMNLP, 2021. https://arxiv.org/abs/2012.14913\nAndy Arditi, Oscar Obeso, Aaquib Syed, Daniel Paleka, Nina Panickssery, Wes Gurnee & Neel Nanda. Refusal in Language Models Is Mediated by a Single Direction. NeurIPS, 2024. https://arxiv.org/abs/2406.11717\nNina Rimsky, Nick Gabrieli, Julian Schulz, Meg Tong, Evan Hubinger & Alexander Matt Turner. Steering Llama 2 via Contrastive Activation Addition. ACL, 2024. https://arxiv.org/abs/2312.06681\nAndy Zou, Long Phan, Sarah Chen et al. Representation Engineering: A Top-Down Approach to AI Transparency. arXiv:2310.01405, 2023. https://arxiv.org/abs/2310.01405\nAleksandar Makelov, Georg Lange, Atticus Geiger & Neel Nanda. Is This the Subspace You Are Looking For? An Interpretability Illusion for Subspace Activation Patching. ICLR, 2024. https://arxiv.org/abs/2311.17030",
+          "series": {
+            "id": "inside-ai",
+            "title": "안에서 보는 AI",
+            "label": "연재",
+            "part": 25,
+            "partLabel": "38편 중 25편",
+            "group": "5부. 중간 표현 읽기"
+          },
+          "prevLabel": "이전 편",
+          "prev": {
+            "title": "두 모델 비교하기",
+            "kind": "안에서 보는 AI · 24편",
+            "year": "2026",
+            "id": "",
+            "slug": "inside-ai-24-model-diffing"
+          },
+          "nextLabel": "다음 편",
+          "next": {
+            "title": "",
+            "kind": "",
+            "year": "",
+            "id": ""
+          }
+        },
+        "en": {
+          "slug": "inside-ai-25-locating-steering",
+          "title": "Locating Knowledge and Steering",
+          "dek": "Two practical questions close the book's chapter on representations: where in a model is a piece of knowledge or a behaviour, and can we change behaviour by pushing on the representation directly? ==The refusal direction answers both, and also shows why neither answer is yet an explanation.==",
+          "kind": "AI from the Inside · Part 25",
+          "date": "2026.11",
+          "readTime": "7 min",
+          "body": "Part 24 asked what differs between two models. This part covers the other two questions of the book's ninth chapter, sections 9.2 and 9.3 (pages 80–82). Where in a model is a particular piece of information or behaviour most causally relevant? And can understanding of representations be used to change a model's behaviour? The two sound close, and the book's main lesson is the difference between them.\n\n## Knowledge localisation\n\nKnowledge localisation methods look for the layers, components or subspaces whose activations are causally tied to a particular capability or behaviour. Part 3 met the best-known method, causal tracing, from 2022. It corrupts the input, for example by adding noise to the words naming the subject of a fact, and then restores the clean activation at one place at a time, to see which restorations bring the right answer back. The places that matter most are where the fact is retrieved. Related work found that the MLP layers hold a disproportionate share of factual associations, acting somewhat like stores of keys and values, and that these can sit in a small subspace of the weights of late-layer MLPs. These analyses laid the ground for localisation.\n\nThe companion notebook runs this on GPT-2 Medium with the classic example of the Eiffel Tower and Paris, and compares how much the MLP and attention components at each layer matter.\n\n## Where it is is not how it works\n\nThe book is careful about what localisation shows. It finds where information is most strongly represented. It does not show whether the model uses that information. Transformers usually have far more capacity than they need, so information can be represented and processed redundantly, in many components and subspaces, depending on the input. A component with a strong causal effect may be only part of the mechanism. Localisation is a useful starting point for understanding, not an analysis that stands on its own; part 3 noted, too, that where causal tracing locates a fact predicts poorly where editing it works best.\n\nLocalisation can also find directions tied to behaviours. Refusal, for instance, has been found to have a roughly low-dimensional structure, with particular directions in activation space associated with a model's tendency to decline harmful requests. And researchers studied the sleeper agents of part 2 by comparing activations, layer by layer, for triggered and untriggered inputs. Such analyses answer where and how a model encodes behaviour-related information. But finding a direction or a layer does not explain the mechanism behind the behaviour; that needs finer-grained analysis such as the circuit discovery of parts 16 and 17.\n\n## Representation engineering and steering\n\nRepresentation engineering changes behaviour by altering representations directly, rather than by changing weights. Activation steering usually means adding a vector to an intermediate activation, typically in the residual stream, to shift the model's outputs while it runs. Where localisation asks where something is, steering looks for a specific vector that changes behaviour. Because nothing is retrained, it is a lightweight way to control a model.\n\nA steering vector is a direction in activation space which, scaled by some strength and added to an activation, moves the model towards a target behaviour. It can come from the weights of a trained probe. Another popular method, which part 7 met with GPT-2's happy direction, is the difference in means: the average activation when the model shows the preferred behaviour minus the average when it shows the unpreferred one. At inference time, the vector times a strength α is added to the activation at some layer.\n\n[Fig. 1]\n\nSimple as this is, the book notes that it reliably changes behaviours such as refusal, helpfulness and style. That gives steering two roles: as a way to control behaviour, and as a causal test for probes. If intervening along a direction consistently changes a behaviour, that is evidence the representation causally influences it. The companion notebook steers GPT-2's sentiment, and then uses representation engineering on Llama-2-13B-chat to find a direction for bias and steer the model towards fairer answers.\n\n## The refusal vector\n\nThe book's worked example is the refusal vector. Collect prompts that make a model refuse, and matched prompts for which it should comply. The refusal direction at a layer is the average residual stream on the first set minus the average on the second. The projection of any activation onto that direction measures how much refusal it carries. Intervening along it tests how refusal depends on it, and previous experiments found that such interventions can strongly raise or lower refusal. The book adds that how the direction is built and read can vary across models and settings.\n\n[Fig. 2]\n\nThe example shows the difference between the two halves of this part. Measuring the projection across layers helps locate where refusal-related information is. Intervening along the direction tests what modifying it does to behaviour. The second gives evidence of causation; it still does not reveal the whole mechanism by which a model decides to refuse.\n\n## Beyond straight lines\n\nPart 7 showed that not all concepts are straight directions, and steering has followed. One 2026 method projects activations into a kernel PCA space, a curved transformation of the original, steers linearly there, and maps back. Another steers along a low-dimensional manifold, motivated by findings that some concepts are better represented as manifolds than as directions. Separately, optimisation-based methods construct steering directions by directly optimising an objective, such as maximising task performance or suppressing unwanted outputs under intervention. They are more flexible than the closed-form contrast of two averages, but need much more computation.\n\n## Steering as a test for features\n\nSteering can also check the labels other methods attach. If an SAE or CLT feature is thought to represent some concept, steering along its direction and watching the behaviour change provides supporting evidence. Such evaluations have been used to compare ways of finding directions, including SAE features, difference-in-means directions and DAS, and benchmarks such as RAVEL, MIB and AxBench, met in part 20, are built around them.\n\n## Brittleness and opacity\n\nThe book closes with a warning box on two limits. Steering can be brittle: a direction found for one distribution, model or task may not carry over to another. And successful steering does not, by itself, give mechanistic transparency. An intervention may affect several features at once, interact nonlinearly with the computation already under way, or work through an unintended pathway that produces the desired behaviour without matching a clean mechanism. A 2024 study showed how patching along a subspace can create exactly this kind of illusion. So steering should be read as evidence of causal influence, not as an explanation of the behaviour.\n\n## The chapter in brief\n\n[Table: Three questions about representations (chapter 9)]\nQuestion | Method | What it can show | What it cannot show alone\nWhat differs between two models? | Model diffing (part 24) | Candidate features added or changed by training | That a feature is really new, or causally used\nWhere is the information? | Knowledge localisation | The components or directions most causally tied to a behaviour | Whether the model relies on them, or the whole mechanism\nCan we change behaviour through it? | Steering | That pushing a representation changes behaviour | How the behaviour is produced; whether it transfers\n\nWith this, the group on reading the middle of a model ends. Its methods mostly show what can be decoded from a representation, and with steering, what changing it does, but not the full story of how the model uses it. The book's next chapter adds a dimension the series has so far ignored: time.\n\n[Table: Terms in this part]\nTerm | Meaning\nKnowledge localisation | Finding the components whose activations are most causally tied to a piece of knowledge or behaviour\nCausal tracing | Corrupting the input, then restoring activations one place at a time to see where the answer comes back\nOverparameterised | Having far more parameters than a task needs, which allows redundancy\nRepresentation engineering | Changing behaviour by editing representations rather than weights\nActivation steering | Adding a vector to an intermediate activation during inference\nSteering vector | A direction that, added at some strength, moves the model towards a behaviour\nDifference in means | A direction built by subtracting the average activation for one behaviour from another's\nRefusal vector | A steering direction tied to a model's tendency to refuse\nKernel PCA | A version of PCA that works in a curved transformation of the space\nOptimisation-based steering | Finding a steering direction by directly optimising an objective\nBrittleness | A direction that works in one setting failing in another\n\nNext, part 26 opens the group on training and data: what can be learned by watching a model change as it learns.",
+          "figures": [
+            {
+              "src": "images/inside-25-steering-en.png",
+              "alt": "A steering vector built and applied, after the book's Figure 15. In activation space, positive examples and negative examples form two clusters; the steering vector runs from the mean of the negative ones to the mean of the positive ones. At inference time, a scaled copy of the vector is added to a new activation, moving it towards the positive behaviour.",
+              "caption": "Fig. 1 — The steering vector of section 9.3: the difference of mean activations for two behaviours, added at some strength α during inference.",
+              "ratio": "640/290"
+            },
+            {
+              "src": "images/inside-25-refusal-en.png",
+              "alt": "Two panels about one refusal direction. Locating: the projection of activations onto the refusal direction, plotted across layers, is high for harmful prompts and low for harmless ones in the middle layers. Steering: adding the direction with increasing strength raises the share of requests the model refuses, and subtracting it lowers the share.",
+              "caption": "Fig. 2 — Localisation and steering with the same refusal vector, after the book's box in section 9.3 (an illustration; the curves are made up). Measuring the projection says where refusal-related information sits; intervening along the direction tests what changing it does.",
+              "ratio": "640/300"
+            }
+          ],
+          "tocLabel": "Contents",
+          "subjectsLabel": "Subjects",
+          "subjects": "Knowledge localisation\nCausal tracing\nSteering vectors\nRefusal direction\nBrittleness",
+          "refsLabel": "References",
+          "refs": "Fazl Barez, Tung-Yu Wu, Hunar Batra et al. Understanding AI from the Inside: The State of Mechanistic Interpretability for AI Safety. arXiv:2611.08438, 2026. Sections 9.2–9.3, pp. 80–82. https://arxiv.org/abs/2611.08438\nNotebooks 02_knowledge_localization and 03_representation_engineering, from the book's companion notebooks. GitHub, 2026. https://github.com/TSGLAB/Interpretability_Survey_Safety/tree/main/notebooks/05_representation_analysis\nKevin Meng, David Bau, Alex Andonian & Yonatan Belinkov. Locating and Editing Factual Associations in GPT. NeurIPS, 2022. https://arxiv.org/abs/2202.05262\nMor Geva, Roei Schuster, Jonathan Berant & Omer Levy. Transformer Feed-Forward Layers Are Key-Value Memories. EMNLP, 2021. https://arxiv.org/abs/2012.14913\nAndy Arditi, Oscar Obeso, Aaquib Syed, Daniel Paleka, Nina Panickssery, Wes Gurnee & Neel Nanda. Refusal in Language Models Is Mediated by a Single Direction. NeurIPS, 2024. https://arxiv.org/abs/2406.11717\nNina Rimsky, Nick Gabrieli, Julian Schulz, Meg Tong, Evan Hubinger & Alexander Matt Turner. Steering Llama 2 via Contrastive Activation Addition. ACL, 2024. https://arxiv.org/abs/2312.06681\nAndy Zou, Long Phan, Sarah Chen et al. Representation Engineering: A Top-Down Approach to AI Transparency. arXiv:2310.01405, 2023. https://arxiv.org/abs/2310.01405\nAleksandar Makelov, Georg Lange, Atticus Geiger & Neel Nanda. Is This the Subspace You Are Looking For? An Interpretability Illusion for Subspace Activation Patching. ICLR, 2024. https://arxiv.org/abs/2311.17030",
+          "series": {
+            "id": "inside-ai",
+            "title": "AI from the Inside",
+            "label": "Series",
+            "part": 25,
+            "partLabel": "Part 25 of 38",
+            "group": "V. Reading the middle of a model"
+          },
+          "prevLabel": "Previous",
+          "prev": {
+            "title": "Model Diffing",
+            "kind": "AI from the Inside · Part 24",
+            "year": "2026",
+            "id": "",
+            "slug": "inside-ai-24-model-diffing"
           },
           "nextLabel": "Next",
           "next": {
