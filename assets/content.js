@@ -159,7 +159,7 @@
             "title": "안에서 보는 AI",
             "kind": "",
             "year": "2026",
-            "desc": "기계적 해석 가능성의 교과서라 할 만한 「Understanding AI from the Inside」를 한 장씩 쉽게 풀어 읽는 연재입니다. ==지금 4편까지 나왔습니다.==",
+            "desc": "기계적 해석 가능성의 교과서라 할 만한 「Understanding AI from the Inside」를 한 장씩 쉽게 풀어 읽는 연재입니다. ==지금 9편까지 나왔습니다.==",
             "ratio": "1/1",
             "image": {
               "src": "images/inside-ai-card.jpg",
@@ -296,7 +296,7 @@
             "title": "AI from the Inside",
             "kind": "",
             "year": "2026",
-            "desc": "A series that walks through “Understanding AI from the Inside”, a textbook of mechanistic interpretability in all but name, one chapter at a time. ==4 parts so far.==",
+            "desc": "A series that walks through “Understanding AI from the Inside”, a textbook of mechanistic interpretability in all but name, one chapter at a time. ==9 parts so far.==",
             "ratio": "1/1",
             "image": {
               "src": "images/inside-ai-card.jpg",
@@ -1645,10 +1645,11 @@
           },
           "nextLabel": "다음 편",
           "next": {
-            "title": "",
-            "kind": "",
-            "year": "",
-            "id": ""
+            "title": "뉴런, 개념, 특징",
+            "kind": "안에서 보는 AI · 5편",
+            "year": "2026",
+            "id": "",
+            "slug": "inside-ai-05-features"
           }
         },
         "en": {
@@ -1693,6 +1694,535 @@
             "year": "2026",
             "id": "",
             "slug": "inside-ai-03-map"
+          },
+          "nextLabel": "Next",
+          "next": {
+            "title": "Neurons, Concepts and Features",
+            "kind": "AI from the Inside · Part 5",
+            "year": "2026",
+            "id": "",
+            "slug": "inside-ai-05-features"
+          }
+        }
+      },
+      {
+        "ko": {
+          "slug": "inside-ai-05-features",
+          "title": "뉴런, 개념, 특징",
+          "dek": "모델이 숫자로 이루어져 있다면, 그 숫자들은 무엇을 나타낼까요? 이번 편은 이 책이 개념, 다의적 뉴런, 특징을 어떻게 정의하는지 따라갑니다. ==특징은 어떤 개념과 함께 켜지는 것만으로는 부족합니다. 그것을 바꾸면 모델의 행동도 바뀌어야 합니다.==",
+          "kind": "안에서 보는 AI · 5편",
+          "date": "2026.11",
+          "readTime": "8분",
+          "body": "4편은 트랜스포머 안의 숫자들이 어디에 있는지 보여 주었습니다. 잔차 스트림에 있고, 각 MLP의 뉴런에 있습니다. 이번 편은 그 숫자들이 무엇을 나타내는지 묻습니다. 이 책의 4.1절부터 4.3절(21–23쪽)을 다루는데, 저자들은 여기서 책 전체가 쓸 용어를 정리합니다. 이때 모델이 정보를 어떤 특정한 방식으로 저장한다고 아직 가정하지 않도록 조심해서 용어를 정의합니다. 그에 관한 가설은 7편부터 9편까지에서 다룹니다.\n\n## 두 가지 이해\n\n이 책은 1편부터 3편까지 계속 돌아온 차이를 먼저 정확하게 적어 둡니다. 모델을 하나의 함수로 생각해 봅시다. 가능한 입력 가운데 하나를 받아 출력을 돌려주는 함수입니다. 행동적 해석 가능성은 유한한 시험 입력들에서 모은 입력과 출력의 쌍을 통해 이 함수를 연구합니다. 모델을 블랙박스로 다룹니다.\n\n기계적 해석 가능성은 같은 함수의 안에서 무슨 일이 일어나는지 살펴봅니다. 모델이 계산하는 도중에 만드는 숫자인 활성값(activation), 그리고 그 활성값을 만들어 내는 학습된 가중치인 파라미터(parameter)가 대상입니다. 언제나 모델의 행동과 연결 지어, 여러 수준의 세밀함으로 살펴봅니다. 짧게 말하면 행동적 연구는 모델이 무엇을 하는지 서술합니다. 기계적 연구는 출력이 어떻게 계산되는지 설명합니다.\n\n## 개념이란 무엇인가\n\n이 책의 거의 모든 방법이 개념을 이야기하므로, 이 책은 이 말을 분명히 정해 둡니다. 개념(concept)은 서로 다른 사례나 맥락에서도 알아볼 수 있는, 뚜렷하고 다시 쓰이는 정보나 지식의 단위입니다. 개 한 마리, 빨간색, 칭찬하는 말처럼 사람에게 익숙한 범주인 개념이 많습니다. 하지만 꼭 그래야 하는 것은 아닙니다.\n\n핵심어는 '다시 쓰인다'입니다. 금융 기관을 뜻할 수도 있고 강가의 둑을 뜻할 수도 있는 영어 단어 \"bank\"를 생각해 봅시다. 어떤 문장에 어느 개념이 들어 있는지 가리려면 주변 단어가 필요할 수 있습니다. 하지만 일단 가려낸 뒤에는, 금융 기관이라는 개념은 그것이 나타나는 모든 맥락에서 같은 것으로 알아볼 수 있어야 합니다. 단어가 \"bank\"이든 \"lender\"이든 마찬가지입니다.\n\n[도판 1]\n\n이 정의는 사람이 이름 붙이지 못한 개념도 일부러 받아들입니다. 신경망은 계산에 중요하고 일관되게 다시 쓰이는 정보 단위를 만들면서도, 그것에 맞는 자연스러운 사람의 말은 없을 수 있습니다. 이 책은 사람이 이해할 수 있다는 것을 개념의 조건이 아니라, 어떤 개념들이 마침 가진 성질로 봅니다. 또 지금까지의 해석 가능성 연구는 거의 모두 사람이 쉽게 이름 붙일 수 있는 개념을 다뤘다고 지적합니다. 모델에게는 중요하지만 사람의 범주에 들어맞지 않는 개념을 찾아내고 설명하는 일은 아직 거의 손대지 않은 영역입니다.\n\n## 한 가지를 뜻하는 뉴런\n\n4편에서 뉴런을 소개했습니다. MLP가 펼친 은닉층의 단위입니다. 뉴런은 텍스트의 위치마다 활성값, 곧 숫자 하나를 가집니다. 이 책은 이를 입력 x에 대한, ℓ층 뉴런 n의 위치 t에서의 활성값으로 씁니다.\n\n가장 해석하기 쉬운 뉴런은 개념 하나에만 반응하는 뉴런일 것입니다. 지금 단어가 \"blue\"일 때마다 활성값이 크고 양수이고, 그 밖에는 0에 가깝게 머물고, 손으로 바꾸면 모델의 출력이 파란색과 관련된 쪽으로 가거나 멀어지는 뉴런을 떠올려 봅시다. 그렇다면 이 뉴런은 파란색이라는 개념에 대응한다고 말할 만합니다. 이 결론에는 세 관찰이 모두 필요하다는 점에 주의해야 합니다. 뉴런이 파란색에 켜지고, 다른 것에는 조용하고, 그것을 바꾸면 모델의 행동이 파란색과 관련된 방향으로 바뀌어야 합니다.\n\n일부 뉴런이 이렇게 행동한다고 가정하고, 초기 연구는 특정 개념을 감지하는 뉴런을 찾아내고 각 뉴런이 하는 일에 이름을 붙이는 방법을 만들었습니다. 예를 들어 이미지 모델에서는, 2017년에 나온 잘 알려진 방법이 개별 단위를 질감, 물체, 장면 종류 같은 개념에 짝지었습니다.\n\n## 여러 가지를 뜻하는 뉴런\n\n후속 연구들은 복잡한 사정을 발견했습니다. 개별 뉴런이, 사람이 보기에는 서로 관련 없어 보이는 여러 개념에 강하게 반응하는 경우가 많았습니다. 이를 다의성(polysemanticity)이라고 부릅니다. 그리스어로 '여러 뜻'이라는 말에서 왔고, 반대말은 단의성(monosemanticity)입니다.\n\n[도판 2]\n\n이 책의 정의는 신중합니다. 서로 다른 두 개념이 있고, 각 개념에 해당하는 입력과 위치가 있을 때, 그 뉴런의 활성값이 두 경우 모두에서 크고, 그 활성값에 개입하면 두 개념 모두와 관련된 모델의 행동이 인과적으로 영향을 받는다면, 그 뉴런은 다의적입니다. 뒷부분이 중요합니다. 두 가지에 켜지기만 하는 뉴런은, 우리가 알아채지 못한 둘의 공통점을 감지하고 있을 수도 있습니다. 이 책이 말하는 다의성은 그 뉴런이 실제로 두 가지 모두에 일을 해야 성립합니다.\n\n신경망은 왜 이렇게 할까요? 이 책은 표현에 걸리는 제약과 중첩(superposition)을 원인으로 꼽습니다. 중첩은 모델이 개념들을 서로 나눠 쓰게 해서, 뉴런 수보다 많은 개념을 저장한다는 생각입니다. 이 가설은 8편에서 다룹니다. 원인이 무엇이든, 다의성은 뉴런 하나하나로 설명하기 어렵게 만듭니다. 모델이 담고 있는 의미 있는 내용이 개별 뉴런과 맞아떨어지지 않을 수 있다는 뜻이고, 그래서 연구자들은 다른 분석 단위를 찾기 시작했습니다.\n\n이 책 바깥의 이야기를 하나 덧붙입니다. 다의성이 실제로 얼마나 널리 퍼져 있는지는 아직 논쟁 중입니다. 이 사이트가 「신경망은 이미 깨끗하다」에서 자세히 읽은 닉 캐머라타(Nick Cammarata)의 2026년 에세이는, 다의적 뉴런의 유명한 사례 일부가 잘못 읽혔고 많은 뉴런이 이 분야가 생각해 온 것보다 깨끗하다고 주장합니다. 이 책의 정의는 바로 이런 논쟁에 쓸모가 있습니다. 어떤 뉴런에 대해서든 무엇을 보이면 질문이 풀리는지 알려 주기 때문입니다.\n\n## 특징\n\n개별 뉴런이 다의적인 경우가 많기 때문에, 기계적 해석 가능성은 점점 다른 단위로 옮겨 갔습니다. 연구자들은 모델이 사람이 이해할 수 있는 개념을 활성 공간의 방향으로, 또는 저차원 다양체(manifold)로 담는 경우가 있다는 것을 발견했습니다. 다양체란 축 하나가 아니라 공간 안의 곡선이나 곡면 같은 구조를 말합니다. 이 책은 특징(feature)이라는 말을 넓게 써서, 사람이 이해할 수 있는 개념에 대응하는 모델 안의 모든 표현을 가리킵니다.\n\n구체적으로 보면 이렇습니다. 4편에서 본 것처럼 한 위치의 잔차 스트림은 숫자 d개의 목록입니다. 이런 목록 전체의 집합이 스트림의 활성 공간이고, 이 공간은 d차원입니다. 뉴런 하나하나는 이런 공간의 축 하나에 해당합니다. 이 책의 기술적인 의미에서 특징은 어떤 구성 요소의 활성 공간 안에 있는 기하학적 구조입니다. 그 구성 요소는 잔차 스트림일 수도, 어텐션 헤드의 출력일 수도, MLP의 출력일 수도 있습니다. 가장 단순한 구조는 방향, 곧 여러 뉴런을 한꺼번에 특정한 비율로 섞은 것입니다.\n\n이 책의 형식적 정의는 두 부분으로 되어 있습니다. 어떤 개념과 연결된 특징은 활성 공간 안의 기하학적 구조로서, 그 활성이 개념의 존재를 예측하고, 개념의 존재나 표현에 인과적으로 관련된 것입니다. 그러니 뉴런과 마찬가지로, 어떤 개념을 나타낸다고 주장하는 특징은 두 가지를 해야 합니다. 개념이 있을 때 그 활성이 올라가야 합니다. 그리고 그것을 키우거나 억누르면 개념과 관련된 방식으로 모델의 행동이 바뀌어야 합니다. 1편의 기계적 분석의 두 조건과 짝을 이룹니다. 모델 내부와의 상관관계를 찾고, 이어서 개입으로 그것이 중요하다는 것을 보이는 것입니다.\n\n이런 의미에서 특징은 뉴런보다 표현력이 크고 더 일반적인 단위입니다. 뉴런은 마침 축과 맞아떨어진, 특정한 방향 하나입니다. 특징은 어떤 방향이든 될 수 있고, 휘어진 구조일 수도 있습니다.\n\n## 근사로서의 방법\n\n이 책은 이 시점에서 특징이 실제로 어떤 형태인지 단정하지 않습니다. 특징을 찾고 조작하는 지금의 방법들을, 각자의 가정에 따라 모양이 정해지는 실용적 근사로 다룹니다. 후보 특징을 찾는 방법은 두 갈래입니다. 판독 기반 방법은 활성값을 읽을 수 있는 무언가로 옮기는데, 언어 모델에게 활성값을 설명하게 하는 경우가 많습니다(22편). 희소 분해 방법은 활성값을 더 단순한 여러 부분으로 쪼갭니다. 가장 잘 알려진 것이 희소 오토인코더입니다(10–13편). 연구자들은 그다음 후보를 조작해서 그것이 인과적으로 중요한지 시험합니다.\n\n실제로는 이런 방법 대부분이 선형 프로브나 딕셔너리 학습(dictionary learning)처럼, 특징을 더하고 잴 수 있는 방향, 곧 거의 선형적인 것으로 다룹니다. 이 가정이 타당한지는 7편의 주제입니다.\n\n## 하나를 찾았다고 그것뿐인 것은 아니다\n\n이 절은 경고로 끝납니다. 어떤 개념에 대해 찾아낸 특징은, 그 개념과 연결된 여러 내부 표현 가운데 하나일 수 있습니다. 이 책이 드는 예는 거절, 곧 모델이 요청을 거절하는 경향입니다. 2024년의 한 연구는 잔차 스트림에서 모델이 거절하는 쪽이나 거절하지 않는 쪽으로 조종되는 방향 하나를 찾았습니다. 눈에 띄는 결과입니다. 하지만 이 방향이 거절이 표현되는 방식의 전부라는 것을 보여 주지는 않습니다. 모델은 여러 층과 구성 요소에 걸쳐 더 복잡한 방식으로 거절을 담고 있을 수 있고, 저차원 다양체처럼 인과적으로 관련된 다른 구조가 아직 아무도 찾지 못한 채 있을 수도 있습니다.\n\n같은 주의가 이 연재 전체에 적용됩니다. 어떤 개념의 손잡이를 찾았다면, 그 손잡이가 작동한다는 것까지는 보인 것입니다. 그것이 유일한 손잡이라는 것도, 모델이 그 개념을 어떻게 표현하는지 이제 이해했다는 것도 보인 것은 아닙니다.\n\n[표: 이번 편의 용어]\n용어 | 뜻\n활성값 | 모델이 계산 도중에 만드는 숫자. 예를 들어 한 위치에서 뉴런 하나가 내는 값\n파라미터 | 활성값을 만들어 내는 학습된 가중치\n개념 | 맥락이 달라도 알아볼 수 있는, 뚜렷하고 다시 쓰이는 정보 단위\n기계 고유의 개념 | 모델에게는 중요하지만 자연스러운 사람의 말로 설명되지 않는 개념\n단의적 | 한 가지 개념에 반응하고, 그 개념에 대해 작용하는\n다의적 | 서로 무관한 여러 개념에 강하게 반응하고, 각각에 대해 행동에 영향을 주는\n활성 공간 | 어떤 구성 요소가 가질 수 있는 모든 활성 벡터의 공간. 숫자 하나가 차원 하나\n특징 | 개념을 예측하고 그 표현에 인과적으로 영향을 주는, 활성 공간 안의 기하학적 구조\n방향 | 여러 차원을 한꺼번에 일정한 비율로 섞은 것. 가장 단순한 형태의 특징\n다양체 | 활성 공간 안에 있는 원이나 곡면 같은 휘어진 구조\n\n6편에서는 특징과 구성 요소가 이어져 회로를 이루는 방식을 봅니다. 이 책이 메커니즘을 설명하는 방법입니다.",
+          "figures": [
+            {
+              "src": "images/inside-05-concepts-ko.png",
+              "alt": "왼쪽에 세 문장이 있습니다. “She paid the cheque into the bank”, “They fished from the river bank”, “The lender approved her loan”. 첫째와 셋째 문장은 ‘금융 기관’이라는 개념으로, 둘째 문장은 ‘강가의 둑’이라는 개념으로 화살표가 이어집니다.",
+              "caption": "도판 1 — 이 책 4.2절의 개념 예시를, 이 연재가 만든 문장으로 옮긴 것입니다. 같은 단어가 서로 다른 개념을 담을 수 있고, 같은 개념이 서로 다른 단어에 나타날 수 있습니다. 무언가를 개념으로 만드는 것은, 맥락이 달라져도 같은 정보 단위로 알아볼 수 있다는 점입니다.",
+              "ratio": "640/270"
+            },
+            {
+              "src": "images/inside-05-neurons-ko.png",
+              "alt": "예시 입력 열두 개에 대한 뉴런 하나의 활성값을 나타낸 막대 그래프 두 개. 왼쪽의 단의적 뉴런은 단어 “blue”가 든 입력에서만 강하게 켜지고 나머지에서는 0에 가깝습니다. 오른쪽의 다의적 뉴런은 서로 무관한 두 묶음, 곧 비에 관한 문장과 닫는 괄호가 있는 코드 줄에서 강하게 켜지고 나머지에서는 0에 가깝습니다.",
+              "caption": "도판 2 — 한 가지를 뜻하는 뉴런과 두 가지를 뜻하는 뉴런입니다(예시이며, 입력과 값은 지어낸 것입니다). 이 책 4.2절의 정의에 따르면 오른쪽 뉴런이 다의적이라고 하려면, 그 활성값을 바꿨을 때 두 묶음 모두에서 모델의 행동도 바뀌어야 합니다.",
+              "ratio": "640/300"
+            }
+          ],
+          "tocLabel": "차례",
+          "subjectsLabel": "주제",
+          "subjects": "개념\n뉴런\n다의성\n특징\n활성 공간",
+          "refsLabel": "참고 문헌",
+          "refs": "Fazl Barez, Tung-Yu Wu, Hunar Batra et al. Understanding AI from the Inside: The State of Mechanistic Interpretability for AI Safety. arXiv:2611.08438, 2026. 4.1–4.3절, 21–23쪽. https://arxiv.org/abs/2611.08438\nNelson Elhage, Tristan Hume, Catherine Olsson et al. Toy Models of Superposition. Transformer Circuits Thread, 2022. https://transformer-circuits.pub/2022/toy_model/index.html\nDavid Bau, Bolei Zhou, Aditya Khosla, Aude Oliva & Antonio Torralba. Network Dissection: Quantifying Interpretability of Deep Visual Representations. CVPR, 2017. https://arxiv.org/abs/1704.05796\nJohn Hewitt, Robert Geirhos & Been Kim. We Can't Understand AI Using our Existing Vocabulary. arXiv:2502.07586, 2025. https://arxiv.org/abs/2502.07586\nAndy Arditi, Oscar Obeso, Aaquib Syed, Daniel Paleka, Nina Panickssery, Wes Gurnee & Neel Nanda. Refusal in Language Models Is Mediated by a Single Direction. NeurIPS, 2024. https://arxiv.org/abs/2406.11717\nNick Cammarata. Neural Networks Are Already Clean. Goodfire, 2026. https://already-clean.goodfire.com/",
+          "series": {
+            "id": "inside-ai",
+            "title": "안에서 보는 AI",
+            "label": "연재",
+            "part": 5,
+            "partLabel": "38편 중 5편",
+            "group": "2부. 기초 개념과 가설"
+          },
+          "prevLabel": "이전 편",
+          "prev": {
+            "title": "트랜스포머는 어떻게 계산하는가",
+            "kind": "안에서 보는 AI · 4편",
+            "year": "2026",
+            "id": "",
+            "slug": "inside-ai-04-transformer"
+          },
+          "nextLabel": "다음 편",
+          "next": {
+            "title": "회로",
+            "kind": "안에서 보는 AI · 6편",
+            "year": "2026",
+            "id": "",
+            "slug": "inside-ai-06-circuits"
+          }
+        },
+        "en": {
+          "slug": "inside-ai-05-features",
+          "title": "Neurons, Concepts and Features",
+          "dek": "If a model is made of numbers, what do the numbers stand for? This part follows the book's definitions of a concept, a polysemantic neuron and a feature. ==A feature has to do more than light up with a concept: changing it has to change what the model does.==",
+          "kind": "AI from the Inside · Part 5",
+          "date": "2026.11",
+          "readTime": "8 min",
+          "body": "Part 4 showed where the numbers inside a transformer live: in the residual stream, and in the neurons of each MLP. This part asks what those numbers stand for. It covers sections 4.1 to 4.3 of the book (pages 21–23), where the authors set up the vocabulary the rest of the book uses. They are careful to define their terms without assuming, yet, that models store information in any particular way. The hypotheses about that come in parts 7 to 9.\n\n## Two kinds of understanding\n\nThe book starts by stating precisely the difference that parts 1 to 3 kept returning to. Think of a model as a function: it takes an input from some set of possible inputs and returns an output. Behavioural interpretability studies that function through pairs of inputs and outputs, collected on a finite set of test inputs. It treats the model as a black box.\n\nMechanistic interpretability studies the same function by examining what happens inside it: the activations, which are the numbers the model computes along the way, and the parameters, the learned weights that produce them. It does this at different levels of detail, always in relation to the model's behaviour. In short, behavioural work describes what a model does, and mechanistic work explains how the output is computed.\n\n## What is a concept?\n\nAlmost every method in the book talks about concepts, so the book pins the word down. A concept is a distinct, reusable unit of information or knowledge that can be identified across different instances or contexts. Many concepts are familiar human categories, such as a dog, the colour red, or words of praise. But they need not be.\n\nThe key word is reusable. Take the word \"bank\", which can mean a financial institution or the land beside a river. Working out which concept is present in a particular sentence may need the surrounding words. Once identified, though, the concept of a financial institution should stay recognisably the same across all the contexts it appears in, whether the word is \"bank\", \"lender\" or something else.\n\n[Fig. 1]\n\nThe definition deliberately leaves room for concepts that people have no word for. A network may form a coherent, reusable unit of information that matters to its computation and still lack any natural human description. The book treats being understandable to humans as a property some concepts happen to have, not as a condition for being a concept. It also notes that almost all interpretability research so far has studied concepts people can readily name. Finding and describing the concepts that matter to a model but do not fit human categories remains largely unexplored.\n\n## A neuron that means one thing\n\nPart 4 introduced neurons: the units of an MLP's expanded hidden layer. Each neuron has an activation at each position in the text, a single number. The book writes it as the activation of neuron n in layer ℓ at position t for input x.\n\nThe easiest neuron to interpret would respond to one concept only. Imagine a neuron whose activation is large and positive whenever the current word is \"blue\", stays close to zero otherwise, and, when changed by hand, pushes the model's outputs towards or away from things related to blue. We could reasonably say that this neuron corresponds to the concept of blue. Note that the conclusion needs all three observations: the neuron fires for blue, it stays quiet for everything else, and changing it changes the model's behaviour in a blue-related way.\n\nAssuming that some neurons behave like this, early work built methods to find neurons that detect particular concepts and to label what each one does. In image models, for example, one well-known method from 2017 matched individual units to concepts such as textures, objects and scene types.\n\n## Neurons that mean several things\n\nFollow-up studies found a complication. Individual neurons often respond strongly to several concepts that look unrelated from a human point of view. This is called polysemanticity, from the Greek for \"many meanings\", and its opposite is monosemanticity.\n\n[Fig. 2]\n\nThe book's definition is careful. A neuron is polysemantic if there are two distinct concepts, with inputs and positions for each, such that the neuron's activation is large for both, and intervening on those activations causally influences the model's behaviour related to both concepts. The second half matters. A neuron that merely fires for two things might be detecting something they share that we have not noticed. Polysemanticity in the book's sense requires that the neuron actually does work for both.\n\nWhy would a network do this? The book points to representational constraints and to superposition, the idea that a model stores more concepts than it has neurons by letting them share. Part 8 is about that hypothesis. Whatever the cause, polysemanticity makes explanations neuron by neuron difficult. It suggests that the meaningful content of a model may not line up with its individual neurons, which is why researchers began looking for other units of analysis.\n\nOne note from outside the book. How widespread polysemanticity really is remains debated. A 2026 essay by Nick Cammarata, which this site read closely in \"Already Clean\", argues that some famous examples of polysemantic neurons were misread, and that many neurons are cleaner than the field assumed. The book's definition is useful for exactly this kind of argument: it says what evidence would settle the question for any given neuron.\n\n## Features\n\nBecause single neurons are often polysemantic, mechanistic interpretability has increasingly moved to other units. Researchers have found that models sometimes encode human-interpretable concepts as directions in activation space, or as low-dimensional manifolds: curves and surfaces inside the space rather than single axes. The book uses the word feature broadly, for any representation in the model that corresponds to a human-interpretable concept.\n\nTo make that concrete, recall from part 4 that the residual stream at a position is a list of d numbers. The set of all such lists is the activation space of the stream, a space with d dimensions. Each neuron is one axis of such a space. A feature, in the book's technical sense, is a geometric structure in the activation space of some component: the residual stream, the output of an attention head, or the output of an MLP. The simplest such structure is a direction, a particular way of combining many neurons at once.\n\nThe book's formal definition has two parts. A feature associated with a concept is a geometric structure in activation space whose activation is predictive of the concept, and causally relevant to its presence or expression. So, as with neurons, a feature claimed to stand for a concept should do two things. Its activation should go up when the concept is present. And increasing or suppressing it should change the model's behaviour in a way related to the concept. This mirrors the two conditions for mechanistic analysis from part 1: a correlation with the inside of the model, then an intervention to show it matters.\n\nIn this sense, features are a more expressive and more general unit than neurons. A neuron is one particular direction, the one that happens to line up with an axis. A feature can be any direction, or something curved.\n\n## Methods as approximations\n\nThe book does not commit, at this point, to what form features really take. It treats existing methods for finding and manipulating features as working approximations, each shaped by its own assumptions. Two families of methods find candidate features. Readout-based methods translate activations into something readable, often by asking a language model to describe them (part 22). Sparse decomposition methods break activations into many simpler parts, the best known being sparse autoencoders (parts 10 to 13). Researchers then manipulate the candidates to test whether they matter causally.\n\nIn practice, most of these methods treat features as approximately linear, meaning directions that can be added and measured, as linear probes and dictionary learning do. Whether that assumption is justified is the subject of part 7.\n\n## One found is not the only one\n\nThe section ends with a warning. For a given concept, a feature you manage to find may be only one of many internal representations connected with it. The book's example is refusal, a model's tendency to decline a request. A 2024 study found a single direction in the residual stream that steers a model towards or away from refusing. That is a striking result. But it does not show that this direction is the whole story of how refusal is represented. The model may encode refusal in a more complex way across several layers and components, and other causally relevant structures, such as low-dimensional manifolds, may exist that nobody has found yet.\n\nThe same caution applies throughout the series. Finding a handle on a concept shows that the handle works. It does not show that it is the only handle, or that we now understand how the model represents the concept.\n\n[Table: Terms in this part]\nTerm | Meaning\nActivation | A number the model computes along the way, such as a neuron's output at one position\nParameters | The learned weights that produce the activations\nConcept | A distinct, reusable unit of information that can be recognised across contexts\nMachine-specific concept | A concept that matters to a model but has no natural human description\nMonosemantic | Responding to, and acting on, one concept\nPolysemantic | Responding strongly to several unrelated concepts and affecting behaviour for each of them\nActivation space | The space of all possible activation vectors of a component, with one dimension per number\nFeature | A geometric structure in activation space that predicts a concept and causally affects its expression\nDirection | A fixed way of combining many dimensions at once; the simplest kind of feature\nManifold | A curved structure, such as a circle or surface, inside the activation space\n\nNext, part 6 shows how features and components connect into circuits, the book's way of describing a mechanism.",
+          "figures": [
+            {
+              "src": "images/inside-05-concepts-en.png",
+              "alt": "Three sentences on the left: “She paid the cheque into the bank”, “They fished from the river bank” and “The lender approved her loan”. Arrows link the first and third sentences to the concept “financial institution”, and the second to the concept “land beside a river”.",
+              "caption": "Fig. 1 — The book's example of a concept in section 4.2, with sentences of our own. The same word can carry different concepts, and the same concept can appear in different words. What makes something a concept is that it can be recognised as the same unit of information across contexts.",
+              "ratio": "640/270"
+            },
+            {
+              "src": "images/inside-05-neurons-en.png",
+              "alt": "Two bar charts of one neuron's activation over twelve example inputs. On the left, a monosemantic neuron fires strongly only for inputs containing the word “blue” and stays near zero for everything else. On the right, a polysemantic neuron fires strongly for two unrelated groups of inputs, sentences about rain and lines of code with a closing bracket, and near zero for the rest.",
+              "caption": "Fig. 2 — A neuron that means one thing, and a neuron that means two (an illustration; the inputs and values are made up). By the book's definition in section 4.2, the right-hand neuron is polysemantic only if changing its activation also changes the model's behaviour for both groups.",
+              "ratio": "640/300"
+            }
+          ],
+          "tocLabel": "Contents",
+          "subjectsLabel": "Subjects",
+          "subjects": "Concepts\nNeurons\nPolysemanticity\nFeatures\nActivation space",
+          "refsLabel": "References",
+          "refs": "Fazl Barez, Tung-Yu Wu, Hunar Batra et al. Understanding AI from the Inside: The State of Mechanistic Interpretability for AI Safety. arXiv:2611.08438, 2026. Sections 4.1–4.3, pp. 21–23. https://arxiv.org/abs/2611.08438\nNelson Elhage, Tristan Hume, Catherine Olsson et al. Toy Models of Superposition. Transformer Circuits Thread, 2022. https://transformer-circuits.pub/2022/toy_model/index.html\nDavid Bau, Bolei Zhou, Aditya Khosla, Aude Oliva & Antonio Torralba. Network Dissection: Quantifying Interpretability of Deep Visual Representations. CVPR, 2017. https://arxiv.org/abs/1704.05796\nJohn Hewitt, Robert Geirhos & Been Kim. We Can't Understand AI Using our Existing Vocabulary. arXiv:2502.07586, 2025. https://arxiv.org/abs/2502.07586\nAndy Arditi, Oscar Obeso, Aaquib Syed, Daniel Paleka, Nina Panickssery, Wes Gurnee & Neel Nanda. Refusal in Language Models Is Mediated by a Single Direction. NeurIPS, 2024. https://arxiv.org/abs/2406.11717\nNick Cammarata. Neural Networks Are Already Clean. Goodfire, 2026. https://already-clean.goodfire.com/",
+          "series": {
+            "id": "inside-ai",
+            "title": "AI from the Inside",
+            "label": "Series",
+            "part": 5,
+            "partLabel": "Part 5 of 38",
+            "group": "II. Foundations and hypotheses"
+          },
+          "prevLabel": "Previous",
+          "prev": {
+            "title": "How a Transformer Computes",
+            "kind": "AI from the Inside · Part 4",
+            "year": "2026",
+            "id": "",
+            "slug": "inside-ai-04-transformer"
+          },
+          "nextLabel": "Next",
+          "next": {
+            "title": "Circuits",
+            "kind": "AI from the Inside · Part 6",
+            "year": "2026",
+            "id": "",
+            "slug": "inside-ai-06-circuits"
+          }
+        }
+      },
+      {
+        "ko": {
+          "slug": "inside-ai-06-circuits",
+          "title": "회로",
+          "dek": "특징 하나하나가 무엇을 뜻하는지 안다고 해서, 모델이 어떻게 답에 이르는지 아는 것은 아닙니다. 이를 위해 이 책은 회로라는 개념을 씁니다. ==구성 요소와 특징을 정보가 흐르는 화살표로 이은 작은 그래프로, 모델이 어떤 행동을 어떻게 만들어 내는지 설명합니다.==",
+          "kind": "안에서 보는 AI · 6편",
+          "date": "2026.11",
+          "readTime": "7분",
+          "body": "4편과 5편은 두 종류의 벽돌을 마련했습니다. 하나는 트랜스포머가 계산에 쓰는 구성 요소, 곧 잔차 스트림에서 읽고 거기에 더하는 어텐션 헤드와 MLP입니다. 다른 하나는 무엇이 표현되어 있는지 말할 때 쓰는 단위, 곧 뉴런과 더 일반적으로는 특징입니다. 이번 편은 이 둘을 합칩니다. 이 책의 4.5절(25–26쪽)을 다루는데, 이 절은 회로라는 개념과 회로 연구의 두 갈래를 소개합니다.\n\n## 메커니즘과 회로\n\n이 책은 모델 안에서 특정한 행동을 만들어 내는 짜임새를 메커니즘(mechanism)이라고 부릅니다. 활성값, 그 안에서 무언가를 나타내는 단위, 그리고 거기에 가해지는 변환을 한데 묶어 부르는 말입니다. 메커니즘을 찾아내고 이해하는 것이 기계적 해석 가능성의 중심 목표입니다.\n\n메커니즘을 설명하는 흔한 방법이 회로(circuit)입니다. 모델이 어떤 입력 하나에 대해 계산하는 모든 것을 그래프로 늘어놓는다고 상상해 봅시다. 각 노드는 어떤 층의 어텐션 모듈이나 MLP 같은 구성 요소이거나, 특징 같은 표현 단위입니다. 각 화살표는 한 노드에서 다른 노드로 정보가 흐르거나, 흐르는 도중에 변환되는 것을 나타냅니다. 정보는 층을 따라 앞으로만 흐르므로 이 그래프에는 고리가 없습니다. 이 책의 용어로는 방향성 비순환 그래프(directed acyclic graph)입니다.\n\n회로는 이 그래프의 부분 그래프입니다. 함께 특정한 계산이나 행동을 수행하는 노드와 화살표를 골라낸 것이고, 나머지는 모두 뺍니다. 이렇게 골라낸 것이 그 메커니즘에 대한 설명이 됩니다.\n\n[도판 1]\n\n핵심은 빼는 데 있습니다. 완전한 모델에는 숫자가 수십억 개 있고, 계산 그래프도 거대합니다. 좋은 회로는 이 행동에 대해서는 그 그래프의 작은 부분이 중요한 일을 한다고 말하고, 각 부분이 무엇을 하는지 말합니다. 그래서 회로는 모델을 그대로 옮겨 놓은 것이 아니라, 사람이 따라갈 수 있는 설명이 됩니다.\n\n## 이 책이 드는 두 가지 예\n\n이 책은 예시 상자에서 두 종류의 회로를 듭니다. 첫째는 유도 헤드 회로(induction head circuit)입니다. 서로 다른 층에 있는 두 어텐션 헤드가 협력해서, 모델이 같은 텍스트 앞부분에서 본 패턴을 이어 가게 합니다. 텍스트에 \"Harry Potter\"가 나왔고 나중에 \"Harry\"가 다시 나오면, 유도 회로는 \"Potter\"를 예측하도록 돕습니다. 이 메커니즘은 맥락 내 학습(in-context learning), 곧 모델이 눈앞의 텍스트에서 패턴을 알아채는 능력의 상당 부분을 떠받치는 것으로 여겨집니다. 19편 전체가 이 이야기입니다.\n\n둘째는 QK 회로입니다. 4편의 쿼리와 키에서 이름을 따왔습니다. 어텐션 헤드의 쿼리와 키가 어떻게 상호작용해서, 그 헤드가 앞선 위치 가운데 어디에 우선순위를 두는지 정하는지를 설명합니다. 이것을 연구하면 헤드가 왜 그곳을 보는지 알 수 있습니다.\n\n## 능력 회로\n\n이 책은 회로 연구를 서로 보완하는 두 갈래로 나눕니다. 첫째 갈래는 우와 바레즈(Wu & Barez)의 2026년 논문을 따라 능력 회로 찾기(capability circuit discovery)라고 부릅니다. 모델의 어떤 행동이나 능력을 재현하기에 충분한, 가장 작은 구성 요소의 집합을 찾는 작업입니다. 구성 요소는 특정한 어텐션 헤드나 MLP 층 같은 구조적 단위입니다.\n\n이 방법은 먼저 그 능력을, 그 능력을 써야 풀 수 있는 질의들의 데이터셋으로 정의합니다. 찾아낸 회로만 남기고 모델의 나머지를 제거하거나 무력화했을 때, 그 데이터셋에서 모델의 성능이 되살아나면 그 회로는 성공한 것으로 봅니다.\n\n이 책은 예를 셋 듭니다. 첫째이자 가장 유명한 것은 2023년 연구가 밝힌 GPT-2 small의 간접 목적어 찾기(indirect object identification)입니다. \"When Mary and John went to the store, John gave a drink to\" 같은 문장이 주어지면, 언어 모델은 \"Mary\"로 이어 써야 합니다. 무언가를 준 사람이 아니라 받은 사람입니다. 연구자들은 모델이 이 일을 어떻게 하는지 추적해서, 일곱 묶음으로 나뉜 26개의 어텐션 헤드로 이루어진 회로를 찾았습니다. 단순하게 말하면, 어떤 헤드들은 \"John\"이 두 번 나왔다는 것을 알아채고, 다른 헤드들은 반복된 이름을 고르지 말라는 신호로 그 사실을 넘기고, 이름 이동 헤드(name mover head) 묶음이 남은 이름 \"Mary\"를 출력으로 옮깁니다.\n\n[도판 2]\n\n이 연구의 세부 사항 하나는 3편과 이어집니다. 주된 이름 이동 헤드를 제거하자, 모델의 다른 곳에 있던 예비 헤드들이 일을 넘겨받아 그 행동을 부분적으로 되살렸습니다. 3편에서 본 히드라 효과의 구체적인 사례입니다. 구성 요소가 하는 일을 그것을 제거해서 재는 방법이 오해를 낳을 수 있는 이유 가운데 하나이기도 합니다.\n\n둘째 예는 수의 비교입니다. 2023년의 한 연구는 GPT-2가 \"The war lasted from the year 1732 to the year 17\" 같은 문장을 어떻게 이어 쓰는지 살폈습니다. 이 문장의 자연스러운 다음 말은 32보다 큰 연도입니다. 연구자들은 모델이 이 자리에서 더 큰 수를 선호하게 만드는 구성 요소들을 찾아냈습니다. 셋째는 맥락 내 학습입니다. 최근 연구는 모델이 프롬프트 안의 예시로부터 과제를 배우게 하는 회로를 추적했습니다.\n\n## 질의 수준 회로\n\n둘째 갈래는 같은 2026년 논문을 따라 질의 수준 회로 찾기(query-level circuit discovery)라고 부르며, 다른 질문을 던집니다. 데이터셋 전체에 걸친 능력 뒤의 구성 요소를 찾는 대신, 특정한 입력 하나, 곧 질의에 대해 모델이 어떻게 답에 이르렀는지 설명합니다. 내부 특징들이 서로 어떻게 작용하며 계산 그래프를 따라 정보를 넘기다가 마지막 예측으로 모이는지 추적합니다.\n\n이런 연구는 대개 다음 부에서 다룰 도구에 기댑니다. 희소 오토인코더나 층간 트랜스코더(10–13편)가 MLP의 출력을 해석할 수 있는 특징들로 자동으로 쪼갭니다. 연구자들은 각 특징이 다음 특징에 얼마나 기여하는지 추적하고, 출력에 이르는 정보의 흐름을 따라갑니다. 2025년에 나온 잘 알려진 방법은 프롬프트마다 하나씩, 저자들이 귀속 그래프(attribution graph)라고 부르는 것을 만들어 냅니다(17편).\n\n두 갈래는 서로를 보완합니다. 능력 회로는 모델이 어떤 과제에 대체로 어떤 구성 요소를 쓰는지 헤드와 층 수준에서 알려 줍니다. 질의 수준 회로는 답 하나가 어떻게 만들어졌는지 특징 단위로 알려 주며, 도시에서 그 도시가 속한 주로, 다시 그 주의 주도로 이어지는 두 단계 조회처럼 모델 안의 추론 단계를 보여 주기도 합니다. 둘 다 3편이 경고한 한계도 안고 있습니다. 회로가 계산의 일부만 담을 수 있고, 찾아낸 회로가 충분한지, 유일한 정답인지 보이기 어렵습니다.\n\n## 기초를 한 문단으로\n\n회로와 함께, 기초를 다루는 이 책의 장이 마무리됩니다. 다의적 뉴런은 분석을 더 표현력 있는 단위인 특징 쪽으로 밀어냅니다. 트랜스포머의 계산은 표현이 어떻게 변환되고 정보가 모델 안에서 어떻게 옮겨지는지 설명합니다. 메커니즘은 이런 단위와 변환과 정보의 흐름을 엮어 하나의 행동을 만들어 내고, 회로는 메커니즘을 적어 내는 방법입니다. 이 모든 것을 어떻게 해석할지는 모델이 무엇을 어떻게 표현하고 계산하는지에 대한 가정에 달려 있습니다. 이 책의 다음 장은 그 가정들을 하나씩 따지고, 이 연재에서는 7편부터 9편까지가 그 내용을 다룹니다.\n\n[표: 이번 편의 용어]\n용어 | 뜻\n메커니즘 | 함께 어떤 행동을 만들어 내는 활성값, 단위, 변환의 짜임새\n계산 그래프 | 어떤 입력에 대한 모델의 계산 전체를 노드와 화살표로 나타낸 것\n방향성 비순환 그래프 | 화살표에 방향이 있고 고리가 생기지 않는 그래프\n회로 | 특정한 행동을 수행하는, 계산 그래프의 부분 그래프\n유도 헤드 | 텍스트 앞부분에서 본 패턴을 이어 가도록 돕는 어텐션 헤드\n맥락 내 학습 | 가중치를 바꾸지 않고, 주어진 텍스트에서 과제나 패턴을 알아채는 것\nQK 회로 | 어텐션 헤드가 어디를 볼지 정하는, 쿼리와 키 사이의 상호작용\n능력 회로 찾기 | 데이터셋에서 어떤 능력을 재현하는 가장 작은 구성 요소 집합을 찾는 것\n간접 목적어 찾기 | \"John gave a drink to Mary\" 같은 문장에서 받는 사람을 고르는 과제\n질의 수준 회로 찾기 | 특정한 입력 하나에 대한 답이 특징들의 결합으로 어떻게 만들어지는지 추적하는 것\n\n7편에서는 이 책의 첫 번째 핵심 가설을 살펴봅니다. 개념이 활성 공간에 곧은 방향으로 저장된다는 가설입니다.",
+          "figures": [
+            {
+              "src": "images/inside-06-subgraph-ko.png",
+              "alt": "작은 모델의 구성 요소를 층별로 늘어놓은 노드 격자. 대부분은 흐리게 처리되어 있습니다. 입력 단어 “Dallas is in”에서 출발해 몇 개의 어텐션 노드와 MLP 노드를 거쳐 출력 “Texas”에 이르는 경로가 강조되어 있고, 노드마다 담긴 내용(‘Dallas’, ‘텍사스의 장소’, ‘다음에 장소가 옴’, ‘Texas라고 말하기’)이 적혀 있습니다.",
+              "caption": "도판 1 — 회로는 모델 계산의 부분 그래프입니다(4.5절). 그래프 대부분은 빼고, 이 행동에 실제로 일하는 부분만 남깁니다. 프롬프트는 이 책의 그림 3을 따랐지만, 노드와 이름표는 단순하게 만든 예시입니다.",
+              "ratio": "640/330"
+            },
+            {
+              "src": "images/inside-06-ioi-ko.png",
+              "alt": "문장 “When Mary and John went to the store, John gave a drink to”와 답 “Mary”. 어텐션 헤드 세 묶음이 차례로 놓여 있습니다. “John”이 두 번 나왔다는 것을 알아채는 헤드, ‘John을 고르지 마라’는 신호를 넘기는 헤드, “Mary”를 출력으로 옮기는 이름 이동 헤드입니다.",
+              "caption": "도판 2 — 이 책이 4.5절에서 능력 회로의 예로 인용하는, GPT-2 small의 간접 목적어 찾기 회로를 크게 단순화한 것입니다(왕 등, 2023). 실제 회로는 일곱 묶음, 26개의 어텐션 헤드로 이루어지며, 주된 헤드를 제거하면 대신 일을 맡는 예비 헤드도 들어 있습니다.",
+              "ratio": "640/300"
+            }
+          ],
+          "tocLabel": "차례",
+          "subjectsLabel": "주제",
+          "subjects": "회로\n메커니즘\n간접 목적어 찾기\n능력 회로\n질의 수준 회로",
+          "refsLabel": "참고 문헌",
+          "refs": "Fazl Barez, Tung-Yu Wu, Hunar Batra et al. Understanding AI from the Inside: The State of Mechanistic Interpretability for AI Safety. arXiv:2611.08438, 2026. 4.5절, 25–26쪽. https://arxiv.org/abs/2611.08438\nNelson Elhage, Neel Nanda, Catherine Olsson et al. A Mathematical Framework for Transformer Circuits. Transformer Circuits Thread, 2021. https://transformer-circuits.pub/2021/framework/index.html\nKevin Wang, Alexandre Variengien, Arthur Conmy, Buck Shlegeris & Jacob Steinhardt. Interpretability in the Wild: a Circuit for Indirect Object Identification in GPT-2 small. ICLR, 2023. https://arxiv.org/abs/2211.00593\nMichael Hanna, Ollie Liu & Alexandre Variengien. How does GPT-2 compute greater-than? Interpreting mathematical abilities in a pre-trained language model. NeurIPS, 2023. https://arxiv.org/abs/2305.00586\nCatherine Olsson, Nelson Elhage, Neel Nanda et al. In-context Learning and Induction Heads. Transformer Circuits Thread, 2022. https://transformer-circuits.pub/2022/in-context-learning-and-induction-heads/index.html\nEmmanuel Ameisen, Jack Lindsey, Adam Pearce et al. Circuit Tracing: Revealing Computational Graphs in Language Models. Transformer Circuits Thread, 2025. https://transformer-circuits.pub/2025/attribution-graphs/methods.html",
+          "series": {
+            "id": "inside-ai",
+            "title": "안에서 보는 AI",
+            "label": "연재",
+            "part": 6,
+            "partLabel": "38편 중 6편",
+            "group": "2부. 기초 개념과 가설"
+          },
+          "prevLabel": "이전 편",
+          "prev": {
+            "title": "뉴런, 개념, 특징",
+            "kind": "안에서 보는 AI · 5편",
+            "year": "2026",
+            "id": "",
+            "slug": "inside-ai-05-features"
+          },
+          "nextLabel": "다음 편",
+          "next": {
+            "title": "선형 표현 가설",
+            "kind": "안에서 보는 AI · 7편",
+            "year": "2026",
+            "id": "",
+            "slug": "inside-ai-07-linear"
+          }
+        },
+        "en": {
+          "slug": "inside-ai-06-circuits",
+          "title": "Circuits",
+          "dek": "Knowing what single features mean is not yet knowing how a model reaches an answer. For that, the book uses circuits: ==small graphs of components and features, with information flowing between them, that describe how a model produces a particular behaviour.==",
+          "kind": "AI from the Inside · Part 6",
+          "date": "2026.11",
+          "readTime": "6 min",
+          "body": "Parts 4 and 5 gave us two kinds of building blocks. One kind is the components a transformer computes with: attention heads and MLPs, reading from and adding to the residual stream. The other kind is the units we use to say what is represented: neurons and, more generally, features. This part puts them together. It covers section 4.5 of the book (pages 25–26), which introduces the idea of a circuit and the two main lines of research on circuits.\n\n## Mechanisms and circuits\n\nThe book uses the word mechanism for the arrangement inside a model that produces a particular behaviour: the activations, the units that represent things in them, and the transformations applied to them, taken together. Finding and understanding mechanisms is a central goal of mechanistic interpretability.\n\nA common way to describe a mechanism is as a circuit. Imagine drawing out everything a model computes for one input as a graph. Each node is a component, such as the attention module or the MLP of some layer, or a unit of representation, such as a feature. Each arrow shows information flowing from one node to another, or being transformed on the way. Because information only flows forward through the layers, the graph has no loops; in the book's terms it is a directed acyclic graph.\n\nA circuit is a subgraph of that graph: a selection of nodes and arrows that together carry out a particular computation or behaviour. Everything else is left out. The selection then serves as a description of the mechanism.\n\n[Fig. 1]\n\nThe idea of leaving things out is the heart of it. A full model has billions of numbers and a huge computational graph. A good circuit says that, for this behaviour, a small part of that graph does the work that matters, and it says what each part does. That is what makes it an explanation people can follow rather than just a copy of the model.\n\n## Two examples from the book\n\nThe book's box of examples names two kinds of circuit. The first is the induction head circuit: two attention heads in different layers cooperate so that a model can continue a pattern it saw earlier in the same text. If the text contains \"Harry Potter\" and later \"Harry\" appears again, an induction circuit helps predict \"Potter\". This mechanism is thought to underlie much of in-context learning, a model's ability to pick up a pattern from the text in front of it. Part 19 is devoted to it.\n\nThe second is the QK circuit, after the query and key vectors of part 4. It describes how the queries and keys of an attention head interact to decide which earlier positions the head prioritises. Studying it explains why a head looks where it looks.\n\n## Capability circuits\n\nThe book describes two complementary lines of research on circuits. The first, which it calls capability circuit discovery after a 2026 paper by Wu and Barez, looks for the smallest set of architectural components, such as particular attention heads or MLP layers, that is enough to reproduce a given behaviour or capability of the model.\n\nThe method begins by defining the capability as a dataset of queries that exercise it. A discovered circuit counts as successful if, keeping only the circuit and removing or neutralising the rest of the model, the model's performance on that dataset is recovered.\n\nThe book lists three examples. The first and most famous is indirect object identification in GPT-2 small, a 2023 study. Given a sentence such as \"When Mary and John went to the store, John gave a drink to\", a language model should continue with \"Mary\": the person who received something, not the person who gave it. The researchers traced how the model does this and found a circuit of 26 attention heads in seven groups. In simplified form, some heads notice that \"John\" appears twice, other heads pass that fact along as a signal not to choose the repeated name, and a group of name mover heads copies the remaining name, \"Mary\", to the output.\n\n[Fig. 2]\n\nOne detail of that study connects to part 3. When the main name mover heads were removed, backup heads elsewhere in the model took over and partly restored the behaviour. That is the hydra effect in a concrete case, and it is one reason why measuring what a component does by removing it can be misleading.\n\nThe second example is numerical comparison. A 2023 study looked at how GPT-2 completes sentences like \"The war lasted from the year 1732 to the year 17\", where a sensible continuation is any year after 32, and found the components that make the model prefer larger numbers there. The third is in-context learning, where recent work has traced circuits that let models learn a task from examples in the prompt.\n\n## Query-level circuits\n\nThe second line of research, which the same 2026 paper calls query-level circuit discovery, asks a different question. Instead of finding the components behind a capability across a whole dataset, it explains how the model reached its answer for one particular input, the query. It traces how internal features interact and pass information through the computational graph until they converge on the final prediction.\n\nThese studies usually rely on the tools of the next group of parts. Sparse autoencoders or cross-layer transcoders (parts 10 to 13) automatically break the outputs of MLPs into interpretable features. Researchers then trace how much each feature contributes to the next, and follow the flow of information to the output. A well-known 2025 method of this kind produces what its authors call attribution graphs, one per prompt (part 17).\n\nThe two lines complement each other. Capability circuits tell us which components a model generally uses for a task, at the level of heads and layers. Query-level circuits tell us, feature by feature, how a single answer was formed, and can surface reasoning steps inside the model, such as a two-step lookup from a city to its state to the state's capital. Each also has the limits part 3 warned about: a circuit may cover only part of the computation, and it can be hard to show that the circuit found is sufficient, or that it is the only right answer.\n\n## The foundations, in one paragraph\n\nWith circuits, the book's chapter on foundations is complete. Polysemantic neurons push analysis towards features as more expressive units. Transformer computation describes how representations are transformed and how information is routed through the model. Mechanisms organise those units, transformations and flows of information so that they produce a behaviour, and circuits are how mechanisms are written down. How we interpret all of this depends on assumptions about how models represent and compute, and the book's next chapter, which parts 7 to 9 cover, examines those assumptions one by one.\n\n[Table: Terms in this part]\nTerm | Meaning\nMechanism | The arrangement of activations, units and transformations that together produce a behaviour\nComputational graph | All of a model's computation for an input, drawn as nodes and arrows\nDirected acyclic graph | A graph whose arrows have a direction and never form a loop\nCircuit | A subgraph of the computational graph that carries out a particular behaviour\nInduction head | An attention head that helps continue a pattern seen earlier in the text\nIn-context learning | A model picking up a task or pattern from the text it is given, without any change to its weights\nQK circuit | The interaction between an attention head's queries and keys that decides where it looks\nCapability circuit discovery | Finding the smallest set of components that reproduces a capability on a dataset\nIndirect object identification | Choosing the recipient in sentences like \"John gave a drink to Mary\"\nQuery-level circuit discovery | Tracing how features combine to produce the answer to one particular input\n\nNext, part 7 examines the first of the book's core hypotheses: that concepts are stored as straight-line directions in activation space.",
+          "figures": [
+            {
+              "src": "images/inside-06-subgraph-en.png",
+              "alt": "A grid of nodes standing for the components of a small model, layer by layer, most of them faded. A highlighted path runs from the input words “Dallas is in” through a few attention and MLP nodes, labelled with what they carry (“Dallas”, “a place in Texas”, “a location comes next”, “say Texas”), to the output “Texas”.",
+              "caption": "Fig. 1 — A circuit is a subgraph of the model's computation (section 4.5). Most of the graph is left out; what remains is the part that does the work for this behaviour. The prompt follows the book's Figure 3, but the nodes and labels here are a simplified illustration.",
+              "ratio": "640/330"
+            },
+            {
+              "src": "images/inside-06-ioi-en.png",
+              "alt": "The sentence “When Mary and John went to the store, John gave a drink to” and the answer “Mary”. Three groups of attention heads are shown in order: heads that notice “John” appears twice, heads that pass on “do not choose John”, and name mover heads that copy “Mary” to the output.",
+              "caption": "Fig. 2 — The indirect object identification circuit in GPT-2 small, much simplified from Wang et al. (2023), a capability circuit the book cites in section 4.5. The full circuit has 26 attention heads in seven groups, including backup heads that take over when the main ones are removed.",
+              "ratio": "640/300"
+            }
+          ],
+          "tocLabel": "Contents",
+          "subjectsLabel": "Subjects",
+          "subjects": "Circuits\nMechanisms\nIndirect object identification\nCapability circuits\nQuery-level circuits",
+          "refsLabel": "References",
+          "refs": "Fazl Barez, Tung-Yu Wu, Hunar Batra et al. Understanding AI from the Inside: The State of Mechanistic Interpretability for AI Safety. arXiv:2611.08438, 2026. Section 4.5, pp. 25–26. https://arxiv.org/abs/2611.08438\nNelson Elhage, Neel Nanda, Catherine Olsson et al. A Mathematical Framework for Transformer Circuits. Transformer Circuits Thread, 2021. https://transformer-circuits.pub/2021/framework/index.html\nKevin Wang, Alexandre Variengien, Arthur Conmy, Buck Shlegeris & Jacob Steinhardt. Interpretability in the Wild: a Circuit for Indirect Object Identification in GPT-2 small. ICLR, 2023. https://arxiv.org/abs/2211.00593\nMichael Hanna, Ollie Liu & Alexandre Variengien. How does GPT-2 compute greater-than? Interpreting mathematical abilities in a pre-trained language model. NeurIPS, 2023. https://arxiv.org/abs/2305.00586\nCatherine Olsson, Nelson Elhage, Neel Nanda et al. In-context Learning and Induction Heads. Transformer Circuits Thread, 2022. https://transformer-circuits.pub/2022/in-context-learning-and-induction-heads/index.html\nEmmanuel Ameisen, Jack Lindsey, Adam Pearce et al. Circuit Tracing: Revealing Computational Graphs in Language Models. Transformer Circuits Thread, 2025. https://transformer-circuits.pub/2025/attribution-graphs/methods.html",
+          "series": {
+            "id": "inside-ai",
+            "title": "AI from the Inside",
+            "label": "Series",
+            "part": 6,
+            "partLabel": "Part 6 of 38",
+            "group": "II. Foundations and hypotheses"
+          },
+          "prevLabel": "Previous",
+          "prev": {
+            "title": "Neurons, Concepts and Features",
+            "kind": "AI from the Inside · Part 5",
+            "year": "2026",
+            "id": "",
+            "slug": "inside-ai-05-features"
+          },
+          "nextLabel": "Next",
+          "next": {
+            "title": "The Linear Representation Hypothesis",
+            "kind": "AI from the Inside · Part 7",
+            "year": "2026",
+            "id": "",
+            "slug": "inside-ai-07-linear"
+          }
+        }
+      },
+      {
+        "ko": {
+          "slug": "inside-ai-07-linear",
+          "title": "선형 표현 가설",
+          "dek": "기계적 해석 가능성의 많은 부분은 한 가지 가정에 기대고 있습니다. 모델 안의 개념이 활성 공간의 곧은 방향이고, 그래서 잴 수도 밀 수도 있다는 가정입니다. 이번 편은 이 가정을 설명하고, ==무엇이 이를 뒷받침하고 어디서 깨지는지== 살펴봅니다.",
+          "kind": "안에서 보는 AI · 7편",
+          "date": "2026.11",
+          "readTime": "7분",
+          "body": "5편은 질문 하나로 끝났습니다. 모델을 읽는 단위로 뉴런 하나하나가 알맞지 않은 경우가 많다면, 무엇이 알맞을까요? 이 책의 5장은 신경망이 정보를 어떻게 표현하고 계산을 어떻게 수행하는지에 관한 가설 네 가지를 다룹니다. 어느 것도 증명되지는 않았지만, 각각이 이 분야가 어떤 방법을 만들고 어떤 실험을 할지에 영향을 주었습니다. 이번 편은 그 가운데 첫 번째이자 가장 영향력 있는 선형 표현 가설(linear representation hypothesis)을 다룹니다. 5.1절(27–28쪽)입니다.\n\n## 가설\n\n선형 표현 가설은 활성 공간의 곧은 방향이 개념을 표현하는 효과적인 기본 단위라고 말합니다. 이 책의 표현으로는, 개념은 활성 공간의 선형 방향인 특징으로 표현될 수 있습니다.\n\n여기서 두 가지 결과가 따라 나오고, 이 가설이 그토록 쓸모 있는 이유도 이 둘에 있습니다. 첫째는 읽기에 관한 것입니다. 어떤 활성값에 개념이 얼마나 강하게 들어 있는지 재려면, 그 활성값을 개념의 방향 위에 사영(projection)합니다. 활성값이 그 방향으로 얼마나 멀리 뻗어 있는지 묻는 것입니다. 도시를 북동쪽으로 가로질러 걷는다고 해 봅시다. 그동안 북쪽으로 이동한 거리가, 걸어간 경로를 북쪽 방향에 사영한 값입니다. 마찬가지로 어떤 활성값을 '행복' 방향에 사영한 값은, 모델의 지금 상태가 얼마나 행복하게 읽히는지 말해 줍니다. 수학적으로는 곱하고 더하는 계산 한 번이며, 이 책은 이를 φᵀh(x)로 씁니다.\n\n둘째는 쓰기에 관한 것입니다. 활성값에 그 방향을, 또는 그 방향의 몇 배를 더하면 모델의 행동이 그 개념 쪽으로 밀려야 하고, 빼면 멀어져야 합니다. 모델이 행복을 어떤 방향으로 담고 있다면, 계산 도중에 그 방향을 조금 더 보태면 모델이 써 내는 문장이 조금 더 행복해져야 합니다.\n\n[도판 1]\n\n## 강한 버전과 약한 버전\n\n이 책은 이 가설을 두 버전으로 나눕니다. 강한 버전은 모든 개념이 선형 특징으로 가장 잘 표현된다고 말합니다. 그렇다면 어느 순간의 모델 활성값이든, 특징 방향들에 지금 입력에서 각 특징이 켜진 정도를 곱해 더한 합으로 대략 쓸 수 있습니다. 활성값을 이해한다는 것은 방향의 목록을 찾아내고 그 세기를 읽어 내는 일이 됩니다. 약한 버전은 일부 개념만 선형으로 표현된다고 말합니다.\n\n이 차이는 아주 중요합니다. 강한 버전이 맞다면, 방향들의 완전한 사전이 곧 모델이 표현하는 것에 대한 완전한 설명이 됩니다. 10편의 희소 오토인코더는 바로 그런 사전을 만들려는 시도입니다. 약한 버전만 맞다면, 선형 도구는 어떤 개념에는 통하고 어떤 개념은 놓칠 것입니다.\n\n## 선형성이 분석을 다룰 만하게 만드는 이유\n\n선형으로 표현된 특징은 고정된 방향에 대응하고, 그 방향에 사영해서 존재를 알아낼 수 있습니다. 기계적 분석이 다룰 만해지는 것은 이 덕분입니다. 특징을 찾고, 재고, 조작하는 데 간단한 방법으로 충분합니다. 예를 들어 특징의 크기를 키운 뒤 활성값에 다시 더할 수 있습니다.\n\n이 책 바깥의 오래된 예가 감을 잡게 해 줍니다. 2013년 연구자들은 단어 임베딩에서 \"king\"의 벡터에서 \"man\"의 벡터를 빼고 \"woman\"의 벡터를 더하면 \"queen\"의 벡터 가까이에 닿는다는 것을 발견했습니다. 대략 성별에 해당하는 방향을 양처럼 더하고 뺄 수 있었던 것입니다. 이 절에 딸린 이 책의 실습 노트북은 오늘날의 모델로 비슷한 일을 합니다. 행복한 문장과 슬픈 문장에 대한 GPT-2의 활성값을 모으고, 두 평균의 차이를 '행복' 방향으로 삼습니다. 그다음 이 방향에 사영하면 새로운 행복한 문장과 슬픈 문장이 갈린다는 것을 보이고, 생성 도중에 이 방향을 더해 GPT-2가 쓰는 문장을 더 행복하게, 또는 더 슬프게 조종합니다.\n\n## 모든 공간의 축이 의미 있지는 않다\n\n이 책은 이어서, 특징이 뉴런과 나란히 놓이리라 기대할 수 있는 곳이 어디인지에 대해 미묘한 점을 짚습니다.\n\n모델의 각 부분은 서로 다른 기하를 가진 활성 공간을 가집니다. MLP의 은닉층에서는 ReLU 같은 비선형 함수가 뉴런마다 따로 작용합니다. 그래서 뉴런 축이 구별됩니다. 각 뉴런이 따로따로 0에서 잘리므로, 어떤 숫자가 뉴런인지가 중요해집니다. 좌표계 자체에 의미가 있는 것이고, 이 책은 앞선 연구를 따라 이를 특권 기저(privileged basis)라고 부릅니다.\n\n잔차 스트림 같은 다른 공간에서는 좌표 하나하나에 따로 작용하는 연산이 없습니다. 스트림에서 읽거나 스트림에 쓰는 모든 것이 행렬 곱셈을 거치는데, 행렬 곱셈은 모든 방향을 똑같이 다룹니다. 스트림의 좌표계를 회전하고 주변의 가중치를 그에 맞게 고치면, 모델은 정확히 같은 것을 계산합니다. 이런 공간의 기저를 비특권 기저(non-privileged basis)라고 하며, 특징이 그 축과 나란해야 할 이유가 없습니다. 특징은 어느 방향이든 향할 수 있습니다.\n\n[도판 2]\n\n이 구별은 많은 것을 설명합니다. 기저가 특권적인 곳에서는 뉴런 하나가 개념 하나를 나타내는 특징 역할을 할 수 있습니다. 그렇지 않은 곳에서는 특징이 어떤 뉴런과도 맞아떨어지지 않는 방향이거나 다른 모양일 수 있고, 활성 공간에서 그것을 찾으려면 특별한 방법이 필요합니다. 뉴런이 어떤 때는 읽히고 어떤 때는 읽히지 않는 이유 가운데 하나이고, 연구자들이 잔차 스트림의 차원 하나하나를 들여다보는 대신 방향을 찾는 이유이기도 합니다.\n\n## 가설을 뒷받침하는 증거\n\n이 책은 약한 버전을 뒷받침하는 증거를 세 가지 듭니다. 3편의 단순한 분류기인 선형 프로브가 아주 다양한 모델에서 아주 다양한 개념을 읽어 냅니다. 방향 하나를 따라 활성값을 조종해서 표적으로 삼은 행동 변화를 만들 수 있습니다. 2024년의 한 연구는 활성값에 벡터 하나를 더하는 것만으로 모델을 조종했습니다. 그리고 희소 오토인코더는 선형으로 접근할 수 있고 조종에도 쓸 수 있는 특징들을 큰 규모로 찾아냅니다.\n\n## 가설에 맞서는 증거\n\n동시에 이 책은, 모든 표현이 곧은 방향으로 잘 설명되지는 않는다는 증거도 상당하다고 전합니다. 어떤 특징들은 비선형적으로 상호작용합니다. 모델 안의 어떤 알고리즘은 비선형 변환에 기댑니다. 어떤 특징들은 서로 상호작용하는 여러 부분 공간에 걸쳐 흩어져 있습니다.\n\n인용된 연구 두 편이 이를 구체적으로 보여 줍니다. 어떤 수를 법으로 하는 덧셈을 학습한 작은 트랜스포머를 연구한 2023년 연구는, 모델이 수를 원 위의 위치로 표현하고 삼각함수 항등식을 써서 회전을 합치는 방식으로 더한다는 것을 발견했습니다. 그리고 「Not All Language Model Features Are One-Dimensionally Linear」라는 직설적인 제목의 2025년 연구는, 언어 모델이 요일과 달을 원 위에 놓인 점들로 표현한다는 것을 발견했습니다. 월요일 옆에 화요일이 있고, 일요일 다음에는 다시 월요일로 돌아오는 2차원의 모양입니다. 이 연구는 모델이 예를 들어 어떤 요일의 이틀 뒤가 무슨 요일인지 계산할 때 이 원을 쓴다는 증거도 찾았습니다. 곧은 방향 하나로는 이렇게 한 바퀴 돌아오는 구조를 담을 수 없습니다.\n\n더 나아가는 연구자들도 있습니다. 2024년의 한 에세이는 특징이 모델 안에 명시적인 대상으로 항상 존재하는 것이 아니라, 회로의 동역학에서 생겨나는 것일 수도 있다고 주장합니다. 이 관점에서는 어떤 개념의 '방향'을 묻는 것이 때로는 잘못된 질문일 수 있습니다.\n\n## 쓸모 있는 근사\n\n이 책의 결론은 신중합니다. 선형 표현 가설은 보편 법칙이 아니라, 어떤 상황에서 성립하는 쓸모 있는 근사로 보는 것이 가장 좋다는 것입니다. 이 연재의 나머지를 읽는 동안에도 이렇게 받아들이는 것이 좋습니다. 프로브부터 희소 오토인코더, 조종 벡터까지 가장 성공한 도구 상당수가 선형성을 가정하며, 그 성공은 모델이 표현하는 것의 많은 부분이 충분히 선형적이라는 증거입니다. 그 도구들이 실패하는 곳은 선형적이지 않은 곳인 경우가 많습니다.\n\n[표: 이번 편의 용어]\n용어 | 뜻\n선형 표현 가설 | 개념이 활성 공간의 곧은 방향으로 표현된다는 생각\n사영 | 활성값이 어떤 방향으로 얼마나 뻗어 있는지. 선형 특징의 세기를 잼\n강한 버전 | 모든 개념이 선형이므로, 활성값은 특징 방향들의 가중합이라는 주장\n약한 버전 | 일부 개념만 선형으로 표현된다는 주장\n평균 차이 | 개념이 있을 때의 평균 활성값에서 없을 때의 평균 활성값을 빼서 방향을 찾는 방법\n조종 | 활성값에 어떤 방향의 몇 배를 더해 행동을 그 개념 쪽으로 미는 것\n기저 | 공간의 좌표를 적을 때 쓰는 축들의 집합\n특권 기저 | ReLU처럼 좌표마다 따로 작용하는 연산 때문에 특별해진 축\n비특권 기저 | 어떤 연산도 구별하지 않아서, 어떻게 회전해도 똑같이 쓸 수 있는 축\n다차원 특징 | 원 위에 놓인 요일처럼, 방향 하나로는 부족한 특징\n\n참고 문헌에 링크한 이 책의 노트북에서 GPT-2로 행복과 슬픔 실험을 직접 해 볼 수 있습니다. 8편에서는 두 번째 가설을 다룹니다. 모델이 차원 수보다 훨씬 많은 특징을 담고 있다는 가설입니다.",
+          "figures": [
+            {
+              "src": "images/inside-07-direction-ko.png",
+              "alt": "활성 공간을 2차원으로 나타낸 스케치. 행복한 문장의 점들이 한쪽에, 슬픈 문장의 점들이 다른 쪽에 모여 있습니다. ‘행복 방향’이라는 화살표가 슬픈 점들의 중심에서 행복한 점들의 중심으로 이어집니다. 중립적인 문장의 활성값을 점선으로 화살표 위에 사영해 얼마나 행복하게 읽히는지 보여 줍니다. 두 번째 화살표는 중립적인 활성값을 그 방향으로 밀어, 모델의 출력이 더 행복해지는 것을 보여 줍니다.",
+              "caption": "도판 1 — 방향으로서의 개념입니다. 5.1절에 딸린 이 책의 노트북을 본떴습니다. 이 노트북은 행복한 문장과 슬픈 문장의 평균 활성값 차이로 GPT-2의 '행복 방향'을 찾습니다(2차원으로 단순화한 예시이며, 실제 활성 공간은 수백에서 수천 차원입니다). 사영으로 개념을 읽고, 방향을 더해 개념을 조종합니다.",
+              "ratio": "640/330"
+            },
+            {
+              "src": "images/inside-07-basis-ko.png",
+              "alt": "두 개의 패널. 왼쪽은 MLP의 은닉층으로, 축은 뉴런 1과 뉴런 2입니다. ReLU가 뉴런마다 따로 작용하므로 축이 특별하며, 특징 하나가 그 축을 따라 놓여 있습니다. 오른쪽은 잔차 스트림으로, 축은 차원 1과 차원 2이고 회전한 축이 점선으로 겹쳐 있으며, 회전해도 아무것도 바뀌지 않습니다. 특징은 임의의 방향을 향합니다.",
+              "caption": "도판 2 — 이 책의 그림 4를 바탕으로 다시 정리한 특권 기저와 비특권 기저입니다. 뉴런마다 따로 작용하는 연산이 있는 곳에서는 뉴런 축이 의미를 가지며, 뉴런 하나가 개념 하나를 담을 수 있습니다. 잔차 스트림에는 축을 구별하는 연산이 없으므로 특징은 어느 방향이든 향할 수 있습니다.",
+              "ratio": "640/300"
+            }
+          ],
+          "tocLabel": "차례",
+          "subjectsLabel": "주제",
+          "subjects": "선형 표현 가설\n방향\n사영\n특권 기저\n조종",
+          "refsLabel": "참고 문헌",
+          "refs": "Fazl Barez, Tung-Yu Wu, Hunar Batra et al. Understanding AI from the Inside: The State of Mechanistic Interpretability for AI Safety. arXiv:2611.08438, 2026. 5.1절, 27–28쪽. https://arxiv.org/abs/2611.08438\n이 책의 실습 노트북 01_linear_representation_hypothesis.ipynb. GitHub, 2026. https://github.com/TSGLAB/Interpretability_Survey_Safety/blob/main/notebooks/01_core_hypotheses/01_linear_representation_hypothesis.ipynb\nKiho Park, Yo Joong Choe & Victor Veitch. The Linear Representation Hypothesis and the Geometry of Large Language Models. ICML, 2024. https://arxiv.org/abs/2311.03658\nTomas Mikolov, Wen-tau Yih & Geoffrey Zweig. Linguistic Regularities in Continuous Space Word Representations. NAACL, 2013. https://aclanthology.org/N13-1090/\nAlexander Matt Turner, Lisa Thiergart, Gavin Leech, David Udell, Juan J. Vazquez, Ulisse Mini & Monte MacDiarmid. Steering Language Models With Activation Engineering. arXiv:2308.10248, 2024. https://arxiv.org/abs/2308.10248\nNelson Elhage, Tristan Hume, Catherine Olsson et al. Toy Models of Superposition. Transformer Circuits Thread, 2022. https://transformer-circuits.pub/2022/toy_model/index.html\nJoshua Engels, Eric J. Michaud, Isaac Liao, Wes Gurnee & Max Tegmark. Not All Language Model Features Are One-Dimensionally Linear. ICLR, 2025. https://arxiv.org/abs/2405.14860\nNeel Nanda, Lawrence Chan, Tom Lieberum, Jess Smith & Jacob Steinhardt. Progress measures for grokking via mechanistic interpretability. ICLR, 2023. https://arxiv.org/abs/2301.05217\nLewis Smith. The 'strong' feature hypothesis could be wrong. LessWrong, 2024. https://www.lesswrong.com/posts/tojtPCCRpKLSHBdpn/the-strong-feature-hypothesis-could-be-wrong",
+          "series": {
+            "id": "inside-ai",
+            "title": "안에서 보는 AI",
+            "label": "연재",
+            "part": 7,
+            "partLabel": "38편 중 7편",
+            "group": "2부. 기초 개념과 가설"
+          },
+          "prevLabel": "이전 편",
+          "prev": {
+            "title": "회로",
+            "kind": "안에서 보는 AI · 6편",
+            "year": "2026",
+            "id": "",
+            "slug": "inside-ai-06-circuits"
+          },
+          "nextLabel": "다음 편",
+          "next": {
+            "title": "중첩 가설",
+            "kind": "안에서 보는 AI · 8편",
+            "year": "2026",
+            "id": "",
+            "slug": "inside-ai-08-superposition"
+          }
+        },
+        "en": {
+          "slug": "inside-ai-07-linear",
+          "title": "The Linear Representation Hypothesis",
+          "dek": "Much of mechanistic interpretability rests on one bet: that a concept inside a model is a straight-line direction in its activation space, which can be measured and pushed. This part explains the bet, ==what supports it, and where it breaks.==",
+          "kind": "AI from the Inside · Part 7",
+          "date": "2026.11",
+          "readTime": "7 min",
+          "body": "Part 5 ended with a question: if single neurons are often not the right unit for reading a model, what is? The book's fifth chapter takes up four hypotheses about how networks represent information and carry out computation. None of them is proven, but each has shaped which methods the field builds and which experiments it runs. This part covers the first and most influential, the linear representation hypothesis, in section 5.1 (pages 27–28).\n\n## The hypothesis\n\nThe linear representation hypothesis says that straight-line directions in activation space are effective basic units for representing concepts. In the book's wording, a concept can be represented by a feature that is a linear direction in the activation space.\n\nTwo consequences follow, and they are what make the hypothesis so useful. The first is about reading. To measure how strongly a concept is present in an activation, you take its projection onto the concept's direction: you ask how far the activation reaches along that direction. Think of walking north-east across a city. The distance you have covered northwards is the projection of your walk onto the north direction. In the same way, the projection of an activation onto a \"happiness\" direction says how happy the model's current state reads. Mathematically, it is a single multiplication and sum, which the book writes as φᵀh(x).\n\nThe second is about writing. Adding the direction to an activation, or a multiple of it, should push the model's behaviour towards the concept, and subtracting it should push the behaviour away. If a model stores happiness along a direction, then adding a little more of that direction partway through the computation should make what it writes a little happier.\n\n[Fig. 1]\n\n## Strong and weak versions\n\nThe book distinguishes two versions of the hypothesis. The strong version says that all concepts are best represented by linear features. Then a model's activation at any moment could be written, approximately, as a sum of feature directions, each multiplied by how strongly that feature is active for the current input. Understanding the activation would amount to finding the list of directions and reading off the strengths. The weak version says only that some concepts are represented linearly.\n\nThe difference matters a great deal. Under the strong version, a complete dictionary of directions would be a complete account of what a model represents, and part 10's sparse autoencoders are an attempt to build exactly that dictionary. Under the weak version, linear tools will work for some concepts and miss others.\n\n## Why linearity makes analysis tractable\n\nA linearly represented feature corresponds to a fixed direction, and its presence can be detected by projecting onto that direction. This is what makes mechanistic analysis manageable. Simple methods suffice to find a feature, measure it and manipulate it, for example by scaling it and adding it back into the activations.\n\nAn old example, from outside the book, gives a feel for this. In 2013, researchers found that in word embeddings, the vector for \"king\" minus the vector for \"man\" plus the vector for \"woman\" landed close to the vector for \"queen\". A direction for gender, roughly, could be added and subtracted like a quantity. The book's companion notebook for this section does something similar with a modern model. It collects GPT-2's activations for happy sentences and for sad ones, takes the difference between their averages as a \"happy\" direction, shows that projecting onto it separates new happy and sad sentences, and then adds the direction during generation to steer GPT-2's writing towards happier or sadder text.\n\n## Not every space has meaningful axes\n\nThe book then makes a subtle point about where features can be expected to line up with neurons.\n\nDifferent parts of a model have activation spaces with different geometry. In the hidden layer of an MLP, a nonlinear function such as ReLU acts on each neuron separately. That singles out the neuron axes: it matters which numbers are neurons, because each is clipped at zero on its own. The coordinate system is meaningful, and the book, following earlier work, calls it a privileged basis.\n\nIn other spaces, such as the residual stream, no operation acts on the coordinates one at a time. Everything that reads from or writes to the stream does so through matrix multiplications, which treat all directions alike. If you rotated the stream's coordinate system and adjusted the weights around it to match, the model would compute exactly the same thing. Such a space has a non-privileged basis, and there is no reason for features to line up with its axes. They can point in any direction.\n\n[Fig. 2]\n\nThis explains a lot. Where the basis is privileged, a single neuron can serve as a feature that stands for a concept. Where it is not, features may be directions, or other shapes, that do not match any individual neuron, and specialised methods are needed to find them in the activation space. It is one reason neurons are sometimes readable and sometimes not, and why researchers search for directions rather than inspecting dimensions of the residual stream.\n\n## The evidence for it\n\nThe book lists three kinds of support for the weak version. Linear probes, the simple classifiers of part 3, succeed in reading a wide range of concepts out of a wide range of models. Activation steering along a single direction can produce targeted changes in behaviour, as in a 2024 study that steered models by adding one vector to their activations. And sparse autoencoders recover, at scale, features that are linearly accessible and that can be used for steering.\n\n## The evidence against it\n\nAt the same time, the book reports substantial evidence that not all representations are well described as straight-line directions. Some features interact nonlinearly. Some algorithms inside models rely on nonlinear transformations. Some features are spread across several subspaces that interact with each other.\n\nTwo of the cited studies make this concrete. A 2023 study of a small transformer trained to add numbers modulo a fixed number found that the model represents numbers as positions on circles and adds them by combining rotations, using trigonometric identities. And a 2025 study, titled bluntly \"Not All Language Model Features Are One-Dimensionally Linear\", found that language models represent the days of the week and the months of the year as points arranged on a circle: a two-dimensional shape in which Monday sits next to Tuesday and Sunday wraps round to Monday. The study also found evidence that models use these circles when they work out, for example, which day comes two days after a given one. No single straight direction can hold that wrap-around.\n\nSome researchers go further. One 2024 essay argues that features may not always exist as explicit objects in a model at all, but may emerge from the dynamics of its circuits. On that view, asking for \"the direction\" of a concept might sometimes be the wrong question.\n\n## A useful approximation\n\nThe book's verdict is measured. The linear representation hypothesis is best viewed as a useful approximation that holds in some settings, not as a universal law. That is a good way to hold it while reading the rest of the series. Many of the most successful tools, from probes to sparse autoencoders to steering vectors, assume linearity, and their successes are evidence that a lot of what models represent is linear enough. Their failures are often places where it is not.\n\n[Table: Terms in this part]\nTerm | Meaning\nLinear representation hypothesis | The idea that concepts are represented as straight-line directions in activation space\nProjection | How far an activation reaches along a direction; it measures a linear feature's strength\nStrong version | All concepts are linear, so an activation is a weighted sum of feature directions\nWeak version | Only some concepts are represented linearly\nDifference in means | Finding a direction by subtracting the average activation without a concept from the average with it\nSteering | Adding a multiple of a direction to activations to push behaviour towards a concept\nBasis | The set of axes used to write down the coordinates of a space\nPrivileged basis | Axes made special by an operation, such as ReLU, that acts on each coordinate separately\nNon-privileged basis | Axes that no operation singles out, so any rotation of them works equally well\nMultidimensional feature | A feature that needs more than one direction, such as days of the week on a circle\n\nThe book's notebook for this part, linked in the references, runs the happy and sad experiment on GPT-2. Next, part 8 takes up the second hypothesis: that models store far more features than they have dimensions.",
+          "figures": [
+            {
+              "src": "images/inside-07-direction-en.png",
+              "alt": "A two-dimensional sketch of activation space. Dots for happy sentences cluster on one side and dots for sad sentences on the other. An arrow labelled “happy direction” runs from the centre of the sad dots to the centre of the happy dots. A neutral sentence's activation is projected onto the arrow with a dashed line, showing how happy it reads. A second arrow shows the neutral activation being pushed along the direction, which makes the model's output happier.",
+              "caption": "Fig. 1 — A concept as a direction, in the style of the book's notebook on section 5.1, which finds a “happy” direction in GPT-2 as the difference between the average activations of happy and sad sentences (an illustration in two dimensions; real activation spaces have hundreds or thousands). The projection reads the concept; adding the direction steers it.",
+              "ratio": "640/330"
+            },
+            {
+              "src": "images/inside-07-basis-en.png",
+              "alt": "Two panels. Left, the hidden layer of an MLP: the axes are neuron 1 and neuron 2, and because ReLU acts on each neuron separately, the axes are special; a feature lies along one of them. Right, the residual stream: the axes are dimension 1 and dimension 2, a rotated copy of the axes is drawn dashed, and nothing changes under the rotation; a feature lies along an arbitrary direction.",
+              "caption": "Fig. 2 — Privileged and non-privileged bases, redrawn after the book's Figure 4. Where an operation acts on each neuron separately, the neuron axes are meaningful and a single neuron can carry a concept. In the residual stream no operation singles out the axes, so features can point anywhere.",
+              "ratio": "640/300"
+            }
+          ],
+          "tocLabel": "Contents",
+          "subjectsLabel": "Subjects",
+          "subjects": "Linear representation hypothesis\nDirections\nProjection\nPrivileged basis\nSteering",
+          "refsLabel": "References",
+          "refs": "Fazl Barez, Tung-Yu Wu, Hunar Batra et al. Understanding AI from the Inside: The State of Mechanistic Interpretability for AI Safety. arXiv:2611.08438, 2026. Section 5.1, pp. 27–28. https://arxiv.org/abs/2611.08438\nNotebook 01_linear_representation_hypothesis.ipynb, from the book's companion notebooks. GitHub, 2026. https://github.com/TSGLAB/Interpretability_Survey_Safety/blob/main/notebooks/01_core_hypotheses/01_linear_representation_hypothesis.ipynb\nKiho Park, Yo Joong Choe & Victor Veitch. The Linear Representation Hypothesis and the Geometry of Large Language Models. ICML, 2024. https://arxiv.org/abs/2311.03658\nTomas Mikolov, Wen-tau Yih & Geoffrey Zweig. Linguistic Regularities in Continuous Space Word Representations. NAACL, 2013. https://aclanthology.org/N13-1090/\nAlexander Matt Turner, Lisa Thiergart, Gavin Leech, David Udell, Juan J. Vazquez, Ulisse Mini & Monte MacDiarmid. Steering Language Models With Activation Engineering. arXiv:2308.10248, 2024. https://arxiv.org/abs/2308.10248\nNelson Elhage, Tristan Hume, Catherine Olsson et al. Toy Models of Superposition. Transformer Circuits Thread, 2022. https://transformer-circuits.pub/2022/toy_model/index.html\nJoshua Engels, Eric J. Michaud, Isaac Liao, Wes Gurnee & Max Tegmark. Not All Language Model Features Are One-Dimensionally Linear. ICLR, 2025. https://arxiv.org/abs/2405.14860\nNeel Nanda, Lawrence Chan, Tom Lieberum, Jess Smith & Jacob Steinhardt. Progress measures for grokking via mechanistic interpretability. ICLR, 2023. https://arxiv.org/abs/2301.05217\nLewis Smith. The 'strong' feature hypothesis could be wrong. LessWrong, 2024. https://www.lesswrong.com/posts/tojtPCCRpKLSHBdpn/the-strong-feature-hypothesis-could-be-wrong",
+          "series": {
+            "id": "inside-ai",
+            "title": "AI from the Inside",
+            "label": "Series",
+            "part": 7,
+            "partLabel": "Part 7 of 38",
+            "group": "II. Foundations and hypotheses"
+          },
+          "prevLabel": "Previous",
+          "prev": {
+            "title": "Circuits",
+            "kind": "AI from the Inside · Part 6",
+            "year": "2026",
+            "id": "",
+            "slug": "inside-ai-06-circuits"
+          },
+          "nextLabel": "Next",
+          "next": {
+            "title": "The Superposition Hypothesis",
+            "kind": "AI from the Inside · Part 8",
+            "year": "2026",
+            "id": "",
+            "slug": "inside-ai-08-superposition"
+          }
+        }
+      },
+      {
+        "ko": {
+          "slug": "inside-ai-08-superposition",
+          "title": "중첩 가설",
+          "dek": "차원이 몇천 개뿐인 모델이 수백만 개의 개념을 다뤄야 할 수도 있습니다. 중첩 가설은 모델이 특징들에게 공간을 나눠 쓰게 해서 이를 해낸다고 말합니다. ==뉴런 하나가 그토록 자주 여러 가지를 한꺼번에 뜻하는 이유도 이것으로 설명됩니다.==",
+          "kind": "안에서 보는 AI · 8편",
+          "date": "2026.11",
+          "readTime": "6분",
+          "body": "7편의 가설은 개념이 방향이라고 말했습니다. 이번 편은 모델이 방향을 몇 개나 쓸 수 있는지, 그리고 담을 공간보다 더 많이 필요할 때 무슨 일이 일어나는지 묻습니다. 이 책의 5.2절(28–30쪽)을 다룹니다. 여기서 다루는 중첩(superposition) 가설은 5편의 다의적 뉴런을 설명하는 가장 흔한 답이고, 다음 부에서 다룰 도구들이 존재하는 이유이기도 합니다.\n\n## 가설\n\n중첩 가설은 모델의 은닉 상태가 차원 수보다 많은 특징을 담고 있다고 말합니다. 모델이 d개의 차원에 m개의 특징을 표현한다면, 이 가설은 m이 d보다 훨씬 크다고 주장합니다.\n\n여기서 두 가지 결과가 나옵니다. 첫째, 특징들이 모두 서로 직교할 수는 없습니다. 두 방향이 직교한다는 것은 서로 직각을 이룬다는 뜻으로, 한 방향으로 움직여도 다른 방향으로는 전혀 움직이지 않는다는 뜻입니다. d차원 공간에는 서로 모두 직각인 방향이 많아야 d개 들어갑니다. 특징이 그보다 많으면 일부는 겹칠 수밖에 없습니다.\n\n하지만 거의 직교할 수는 있습니다. 직각에 가깝지만 정확히 직각은 아닌 각도로 놓이는 것입니다. 여기서는 2차원과 3차원에서 길러진 일상의 직관이 우리를 잘못 이끕니다. 수천 차원의 공간에서는, 서로 거의 직각인 방향의 수가 차원 수보다 엄청나게 많을 수 있습니다. 이 절에 딸린 이 책의 노트북은 존슨–린덴스트라우스 보조정리(Johnson–Lindenstrauss lemma)라는 수학 결과로 그 이유를 설명합니다. 그러니 큰 모델은 약간의 겹침만 감수하면 거의 독립적인 방향을 아주 많이 쓸 수 있습니다.\n\n둘째, 중첩은 다의성을 낳습니다. 특징이 차원보다 많으면 모델은 특징마다 자기 뉴런을 줄 수 없습니다. 특징들이 같은 차원을 나눠 써야 하므로, 뉴런 하나가 서로 무관한 여러 개념을 담는 데 함께 관여하게 됩니다.\n\n[도판 1]\n\n## 나눠 쓰는 것이 이득일 수 있는 이유\n\n겹침에는 대가가 있습니다. 두 특징이 차원을 나눠 쓰면, 한 특징이 켜질 때 다른 특징을 읽는 값도 조금 켜집니다. 이를 간섭(interference)이라고 부릅니다. 그렇다면 학습은 왜 이런 배치를 택할까요?\n\n이 책이 여기서 주로 기대는 2022년 연구 「Toy Models of Superposition」이 표준적인 답을 줍니다. 이 연구는 아주 작은 신경망에게 차원보다 많은 특징을 저장했다가 되살리도록 학습시키고, 신경망이 언제 중첩을 택하는지 지켜보았습니다. 열쇠는 희소성(sparsity), 곧 각 특징이 얼마나 드물게 켜지는가였습니다. 대부분의 개념은 대부분의 입력에 없습니다. 요리에 관한 문서에 세법이 나오는 일은 드물고, 코드 한 줄에 한국어 시가 들어 있는 일도 드뭅니다. 두 특징이 함께 켜지는 일이 드물다면 둘 사이의 간섭도 거의 문제가 되지 않고, ReLU 같은 비선형 함수가 남은 작은 겹침을 걸러 낼 수 있습니다. 이런 조건에서는 희소한 특징 여럿을 적은 차원에 채워 넣는 것이 좋은 거래이고, 작은 신경망들은 실제로 그렇게 했습니다. 특징이 자주 켜질 때는 그렇게 하지 않았습니다.\n\n[도판 2]\n\n이 책의 실습 노트북은 이 작은 모델을 재현합니다. 작은 신경망을 학습시킨 다음, 학습된 특징 방향들이 서로 얼마나 겹치는지 도표로 보여 줍니다. 특징들이 각자 차원을 받았는지, 함께 밀어 넣어졌는지를 직접 확인할 수 있습니다.\n\n## 증거\n\n이 책은 두 종류의 증거를 듭니다. 첫째, 기계적 연구들은 다의적 뉴런이 널리 퍼져 있다는 것을 거듭 발견했습니다. 개별 뉴런이 서로 무관한 여러 개념에 켜지는 경우가 많고, 그래서 뉴런 하나만 떼어 읽기 어렵습니다. 둘째, 중첩을 가정하고 만든 방법들이 잘 작동합니다. 딕셔너리 학습(dictionary learning) 방법, 그 가운데서도 희소 오토인코더는 활성값이 희소한 특징 여럿의 합이라는 생각에서 출발하는데, 나눠 쓰인 활성 공간에서 수백만 개의 서로 다른 특징을 찾아냅니다. 이렇게 찾은 특징 상당수는 개별 뉴런보다 훨씬 단의적이고, 일부는 모델의 행동에 인과적으로 영향을 준다는 것이 확인되었습니다. 이런 결과들을 함께 놓고 보면, 활성 공간이 담은 의미는 개별 뉴런의 축보다 방향을 따라 더 많이 놓여 있을 수 있습니다.\n\n## 아직은 가설\n\n이 책은 대규모 언어 모델에서 중첩이 확립된 사실이 아니라 여전히 가설이라는 점을 분명히 하고, 조심해야 할 이유를 세 가지 듭니다.\n\n첫째, 다의적 뉴런이 있다는 것만으로 중첩이 그 원인이라고 할 수는 없습니다. 둘째, 딕셔너리 학습 방법은 중첩이 없을 때도 해석 가능한 특징을 찾아낼 수 있으므로, 그 성공이 중첩의 존재를 증명하지는 않습니다. 셋째, 2024년의 한 연구는 특징이 뉴런보다 많지 않을 때도 다의성이 생길 수 있음을 보였습니다. 이 연구에 따르면 뉴런은 공간이 모자라서가 아니라, 학습이 어디서 시작했는지나 그 과정의 잡음처럼 우연한 이유로 개념을 섞게 될 수 있습니다. 이 책은 이를, 중첩과 함께 작용할 수도 있는 다른 메커니즘들이 뉴런을 다의적으로 만들 수 있다는 신호로 읽습니다.\n\n## 설계의 문제로서의 중첩\n\n이 절은 문제를 다르게 보게 하는 생각으로 끝납니다. 중첩은 깊은 신경망이 피할 수 없는 성질이 아닙니다. 보통의 구조가 그것을 허용하기 때문에 생깁니다. 구조나 활성값에 아무 제약이 없으면, 학습 과정인 경사 하강법(gradient descent)은 활성 공간의 기하를 마음껏 이용해서 뉴런 수보다 훨씬 많은 특징을 채워 넣습니다.\n\n이는 다른 연구 방향을 시사하며, 이 책은 이를 설계로 얻는 해석 가능성(interpretability by design)이라고 부릅니다. 완성된 모델의 중첩된 활성값을 나중에 풀어내는 대신, 특징을 분석하기 쉬운 표현을 낳도록 구조나 구성 요소를 설계할 수 있다는 것입니다. 이 책은 개입할 지점을 두 군데 꼽습니다. 하나는 가중치나 활성값에 희소성을 강제하는 것입니다. 입력 하나에 MLP나 어텐션 헤드의 뉴런이 몇 개까지 참여할 수 있는지 제한해서, 한 특징을 함께 실어 나를 수 있는 단위의 수를 제한합니다. 초기의 예로 MLP 뉴런을 단의성 쪽으로 밀도록 설계한 2022년의 활성화 함수 SoLU가 있습니다. 다른 하나는 분석의 기본 단위를, 활성값 안의 고정된 특징에서 가중치 행렬이 수행하는 학습 가능한 변환으로 바꾸는 것입니다. 어떤 과제에는 이쪽이 더 잘 맞고, 표현을 압축해야 하는 압력도 사라집니다.\n\n어느 쪽이든 중첩은 거꾸로 풀어내야 하는 현상에 그치지 않고, 처음부터 제한할 수 있는 설계의 선택이 됩니다. 이런 방법과 그 대가는 15편에서 다룹니다.\n\n[표: 이번 편의 용어]\n용어 | 뜻\n중첩 | 특징들이 공간을 나눠 쓰게 해서, 차원 수보다 많은 특징을 담는 것\n직교 | 직각을 이루어서, 한 방향으로 움직여도 다른 방향으로는 움직이지 않는 관계\n거의 직교 | 직각에 가까운 각도. 고차원에서는 이런 방향이 차원 수보다 훨씬 많이 들어감\n간섭 | 한 특징이 자기와 겹치는 다른 특징을 읽는 값에 일으키는 작고 원치 않는 활성\n희소성 | 특징이 얼마나 드물게 켜지는지. 대부분의 특징은 대부분의 입력에 없음\n장난감 모델 | 어떤 현상을 통째로 연구할 수 있도록 단순한 과제로 학습시킨 아주 작은 신경망\n딕셔너리 학습 | 활성값을 희소한 특징 여럿의 합으로 다시 쓰는 방법들\n경사 하강법 | 오차를 줄이도록 가중치를 조금씩 고쳐 나가는 학습 과정\n설계로 얻는 해석 가능성 | 특징을 나중에 풀어내는 대신, 처음부터 특징을 읽기 쉬운 모델을 만드는 것\nSoLU | MLP 뉴런을 더 단의적으로 만들도록 설계한 활성화 함수\n\n9편에서는 남은 두 가설을 다룹니다. 모델이 자기 내부를 설명할 수 있다는 가설, 그리고 서로 다른 모델이 같은 것을 배운다는 가설입니다.",
+          "figures": [
+            {
+              "src": "images/inside-08-packing-ko.png",
+              "alt": "뉴런 축이 두 개씩 있는 패널 두 개. 왼쪽에서는 고양이와 개라는 두 특징이 각자 자기 축을 따라 놓여, 뉴런마다 한 가지만 뜻합니다. 오른쪽에서는 고양이, 개, 자동차, 꽃, 나무라는 다섯 특징이 같은 두 차원 안에 별 모양으로 퍼져 있어, 뉴런 축마다 여러 특징에 걸치고 가까운 특징끼리 간섭합니다.",
+              "caption": "도판 1 — 이 책의 그림 5를 바탕으로 다시 정리한, 중첩이 다의성을 낳는 방식입니다. 특징이 차원보다 많지 않으면 특징마다 자기 뉴런을 가질 수 있습니다. 특징이 차원보다 많으면 나눠 써야 하고, 뉴런마다 여러 특징에 관여하게 됩니다.",
+              "ratio": "640/300"
+            },
+            {
+              "src": "images/inside-08-sparse-ko.png",
+              "alt": "특징 다섯 개를 행으로, 입력 스무 개를 열로 놓은 격자. 각 특징은 몇 개의 열에서만 켜지며(점으로 표시), 거의 모든 열에서 켜진 특징은 많아야 하나입니다. 한 열에서만 두 특징이 동시에 켜지고, 그 열이 간섭이 일어나는 유일한 곳으로 표시되어 있습니다.",
+              "caption": "도판 2 — 희소한 특징들이 공간을 나눠 쓸 수 있는 이유입니다(이 책이 5.2절에서 인용하는 Elhage 등(2022)의 논리를 예로 든 것입니다). 특징마다 켜지는 일이 드물면, 차원을 나눠 쓰는 두 특징이 함께 켜지는 일도 드물어서, 겹침 때문에 생기는 오류도 드뭅니다.",
+              "ratio": "640/280"
+            }
+          ],
+          "tocLabel": "차례",
+          "subjectsLabel": "주제",
+          "subjects": "중첩\n다의성\n거의 직교\n희소성\n설계로 얻는 해석 가능성",
+          "refsLabel": "참고 문헌",
+          "refs": "Fazl Barez, Tung-Yu Wu, Hunar Batra et al. Understanding AI from the Inside: The State of Mechanistic Interpretability for AI Safety. arXiv:2611.08438, 2026. 5.2절, 28–30쪽. https://arxiv.org/abs/2611.08438\n이 책의 실습 노트북 02_superposition_hypothesis.ipynb. GitHub, 2026. https://github.com/TSGLAB/Interpretability_Survey_Safety/blob/main/notebooks/01_core_hypotheses/02_superposition_hypothesis.ipynb\nNelson Elhage, Tristan Hume, Catherine Olsson et al. Toy Models of Superposition. Transformer Circuits Thread, 2022. https://transformer-circuits.pub/2022/toy_model/index.html\nTrenton Bricken, Adly Templeton, Joshua Batson et al. Towards Monosemanticity: Decomposing Language Models With Dictionary Learning. Transformer Circuits Thread, 2023. https://transformer-circuits.pub/2023/monosemantic-features/index.html\nAdly Templeton, Tom Conerly, Jonathan Marcus et al. Scaling Monosemanticity: Extracting Interpretable Features from Claude 3 Sonnet. Transformer Circuits Thread, 2024. https://transformer-circuits.pub/2024/scaling-monosemanticity/index.html\nVictor Lecomte, Kushal Thaman, Rylan Schaeffer, Naomi Bashkansky, Trevor Chow & Sanmi Koyejo. What Causes Polysemanticity? An Alternative Origin Story of Mixed Selectivity from Incidental Causes. ICLR Workshop on Representational Alignment, 2024. https://arxiv.org/abs/2312.03096\nNelson Elhage, Tristan Hume, Catherine Olsson et al. Softmax Linear Units. Transformer Circuits Thread, 2022. https://transformer-circuits.pub/2022/solu/index.html",
+          "series": {
+            "id": "inside-ai",
+            "title": "안에서 보는 AI",
+            "label": "연재",
+            "part": 8,
+            "partLabel": "38편 중 8편",
+            "group": "2부. 기초 개념과 가설"
+          },
+          "prevLabel": "이전 편",
+          "prev": {
+            "title": "선형 표현 가설",
+            "kind": "안에서 보는 AI · 7편",
+            "year": "2026",
+            "id": "",
+            "slug": "inside-ai-07-linear"
+          },
+          "nextLabel": "다음 편",
+          "next": {
+            "title": "특권적 접근과 보편성",
+            "kind": "안에서 보는 AI · 9편",
+            "year": "2026",
+            "id": "",
+            "slug": "inside-ai-09-access-universality"
+          }
+        },
+        "en": {
+          "slug": "inside-ai-08-superposition",
+          "title": "The Superposition Hypothesis",
+          "dek": "A model with a few thousand dimensions may need to keep track of millions of concepts. The superposition hypothesis says it manages this by letting features share space. ==That would explain why single neurons so often mean several things at once.==",
+          "kind": "AI from the Inside · Part 8",
+          "date": "2026.11",
+          "readTime": "6 min",
+          "body": "Part 7's hypothesis said that concepts are directions. This part asks how many directions a model can use, and what happens when it needs more than it has room for. It covers section 5.2 of the book (pages 28–30). The hypothesis it describes, superposition, is the usual explanation for the polysemantic neurons of part 5, and it is the reason the tools of the next group of parts exist.\n\n## The hypothesis\n\nThe superposition hypothesis says that a model's hidden states encode more features than they have dimensions. If a model represents m features in d dimensions, the hypothesis claims that m is much larger than d.\n\nThat has two consequences. First, the features cannot all be orthogonal to one another. Two directions are orthogonal when they are at right angles, so that moving along one does not move you at all along the other. A space with d dimensions has room for at most d directions that are all at right angles to each other. With more features than that, some must overlap.\n\nBut they can be nearly orthogonal: at angles close to, but not exactly, ninety degrees. Here our everyday intuition, built on two and three dimensions, misleads us. In a space with thousands of dimensions, the number of directions that are all nearly at right angles to each other is vastly larger than the number of dimensions. The book's notebook for this section explains why, using a mathematical result called the Johnson–Lindenstrauss lemma. So a large model has room for a huge number of almost independent directions, as long as it tolerates a little overlap.\n\nSecond, superposition implies polysemanticity. If features outnumber dimensions, the model cannot give each feature its own neuron. Features have to share the same dimensions, so a single neuron ends up taking part in encoding several unrelated concepts.\n\n[Fig. 1]\n\n## Why sharing could pay\n\nOverlap has a cost. When two features share dimensions, activating one also slightly activates the reading of the other. This is called interference. So why would training ever settle on such an arrangement?\n\nThe book's main source here, a 2022 study called \"Toy Models of Superposition\", gives the standard answer. It trained tiny networks to store more features than they had dimensions and then recover them, and watched when they chose to superpose. The key was sparsity: how rarely each feature is active. Most concepts are absent from most inputs. A text about cooking rarely mentions tax law, and a line of code rarely contains a Korean poem. If two features are seldom active at the same time, the interference between them seldom matters, and a nonlinearity such as ReLU can filter out the small leftover overlap. In that regime, packing many sparse features into a few dimensions is a good trade, and the toy networks made it. When features were active often, they did not.\n\n[Fig. 2]\n\nThe companion notebook reproduces this toy model. It trains a small network, then plots how its learned feature directions overlap, which shows directly whether features were given their own dimensions or squeezed together.\n\n## The evidence\n\nThe book cites two kinds of evidence. First, mechanistic studies have repeatedly found that polysemantic neurons are widespread: individual neurons often activate for several unrelated concepts and are hard to read as standalone units. Second, methods built on the assumption of superposition work. Dictionary-learning methods, chiefly sparse autoencoders, start from the idea that activations are sums of many sparse features, and they recover millions of distinct features from shared activation spaces. Many of the features they find are much more monosemantic than individual neurons, and some have been shown to influence the model's behaviour causally. Together, these findings suggest that more of the meaning in an activation space lies along directions than along the axes of individual neurons.\n\n## Still a hypothesis\n\nThe book is clear that superposition remains a hypothesis in large language models, not an established fact, and it gives three reasons for caution.\n\nFirst, polysemantic neurons do not by themselves show that superposition causes them. Second, dictionary-learning methods can recover interpretable features even when there is no superposition, so their success does not prove it is there. Third, a 2024 study showed that polysemanticity can arise even when there are no more features than neurons. In its account, neurons can end up mixing concepts for incidental reasons during training, such as where the training happened to start and the noise along the way, rather than because they are short of room. The book reads this as pointing to other mechanisms, possibly working alongside superposition, by which neurons come to mean several things.\n\n## Superposition as a design choice\n\nThe section closes with an idea that changes how the problem looks. Superposition is not an unavoidable property of deep neural networks. It happens because ordinary architectures allow it. With no constraints on the architecture or the activations, the training process, gradient descent, is free to exploit the geometry of the activation space and pack far more features than there are neurons.\n\nThat suggests a different research direction, which the book calls interpretability by design. Instead of untangling a finished model's superposed activations afterwards, one can design architectures or components that encourage representations whose features are easier to analyse. The book names two points of intervention. One is to impose sparsity on weights or activations, limiting how many neurons in an MLP or attention head can take part for a given input, and so limiting how many units can jointly carry any one feature. An early example is an activation function from 2022 called SoLU, designed to push MLP neurons towards monosemanticity. The other is to change the basic units of analysis, from fixed features in the activations to learnable transformations carried out by weight matrices, which suits some tasks better and removes the pressure to compress representations.\n\nEither way, superposition stops being only a phenomenon to reverse-engineer and becomes a design choice that can be limited from the start. Part 15 covers these methods and what they cost.\n\n[Table: Terms in this part]\nTerm | Meaning\nSuperposition | Storing more features than there are dimensions, by letting features share space\nOrthogonal | At right angles, so that moving along one direction does not move along the other\nNearly orthogonal | At angles close to ninety degrees; in high dimensions, far more such directions fit than there are dimensions\nInterference | The small, unwanted activation one feature causes in the reading of another that overlaps it\nSparsity | How rarely a feature is active; most features are absent from most inputs\nToy model | A tiny network trained on a simple task so that a phenomenon can be studied in full\nDictionary learning | Methods that rewrite activations as sums of many sparse features\nGradient descent | The training process that adjusts weights step by step to reduce error\nInterpretability by design | Building models whose features are easier to read, instead of untangling them afterwards\nSoLU | An activation function designed to make MLP neurons more monosemantic\n\nNext, part 9 covers the last two hypotheses: that a model can explain its own insides, and that different models learn the same things.",
+          "figures": [
+            {
+              "src": "images/inside-08-packing-en.png",
+              "alt": "Two panels, each with two neuron axes. Left: two features, cat and dog, each lie along their own axis, so each neuron means one thing. Right: five features, cat, dog, car, flower and tree, are spread around like the points of a star in the same two dimensions, so each neuron axis cuts across several features, and nearby features interfere.",
+              "caption": "Fig. 1 — Superposition implies polysemanticity, redrawn after the book's Figure 5. With no more features than dimensions, each feature can have its own neuron. With more features than dimensions, they must share, and every neuron ends up involved in several.",
+              "ratio": "640/300"
+            },
+            {
+              "src": "images/inside-08-sparse-en.png",
+              "alt": "A grid with five features as rows and twenty inputs as columns. Each feature is active, shown by a dot, in only a few columns, and in almost every column at most one feature is active. In one column two features are active at once, and that column is marked as the only place where they interfere.",
+              "caption": "Fig. 2 — Why sparse features can share space (an illustration of the reasoning in Elhage et al., 2022, which the book cites for section 5.2). If each feature is rarely active, two features sharing dimensions are seldom active together, so the errors their overlap causes are rare.",
+              "ratio": "640/280"
+            }
+          ],
+          "tocLabel": "Contents",
+          "subjectsLabel": "Subjects",
+          "subjects": "Superposition\nPolysemanticity\nNear-orthogonality\nSparsity\nInterpretability by design",
+          "refsLabel": "References",
+          "refs": "Fazl Barez, Tung-Yu Wu, Hunar Batra et al. Understanding AI from the Inside: The State of Mechanistic Interpretability for AI Safety. arXiv:2611.08438, 2026. Section 5.2, pp. 28–30. https://arxiv.org/abs/2611.08438\nNotebook 02_superposition_hypothesis.ipynb, from the book's companion notebooks. GitHub, 2026. https://github.com/TSGLAB/Interpretability_Survey_Safety/blob/main/notebooks/01_core_hypotheses/02_superposition_hypothesis.ipynb\nNelson Elhage, Tristan Hume, Catherine Olsson et al. Toy Models of Superposition. Transformer Circuits Thread, 2022. https://transformer-circuits.pub/2022/toy_model/index.html\nTrenton Bricken, Adly Templeton, Joshua Batson et al. Towards Monosemanticity: Decomposing Language Models With Dictionary Learning. Transformer Circuits Thread, 2023. https://transformer-circuits.pub/2023/monosemantic-features/index.html\nAdly Templeton, Tom Conerly, Jonathan Marcus et al. Scaling Monosemanticity: Extracting Interpretable Features from Claude 3 Sonnet. Transformer Circuits Thread, 2024. https://transformer-circuits.pub/2024/scaling-monosemanticity/index.html\nVictor Lecomte, Kushal Thaman, Rylan Schaeffer, Naomi Bashkansky, Trevor Chow & Sanmi Koyejo. What Causes Polysemanticity? An Alternative Origin Story of Mixed Selectivity from Incidental Causes. ICLR Workshop on Representational Alignment, 2024. https://arxiv.org/abs/2312.03096\nNelson Elhage, Tristan Hume, Catherine Olsson et al. Softmax Linear Units. Transformer Circuits Thread, 2022. https://transformer-circuits.pub/2022/solu/index.html",
+          "series": {
+            "id": "inside-ai",
+            "title": "AI from the Inside",
+            "label": "Series",
+            "part": 8,
+            "partLabel": "Part 8 of 38",
+            "group": "II. Foundations and hypotheses"
+          },
+          "prevLabel": "Previous",
+          "prev": {
+            "title": "The Linear Representation Hypothesis",
+            "kind": "AI from the Inside · Part 7",
+            "year": "2026",
+            "id": "",
+            "slug": "inside-ai-07-linear"
+          },
+          "nextLabel": "Next",
+          "next": {
+            "title": "Privileged Access and Universality",
+            "kind": "AI from the Inside · Part 9",
+            "year": "2026",
+            "id": "",
+            "slug": "inside-ai-09-access-universality"
+          }
+        }
+      },
+      {
+        "ko": {
+          "slug": "inside-ai-09-access-universality",
+          "title": "특권적 접근과 보편성",
+          "dek": "기초를 다루는 이 책의 장은 가설 두 개로 마무리됩니다. 하나는 모델이 자기 내부의 가장 좋은 해석자일 수 있다고 말합니다. 다른 하나는 서로 다른 모델이 같은 것을 배운다고 말합니다. ==둘 다 부분적으로만 뒷받침되며, 둘 다 해석 가능성 연구가 얼마나 멀리 확장될 수 있는지를 좌우합니다.==",
+          "kind": "안에서 보는 AI · 9편",
+          "date": "2026.11",
+          "readTime": "7분",
+          "body": "7편과 8편은 모델 안에 무엇이 있는지에 관한 가설 두 개를 다뤘습니다. 개념은 방향이라는 가설, 그리고 개념이 차원보다 많다는 가설입니다. 이번 편은 이 책의 장에 남은 두 가설, 5.3절과 5.4절(30–31쪽)을 다룹니다. 이 둘은 다른 문제를 다룹니다. 누가 모델의 내부를 읽을 수 있는지, 그리고 한 모델에 대해 알게 된 것이 다른 모델에도 통하는지입니다.\n\n## 특권적 접근 가설\n\n언어 모델에게 자기 자신을 해석하게 하는 방법이 늘고 있습니다. 모델에게 자기 활성값이 무엇을 뜻하는지 묻거나, 그것을 설명하도록 학습시키는 방법입니다. 이 책은 이런 방법을 정당화하는 생각을 특권적 접근 가설(privileged access hypothesis)이라고 부릅니다. 자기 자신을 해석하는 데 쓰이는 언어 모델은, 알맞은 방식으로 묻거나 학습시키면, 바깥에서 보이는 행동만으로는 믿을 만하게 되살릴 수 없는 내부 변수와 중간 계산에 다가갈 수 있다는 것입니다. 그렇다면 모델은 자기 행동의 해석자로서 바깥의 관찰자보다 유리한 자리에 있게 됩니다.\n\n이런 바람은 오래되었습니다. 시스템이 자기 추론을 지켜보고 판단하는 능력, 곧 내성적 감시(introspective monitoring)는 AI에서 오래도록 바라던 성질이었습니다. 이미 1977년에, 의사들에게 감염병에 대해 조언하던 규칙 기반 의료 전문가 시스템 MYCIN은 왜 그런 결론에 이르렀는지 설명해 주는 설명 모듈을 갖추고 있었습니다. 이 책은 자기를 설명하는 언어 모델을 이런 노력의 현대판으로 봅니다.\n\n하지만 큰 차이가 있습니다. 규칙 기반 시스템은 자기가 따른 규칙을 그대로 보여 주면 됩니다. 현대의 언어 모델은 아주 비선형적인 방식으로 계산하고, 어디에도 규칙이 적혀 있지 않습니다. 기계적 도구로 그 계산의 일부를 거꾸로 풀어낼 수는 있지만, 이 도구들은 기술적으로 복잡해서 누가 쓸 수 있는지, 얼마나 확장할 수 있는지가 제한됩니다. 특권적 접근 가설은 지름길을 제안합니다. 모델의 내부 상태에는 이미 잠재된 믿음이나 중간 계획 같은, 자기 계산에 대한 정보가 들어 있으니, 모델이 그 정보를 직접 말로 옮기도록 배울 수 있다는 것입니다. 그렇다면 자기 설명은 기계적 분석을 확장성 있게 보완하는 수단이 됩니다.\n\n## 가설을 뒷받침하는 증거\n\n이 책에 따르면 가장 직접적인 증거는 최근의 개념 주입(concept injection) 실험에서 나옵니다. 연구자들은 어떤 개념을 나타내는 방향을, 흔히 7편의 평균 차이 방법으로 찾은 뒤, 모델에게 알리지 않고 모델의 활성값에 더합니다. 그다음 모델에게 무언가 알아챈 것이 있는지 묻습니다. 이런 일을 위해 따로 학습시키지 않았는데도, 모델은 주입된 개념을 알아채고 그것이 무엇인지 말하는 경우가 있습니다. 관련된 2026년 연구는 모델이 자기 활성값에 무작위 잡음이 가해진 것을 알아챌 수 있다는 것도 발견했습니다.\n\n조금 덜 직접적인 두 번째 증거는 설명자 모델(explainer model)에서 나옵니다. 대상 모델의 활성값을 말로 설명하도록 미세 조정한 모델입니다. 실제로 설명자는 대상 모델의 복사본에서 출발해 만드는 경우가 많고, 대개 다른 모델에서 출발하는 것보다 잘 작동합니다. 대상 모델이 자기 활성값을 해석하는 데 필요한 것의 상당 부분을 이미 담고 있다는 뜻으로 볼 수 있습니다. 미세 조정은 없던 능력을 새로 만드는 것이 아니라, 있던 능력을 끌어내고 다듬는 셈입니다.\n\n이 책의 실습 노트북은 바로 이것을 시험합니다. 세 모델에게 Llama-3.1-8B의 내부 특징을 설명하게 합니다. Llama-3.1-8B 자신, 그것을 지시 따르기용으로 조정한 버전, 그리고 이전 모델인 Llama-3-8B입니다. 특권적 접근이 성립한다면 자기 자신을 설명하는 모델이 가장 잘해야 합니다.\n\n## 가설에 맞서는 증거\n\n이 책은 부정적인 결과도 전합니다. 2026년의 한 연구는 모델이 자기 출력이 얼마나 무작위적일지를 정하는 설정인 샘플링 온도(sampling temperature)를, 다른 모델의 온도보다 더 잘 맞히지 못한다는 것을 발견했습니다. 내성처럼 보이는 것이 자기에 대한 접근이 아니라, 모델 같은 시스템이 대체로 어떻게 행동하는지에 대한 일반적인 추론일 수 있다는 뜻입니다.\n\n다른 최근 연구들은, 내부에 기댄 설명이 행동을 지켜보는 것보다 실제로 나은 점이 있는지 묻습니다. 한 연구에서는, 모델이 다른 상황에서 어떻게 행동할지 예측하는 과제에서, 활성 오라클(activation oracle)이라고 부르는 설명자 모델을 포함한 활성값 판독 도구가 AI 에이전트에게 대화 기록만 읽는 것보다 나은 점을 주지 못했습니다. 또 다른 연구는 활성값을 말로 옮기는 표준 벤치마크를 대상 모델의 내부에 전혀 접근하지 않고도 풀 수 있음을 보였습니다.\n\n[도판 1]\n\n이 책의 요약은 정확합니다. 이런 결과들은 특권적 접근이 유리한 조건에서 특정한 과제에 대해서는 가능하다는 것을 보여 줍니다. 보편적이거나 믿을 만하다는 것을 보여 주지는 않습니다. 중대한 실패 방식과 한계가 남아 있으므로 이 가설은 조심해서 다뤄야 합니다. 자기 설명은 22편과 32편에서 자세히 다시 다룹니다.\n\n## 보편성 가설\n\n네 번째 가설은 서로 다른 모델이 결국 같은 내부를 갖게 되는지 묻습니다. 이 책은 이를 최근에 붙은 이름인 플라톤적 표현 가설(Platonic representation hypothesis)로 적습니다. 비슷한 과제로 따로따로 학습한 모델들은 비슷한 내부 표현이나 알고리즘을 갖게 되는 경향이 있고, 그것은 과제 자체가 정하는 표준적인 형태에 가까운 경우가 많다는 것입니다. 얼마나 강하게 수렴하는지는 모델 크기, 구조, 학습 데이터 같은 요인에 달려 있습니다.\n\n2024년 논문에서 나온 이 이름은 플라톤의 동굴 비유를 빌려 왔습니다. 서로 다른 모델은 서로 다른 데이터를 통해 세계의 서로 다른 그림자를 보지만, 그 그림자를 드리우는 실재에 대해서는 비슷한 표현으로 수렴할 수 있다는 것입니다. 해석 가능성 분야에서 같은 생각을 가리키던 예전 이름은 보편성(universality)입니다. 2020년의 회로 연구 프로그램이, 곡선 감지기처럼 비슷한 특징을 서로 다른 많은 이미지 모델에서 찾아낸 뒤 제안한 것입니다.\n\n## 약한 보편성과 강한 보편성\n\n이 책은 수렴의 수준을 둘로 나눕니다. 약한 보편성은 모델들이 내부 표현은 서로 달라도, 같은 알고리즘이나 되풀이되는 계산 패턴으로 수렴한다는 뜻입니다. 강한 보편성은 더 대담한 주장으로, 표현 자체가 공통의 표준 형태로 수렴한다는 뜻입니다.\n\n[도판 2]\n\n약한 보편성은 꽤 잘 뒷받침됩니다. 비슷한 어텐션 패턴, 특징, 회로가 모델과 과제와 규모를 가리지 않고 거듭 나타납니다. 강한 보편성은 덜 뒷받침됩니다. 강한 보편성은 보통 두 모델의 내부 표현이 얼마나 닮았는지 점수를 매기는 표현 유사도 지표(representational similarity metric)로 시험하는데, 최근 연구들은 이런 시험의 결과가 쉽게 흔들린다는 것을 발견했습니다. 구조, 학습 데이터, 또는 학습이 우연히 거친 경로의 차이 때문에 표현이 서로 갈라질 수도 있습니다.\n\n## 보편성이 중요한 이유\n\n걸린 것은 실용적인 문제입니다. 강한 보편성이 성립한다면, 세밀한 기계적 발견과 그것으로 만든 방법이 한 모델에서 다른 모델로 쉽게 옮겨 갈 수 있습니다. 약한 보편성만 성립한다면, 발견은 모델 계열과 과제에 따라 달라질 수 있습니다. 그렇다면 31편에서 다룰 '야심 찬' 연구 방향의 목표인, 한 모델에 대한 완전한 기계적 이해조차 다른 모델로 일반화되지 않을 수 있습니다. 모든 통찰을 모델마다 새로 얻어야 하는 것입니다. 그래서 보편성이 어디까지 성립하는지 아는 것은 각 연구 방향의 가능성과 한계를 판단하는 데 꼭 필요합니다.\n\n## 네 가설을 한자리에\n\n이 책은 네 가설을 나란히 놓으며 이 장을 마칩니다.\n\n[표: 네 가지 핵심 가설]\n가설 | 주장 | 뒷받침하는 것\n선형 표현(7편) | 개념은 활성 공간의 방향이다 | 선형 도구로 특징을 찾고, 재고, 조종하기\n중첩(8편) | 모델은 차원 수보다 많은 특징을 담는다 | 뉴런 하나가 아니라 방향이나 더 복잡한 모양으로 특징을 찾기\n특권적 접근(9편) | 모델은 자기 내부를 읽고 보고할 수 있다 | 모델에게 자기 자신을 해석하게 하기\n보편성(9편) | 비슷한 과제로 학습한 모델은 비슷한 것을 배운다 | 한 모델의 발견이 다른 모델로 옮겨 가리라 기대하기\n\n어느 가설이든 어떤 상황에서는 성립하고 어떤 상황에서는 실패하며, 그 위에 세운 기법은 모두 그 한계를 물려받습니다. 다음 부는 앞의 두 가설 위에 세운 기법으로 넘어갑니다. 특징이 중첩된 희소한 방향이라고 가정하고 모델의 특징을 되찾으려는 딕셔너리 학습입니다.\n\n[표: 이번 편의 용어]\n용어 | 뜻\n특권적 접근 가설 | 모델이 바깥의 관찰자보다 자기 내부 변수를 더 잘 보고할 수 있다는 생각\n내성적 감시 | 시스템이 자기 추론을 지켜보고 판단하는 능력\n개념 주입 | 모델이 알아채는지 보려고 개념의 방향을 활성값에 더하는 실험\n설명자 모델 | 다른 모델의 활성값을 말로 설명하도록 학습시킨 모델\n활성 오라클 | 활성값에 대한 질문에 답하는 설명자 모델의 한 종류\n샘플링 온도 | 모델의 출력이 얼마나 무작위적일지를 정하는 설정\n보편성 | 서로 다른 모델이 비슷한 특징, 알고리즘, 표현을 배운다는 생각\n플라톤적 표현 가설 | 보편성의 최근 이름. 모델들이 세계에 대한 공통된 표현으로 수렴한다는 생각\n약한 보편성 | 표현은 달라도 같은 알고리즘으로 수렴하는 것\n강한 보편성 | 표현 자체가 같은 것으로 수렴하는 것\n표현 유사도 지표 | 두 모델의 내부 표현이 얼마나 닮았는지 매기는 점수\n\n10편에서는 특징 찾기 부를 시작합니다. 희소 코딩 문제와 희소 오토인코더입니다.",
+          "figures": [
+            {
+              "src": "images/inside-09-access-ko.png",
+              "alt": "모델이 자기 내부를 읽을 수 있는지에 대한 증거를 두 열로 정리한 도표. 찬성 쪽: 모델이 자기 활성값에 주입된 개념을 알아채는 경우가 있고, 대상 모델의 복사본에서 학습한 설명자 모델이 다른 모델에서 학습한 것보다 잘 작동합니다. 반대 쪽: 모델이 자기 샘플링 온도를 다른 모델의 온도보다 더 잘 맞히지 못하고, 활성값을 읽는 도구가 대화 기록만 읽는 것보다 에이전트에게 나은 점이 없었고, 활성값을 말로 옮기는 표준 벤치마크는 대상 모델의 내부 없이도 풀 수 있습니다. 맨 아래 결론: 일부 과제에서는 가능하지만, 보편적이거나 믿을 만하지는 않음.",
+              "caption": "도판 1 — 이 책 5.3절이 정리한, 특권적 접근 가설에 대한 찬반 증거입니다. 맨 아래 줄이 이 책의 결론입니다.",
+              "ratio": "640/330"
+            },
+            {
+              "src": "images/inside-09-universality-ko.png",
+              "alt": "같은 과제로 학습한 모델 두 쌍. 약한 보편성 쌍에서는 두 모델이 같은 세 단계의 알고리즘을 실행하지만, 내부 표현의 배치는 서로 회전한 점구름처럼 다릅니다. 강한 보편성 쌍에서는 표현 자체가 같은 방식으로 배치되어 있습니다.",
+              "caption": "도판 2 — 이 책 5.4절을 따른 약한 보편성과 강한 보편성입니다. 약한 보편성은 모델들이 같은 알고리즘으로 수렴한다는 뜻입니다. 강한 보편성은 같은 표현으로 수렴한다는 뜻입니다. 앞의 것이 뒤의 것보다 더 잘 뒷받침됩니다.",
+              "ratio": "640/320"
+            }
+          ],
+          "tocLabel": "차례",
+          "subjectsLabel": "주제",
+          "subjects": "특권적 접근 가설\n내성\n설명자 모델\n보편성\n플라톤적 표현 가설",
+          "refsLabel": "참고 문헌",
+          "refs": "Fazl Barez, Tung-Yu Wu, Hunar Batra et al. Understanding AI from the Inside: The State of Mechanistic Interpretability for AI Safety. arXiv:2611.08438, 2026. 5.3–5.4절, 30–31쪽. https://arxiv.org/abs/2611.08438\n이 책의 실습 노트북 03_privileged_access_hypothesis.ipynb. GitHub, 2026. https://github.com/TSGLAB/Interpretability_Survey_Safety/blob/main/notebooks/01_core_hypotheses/03_privileged_access_hypothesis.ipynb\nEdward H. Shortliffe. MYCIN: A knowledge-based computer program applied to infectious diseases. Proceedings of the Annual Symposium on Computer Application in Medical Care, 1977. https://pmc.ncbi.nlm.nih.gov/articles/PMC2464549/\nJack Lindsey. Emergent introspective awareness in large language models. arXiv:2601.01828, 2026. https://arxiv.org/abs/2601.01828\nDamiano Fornasiere, Mirko Bronzi, Spencer Kitts, Alessandro Palmas, Yoshua Bengio & Oliver Richardson. Language models recognize dropout and gaussian noise applied to their activations. arXiv:2604.17465, 2026. https://arxiv.org/abs/2604.17465\nAlexander Pan, Lijie Chen & Jacob Steinhardt. LatentQA: Teaching LLMs to decode activations into natural language. ICLR, 2026. https://openreview.net/forum?id=niUroX9EOd\nMinyoung Huh, Brian Cheung, Tongzhou Wang & Phillip Isola. Position: The Platonic Representation Hypothesis. ICML, 2024. https://arxiv.org/abs/2405.07987\nChris Olah, Nick Cammarata, Ludwig Schubert, Gabriel Goh, Michael Petrov & Shan Carter. Zoom In: An Introduction to Circuits. Distill, 2020. https://distill.pub/2020/circuits/zoom-in/\nFabian Gröger, Shuo Wen & Maria Brbic. Revisiting the Platonic Representation Hypothesis: An Aristotelian View. ICML, 2026. https://openreview.net/forum?id=uz0gAAYydl\nA. Sophia Koepke, Daniil Zverev, Shiry Ginosar & Alexei A. Efros. Back into Plato's Cave: Examining Cross-Modal Representational Convergence at Scale. arXiv:2604.18572, 2026. https://arxiv.org/abs/2604.18572",
+          "series": {
+            "id": "inside-ai",
+            "title": "안에서 보는 AI",
+            "label": "연재",
+            "part": 9,
+            "partLabel": "38편 중 9편",
+            "group": "2부. 기초 개념과 가설"
+          },
+          "prevLabel": "이전 편",
+          "prev": {
+            "title": "중첩 가설",
+            "kind": "안에서 보는 AI · 8편",
+            "year": "2026",
+            "id": "",
+            "slug": "inside-ai-08-superposition"
+          },
+          "nextLabel": "다음 편",
+          "next": {
+            "title": "",
+            "kind": "",
+            "year": "",
+            "id": ""
+          }
+        },
+        "en": {
+          "slug": "inside-ai-09-access-universality",
+          "title": "Privileged Access and Universality",
+          "dek": "Two more hypotheses close the book's chapter on foundations. One says a model may be the best interpreter of its own insides. The other says different models learn the same things. ==Both are partly supported, and both decide how far interpretability can scale.==",
+          "kind": "AI from the Inside · Part 9",
+          "date": "2026.11",
+          "readTime": "7 min",
+          "body": "Parts 7 and 8 covered two hypotheses about what is inside a model: concepts as directions, and more concepts than dimensions. This part covers the last two in the book's chapter, sections 5.3 and 5.4 (pages 30–31). They are about something else: who can read a model's insides, and whether what we learn about one model carries over to another.\n\n## The privileged access hypothesis\n\nA growing family of methods uses a language model to interpret itself: asking it what its activations mean, or training it to describe them. The book names the idea that justifies these methods the privileged access hypothesis. A language model used to interpret itself can, when prompted or trained in the right way, reach internal variables and intermediate computations that cannot be reliably recovered from its outward behaviour alone. That would give it an advantage over outside observers as an interpreter of its own behaviour.\n\nThe wish is old. The ability of a system to monitor and judge its own reasoning, called introspective monitoring, has long been a goal in AI. As early as 1977, a rule-based medical expert system called MYCIN, which advised doctors on infections, had an explanation module that could tell them why it had reached its conclusions. The book sees self-explaining language models as a modern continuation of that effort.\n\nThere is a big difference, though. A rule-based system can simply show the rule it followed. A modern language model computes in a highly nonlinear way, with no rules written down anywhere. Mechanistic tools can reverse-engineer parts of that computation, but they are technically complex, which limits who can use them and how far they scale. The privileged access hypothesis proposes a shortcut: the model's internal states already contain information about its own computation, such as latent beliefs or intermediate plans, so the model could learn to put that information into words directly. That would make self-explanation a scalable complement to mechanistic analysis.\n\n## The evidence for it\n\nThe most direct evidence, according to the book, comes from recent experiments on concept injection. Researchers take a direction that represents a concept, often found with the difference-in-means method of part 7, and add it to the model's activations without telling the model. Then they ask the model whether it notices anything. Even without any training for this, models are sometimes aware of the injected concept and can name it. A related 2026 study found that models can recognise when random noise has been applied to their activations.\n\nA second, less direct line of evidence comes from explainer models: a model fine-tuned to describe the activations of a target model in words. In practice, explainers are usually built from a copy of the target model itself, and that usually works better than starting from a different model. This suggests the target model already encodes much of what is needed to interpret its own activations, and that fine-tuning draws out and sharpens an existing ability rather than creating one from nothing.\n\nThe companion notebook tests exactly this. It asks three models to describe the internal features of Llama-3.1-8B: Llama-3.1-8B itself, its instruction-tuned version, and the older Llama-3-8B. If privileged access holds, the model explaining itself should do best.\n\n## The evidence against it\n\nThe book also reports negative results. A 2026 study found that models predict their own sampling temperature, a setting that controls how random their outputs are, no better than they predict the temperature of other models. That suggests that what looks like introspection may be general reasoning about how model-like systems behave, not access to the self.\n\nOther recent work questions whether explanations based on internals give any practical advantage over watching behaviour. One study found that tools for reading activations, including explainer models known as activation oracles, gave AI agents no advantage over agents that only read transcripts, when the task was to predict how a model would behave in other situations. Another showed that standard benchmarks for putting activations into words can be solved without any access to the target model's internals at all.\n\n[Fig. 1]\n\nThe book's summary is precise. These results show that privileged access is possible for certain tasks under favourable conditions. They do not show that it is universal or reliable. The hypothesis should be treated with caution, because significant failure modes and limits remain. Parts 22 and 32 return to self-explanation in detail.\n\n## The universality hypothesis\n\nThe fourth hypothesis asks whether different models end up with the same insides. The book states it under its recent name, the Platonic representation hypothesis: models trained independently on similar tasks tend to develop similar internal representations or algorithms, which often approximate a canonical form determined by the task itself. How strongly they converge depends on factors such as model size, architecture and training data.\n\nThe name, from a 2024 paper, alludes to Plato's allegory of the cave. Different models see different shadows of the world, through different data, yet they may converge on similar representations of the reality that casts them. The older word for the same idea in interpretability is universality, which the 2020 Circuits programme proposed after finding similar features, such as curve detectors, in many different image models.\n\n## Weak and strong universality\n\nThe book separates two levels of convergence. Weak universality means that models converge on the same algorithms or recurring computational patterns, even if they encode them in different internal representations. Strong universality is the bolder claim that the representations themselves converge on a shared canonical form.\n\n[Fig. 2]\n\nWeak universality has good support. Similar attention patterns, features and circuits keep turning up across models, tasks and scales. Strong universality has less. It is usually tested with representational similarity metrics, which score how alike the internal representations of two models are, and recent studies have found the results of those tests to be fragile. Representations can also diverge because of differences in architecture, in training data, or in the path training happened to take.\n\n## Why universality matters\n\nThe stakes are practical. If strong universality holds, detailed mechanistic findings, and the methods built on them, may carry over readily from one model to another. If only weak universality holds, findings may depend on the model family and the task. Then even a complete mechanistic understanding of one model, the goal of the \"ambitious\" research direction of part 31, might fail to generalise to others. Every insight would have to be earned again, model by model. So knowing how far universality reaches is essential for judging the promise and the limits of each research direction.\n\n## The four hypotheses together\n\nThe book closes its chapter by placing the four hypotheses side by side.\n\n[Table: The four core hypotheses]\nHypothesis | Claim | What it supports\nLinear representation (part 7) | Concepts are directions in activation space | Finding, measuring and steering features with linear tools\nSuperposition (part 8) | Models store more features than they have dimensions | Looking for features as directions or more complex shapes, not single neurons\nPrivileged access (part 9) | A model can read and report its own internals | Using models to interpret themselves\nUniversality (part 9) | Models trained on similar tasks learn similar things | Expecting findings to transfer from one model to another\n\nEach hypothesis holds in some settings and fails in others, and every technique built on one inherits its limits. The next group of parts turns to the techniques built on the first two: dictionary learning, which tries to recover a model's features by assuming they are sparse directions in superposition.\n\n[Table: Terms in this part]\nTerm | Meaning\nPrivileged access hypothesis | The idea that a model can report its own internal variables better than outside observers can\nIntrospective monitoring | A system's ability to watch and judge its own reasoning\nConcept injection | Adding a concept's direction to a model's activations to see if the model notices\nExplainer model | A model trained to describe another model's activations in words\nActivation oracle | A kind of explainer model that answers questions about activations\nSampling temperature | A setting that controls how random a model's outputs are\nUniversality | The idea that different models learn similar features, algorithms or representations\nPlatonic representation hypothesis | The recent name for universality: models converge on a shared picture of the world\nWeak universality | Convergence on the same algorithms, possibly with different representations\nStrong universality | Convergence on the same representations themselves\nRepresentational similarity metric | A score of how alike two models' internal representations are\n\nNext, part 10 begins the group on finding features, with the sparse coding problem and sparse autoencoders.",
+          "figures": [
+            {
+              "src": "images/inside-09-access-en.png",
+              "alt": "Two columns of evidence on whether a model can read its own internals. For: models sometimes notice concepts injected into their activations, and explainer models trained from a copy of the target model work better than ones trained from other models. Against: models predict their own sampling temperature no better than other models' temperature, tools that read activations gave agents no advantage over reading transcripts, and standard benchmarks for verbalising activations can be solved without the target's internals. A verdict at the bottom reads: possible for some tasks, not universal or reliable.",
+              "caption": "Fig. 1 — The evidence for and against the privileged access hypothesis, as section 5.3 of the book summarises it. The book's conclusion is in the bottom line.",
+              "ratio": "640/330"
+            },
+            {
+              "src": "images/inside-09-universality-en.png",
+              "alt": "Two pairs of models trained on the same task. In the weak-universality pair, both models run the same three steps of an algorithm, but their internal representations are arranged differently, shown as point clouds rotated relative to each other. In the strong-universality pair, the representations themselves are arranged the same way.",
+              "caption": "Fig. 2 — Weak and strong universality, after section 5.4 of the book. Weak universality means models converge on the same algorithms; strong universality means they converge on the same representations. The first is better supported than the second.",
+              "ratio": "640/320"
+            }
+          ],
+          "tocLabel": "Contents",
+          "subjectsLabel": "Subjects",
+          "subjects": "Privileged access hypothesis\nIntrospection\nExplainer models\nUniversality\nPlatonic representation hypothesis",
+          "refsLabel": "References",
+          "refs": "Fazl Barez, Tung-Yu Wu, Hunar Batra et al. Understanding AI from the Inside: The State of Mechanistic Interpretability for AI Safety. arXiv:2611.08438, 2026. Sections 5.3–5.4, pp. 30–31. https://arxiv.org/abs/2611.08438\nNotebook 03_privileged_access_hypothesis.ipynb, from the book's companion notebooks. GitHub, 2026. https://github.com/TSGLAB/Interpretability_Survey_Safety/blob/main/notebooks/01_core_hypotheses/03_privileged_access_hypothesis.ipynb\nEdward H. Shortliffe. MYCIN: A knowledge-based computer program applied to infectious diseases. Proceedings of the Annual Symposium on Computer Application in Medical Care, 1977. https://pmc.ncbi.nlm.nih.gov/articles/PMC2464549/\nJack Lindsey. Emergent introspective awareness in large language models. arXiv:2601.01828, 2026. https://arxiv.org/abs/2601.01828\nDamiano Fornasiere, Mirko Bronzi, Spencer Kitts, Alessandro Palmas, Yoshua Bengio & Oliver Richardson. Language models recognize dropout and gaussian noise applied to their activations. arXiv:2604.17465, 2026. https://arxiv.org/abs/2604.17465\nAlexander Pan, Lijie Chen & Jacob Steinhardt. LatentQA: Teaching LLMs to decode activations into natural language. ICLR, 2026. https://openreview.net/forum?id=niUroX9EOd\nMinyoung Huh, Brian Cheung, Tongzhou Wang & Phillip Isola. Position: The Platonic Representation Hypothesis. ICML, 2024. https://arxiv.org/abs/2405.07987\nChris Olah, Nick Cammarata, Ludwig Schubert, Gabriel Goh, Michael Petrov & Shan Carter. Zoom In: An Introduction to Circuits. Distill, 2020. https://distill.pub/2020/circuits/zoom-in/\nFabian Gröger, Shuo Wen & Maria Brbic. Revisiting the Platonic Representation Hypothesis: An Aristotelian View. ICML, 2026. https://openreview.net/forum?id=uz0gAAYydl\nA. Sophia Koepke, Daniil Zverev, Shiry Ginosar & Alexei A. Efros. Back into Plato's Cave: Examining Cross-Modal Representational Convergence at Scale. arXiv:2604.18572, 2026. https://arxiv.org/abs/2604.18572",
+          "series": {
+            "id": "inside-ai",
+            "title": "AI from the Inside",
+            "label": "Series",
+            "part": 9,
+            "partLabel": "Part 9 of 38",
+            "group": "II. Foundations and hypotheses"
+          },
+          "prevLabel": "Previous",
+          "prev": {
+            "title": "The Superposition Hypothesis",
+            "kind": "AI from the Inside · Part 8",
+            "year": "2026",
+            "id": "",
+            "slug": "inside-ai-08-superposition"
           },
           "nextLabel": "Next",
           "next": {
