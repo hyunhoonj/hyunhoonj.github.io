@@ -219,14 +219,18 @@
   }
 
   /* One row under an article: [이전 글] or [다음 글], then the title, kind and
-     year of the work it names. The id names a home block, and the title opens
+     year of the work it names. A slug names an article directly — how the parts
+     of a series point at each other, since only the series has a home block.
+     Otherwise the id names a home block, and the title opens
      whatever that block opens — its article, or the atlas — or the block itself
      on the home page when it opens nothing. A row with no title is left out. */
   function neighbour(ctx, label, w) {
     w = w || {};
     if (!String(w.title || '').trim()) return '';
     var title = esc(w.title);
-    if (w.id) {
+    if (w.slug && postIndexBySlug(ctx.content, ctx.lang, w.slug) >= 0) {
+      title = '<a href="' + esc(ctx.resolve(articlePath(ctx.lang, w.slug))) + '">' + title + '</a>';
+    } else if (w.id) {
       var b = (ctx.content.home[ctx.lang].blocks || []).filter(function (x) { return x.id === w.id; })[0];
       var href = (b && blockTarget(ctx, b)) || ROUTES[ctx.lang].home + '#' + w.id;
       title = '<a href="' + esc(ctx.resolve(href)) + '">' + title + '</a>';
@@ -238,6 +242,42 @@
           '<span class="dim">,</span><span class="dim">' + esc(w.year) + '</span>' +
         '</div>' +
       '</div>';
+  }
+
+  /* A post joins a series by carrying series: { id, title, label, part,
+     partLabel, group }. The series has no page of its own: every part lists all
+     the parts, read off the posts, so publishing a part is the only step. */
+  function seriesParts(ctx, id) {
+    return (ctx.content.posts || []).map(function (entry, i) { return { d: entry && entry[ctx.lang], i: i }; })
+      .filter(function (x) { return x.d && x.d.series && x.d.series.id === id; })
+      .sort(function (a, b) { return (Number(a.d.series.part) || 0) - (Number(b.d.series.part) || 0); });
+  }
+
+  /* The rail names the series and the part, and points at the full list. */
+  function seriesRail(s) {
+    return '<div><div class="rail-title">[' + esc(s.label) + ']</div>' +
+      '<div class="rail-list rail-list--dim"><a href="#series">' + esc(s.title) + '</a>' +
+      (s.partLabel ? '<span>' + esc(s.partLabel) + '</span>' : '') + '</div></div>';
+  }
+
+  /* Every part, under the group it belongs to; the one being read is not a link. */
+  function seriesList(ctx, s) {
+    var group = null;
+    var rows = seriesParts(ctx, s.id).map(function (x) {
+      var p = x.d, head = '';
+      if (p.series.group && p.series.group !== group) {
+        group = p.series.group;
+        head = '<div class="series-group">' + esc(group) + '</div>';
+      }
+      var title = esc(p.title), here = x.i === ctx.index;
+      return head + '<div' + (here ? ' class="is-current" aria-current="page"' : '') + '>' +
+        String(p.series.part).padStart(2, '0') + ' &nbsp;' +
+        (here ? title : '<a href="' + esc(ctx.resolve(articlePath(ctx.lang, p.slug))) + '">' + title + '</a>') +
+        '</div>';
+    }).join('');
+    return '<div class="article-refs article-series" id="series">' +
+      '<div class="rail-title">[' + esc(s.label) + ' — ' + esc(s.title) + ']</div>' +
+      '<div class="rail-list">' + rows + '</div></div>';
   }
 
   /* ── pages ────────────────────────────────────────────────────────────── */
@@ -406,6 +446,7 @@
     var d = entry[ctx.lang];
     var toc = headings(d.body);
     var refs = lines(d.refs).map(reference);
+    var series = d.series && d.series.id ? d.series : null;
 
     return '<div class="split article-head">' +
         '<div class="meta meta--dim">' +
@@ -428,12 +469,14 @@
               lines(d.subjects).map(function (t) { return '<span>' + esc(t) + '</span>'; }).join('') +
             '</div>' +
           '</div>' +
+          (series ? seriesRail(series) : '') +
         '</div>' +
         '<div class="article-body">' + articleBody(ctx, d.body, d.figures) +
           '<div class="article-refs">' +
             '<div class="rail-title">[' + esc(d.refsLabel) + ']</div>' +
               numbered(refs.map(function (r) { return r.text; }), '', function (i) { return refs[i].href; }) +
           '</div>' +
+          (series ? seriesList(ctx, series) : '') +
         '</div>' +
       '</div>\n' +
       neighbour(ctx, d.prevLabel, d.prev) +

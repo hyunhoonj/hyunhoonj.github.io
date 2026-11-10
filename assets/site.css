@@ -215,6 +215,12 @@ figcaption { margin-top: 10px; font-size: 12px; color: var(--color-neutral-600);
 .article-refs .rail-list {
   gap: var(--space-2); line-height: 1.6; color: var(--color-neutral-700);
 }
+/* A series lists all its parts under the references (it takes their look), in
+   groups; the part being read is set in ink and not linked. */
+.article-series .series-group { margin-top: var(--space-3); font-size: 12px; color: var(--color-neutral-600); }
+.article-series .series-group:first-child { margin-top: 0; }
+.article-series .is-current { color: var(--color-text); }
+.rail a[href="#series"] { text-decoration-line: underline; text-decoration-thickness: 1px; text-underline-offset: 3px; }
 .article-next { margin-top: calc(var(--space-8) * 3); }
 .article-next .meta { font-size: 15px; }
 /* [이전 글] and [다음 글] sit together, one under the other. */
