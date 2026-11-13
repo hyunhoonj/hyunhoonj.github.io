@@ -44,8 +44,8 @@
             "desc": "감정, 간섭, 위계가 얽힌 매듭으로 의식을 설명하는 새 이론을 깊이 읽습니다. ==언어 모델에 보이는 것은 구조가 아니라 그림자라고 합니다==.",
             "ratio": "1/1",
             "image": {
-              "src": "images/el-trefoil.jpg",
-              "alt": "붓으로 그린 세잎 매듭. 고리 세 개가 서로 위아래로 엇갈리며 이어지고, 가운데에 옅은 청록색 번짐이 있음"
+              "src": "images/el-trefoil-rose.jpg",
+              "alt": "붓으로 그린 세잎 매듭. 고리 세 개가 서로 위아래로 엇갈리며 이어지고, 가운데에 옅은 장밋빛 번짐이 있음"
             }
           },
           {
@@ -194,8 +194,8 @@
             "desc": "A close reading of a new theory that explains consciousness as a knot of emotion, interference and hierarchy. ==What language models show, it says, is a shadow, not the architecture.==",
             "ratio": "1/1",
             "image": {
-              "src": "images/el-trefoil.jpg",
-              "alt": "A trefoil knot drawn with a brush, its three loops passing over and under one another, with a pale cyan wash at its centre"
+              "src": "images/el-trefoil-rose.jpg",
+              "alt": "A trefoil knot drawn with a brush, its three loops passing over and under one another, with a pale rose wash at its centre"
             }
           },
           {
