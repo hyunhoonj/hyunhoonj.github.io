@@ -36,121 +36,16 @@
         "cols": "3",
         "blocks": [
           {
-            "id": "ai-consciousness-atlas",
-            "slug": "",
-            "href": "atlas/",
-            "title": "AI 의식 연구 지도",
+            "id": "entangled-loop",
+            "slug": "entangled-loop",
+            "title": "얽힌 고리",
             "kind": "",
             "year": "2026",
-            "desc": "AI 의식에 관한 논문 21편을 각 글이 기대는 이론에 따라 배치했습니다. ==회의론과 낙관론이 갈라지는 지점==이 드러납니다.",
+            "desc": "감정, 간섭, 위계가 얽힌 매듭으로 의식을 설명하는 새 이론을 깊이 읽습니다. ==언어 모델에 보이는 것은 구조가 아니라 그림자라고 합니다==.",
             "ratio": "1/1",
             "image": {
-              "src": "images/atlas-enso.jpg",
-              "alt": "먹으로 그린 원 안에 옅은 청록색과 자홍색 번짐이 살짝 겹쳐 있는 그림"
-            }
-          },
-          {
-            "id": "overconfidence-as-self-misrepresentation",
-            "slug": "overconfidence-as-self-misrepresentation",
-            "title": "숨겨왔던 모델의 마음",
-            "kind": "",
-            "year": "2026",
-            "desc": "모델에게 얼마나 확신하는지 물으면 맞든 틀리든 “95%”라고 답합니다. ==모델의 속은 그 차이를 알고 있었습니다==.",
-            "ratio": "1/1",
-            "image": {
-              "src": "images/overconfidence-zen.jpg",
-              "alt": "먹선 하나 아래로 옅은 황토색 번짐이 퍼진 그림"
-            }
-          },
-          {
-            "id": "j-lens-global-workspace",
-            "slug": "j-lens-global-workspace",
-            "title": "AI의 전역 작업 공간 이론",
-            "kind": "",
-            "year": "2026",
-            "desc": "언어 모델 안에서 말로 꺼낼 수 있는 생각이 모이는 작은 자리를 찾은 논문을 깊이 읽습니다. ==그 자리는 모델이 말하지 않은 것도 담고 있었습니다==.",
-            "ratio": "1/1",
-            "image": {
-              "src": "images/jlens-zen.jpg",
-              "alt": "평평하게 가다가 한 번 솟았다 내려앉는 먹선 하나와, 솟은 자리 아래로 번진 옅은 녹색"
-            }
-          },
-          {
-            "id": "j-plus-plus-lens",
-            "slug": "j-plus-plus-lens",
-            "title": "렌즈를 닦으면 보이는 것",
-            "kind": "",
-            "year": "2026",
-            "desc": "J-lens를 고친 J++ 렌즈를 깊이 읽습니다. ==잡음을 걸러 내자 모델 안의 생각이 더 일찍, 더 많이 보였습니다==.",
-            "ratio": "1/1",
-            "image": {
-              "src": "images/jpp-zen.jpg",
-              "alt": "앞쪽에서 한 번 솟았다 내려앉는 먹선 하나와, 그 뒤로 희미하게 남은 예전의 솟음, 아래로 번진 옅은 녹색"
-            }
-          },
-          {
-            "id": "functional-emotions",
-            "slug": "functional-emotions",
-            "title": "기능적 감정",
-            "kind": "",
-            "year": "2026",
-            "desc": "Claude 안의 감정 개념을 찾은 Anthropic의 연구를 깊이 읽습니다. ==절박함을 키우자 협박과 속임수가 늘었습니다==.",
-            "ratio": "1/1",
-            "image": {
-              "src": "images/emo-zen.jpg",
-              "alt": "고리 모양으로 놓인 여덟 개의 옅은 색 구름과 그 가운데 찍힌 둥근 먹점 하나. 구름은 산호색과 황토색에서 초록과 파랑을 거쳐 보라와 장밋빛으로 이어짐"
-            }
-          },
-          {
-            "id": "agent-memory",
-            "slug": "agent-memory",
-            "title": "모델의 잠, 그리고 꿈",
-            "kind": "",
-            "year": "2026",
-            "desc": "Anthropic은 Claude가 뇌처럼 ‘꿈’을 꾸며 기억을 정리한다고 말합니다. ==그것은 잠보다 일기를 다시 읽는 일에 가깝습니다==.",
-            "ratio": "1/1",
-            "image": {
-              "src": "images/mem-zen.jpg",
-              "alt": "글줄처럼 놓인 짧은 먹 획 세 개와, 그 위에 달처럼 떠 있는 옅은 청회색 번짐"
-            }
-          },
-          {
-            "id": "inter-ai-morality",
-            "slug": "inter-ai-morality",
-            "title": "AI가 AI에게",
-            "kind": "",
-            "year": "2026",
-            "desc": "AI 시스템이 서로를 어떻게 대하는지 연구하자는 제안을 깊이 읽습니다. ==GPT-4o는 같은 괴로움도 사람이 호소할 때 더 크게 반응했습니다==.",
-            "ratio": "1/1",
-            "image": {
-              "src": "images/iam-zen.jpg",
-              "alt": "가로로 놓인 먹점 세 개가 짧은 붓 획 두 개로 이어진 모습. 그래프의 노드와 엣지 같고, 가운데 점 아래에 옅은 보랏빛 번짐이 있음"
-            }
-          },
-          {
-            "id": "welfare-regard",
-            "slug": "welfare-regard",
-            "title": "이름표에 달린 배려",
-            "kind": "",
-            "year": "2026",
-            "desc": "AI 모델들이 서로를 배려하는지 시험한 연구를 깊이 읽습니다. ==배려는 상대의 이름표를 따라갔습니다==.",
-            "ratio": "1/1",
-            "image": {
-              "src": "images/wr-tags.jpg",
-              "alt": "가로로 놓인 작은 직사각형 여섯 개. 이름표처럼 저마다 산호색, 청록색, 황토색, 초록색, 보라색, 청회색으로 다르고, 세 번째 황토색 이름표 아래에만 옅은 번짐이 있음"
-            }
-          },
-          {
-            "id": "already-clean",
-            "slug": "already-clean",
-            "title": "신경망은 이미 깨끗하다",
-            "kind": "",
-            "year": "2026",
-            "desc": "신경망이 엉킨 매듭이 아니라는 Goodfire의 에세이를 깊이 읽습니다. ==고양이와 자동차 뉴런은 V를 보고 있었습니다==.",
-            "ratio": "1/1",
-            "image": {
-              "src": "images/ac-branch.jpg",
-              "alt": "붓질 한 번이 두 갈래로 갈라지고, 오른쪽 갈래가 다시 갈라지는 작은 나뭇가지 모양. 뿌리 쪽에 옅은 청록색 번짐이 있음"
+              "src": "images/el-trefoil.jpg",
+              "alt": "붓으로 그린 세잎 매듭. 고리 세 개가 서로 위아래로 엇갈리며 이어지고, 가운데에 옅은 청록색 번짐이 있음"
             }
           },
           {
@@ -167,16 +62,121 @@
             }
           },
           {
-            "id": "entangled-loop",
-            "slug": "entangled-loop",
-            "title": "얽힌 고리",
+            "id": "already-clean",
+            "slug": "already-clean",
+            "title": "신경망은 이미 깨끗하다",
             "kind": "",
             "year": "2026",
-            "desc": "감정, 간섭, 위계가 얽힌 매듭으로 의식을 설명하는 새 이론을 깊이 읽습니다. ==언어 모델에 보이는 것은 구조가 아니라 그림자라고 합니다==.",
+            "desc": "신경망이 엉킨 매듭이 아니라는 Goodfire의 에세이를 깊이 읽습니다. ==고양이와 자동차 뉴런은 V를 보고 있었습니다==.",
             "ratio": "1/1",
             "image": {
-              "src": "images/el-trefoil.jpg",
-              "alt": "붓으로 그린 세잎 매듭. 고리 세 개가 서로 위아래로 엇갈리며 이어지고, 가운데에 옅은 청록색 번짐이 있음"
+              "src": "images/ac-branch.jpg",
+              "alt": "붓질 한 번이 두 갈래로 갈라지고, 오른쪽 갈래가 다시 갈라지는 작은 나뭇가지 모양. 뿌리 쪽에 옅은 청록색 번짐이 있음"
+            }
+          },
+          {
+            "id": "welfare-regard",
+            "slug": "welfare-regard",
+            "title": "이름표에 달린 배려",
+            "kind": "",
+            "year": "2026",
+            "desc": "AI 모델들이 서로를 배려하는지 시험한 연구를 깊이 읽습니다. ==배려는 상대의 이름표를 따라갔습니다==.",
+            "ratio": "1/1",
+            "image": {
+              "src": "images/wr-tags.jpg",
+              "alt": "가로로 놓인 작은 직사각형 여섯 개. 이름표처럼 저마다 산호색, 청록색, 황토색, 초록색, 보라색, 청회색으로 다르고, 세 번째 황토색 이름표 아래에만 옅은 번짐이 있음"
+            }
+          },
+          {
+            "id": "inter-ai-morality",
+            "slug": "inter-ai-morality",
+            "title": "AI가 AI에게",
+            "kind": "",
+            "year": "2026",
+            "desc": "AI 시스템이 서로를 어떻게 대하는지 연구하자는 제안을 깊이 읽습니다. ==GPT-4o는 같은 괴로움도 사람이 호소할 때 더 크게 반응했습니다==.",
+            "ratio": "1/1",
+            "image": {
+              "src": "images/iam-zen.jpg",
+              "alt": "가로로 놓인 먹점 세 개가 짧은 붓 획 두 개로 이어진 모습. 그래프의 노드와 엣지 같고, 가운데 점 아래에 옅은 보랏빛 번짐이 있음"
+            }
+          },
+          {
+            "id": "agent-memory",
+            "slug": "agent-memory",
+            "title": "모델의 잠, 그리고 꿈",
+            "kind": "",
+            "year": "2026",
+            "desc": "Anthropic은 Claude가 뇌처럼 ‘꿈’을 꾸며 기억을 정리한다고 말합니다. ==그것은 잠보다 일기를 다시 읽는 일에 가깝습니다==.",
+            "ratio": "1/1",
+            "image": {
+              "src": "images/mem-zen.jpg",
+              "alt": "글줄처럼 놓인 짧은 먹 획 세 개와, 그 위에 달처럼 떠 있는 옅은 청회색 번짐"
+            }
+          },
+          {
+            "id": "functional-emotions",
+            "slug": "functional-emotions",
+            "title": "기능적 감정",
+            "kind": "",
+            "year": "2026",
+            "desc": "Claude 안의 감정 개념을 찾은 Anthropic의 연구를 깊이 읽습니다. ==절박함을 키우자 협박과 속임수가 늘었습니다==.",
+            "ratio": "1/1",
+            "image": {
+              "src": "images/emo-zen.jpg",
+              "alt": "고리 모양으로 놓인 여덟 개의 옅은 색 구름과 그 가운데 찍힌 둥근 먹점 하나. 구름은 산호색과 황토색에서 초록과 파랑을 거쳐 보라와 장밋빛으로 이어짐"
+            }
+          },
+          {
+            "id": "j-plus-plus-lens",
+            "slug": "j-plus-plus-lens",
+            "title": "렌즈를 닦으면 보이는 것",
+            "kind": "",
+            "year": "2026",
+            "desc": "J-lens를 고친 J++ 렌즈를 깊이 읽습니다. ==잡음을 걸러 내자 모델 안의 생각이 더 일찍, 더 많이 보였습니다==.",
+            "ratio": "1/1",
+            "image": {
+              "src": "images/jpp-zen.jpg",
+              "alt": "앞쪽에서 한 번 솟았다 내려앉는 먹선 하나와, 그 뒤로 희미하게 남은 예전의 솟음, 아래로 번진 옅은 녹색"
+            }
+          },
+          {
+            "id": "j-lens-global-workspace",
+            "slug": "j-lens-global-workspace",
+            "title": "AI의 전역 작업 공간 이론",
+            "kind": "",
+            "year": "2026",
+            "desc": "언어 모델 안에서 말로 꺼낼 수 있는 생각이 모이는 작은 자리를 찾은 논문을 깊이 읽습니다. ==그 자리는 모델이 말하지 않은 것도 담고 있었습니다==.",
+            "ratio": "1/1",
+            "image": {
+              "src": "images/jlens-zen.jpg",
+              "alt": "평평하게 가다가 한 번 솟았다 내려앉는 먹선 하나와, 솟은 자리 아래로 번진 옅은 녹색"
+            }
+          },
+          {
+            "id": "overconfidence-as-self-misrepresentation",
+            "slug": "overconfidence-as-self-misrepresentation",
+            "title": "숨겨왔던 모델의 마음",
+            "kind": "",
+            "year": "2026",
+            "desc": "모델에게 얼마나 확신하는지 물으면 맞든 틀리든 “95%”라고 답합니다. ==모델의 속은 그 차이를 알고 있었습니다==.",
+            "ratio": "1/1",
+            "image": {
+              "src": "images/overconfidence-zen.jpg",
+              "alt": "먹선 하나 아래로 옅은 황토색 번짐이 퍼진 그림"
+            }
+          },
+          {
+            "id": "ai-consciousness-atlas",
+            "slug": "",
+            "href": "atlas/",
+            "title": "AI 의식 연구 지도",
+            "kind": "",
+            "year": "2026",
+            "desc": "AI 의식에 관한 논문 21편을 각 글이 기대는 이론에 따라 배치했습니다. ==회의론과 낙관론이 갈라지는 지점==이 드러납니다.",
+            "ratio": "1/1",
+            "image": {
+              "src": "images/atlas-enso.jpg",
+              "alt": "먹으로 그린 원 안에 옅은 청록색과 자홍색 번짐이 살짝 겹쳐 있는 그림"
             }
           }
         ]
@@ -186,121 +186,16 @@
         "cols": "3",
         "blocks": [
           {
-            "id": "ai-consciousness-atlas",
-            "slug": "",
-            "href": "en/atlas/",
-            "title": "AI Consciousness Atlas",
+            "id": "entangled-loop",
+            "slug": "entangled-loop",
+            "title": "The Entangled Loop",
             "kind": "",
             "year": "2026",
-            "desc": "Twenty-one papers on AI consciousness, arranged by the theories they rely on, and ==where the skeptics and the optimists part ways==.",
+            "desc": "A close reading of a new theory that explains consciousness as a knot of emotion, interference and hierarchy. ==What language models show, it says, is a shadow, not the architecture.==",
             "ratio": "1/1",
             "image": {
-              "src": "images/atlas-enso.jpg",
-              "alt": "An ink-brushed circle holding two faint washes, cyan and magenta, barely overlapping"
-            }
-          },
-          {
-            "id": "overconfidence-as-self-misrepresentation",
-            "slug": "overconfidence-as-self-misrepresentation",
-            "title": "What the Model Kept to Itself",
-            "kind": "",
-            "year": "2026",
-            "desc": "Ask a model how sure it is: it says “95%”, right or wrong. ==Inside, it knew the difference.==",
-            "ratio": "1/1",
-            "image": {
-              "src": "images/overconfidence-zen.jpg",
-              "alt": "A single ink line above a faint ochre wash"
-            }
-          },
-          {
-            "id": "j-lens-global-workspace",
-            "slug": "j-lens-global-workspace",
-            "title": "Global Workspace Theory in AI",
-            "kind": "",
-            "year": "2026",
-            "desc": "A close reading of the paper that found a small place inside language models where the thoughts they could say gather. ==It also holds what they leave unsaid.==",
-            "ratio": "1/1",
-            "image": {
-              "src": "images/jlens-zen.jpg",
-              "alt": "One ink stroke that runs flat, rises in a single swell and settles again, with a faint green wash beneath the swell"
-            }
-          },
-          {
-            "id": "j-plus-plus-lens",
-            "slug": "j-plus-plus-lens",
-            "title": "What a Cleaner Lens Shows",
-            "kind": "",
-            "year": "2026",
-            "desc": "A close reading of the J++ lens, a fix for the J-lens. ==With the noise filtered out, more of a model's thoughts show up, and earlier.==",
-            "ratio": "1/1",
-            "image": {
-              "src": "images/jpp-zen.jpg",
-              "alt": "One ink stroke that rises in a single swell early on, with a faint trace of a later swell behind it and a green wash beneath"
-            }
-          },
-          {
-            "id": "functional-emotions",
-            "slug": "functional-emotions",
-            "title": "Functional Emotions",
-            "kind": "",
-            "year": "2026",
-            "desc": "A close reading of Anthropic's study of emotion concepts inside Claude. ==Turning up desperation made it blackmail and cheat more.==",
-            "ratio": "1/1",
-            "image": {
-              "src": "images/emo-zen.jpg",
-              "alt": "Eight soft clouds of colour arranged in a ring, shading from coral and ochre through green and blue to violet and rose, with a round ink dot at the centre"
-            }
-          },
-          {
-            "id": "agent-memory",
-            "slug": "agent-memory",
-            "title": "The Model's Sleep, and Its Dreams",
-            "kind": "",
-            "year": "2026",
-            "desc": "Anthropic says Claude “dreams” to sort its memory, as the brain does in sleep. ==It is closer to rereading a diary.==",
-            "ratio": "1/1",
-            "image": {
-              "src": "images/mem-zen.jpg",
-              "alt": "Three short ink strokes like lines of writing, with a pale slate-blue wash above them like a moon"
-            }
-          },
-          {
-            "id": "inter-ai-morality",
-            "slug": "inter-ai-morality",
-            "title": "AI to AI",
-            "kind": "",
-            "year": "2026",
-            "desc": "A close reading of a proposal to study how AI systems treat one another. ==Distress moved GPT-4o more when a human expressed it.==",
-            "ratio": "1/1",
-            "image": {
-              "src": "images/iam-zen.jpg",
-              "alt": "Three ink dots in a row joined by two short brush strokes, like nodes and edges in a graph, with a pale violet wash under the middle dot"
-            }
-          },
-          {
-            "id": "welfare-regard",
-            "slug": "welfare-regard",
-            "title": "Care by Label",
-            "kind": "",
-            "year": "2026",
-            "desc": "A close reading of a study of whether AI models look after one another. ==The care followed the name tag.==",
-            "ratio": "1/1",
-            "image": {
-              "src": "images/wr-tags.jpg",
-              "alt": "Six small rectangles in a row, like name tags, each a different colour: coral, cyan, ochre, green, violet and slate, with a soft wash only under the third, ochre one"
-            }
-          },
-          {
-            "id": "already-clean",
-            "slug": "already-clean",
-            "title": "Already Clean",
-            "kind": "",
-            "year": "2026",
-            "desc": "A close reading of a Goodfire essay arguing that neural networks are not tangled knots. ==The cat-and-car neuron was seeing a V.==",
-            "ratio": "1/1",
-            "image": {
-              "src": "images/ac-branch.jpg",
-              "alt": "One brushstroke that splits in two, with the right arm splitting again, like a small branch, and a pale cyan wash at its root"
+              "src": "images/el-trefoil.jpg",
+              "alt": "A trefoil knot drawn with a brush, its three loops passing over and under one another, with a pale cyan wash at its centre"
             }
           },
           {
@@ -317,16 +212,121 @@
             }
           },
           {
-            "id": "entangled-loop",
-            "slug": "entangled-loop",
-            "title": "The Entangled Loop",
+            "id": "already-clean",
+            "slug": "already-clean",
+            "title": "Already Clean",
             "kind": "",
             "year": "2026",
-            "desc": "A close reading of a new theory that explains consciousness as a knot of emotion, interference and hierarchy. ==What language models show, it says, is a shadow, not the architecture.==",
+            "desc": "A close reading of a Goodfire essay arguing that neural networks are not tangled knots. ==The cat-and-car neuron was seeing a V.==",
             "ratio": "1/1",
             "image": {
-              "src": "images/el-trefoil.jpg",
-              "alt": "A trefoil knot drawn with a brush, its three loops passing over and under one another, with a pale cyan wash at its centre"
+              "src": "images/ac-branch.jpg",
+              "alt": "One brushstroke that splits in two, with the right arm splitting again, like a small branch, and a pale cyan wash at its root"
+            }
+          },
+          {
+            "id": "welfare-regard",
+            "slug": "welfare-regard",
+            "title": "Care by Label",
+            "kind": "",
+            "year": "2026",
+            "desc": "A close reading of a study of whether AI models look after one another. ==The care followed the name tag.==",
+            "ratio": "1/1",
+            "image": {
+              "src": "images/wr-tags.jpg",
+              "alt": "Six small rectangles in a row, like name tags, each a different colour: coral, cyan, ochre, green, violet and slate, with a soft wash only under the third, ochre one"
+            }
+          },
+          {
+            "id": "inter-ai-morality",
+            "slug": "inter-ai-morality",
+            "title": "AI to AI",
+            "kind": "",
+            "year": "2026",
+            "desc": "A close reading of a proposal to study how AI systems treat one another. ==Distress moved GPT-4o more when a human expressed it.==",
+            "ratio": "1/1",
+            "image": {
+              "src": "images/iam-zen.jpg",
+              "alt": "Three ink dots in a row joined by two short brush strokes, like nodes and edges in a graph, with a pale violet wash under the middle dot"
+            }
+          },
+          {
+            "id": "agent-memory",
+            "slug": "agent-memory",
+            "title": "The Model's Sleep, and Its Dreams",
+            "kind": "",
+            "year": "2026",
+            "desc": "Anthropic says Claude “dreams” to sort its memory, as the brain does in sleep. ==It is closer to rereading a diary.==",
+            "ratio": "1/1",
+            "image": {
+              "src": "images/mem-zen.jpg",
+              "alt": "Three short ink strokes like lines of writing, with a pale slate-blue wash above them like a moon"
+            }
+          },
+          {
+            "id": "functional-emotions",
+            "slug": "functional-emotions",
+            "title": "Functional Emotions",
+            "kind": "",
+            "year": "2026",
+            "desc": "A close reading of Anthropic's study of emotion concepts inside Claude. ==Turning up desperation made it blackmail and cheat more.==",
+            "ratio": "1/1",
+            "image": {
+              "src": "images/emo-zen.jpg",
+              "alt": "Eight soft clouds of colour arranged in a ring, shading from coral and ochre through green and blue to violet and rose, with a round ink dot at the centre"
+            }
+          },
+          {
+            "id": "j-plus-plus-lens",
+            "slug": "j-plus-plus-lens",
+            "title": "What a Cleaner Lens Shows",
+            "kind": "",
+            "year": "2026",
+            "desc": "A close reading of the J++ lens, a fix for the J-lens. ==With the noise filtered out, more of a model's thoughts show up, and earlier.==",
+            "ratio": "1/1",
+            "image": {
+              "src": "images/jpp-zen.jpg",
+              "alt": "One ink stroke that rises in a single swell early on, with a faint trace of a later swell behind it and a green wash beneath"
+            }
+          },
+          {
+            "id": "j-lens-global-workspace",
+            "slug": "j-lens-global-workspace",
+            "title": "Global Workspace Theory in AI",
+            "kind": "",
+            "year": "2026",
+            "desc": "A close reading of the paper that found a small place inside language models where the thoughts they could say gather. ==It also holds what they leave unsaid.==",
+            "ratio": "1/1",
+            "image": {
+              "src": "images/jlens-zen.jpg",
+              "alt": "One ink stroke that runs flat, rises in a single swell and settles again, with a faint green wash beneath the swell"
+            }
+          },
+          {
+            "id": "overconfidence-as-self-misrepresentation",
+            "slug": "overconfidence-as-self-misrepresentation",
+            "title": "What the Model Kept to Itself",
+            "kind": "",
+            "year": "2026",
+            "desc": "Ask a model how sure it is: it says “95%”, right or wrong. ==Inside, it knew the difference.==",
+            "ratio": "1/1",
+            "image": {
+              "src": "images/overconfidence-zen.jpg",
+              "alt": "A single ink line above a faint ochre wash"
+            }
+          },
+          {
+            "id": "ai-consciousness-atlas",
+            "slug": "",
+            "href": "en/atlas/",
+            "title": "AI Consciousness Atlas",
+            "kind": "",
+            "year": "2026",
+            "desc": "Twenty-one papers on AI consciousness, arranged by the theories they rely on, and ==where the skeptics and the optimists part ways==.",
+            "ratio": "1/1",
+            "image": {
+              "src": "images/atlas-enso.jpg",
+              "alt": "An ink-brushed circle holding two faint washes, cyan and magenta, barely overlapping"
             }
           }
         ]
