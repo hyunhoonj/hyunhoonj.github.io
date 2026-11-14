@@ -15,7 +15,7 @@
         "navContact": "연락",
         "navContactShort": "",
         "langSwitch": "English",
-        "copyright": "© 2026",
+        "copyright": "© 2026 정현훈. 무단 전재·재배포 금지.",
         "links": "Github | https://github.com/hyunhoonj\nGoogle Scholar | https://scholar.google.com/citations?user=0ROak0YAAAAJ&hl=en\nhyunhoon.j@gmail.com | mailto:hyunhoon.j@gmail.com"
       },
       "en": {
@@ -26,7 +26,7 @@
         "navContact": "Contact",
         "navContactShort": "",
         "langSwitch": "한국어",
-        "copyright": "© 2026",
+        "copyright": "© 2026 Hyunhoon Jung. All rights reserved.",
         "links": "Github | https://github.com/hyunhoonj\nGoogle Scholar | https://scholar.google.com/citations?user=0ROak0YAAAAJ&hl=en\nhyunhoon.j@gmail.com | mailto:hyunhoon.j@gmail.com"
       }
     },
@@ -343,6 +343,10 @@
           {
             "label": "학력",
             "items": "석·박사 통합과정, 뇌인지과학 (KAIST, 27년 ~)\n석사, HCI(인간 컴퓨터 상호작용) (서울대)"
+          },
+          {
+            "label": "저작권",
+            "items": "이 사이트의 글, 도판, 이미지는 정현훈의 저작물이며, 모든 권리를 보유합니다.\n출처와 링크를 밝힌 짧은 인용은 환영합니다.\n전재, 번역, 각색, 재배포, AI 학습 데이터로의 활용 등 그 밖의 이용은 미리 서면 허락을 받아 주세요.\n허락 요청: hyunhoon.j@gmail.com\n다른 저작물에서 인용하거나 각색한 내용은 원래의 라이선스를 따릅니다."
           }
         ]
       },
@@ -356,6 +360,10 @@
           {
             "label": "Education",
             "items": "Integrated M.S.–Ph.D. program, Brain and Cognitive Sciences (KAIST, 2027–)\nM.S., HCI (Human–Computer Interaction) (Seoul National University)"
+          },
+          {
+            "label": "Copyright",
+            "items": "The writing, figures and images on this site are the work of Hyunhoon Jung. All rights reserved.\nShort quotations with credit and a link back are welcome.\nAny other use, including reposting, translating, adapting, redistributing or using as AI training data, needs written permission first.\nPermission requests: hyunhoon.j@gmail.com\nMaterial quoted or adapted from other works keeps its original licence."
           }
         ]
       }
