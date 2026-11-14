@@ -16,7 +16,7 @@
         "navContactShort": "",
         "langSwitch": "English",
         "copyright": "© 2026 정현훈. 무단 전재·재배포 금지.",
-        "links": "Github | https://github.com/hyunhoonj\nGoogle Scholar | https://scholar.google.com/citations?user=0ROak0YAAAAJ&hl=en\nhyunhoon.j@gmail.com | mailto:hyunhoon.j@gmail.com"
+        "links": "Google Scholar | https://scholar.google.com/citations?user=0ROak0YAAAAJ&hl=en\nhyunhoon.j@gmail.com | mailto:hyunhoon.j@gmail.com"
       },
       "en": {
         "title": "Hyunhoon Jung",
@@ -27,7 +27,7 @@
         "navContactShort": "",
         "langSwitch": "한국어",
         "copyright": "© 2026 Hyunhoon Jung. All rights reserved.",
-        "links": "Github | https://github.com/hyunhoonj\nGoogle Scholar | https://scholar.google.com/citations?user=0ROak0YAAAAJ&hl=en\nhyunhoon.j@gmail.com | mailto:hyunhoon.j@gmail.com"
+        "links": "Google Scholar | https://scholar.google.com/citations?user=0ROak0YAAAAJ&hl=en\nhyunhoon.j@gmail.com | mailto:hyunhoon.j@gmail.com"
       }
     },
     "home": {
@@ -377,11 +377,6 @@
         "channelsLabel": "그 밖에",
         "channels": [
           {
-            "name": "Github",
-            "note": "진행 중인 프로젝트",
-            "href": "https://github.com/hyunhoonj"
-          },
-          {
             "name": "Google Scholar",
             "note": "발표된 논문 전체",
             "href": "https://scholar.google.com/citations?user=0ROak0YAAAAJ&hl=en"
@@ -409,11 +404,6 @@
         "reply": "Usually two days. If none comes, send it again.",
         "channelsLabel": "Elsewhere",
         "channels": [
-          {
-            "name": "Github",
-            "note": "prototypes and analysis code",
-            "href": "https://github.com/hyunhoonj"
-          },
           {
             "name": "Google Scholar",
             "note": "the published record",
