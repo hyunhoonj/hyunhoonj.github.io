@@ -220,3 +220,13 @@ something the canvas did not state:
 Placeholder copy from the canvas — `[회사명]` / `[Company]`, `[저자]` / `[Author]`,
 `hyunhoon@email.com`, the Github and Scholar URLs — is carried over verbatim and
 still needs real values.
+
+## Copyright
+
+Everything here is © Hyunhoon Jung, all rights reserved — see `LICENSE`. The
+notice reaches readers through the footer and the Information page
+(`common.*.copyright` and the last `info.*.groups` entry in `content.js`), and
+machines through three opt-outs: the `author`, `robots: noai` and
+`tdm-reservation` meta tags `render.js` writes into every page, `robots.txt`
+(which turns away AI-training crawlers but not search engines), and
+`.well-known/tdmrep.json`. `.nojekyll` is what lets Pages serve `.well-known`.

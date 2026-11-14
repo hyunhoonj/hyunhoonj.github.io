@@ -540,6 +540,12 @@
       '  <meta name="viewport" content="width=device-width, initial-scale=1">\n' +
       '  <title>' + esc(m.title) + '</title>\n' +
       '  <meta name="description" content="' + esc(m.desc) + '">\n' +
+      // The rights notice, in the forms machines read: the author, an opt-out
+      // from AI training that some crawlers honour, and the W3C TDM
+      // Reservation Protocol (see also robots.txt and /.well-known/tdmrep.json).
+      '  <meta name="author" content="' + esc(content.common[lang].name) + '">\n' +
+      '  <meta name="robots" content="noai, noimageai">\n' +
+      '  <meta name="tdm-reservation" content="1">\n' +
       '  ' + alternates + '\n' +
       '  <link rel="preconnect" href="https://fonts.googleapis.com">\n' +
       '  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>\n' +
