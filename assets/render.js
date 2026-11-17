@@ -519,6 +519,11 @@
     return { title: (d.title || '') + ' — ' + c.title, desc: plain(d.dek) };
   }
 
+  /* Visit counts with GoatCounter (cookie-free; the Information page says so).
+     Set by atlas-source/tools/site_analytics.js; an empty code leaves the
+     counter out. GoatCounter's script does not count visits from localhost. */
+  var GOATCOUNTER = 'hyunhoonj';
+
   /* The full document, for build.js. `version` stamps the asset links: GitHub
      Pages serves them with a ten-minute cache, so without it a deploy can land
      and a browser still read yesterday's stylesheet. */
@@ -556,6 +561,7 @@
       '<body>\n' +
       body(content, { lang: lang, page: page, index: index, resolve: rel }) + '\n' +
       '<script src="' + esc(rel('assets/site.js')) + '"></script>\n' +
+      (GOATCOUNTER ? '<script data-goatcounter="https://' + GOATCOUNTER + '.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>\n' : '') +
       '</body>\n' +
       '</html>\n';
   }
