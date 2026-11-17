@@ -419,14 +419,17 @@
   }
 
   /* [text](target) inside an article paragraph becomes a link. The target is an
-     article's slug, which opens that article in the reader's language, or a
-     full https:// address. A slug that names no article leaves the text plain,
-     so a deleted article never leaves a link to a page that is not there. */
+     article's slug, which opens that article in the reader's language; a
+     root-relative path to a page of the site's own outside writing/ ('atlas/',
+     'en/atlas/'), resolved like a home block's href; or a full https://
+     address. A slug that names no article leaves the text plain, so a deleted
+     article never leaves a link to a page that is not there. */
   var LINK = /\[([^\]\n]+)\]\(([^)\s]+)\)/g;
   function inline(ctx, text, cls) {
     var links = [];
     var t = String(text == null ? '' : text).replace(LINK, function (all, label, target) {
       var href = /^https?:\/\//.test(target) ? target
+        : target.indexOf('/') >= 0 ? ctx.resolve(target)
         : postIndexBySlug(ctx.content, ctx.lang, target) >= 0 ? ctx.resolve(articlePath(ctx.lang, target)) : '';
       links.push(href ? '<a class="inline-link" href="' + esc(href) + '">' + esc(label) + '</a>' : esc(label));
       return '\u0000' + (links.length - 1) + '\u0000';
