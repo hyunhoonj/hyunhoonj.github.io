@@ -5603,7 +5603,7 @@
         "ko": {
           "slug": "two-ways-to-lose-a-self",
           "title": "자아를 잃는 두 가지 방식",
-          "dek": "이인증을 겪는 사람과 숙련된 명상가는 몸으로서의 자아가 옅어지는 같은 경험을 말하지만, 한쪽은 괴로워하고 다른 쪽은 번영합니다. 새 프리프린트는 둘을 다이얼 하나로 설명합니다. ==몸에서 오는 신호가 자아를 얼마나 고칠 수 있게 두느냐입니다.==",
+          "dek": "이인증을 겪는 사람과 숙련된 명상가는 몸으로서의 자아가 옅어지는 같은 경험을 말하지만, 한쪽은 괴로워하고 다른 쪽은 번영합니다. 새 프리프린트는 둘을 다이얼 하나로 설명합니다. ==몸에서 오는 신호를 얼마나 받아들여 자기 모델을 고쳐 나가느냐입니다.==",
           "kind": "논문 읽기",
           "date": "2026.11",
           "readTime": "15분",
@@ -5645,7 +5645,7 @@
         "en": {
           "slug": "two-ways-to-lose-a-self",
           "title": "Two Ways to Lose a Self",
-          "dek": "People with depersonalisation and advanced meditators describe the same fading of the bodily self, yet one suffers and the other flourishes. A new preprint traces both to one dial: ==how far signals from the body are allowed to revise the self.==",
+          "dek": "People with depersonalisation and advanced meditators describe the same fading of the bodily self, yet one suffers and the other flourishes. A new preprint traces both to one dial: ==how far signals from the body are allowed to revise the self-model.==",
           "kind": "Close reading",
           "date": "2026.11",
           "readTime": "13 min",
