@@ -43,7 +43,9 @@
     return out + esc(t.slice(last));
   }
 
-  function plain(text) { return String(text == null ? '' : text).replace(/==/g, '').replace(/\s+/g, ' ').trim(); }
+  function plain(text) {
+    return String(text == null ? '' : text).replace(/\[([^\]\n]+)\]\(([^)\s]+)\)/g, '$1').replace(/==/g, '').replace(/\s+/g, ' ').trim();
+  }
 
   /* A newline the author typed becomes a break. The three statements ask for
      this — the rest of the site lets the measure decide where lines end. The break
@@ -394,6 +396,7 @@
        > text                a pull quote — the quotation marks are ours, so the
                              text never has to carry a matched pair
        [표: cap] + rows      a table, cells split by |, first row the head
+     Inside a paragraph or a pull quote, [text](target) is a link: see inline(). 
        anything else         a paragraph */
   /* The blocks a body is made of. The contents list and the body itself read the
      same ones, so a heading cannot be in one and not the other. */
@@ -415,6 +418,22 @@
     }).filter(Boolean);
   }
 
+  /* [text](target) inside an article paragraph becomes a link. The target is an
+     article's slug, which opens that article in the reader's language, or a
+     full https:// address. A slug that names no article leaves the text plain,
+     so a deleted article never leaves a link to a page that is not there. */
+  var LINK = /\[([^\]\n]+)\]\(([^)\s]+)\)/g;
+  function inline(ctx, text, cls) {
+    var links = [];
+    var t = String(text == null ? '' : text).replace(LINK, function (all, label, target) {
+      var href = /^https?:\/\//.test(target) ? target
+        : postIndexBySlug(ctx.content, ctx.lang, target) >= 0 ? ctx.resolve(articlePath(ctx.lang, target)) : '';
+      links.push(href ? '<a class="inline-link" href="' + esc(href) + '">' + esc(label) + '</a>' : esc(label));
+      return '\u0000' + (links.length - 1) + '\u0000';
+    });
+    return band(t, cls).replace(/\u0000(\d+)\u0000/g, function (all, i) { return links[Number(i)]; });
+  }
+
   function articleBody(ctx, text, figs) {
     var sections = 0;
     return blocks(text)
@@ -426,7 +445,7 @@
         if (head) return '<h2 class="article-h2" id="' + sectionId(sections++) + '">' + esc(head[1].trim()) + '</h2>';
 
         if (t.charAt(0) === '>') {
-          return '<p class="pull">&ldquo;' + band(t.replace(/^>\s*/, ''), 'band-2') + '&rdquo;</p>';
+          return '<p class="pull">&ldquo;' + inline(ctx, t.replace(/^>\s*/, ''), 'band-2') + '&rdquo;</p>';
         }
 
         var table = /^\[(?:표|Table)(?::\s*([^\]]*))?\]\n([\s\S]+)$/.exec(t);
@@ -435,7 +454,7 @@
           return tableBlock((table[1] || '').trim(), lines);
         }
 
-        return '<p>' + band(t, 'band-2') + '</p>';
+        return '<p>' + inline(ctx, t, 'band-2') + '</p>';
       })
       .join('\n');
   }
