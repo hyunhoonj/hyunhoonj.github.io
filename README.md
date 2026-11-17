@@ -142,7 +142,7 @@ private, the studio has to move to a separate private repository.
 | `> line` | pull-quote — the renderer supplies the quotation marks |
 | `[도판 1]` / `[Fig. 1]` | figure 1 from this document's figure list |
 | `[표: caption]` / `[Table: caption]` | a table — see below |
-| `[text](slug)` | inside a body paragraph or pull quote, a link to that article in the reader's language; `[text](https://…)` links an address. A slug that names no article leaves the text plain |
+| `[text](slug)` | inside a body paragraph or pull quote, a link to that article in the reader's language; `[text](atlas/)` links a page of the site's own by its root-relative path, and `[text](https://…)` an address. A slug that names no article leaves the text plain |
 | `name \| url` | one footer link per line |
 | Enter, in a statement | a line break where you typed it |
 

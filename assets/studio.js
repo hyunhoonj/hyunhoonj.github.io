@@ -55,7 +55,7 @@
         '<span class="mark">[도판 1]</span> — 아래 도판 목록의 번호',
         '<span class="mark">[표: 캡션]</span> 다음 줄부터 파이프(|)로 칸 나눔, 첫 줄이 머리',
         '<span class="mark">==강조==</span> = 하이라이트 밴드',
-        '<span class="mark">[글자](글-slug)</span> = 다른 글로 가는 링크 (https:// 주소도 됨)'
+        '<span class="mark">[글자](글-slug)</span> = 다른 글로 가는 링크 (atlas/ 같은 사이트 경로, https:// 주소도 됨)'
       ],
       figList: '도판 목록', addFig: '＋ 도판 추가', ratioLabel: '비율',
       figCap: '설명', coverImage: '대표 이미지', coverRatio: '이미지 비율',
@@ -137,7 +137,7 @@
         '<span class="mark">[Fig. 1]</span> — the number from the figure list below',
         '<span class="mark">[Table: caption]</span> then pipe-separated rows, the first one the head',
         '<span class="mark">==text==</span> = highlight band',
-        '<span class="mark">[text](article-slug)</span> = a link to another article (an https:// address works too)'
+        '<span class="mark">[text](article-slug)</span> = a link to another article (a site path such as atlas/, or an https:// address, works too)'
       ],
       figList: 'Figure list', addFig: '＋ Add figure', ratioLabel: 'Ratio',
       figCap: 'Caption', coverImage: 'Cover image', coverRatio: 'Ratio',
