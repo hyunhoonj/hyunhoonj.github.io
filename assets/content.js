@@ -399,6 +399,10 @@
           {
             "label": "저작권",
             "items": "이 사이트의 글, 도판, 이미지는 정현훈의 저작물이며, 모든 권리를 보유합니다.\n출처와 링크를 밝힌 짧은 인용은 환영합니다.\n전재, 번역, 각색, 재배포, AI 학습 데이터로의 활용 등 그 밖의 이용은 미리 서면 허락을 받아 주세요.\n허락 요청: hyunhoon.j@gmail.com\n다른 저작물에서 인용하거나 각색한 내용은 원래의 라이선스를 따릅니다."
+          },
+          {
+            "label": "방문 집계",
+            "items": "이 사이트는 어떤 글이 읽히는지 보려고 GoatCounter로 페이지 조회 수를 셉니다.\n쿠키를 쓰지 않으며, 방문자 개개인을 추적하지 않습니다."
           }
         ]
       },
@@ -416,6 +420,10 @@
           {
             "label": "Copyright",
             "items": "The writing, figures and images on this site are the work of Hyunhoon Jung. All rights reserved.\nShort quotations with credit and a link back are welcome.\nAny other use, including reposting, translating, adapting, redistributing or using as AI training data, needs written permission first.\nPermission requests: hyunhoon.j@gmail.com\nMaterial quoted or adapted from other works keeps its original licence."
+          },
+          {
+            "label": "Visit counts",
+            "items": "This site counts page views with GoatCounter, to see which writing people read.\nIt uses no cookies and does not track individual visitors."
           }
         ]
       }
