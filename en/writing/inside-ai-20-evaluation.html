@@ -13,8 +13,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,400&amp;family=Noto+Serif+KR:wght@300;400;600&amp;display=swap">
-  <link rel="stylesheet" href="../../assets/broadsheet.css?v=4348a9b1">
-  <link rel="stylesheet" href="../../assets/site.css?v=4348a9b1">
+  <link rel="stylesheet" href="../../assets/broadsheet.css?v=e4498c44">
+  <link rel="stylesheet" href="../../assets/site.css?v=e4498c44">
 </head>
 <body>
 <div class="sheet">
@@ -42,7 +42,7 @@
 <p>Are the components necessary, sufficient and specific? These are the tests of part 18, made into scores. The necessity score is the fraction of performance lost when the components are ablated. The sufficiency score is the fraction kept when only the components remain active. Specificity measures whether intervening on the components affects the target behaviour rather than a set of control behaviours. The protocol adds an important control: compare against ablating or keeping random sets of components of the same size, because removing any large chunk of a model may hurt it. An interchange test, swapping activations between inputs of different behaviours, completes the set.</p>
 <p>Several benchmarks already test causal validity: MIB for circuits and causal variables, AxBench for steering towards concepts, RAVEL for locating features of given concepts, and SAEBench for sparse autoencoders, which pairs reconstruction metrics with downstream tasks such as removing gender bias.</p>
 <h2 class="article-h2" id="section-7">Dimension 5: human interpretability</h2>
-<p>Do the explanations actually help people? Explanation utility measures how much better people predict the model&#39;s behaviour on new inputs with the explanation than without it. Debugging utility measures how much more often they manage to identify and fix the model&#39;s errors. Consistency of interpretation measures whether different people read the same explanation the same way. The book admits the difficulties: human studies are expensive, and expertise confounds them, since an explanation clear to an interpretability researcher may be opaque to a domain expert, and vice versa.</p>
+<p>Do the explanations actually help people? Explanation utility measures how much better people predict the model&#39;s behaviour on new inputs with the explanation than without it. Debugging utility measures how much more often they manage to identify and fix the model&#39;s errors. Consistency of interpretation measures whether different people read the same explanation the same way, as inter-rater agreement. The book admits the difficulties: human studies are expensive, and expertise confounds them, since an explanation clear to an interpretability researcher may be opaque to a domain expert, and vice versa.</p>
 <h2 class="article-h2" id="section-8">Applying the framework</h2>
 <p>The book also suggests what matters most for different families of methods. For SAEs: agreement between feature attributions and interventions, reconstruction and loss recovery, alignment of features across seeds, necessity and sufficiency of features, and whether people and models describe features consistently. For circuit discovery: counterfactual recovery, behavioural coverage, robustness to seeds, settings and paraphrases, interchange tests, and the trade-off between how small a circuit is and how much it explains. For probes and steering vectors, a recurring item is to look for confounding factors in the data used to fit them, the shared information that a direction might really be picking up.</p>
 <p>And it gives a five-step protocol.</p>
@@ -57,7 +57,7 @@
 <footer class="colophon"><div class="colophon-links"><a href="https://scholar.google.com/citations?user=0ROak0YAAAAJ&amp;hl=en">Google Scholar</a><span>,</span><a href="mailto:hyunhoon.j@gmail.com">hyunhoon.j@gmail.com</a></div><span class="colophon-copy">© 2026 Hyunhoon Jung. All rights reserved.</span></footer>
 </div>
 </div>
-<script src="../../assets/site.js?v=4348a9b1"></script>
+<script src="../../assets/site.js?v=e4498c44"></script>
 <script data-goatcounter="https://hyunhoonj.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
 </body>
 </html>

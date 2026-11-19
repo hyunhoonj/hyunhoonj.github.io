@@ -13,8 +13,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,400&amp;family=Noto+Serif+KR:wght@300;400;600&amp;display=swap">
-  <link rel="stylesheet" href="../../assets/broadsheet.css?v=4348a9b1">
-  <link rel="stylesheet" href="../../assets/site.css?v=4348a9b1">
+  <link rel="stylesheet" href="../../assets/broadsheet.css?v=e4498c44">
+  <link rel="stylesheet" href="../../assets/site.css?v=e4498c44">
 </head>
 <body>
 <div class="sheet">
@@ -29,7 +29,7 @@
 <p>Almost every method in the book talks about concepts, so the book pins the word down. A concept is a distinct, reusable unit of information or knowledge that can be identified across different instances or contexts. Many concepts are familiar human categories, such as a dog, the colour red, or words of praise. But they need not be.</p>
 <p>The key word is reusable. Take the word &quot;bank&quot;, which can mean a financial institution or the land beside a river. Working out which concept is present in a particular sentence may need the surrounding words. Once identified, though, the concept of a financial institution should stay recognisably the same across all the contexts it appears in, whether the word is &quot;bank&quot;, &quot;lender&quot; or something else.</p>
 <figure><div class="frame" style="aspect-ratio:640/270"><img src="../../images/inside-05-concepts-en.png" alt="Three sentences on the left: “She paid the cheque into the bank”, “They fished from the river bank” and “The lender approved her loan”. Arrows link the first and third sentences to the concept “financial institution”, and the second to the concept “land beside a river”."></div><figcaption>Fig. 1 — The book&#39;s example of a concept in section 4.2, with sentences of our own. The same word can carry different concepts, and the same concept can appear in different words. What makes something a concept is that it can be recognised as the same unit of information across contexts.</figcaption></figure>
-<p>The definition deliberately leaves room for concepts that people have no word for. A network may form a coherent, reusable unit of information that matters to its computation and still lack any natural human description. The book treats being understandable to humans as a property some concepts happen to have, not as a condition for being a concept. It also notes that almost all interpretability research so far has studied concepts people can readily name. Finding and describing the concepts that matter to a model but do not fit human categories remains largely unexplored.</p>
+<p>The definition deliberately leaves room for concepts that people have no word for. A network may form a coherent, reusable unit of information that matters to its computation and still lack any natural human description. The book calls such concepts machine-specific. The book treats being understandable to humans as a property some concepts happen to have, not as a condition for being a concept. It also notes that almost all interpretability research so far has studied concepts people can readily name. Finding and describing the concepts that matter to a model but do not fit human categories remains largely unexplored.</p>
 <h2 class="article-h2" id="section-3">A neuron that means one thing</h2>
 <p>Part 4 introduced neurons: the units of an MLP&#39;s expanded hidden layer. Each neuron has an activation at each position in the text, a single number. The book writes it as the activation of neuron n in layer ℓ at position t for input x.</p>
 <p>The easiest neuron to interpret would respond to one concept only. Imagine a neuron whose activation is large and positive whenever the current word is &quot;blue&quot;, stays close to zero otherwise, and, when changed by hand, pushes the model&#39;s outputs towards or away from things related to blue. We could reasonably say that this neuron corresponds to the concept of blue. Note that the conclusion needs all three observations: the neuron fires for blue, it stays quiet for everything else, and changing it changes the model&#39;s behaviour in a blue-related way.</p>
@@ -57,7 +57,7 @@
 <footer class="colophon"><div class="colophon-links"><a href="https://scholar.google.com/citations?user=0ROak0YAAAAJ&amp;hl=en">Google Scholar</a><span>,</span><a href="mailto:hyunhoon.j@gmail.com">hyunhoon.j@gmail.com</a></div><span class="colophon-copy">© 2026 Hyunhoon Jung. All rights reserved.</span></footer>
 </div>
 </div>
-<script src="../../assets/site.js?v=4348a9b1"></script>
+<script src="../../assets/site.js?v=e4498c44"></script>
 <script data-goatcounter="https://hyunhoonj.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
 </body>
 </html>

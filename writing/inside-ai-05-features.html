@@ -13,8 +13,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,400&amp;family=Noto+Serif+KR:wght@300;400;600&amp;display=swap">
-  <link rel="stylesheet" href="../assets/broadsheet.css?v=4348a9b1">
-  <link rel="stylesheet" href="../assets/site.css?v=4348a9b1">
+  <link rel="stylesheet" href="../assets/broadsheet.css?v=e4498c44">
+  <link rel="stylesheet" href="../assets/site.css?v=e4498c44">
 </head>
 <body>
 <div class="sheet">
@@ -29,7 +29,7 @@
 <p>이 책에 나오는 방법은 거의 모두 개념을 이야기하므로, 저자들은 이 말을 분명히 정해 둡니다. 개념(concept)은 서로 다른 사례나 맥락에서도 알아볼 수 있는, 뚜렷하고 다시 쓰이는 정보나 지식의 단위입니다. 개 한 마리, 빨간색, 칭찬하는 말처럼 사람에게 익숙한 범주인 개념이 많습니다. 하지만 꼭 그래야 하는 것은 아닙니다.</p>
 <p>핵심어는 &#39;다시 쓰인다&#39;입니다. 금융 기관을 뜻할 수도 있고 강가의 둑을 뜻할 수도 있는 영어 단어 &quot;bank&quot;를 생각해 봅시다. 어떤 문장에 어느 개념이 들어 있는지 가리려면 주변 단어가 필요할 수 있습니다. 하지만 일단 가려낸 뒤에는, 금융 기관이라는 개념은 어느 맥락에 나타나든 같은 것으로 알아볼 수 있어야 합니다. 단어가 &quot;bank&quot;이든 &quot;lender&quot;이든 마찬가지입니다.</p>
 <figure><div class="frame" style="aspect-ratio:640/270"><img src="../images/inside-05-concepts-ko.png" alt="왼쪽에 세 문장이 있습니다. “She paid the cheque into the bank”, “They fished from the river bank”, “The lender approved her loan”. 첫째와 셋째 문장은 ‘금융 기관’이라는 개념으로, 둘째 문장은 ‘강가의 둑’이라는 개념으로 화살표가 이어집니다."></div><figcaption>도판 1 — 이 책 4.2절의 개념 예시를, 이 연재가 만든 문장으로 옮긴 것입니다. 같은 단어가 서로 다른 개념을 담을 수 있고, 같은 개념이 서로 다른 단어에 나타날 수 있습니다. 맥락이 달라져도 같은 정보 단위로 알아볼 수 있어야 개념입니다.</figcaption></figure>
-<p>이 정의는 사람이 이름 붙이지 못한 개념도 일부러 받아들입니다. 신경망이 계산에 중요하고 일관되게 다시 쓰이는 정보 단위를 만들었는데, 그 단위를 가리킬 자연스러운 사람의 말은 없을 수도 있습니다. 이 책은 사람이 이해할 수 있다는 점을 개념의 조건이 아니라, 일부 개념에 마침 있는 성질로 봅니다. 또 지금까지의 해석 가능성 연구는 거의 모두 사람이 쉽게 이름 붙일 수 있는 개념을 다뤘다고 지적합니다. 모델에게는 중요하지만 사람의 범주에 들어맞지 않는 개념을 찾아내고 설명하는 일은 아직 거의 손대지 않은 영역입니다.</p>
+<p>이 정의는 사람이 이름 붙이지 못한 개념도 일부러 받아들입니다. 신경망이 계산에 중요하고 일관되게 다시 쓰이는 정보 단위를 만들었는데, 그 단위를 가리킬 자연스러운 사람의 말은 없을 수도 있습니다. 이 책은 이런 개념을 기계 고유의 개념(machine-specific concept)이라고 부릅니다. 이 책은 사람이 이해할 수 있다는 점을 개념의 조건이 아니라, 일부 개념에 마침 있는 성질로 봅니다. 또 지금까지의 해석 가능성 연구는 거의 모두 사람이 쉽게 이름 붙일 수 있는 개념을 다뤘다고 지적합니다. 모델에게는 중요하지만 사람의 범주에 들어맞지 않는 개념을 찾아내고 설명하는 일은 아직 거의 손대지 않은 영역입니다.</p>
 <h2 class="article-h2" id="section-3">한 가지를 뜻하는 뉴런</h2>
 <p>4편에서 뉴런을 소개했습니다. MLP가 펼친 은닉층의 단위입니다. 뉴런은 텍스트의 위치마다 활성값, 곧 숫자 하나를 냅니다. 이 책은 이 값을, 입력 x가 들어왔을 때 ℓ층 뉴런 n이 위치 t에서 내는 활성값으로 적습니다.</p>
 <p>가장 해석하기 쉬운 뉴런은 개념 하나에만 반응하는 뉴런일 것입니다. 이런 뉴런을 떠올려 봅시다. 지금 단어가 &quot;blue&quot;일 때마다 활성값이 크고 양수이며, 그 밖에는 0에 가깝게 머뭅니다. 손으로 값을 바꾸면 모델의 출력이 파란색과 관련된 쪽으로 가거나 그쪽에서 멀어집니다. 그렇다면 이 뉴런은 파란색이라는 개념에 대응한다고 말할 만합니다. 이 결론에는 세 관찰이 모두 필요하다는 점에 주의해야 합니다. 뉴런이 파란색에 켜지고, 다른 것에는 조용하고, 값을 바꾸면 모델의 행동이 파란색과 관련된 방향으로 바뀌어야 합니다.</p>
@@ -57,7 +57,7 @@
 <footer class="colophon"><div class="colophon-links"><a href="https://scholar.google.com/citations?user=0ROak0YAAAAJ&amp;hl=en">Google Scholar</a><span>,</span><a href="mailto:hyunhoon.j@gmail.com">hyunhoon.j@gmail.com</a></div><span class="colophon-copy">© 2026 정현훈. 무단 전재·재배포 금지.</span></footer>
 </div>
 </div>
-<script src="../assets/site.js?v=4348a9b1"></script>
+<script src="../assets/site.js?v=e4498c44"></script>
 <script data-goatcounter="https://hyunhoonj.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
 </body>
 </html>

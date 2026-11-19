@@ -13,8 +13,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,400&amp;family=Noto+Serif+KR:wght@300;400;600&amp;display=swap">
-  <link rel="stylesheet" href="../assets/broadsheet.css?v=4348a9b1">
-  <link rel="stylesheet" href="../assets/site.css?v=4348a9b1">
+  <link rel="stylesheet" href="../assets/broadsheet.css?v=e4498c44">
+  <link rel="stylesheet" href="../assets/site.css?v=e4498c44">
 </head>
 <body>
 <div class="sheet">
@@ -32,7 +32,7 @@
 <h2 class="article-h2" id="section-3">대체 모델</h2>
 <p>이 책이 CLT에서 끌어내는 핵심 아이디어는 대체 모델(replacement model)입니다. 원래 모델의 모든 MLP 층을 CLT의 재구성으로 바꿔 놓은 버전입니다. 대체 모델을 실행할 때는 층마다 CLT 특징을 계산하고, 각 MLP의 출력을 그 층과 앞선 층의 특징으로 만든 재구성으로 바꾸고, 어텐션 층은 그대로 둡니다.</p>
 <p>특정한 프롬프트 하나를 연구할 때는 한 걸음 더 나아가 국소 대체 모델(local replacement model)을 만듭니다. 원래 모델이 그 프롬프트를 처리할 때의 어텐션 패턴(attention pattern)과 정규화(normalisation) 통계를 그대로 고정해 두고, CLT가 재구성하지 못한 부분을 보정하는 항을 층마다 더합니다. 그러면 국소 대체 모델은 그 프롬프트에서 원래 모델의 활성값과 정확히 일치하면서도, 그 활성값을 해석 가능한 CLT 특징으로 나타냅니다.</p>
-<p>보정 없이 MLP를 통째로 바꾸면 일치도가 훨씬 떨어집니다. 이 방법을 처음 내놓은 2025년 연구에서는, 비교적 작은 18층 모델의 경우 대체 모델이 가장 그럴듯하다고 본 다음 토큰이 원래 모델과 같은 경우가 표준 텍스트 데이터셋 프롬프트의 약 50%에 그쳤습니다.</p>
+<p>보정 없이 MLP를 통째로 바꾸면 일치도가 훨씬 떨어집니다. 이 방법을 처음 내놓은 2025년 연구에서는, 비교적 작은 18층 모델의 경우 대체 모델이 가장 그럴듯하다고 본 다음 토큰이 원래 모델과 같은 경우가 표준 텍스트 데이터셋인 The Pile에서 뽑은 프롬프트의 약 50%에 그쳤습니다.</p>
 <figure><div class="frame" style="aspect-ratio:640/360"><img src="../images/inside-13-tools-ko.png" alt="세 층짜리 모델을 도구마다 하나씩 나타낸 작은 도식 네 개. SAE는 잔차 스트림의 한 지점을 읽고 같은 지점을 다시 만듭니다. 트랜스코더는 MLP의 입력을 읽고 출력을 예측합니다. 층간 트랜스코더는 한 층에서 스트림을 읽고, 그 층과 그 뒤 모든 층의 MLP 출력에 써 넣습니다. 크로스코더는 모든 층을 한꺼번에 읽고, 공유된 특징 한 벌로 모든 층을 다시 만듭니다."></div><figcaption>도판 1 — 이 책의 그림 6, 7, 9와 6.7절을 따라, 사전 기반 도구가 각각 무엇을 읽고 무엇을 다시 만드는지 정리한 것입니다. 오른쪽 도구일수록 모델의 더 많은 층을 보고, 비용도 더 듭니다.</figcaption></figure>
 <h2 class="article-h2" id="section-4">충실도에 대한 이 책의 경고</h2>
 <p>여기서 충실도(fidelity)는 대체 모델이 원래 모델을 얼마나 충실하게 재현하는지를 뜻합니다. 이 책은 충실도에 관해 주의할 점들을 따로 상자에 정리하는데, CLT 기반 결과가 많은 주목을 받아 온 만큼 꼼꼼히 따라갈 만합니다.</p>
@@ -62,7 +62,7 @@
 <footer class="colophon"><div class="colophon-links"><a href="https://scholar.google.com/citations?user=0ROak0YAAAAJ&amp;hl=en">Google Scholar</a><span>,</span><a href="mailto:hyunhoon.j@gmail.com">hyunhoon.j@gmail.com</a></div><span class="colophon-copy">© 2026 정현훈. 무단 전재·재배포 금지.</span></footer>
 </div>
 </div>
-<script src="../assets/site.js?v=4348a9b1"></script>
+<script src="../assets/site.js?v=e4498c44"></script>
 <script data-goatcounter="https://hyunhoonj.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
 </body>
 </html>
