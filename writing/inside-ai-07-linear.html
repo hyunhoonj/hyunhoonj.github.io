@@ -13,17 +13,17 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,400&amp;family=Noto+Serif+KR:wght@300;400;600&amp;display=swap">
-  <link rel="stylesheet" href="../assets/broadsheet.css?v=148bce48">
-  <link rel="stylesheet" href="../assets/site.css?v=148bce48">
+  <link rel="stylesheet" href="../assets/broadsheet.css?v=0544aa1c">
+  <link rel="stylesheet" href="../assets/site.css?v=0544aa1c">
 </head>
 <body>
 <div class="sheet">
 <div class="page">
 <header class="masthead"><div><a class="masthead-name" href="../index.html">Hyunhoon Jung <span class="slash">/</span> 정현훈</a></div><nav class="masthead-nav"><a href="../information.html">소개</a><a href="../contact.html">연락</a><a class="lang-switch" lang="en" hreflang="en" href="../en/writing/inside-ai-07-linear.html">English</a></nav></header>
 <div class="split article-head"><div class="meta meta--dim"><span>안에서 보는 AI · 7편</span><span>,</span><span>2026.11</span><span>,</span><span>7분</span></div><div><h1 class="article-title">선형 표현 가설</h1><p class="article-dek">기계적 해석 가능성의 많은 부분은 한 가지 가정에 기대고 있습니다. 모델 안의 개념이 활성 공간의 곧은 방향이고, 그래서 그 세기를 잴 수도 있고 모델을 그 방향으로 밀 수도 있다는 가정입니다. 이번 편은 이 가정을 설명하고, <span class="band">무엇이 이를 뒷받침하고 어디서 깨지는지</span> 살펴봅니다.</p></div></div>
-<div class="split article-grid"><div class="rail"><div><div class="rail-title">[차례]</div><div class="rail-list"><div>01 &nbsp;<a href="#section-1">가설</a></div><div>02 &nbsp;<a href="#section-2">강한 버전과 약한 버전</a></div><div>03 &nbsp;<a href="#section-3">선형성이 분석을 다룰 만하게 만드는 이유</a></div><div>04 &nbsp;<a href="#section-4">모든 공간의 축이 의미 있지는 않다</a></div><div>05 &nbsp;<a href="#section-5">가설을 뒷받침하는 증거</a></div><div>06 &nbsp;<a href="#section-6">가설에 맞서는 증거</a></div><div>07 &nbsp;<a href="#section-7">쓸모 있는 근사</a></div></div></div><div><div class="rail-title">[주제]</div><div class="rail-list rail-list--dim"><span>선형 표현 가설</span><span>방향</span><span>사영</span><span>특권 기저</span><span>조종</span></div></div><div><div class="rail-title">[연재]</div><div class="rail-list rail-list--dim"><a href="#series">안에서 보는 AI</a><span>38편 중 7편</span></div></div></div><div class="article-body"><p>5편은 질문 하나로 끝났습니다. 모델을 읽는 단위로 뉴런 하나하나가 알맞지 않은 경우가 많다면, 무엇이 알맞을까요? 이 책의 5장은 신경망이 정보를 어떻게 표현하고 계산을 어떻게 수행하는지에 관한 가설 네 가지를 다룹니다. 어느 것도 증명되지는 않았지만, 각각이 이 분야가 어떤 방법을 만들고 어떤 실험을 할지에 영향을 주었습니다. 이번 편은 그 가운데 첫 번째이자 가장 영향력 있는 선형 표현 가설(linear representation hypothesis)을 다룹니다. 5.1절(27–28쪽)입니다.</p>
+<div class="split article-grid"><div class="rail"><div><div class="rail-title">[차례]</div><div class="rail-list"><div>01 &nbsp;<a href="#section-1">가설</a></div><div>02 &nbsp;<a href="#section-2">강한 버전과 약한 버전</a></div><div>03 &nbsp;<a href="#section-3">선형성이 분석을 다룰 만하게 만드는 이유</a></div><div>04 &nbsp;<a href="#section-4">모든 공간의 축이 의미 있지는 않다</a></div><div>05 &nbsp;<a href="#section-5">가설을 뒷받침하는 증거</a></div><div>06 &nbsp;<a href="#section-6">가설에 맞서는 증거</a></div><div>07 &nbsp;<a href="#section-7">쓸모 있는 근사</a></div></div></div><div><div class="rail-title">[주제]</div><div class="rail-list rail-list--dim"><span>선형 표현 가설</span><span>방향</span><span>사영</span><span>특권 기저</span><span>조종</span></div></div><div><div class="rail-title">[연재]</div><div class="rail-list rail-list--dim"><a href="#series">안에서 보는 AI</a><span>38편 중 7편</span></div></div></div><div class="article-body"><p>5편에서 보았듯이, 뉴런 하나하나는 모델을 읽는 단위로 알맞지 않은 경우가 많아서 이 분야는 특징(feature)이라는 단위로 옮겨 갔습니다. 이 책의 5장은 신경망이 정보를 어떻게 표현하고 계산을 어떻게 수행하는지에 관한 가설 네 가지를 다룹니다. 어느 것도 증명되지는 않았지만, 각각이 이 분야가 어떤 방법을 만들고 어떤 실험을 할지에 영향을 주었습니다. 이번 편은 그 가운데 첫 번째이자 가장 영향력 있는 선형 표현 가설(linear representation hypothesis)을 다룹니다. 5.1절(27–28쪽)입니다.</p>
 <h2 class="article-h2" id="section-1">가설</h2>
-<p>선형 표현 가설은 활성 공간(activation space)의 곧은 방향이 개념을 표현하는 효과적인 기본 단위라고 말합니다. 이 책의 표현으로는, 개념은 활성 공간의 선형 방향인 특징(feature)으로 표현될 수 있습니다.</p>
+<p>선형 표현 가설은 활성 공간(activation space)의 곧은 방향이 개념을 표현하는 효과적인 기본 단위라고 말합니다. 이 책의 표현으로는, 개념은 활성 공간의 선형 방향인 특징으로 표현될 수 있습니다.</p>
 <p>여기서 두 가지 결과가 따라 나오고, 이 가설이 그토록 쓸모 있는 이유도 이 둘에 있습니다. 첫째는 읽기에 관한 것입니다. 어떤 활성값(activation)에 개념이 얼마나 강하게 들어 있는지 재려면, 그 활성값을 개념의 방향 위에 사영(projection)합니다. 활성값이 그 방향으로 얼마나 멀리 뻗어 있는지 묻는 것입니다. 도시를 북동쪽으로 가로질러 걷는다고 해 봅시다. 그동안 북쪽으로 이동한 거리가, 걸어간 경로를 북쪽 방향에 사영한 값입니다. 마찬가지로 어떤 활성값을 &#39;행복&#39; 방향에 사영하면, 모델의 지금 상태가 얼마나 행복하게 읽히는지 알 수 있습니다. 수학적으로는 곱하고 더하는 계산 한 번이며, 이 책은 이를 φᵀh(x)로 씁니다.</p>
 <p>둘째는 쓰기에 관한 것입니다. 활성값에 그 방향을, 또는 그 방향의 몇 배를 더하면 모델의 행동이 그 개념 쪽으로 밀려야 하고, 빼면 멀어져야 합니다. 모델이 행복을 어떤 방향으로 담고 있다면, 계산 도중에 그 방향을 조금 더 보탰을 때 모델이 써 내는 문장이 조금 더 행복해져야 합니다.</p>
 <figure><div class="frame" style="aspect-ratio:640/330"><img src="../images/inside-07-direction-ko.png" alt="활성 공간을 2차원으로 나타낸 스케치. 행복한 문장의 점들이 한쪽에, 슬픈 문장의 점들이 다른 쪽에 모여 있습니다. ‘행복 방향’이라는 화살표가 슬픈 점들의 중심에서 행복한 점들의 중심으로 이어집니다. 중립적인 문장의 활성값을 점선으로 화살표 위에 사영해 얼마나 행복하게 읽히는지 보여 줍니다. 두 번째 화살표는 중립적인 활성값을 그 방향으로 밀어, 모델의 출력이 더 행복해지는 것을 보여 줍니다."></div><figcaption>도판 1 — 방향으로 나타낸 개념입니다. 5.1절에 딸린 이 책의 노트북을 본떴습니다. 이 노트북은 행복한 문장과 슬픈 문장의 평균 활성값 차이로 GPT-2의 &#39;행복 방향&#39;을 찾습니다(2차원으로 단순화한 예시이며, 실제 활성 공간은 수백에서 수천 차원입니다). 사영으로 개념을 읽고, 방향을 더해 개념을 조종합니다.</figcaption></figure>
@@ -53,7 +53,7 @@
 <footer class="colophon"><div class="colophon-links"><a href="https://scholar.google.com/citations?user=0ROak0YAAAAJ&amp;hl=en">Google Scholar</a><span>,</span><a href="mailto:hyunhoon.j@gmail.com">hyunhoon.j@gmail.com</a></div><span class="colophon-copy">© 2026 정현훈. 무단 전재·재배포 금지.</span></footer>
 </div>
 </div>
-<script src="../assets/site.js?v=148bce48"></script>
+<script src="../assets/site.js?v=0544aa1c"></script>
 <script data-goatcounter="https://hyunhoonj.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
 </body>
 </html>
