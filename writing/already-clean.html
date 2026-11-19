@@ -13,8 +13,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,400&amp;family=Noto+Serif+KR:wght@300;400;600&amp;display=swap">
-  <link rel="stylesheet" href="../assets/broadsheet.css?v=148bce48">
-  <link rel="stylesheet" href="../assets/site.css?v=148bce48">
+  <link rel="stylesheet" href="../assets/broadsheet.css?v=0544aa1c">
+  <link rel="stylesheet" href="../assets/site.css?v=0544aa1c">
 </head>
 <body>
 <div class="sheet">
@@ -62,7 +62,7 @@
 <p>그는 두 가지 실수의 대가가 같지 않다는 점도 짚습니다. 신경망이 깨끗하다고 가정했는데 틀렸다면, 지저분한 뉴런은 단서가 됩니다. 조사하다 보면 설명이 나아집니다. 반대로 신경망이 접혀 있다고 가정했는데 틀렸다면, 지저분한 뉴런에서 탐구가 끝납니다. 더 들여다보지 않기 때문입니다. 그는 여러 해 동안 두 번째 가정을 했고, 그 때문에 생각을 바꿔 줄 수 있었던 증거마저 중첩으로 설명하고 넘어가 버렸습니다.</p>
 <p>마지막으로 에세이는 이 분야가 다른 이유로 받아들인 변화의 덕을 보았을 수 있다고 봅니다. 2023년에 저자는 작고 단순화한 모델이 가장 좋은 출발점이라고 생각했습니다. 지금은 반대로 생각합니다. InceptionV1에 없던 잔차 스트림(residual stream) 같은 요즘 설계의 요소들은 신경망이 잘 배우도록 돕는 장치이고, 이런 요소를 덜어 내면 뉴런도 제대로 배우지 못합니다. 또 큰 모델은 패턴을 알아보기 쉬운, 한 가지에 집중하는 뉴런을 배웁니다. 에세이의 말대로라면, 이 분야는 어차피 원하던 설계와 규모를 받아들이면서 자기도 모르게 깨끗한 뉴런 쪽으로 다가가고 있었는지도 모릅니다.</p>
 <h2 class="article-h2" id="section-6">제가 확인한 것</h2>
-<p>에세이 페이지에는 무작위로 고른 &#39;뉴런 논문&#39;(neuron paper) 1,000편이 공개되어 있습니다. 논문이라고 부르지만 실제로는 뉴런 하나를 자세히 조사한 보고서로, Qwen3-32B에서 500편, 전문가 혼합 모델 Qwen3.6-35B-A3B의 전문가 뉴런에서 500편입니다. 보고서마다 그 뉴런이 얼마나 깨끗한지를 1점에서 10점으로 매긴 평가자의 점수와 한 줄짜리 이유가 붙어 있습니다. 이 점수는 90%라는 수치의 근거와 같은 척도가 아니어서, 그 수치를 확인해 주지는 못합니다. 그래도 점수 분포는 세어 볼 수 있습니다(도판 4).</p>
+<p>에세이 페이지에는 무작위로 고른 &#39;뉴런 논문&#39;(neuron paper) 1,000편이 공개되어 있습니다. 논문이라고 부르지만 실제로는 뉴런 하나를 자세히 조사한 보고서로, 전문가로 나뉘지 않은 밀집 모델(dense model) Qwen3-32B에서 500편, 전문가 혼합 모델 Qwen3.6-35B-A3B의 전문가 뉴런에서 500편입니다. 보고서마다 그 뉴런이 얼마나 깨끗한지를 1점에서 10점으로 매긴 평가자의 점수와 한 줄짜리 이유가 붙어 있습니다. 이 점수는 90%라는 수치의 근거와 같은 척도가 아니어서, 그 수치를 확인해 주지는 못합니다. 그래도 점수 분포는 세어 볼 수 있습니다(도판 4).</p>
 <figure><div class="frame" style="aspect-ratio:640/330"><img src="../images/ac-fig3b-ko.png" alt="평가자가 매긴 깨끗함 점수(1–10점)를 Qwen3-32B 뉴런 500개와 Qwen3.6-35B-A3B 뉴런 500개로 나누어 그린 막대 그래프. 대부분 6–8점. 4점 이하 102개, 5점 이상 898개."></div><figcaption>도판 4 — 에세이와 함께 공개된 뉴런 보고서 1,000편을 제가 세었습니다. 막대 하나는 평가자가 그 점수를 준 뉴런의 수입니다. 이 점수는 에세이가 말하는 90%의 근거와 같은 척도가 아닙니다.</figcaption></figure>
 <p>1,000개 가운데 898개가 5점 이상이었습니다(Qwen3-32B 454개, 전문가 혼합 모델 444개). 5점부터는 이유에 대개 중심 개념 하나가 적혀 있고, 따라갈 수 있는 가지나 설명되지 않은 나머지가 붙은 경우가 많습니다. 4점 이하인 102개의 이유에는 서로 무관한 반응이나 공통점 없는 혼합이 더 자주 나옵니다. 1점을 받은 6개는 모두 전문가 혼합 모델의 뉴런이고, 대부분 사실상 켜지지 않는 뉴런입니다. 8점 이상은 300개뿐입니다. 공개된 표본은 대부분의 뉴런이 한 가지 일을 하고 거기에 가지가 붙는다는 에세이의 설명과 맞습니다. 동시에 그 설명이 가지를 어떻게 세느냐에 상당 부분 달려 있다는 것도 보여 줍니다.</p>
 <p>주된 일과 가지의 경계를 어디에 긋느냐가 판단의 문제라는 것은, 뉴런 하나만 봐도 알 수 있습니다. 에세이는 가장 강한 활성에 IDL과 Cesium 코드가 섞인 행성 지질학 뉴런을 소개하고, 코드를 가지로 셉니다. 이 뉴런의 보고서는 그만큼 확신하지 않습니다. 평가자는 5점을 주었고, 가장 강한 활성의 5분의 1을 차지하는 코드 쪽 활성이 지질학과 끝내 연결되지 않는다고 적었습니다. 한편 같은 보고서는 이 뉴런을 제거하면 모델의 출력 가운데 지질학 쪽만 바뀐다고 전합니다. 가지는 덜 중요하다는 에세이의 주장과 맞는 결과입니다. 코드가 가지인지, 설명되지 않은 별개의 반응인지는 판단의 문제입니다. 에세이도 각주에서 자신의 백분율이 바로 이런 판단에 달려 있다고 밝힙니다.</p>
@@ -90,7 +90,7 @@
 <footer class="colophon"><div class="colophon-links"><a href="https://scholar.google.com/citations?user=0ROak0YAAAAJ&amp;hl=en">Google Scholar</a><span>,</span><a href="mailto:hyunhoon.j@gmail.com">hyunhoon.j@gmail.com</a></div><span class="colophon-copy">© 2026 정현훈. 무단 전재·재배포 금지.</span></footer>
 </div>
 </div>
-<script src="../assets/site.js?v=148bce48"></script>
+<script src="../assets/site.js?v=0544aa1c"></script>
 <script data-goatcounter="https://hyunhoonj.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
 </body>
 </html>

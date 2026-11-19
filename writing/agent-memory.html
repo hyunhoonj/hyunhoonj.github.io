@@ -13,8 +13,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,400&amp;family=Noto+Serif+KR:wght@300;400;600&amp;display=swap">
-  <link rel="stylesheet" href="../assets/broadsheet.css?v=148bce48">
-  <link rel="stylesheet" href="../assets/site.css?v=148bce48">
+  <link rel="stylesheet" href="../assets/broadsheet.css?v=0544aa1c">
+  <link rel="stylesheet" href="../assets/site.css?v=0544aa1c">
 </head>
 <body>
 <div class="sheet">
@@ -29,7 +29,7 @@
 <p>Anthropic의 글은 사람의 기억을 이렇게 설명합니다. 해마(hippocampus)는 경험을 일어나는 대로 빠르게 기록해서 바로 꺼내 쓸 수 있게 합니다. 그중 일부만 오래가는 지식이 되는데, 그 일은 상당 부분 오프라인, 곧 잠자거나 조용히 쉬는 동안에 일어납니다. 이때 해마가 최근 경험을 재생(replay)하고, 그 경험은 우리가 아는 것 대부분이 저장되는 신피질(neocortex)에 차츰 새겨집니다. 경험 전후에 분비되는 화학 신호가 어떤 기억을 중요하다고 표시하면, 표시된 기억은 더 자주 재생됩니다.</p>
 <p>Anthropic의 글은 이름을 밝히지 않지만, 이것은 James McClelland, Bruce McNaughton, Randall O&#39;Reilly가 1995년에 정리한 상보적 학습 시스템 이론(complementary learning systems)입니다. 이 이론의 핵심은 기억 시스템이 애초에 왜 둘인가 하는 물음에 있습니다. 신피질처럼 여러 지식이 같은 연결들을 나눠 쓰며 저장되는 네트워크는, 새 경험을 많은 옛 경험과 섞어 가며 천천히 배울 때 세상의 구조를 가장 잘 익힙니다. 새로운 것 하나를 빨리 배우게 하면 이미 알던 것을 덮어써 버리는데, 저자들은 이것을 파국적 간섭(catastrophic interference)이라고 부릅니다. 그래서 뇌는 일을 나눕니다. 해마는 새 일화를 곧바로 배우고 다른 모든 것과 떼어 둡니다. 그리고 며칠, 혹은 그보다 긴 시간에 걸쳐 그 일화를 신피질에 다시 들려주고, 신피질은 그 일화를 이미 아는 것들 속에 천천히 엮어 넣습니다. 저자들은 이 재생이 잠을 포함한 오프라인 상태에서도 일어난다고 가정합니다.</p>
 <p>Anthropic의 글은 이 그림을 Claude에 옮겨 놓습니다. 세션의 대화 기록은 해마의 빠른 기록에 해당하고, 꿈꾸기(dreaming)는 오프라인 재생에 해당합니다. Claude는 작업과 작업 사이에 지난 대화 기록과 노트를 다시 읽고, 실수를 바로잡고, 새 노트와 요약, 서로 연결된 위키 페이지를 씁니다. 이 생각은 Letta와 UC 버클리의 연구자들이 수면 시간 연산(sleep-time compute)이라고 부른 방법에 바탕을 둡니다. 상호작용과 상호작용 사이의 빈 시간에, 모델이 이미 가진 것을 다시 다듬는 방법입니다.</p>
-<figure><div class="frame" style="aspect-ratio:640/330"><img src="../images/mem-fig1-ko.png" alt="두 줄로 그린 모식도. 뇌: 경험, 해마(빠르게, 일화를 하나씩 따로 둠), 잠과 휴식 중의 재생을 거쳐 신피질(느리게, 연결이 바뀜). 에이전트 메모리를 쓰는 Claude: 세션, 대화 기록(글자 그대로 남음), 작업 사이의 꿈꾸기를 거쳐 노트와 위키(입력으로 다시 읽힘). 노트 아래에 빗금 친 모델의 가중치는 그대로이고, 모델에 닿는 화살표는 없음"></div><figcaption>도판 1 — 겪은 일을 간직하는 두 방식을 그린 모식도입니다. 뇌에서는 재생이 신피질을 가르치므로, 기억하는 시스템 자체가 바뀝니다. Claude에서는 꿈꾸기가 노트를 쓰고, 그 노트는 다음 세션에 입력으로 다시 읽힙니다. 모델의 가중치는 그대로입니다.</figcaption></figure>
+<figure><div class="frame" style="aspect-ratio:640/330"><img src="../images/mem-fig1b-ko.png" alt="두 줄로 그린 모식도. 뇌: 경험, 해마(빠르게, 일화를 따로 떼어 둠), 잠과 휴식 중의 재생을 거쳐 신피질(느리게, 연결이 바뀜). 에이전트 메모리를 쓰는 Claude: 세션, 대화 기록(글자 그대로 남음), 작업 사이의 꿈꾸기를 거쳐 노트와 위키(입력으로 다시 읽힘). 노트 아래에 빗금 친 모델의 가중치는 그대로이고, 모델에 닿는 화살표는 없음"></div><figcaption>도판 1 — 겪은 일을 간직하는 두 방식을 그린 모식도입니다. 뇌에서는 재생이 신피질을 가르치므로, 기억하는 시스템 자체가 바뀝니다. Claude에서는 꿈꾸기가 노트를 쓰고, 그 노트는 다음 세션에 입력으로 다시 읽힙니다. 모델의 가중치는 그대로입니다.</figcaption></figure>
 <h2 class="article-h2" id="section-2">비유가 맞는 곳</h2>
 <p>세 가지는 잘 들어맞습니다.</p>
 <p>첫째는 시점입니다. 뇌와 Claude 모두 지금 적어 두고 나중에 정리합니다. Claude는 세션 중에 노트를 쓸 수 있는데, 그러면 작업에 쓸 주의를 나눠야 합니다. 아니면 그 일을 꿈꾸기에 맡길 수 있는데, 그러면 나중에 연산을 들여야 합니다. 글은 언제 기억을 써야 하는지를 열린 질문으로 남깁니다. 뇌의 답은 깨어 있을 때와 잘 때, 양쪽에서 조금씩 하는 것입니다.</p>
@@ -58,7 +58,7 @@
 <footer class="colophon"><div class="colophon-links"><a href="https://scholar.google.com/citations?user=0ROak0YAAAAJ&amp;hl=en">Google Scholar</a><span>,</span><a href="mailto:hyunhoon.j@gmail.com">hyunhoon.j@gmail.com</a></div><span class="colophon-copy">© 2026 정현훈. 무단 전재·재배포 금지.</span></footer>
 </div>
 </div>
-<script src="../assets/site.js?v=148bce48"></script>
+<script src="../assets/site.js?v=0544aa1c"></script>
 <script data-goatcounter="https://hyunhoonj.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
 </body>
 </html>
