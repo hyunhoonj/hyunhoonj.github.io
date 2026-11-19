@@ -83,8 +83,8 @@
             "desc": "인간 너머로 법인격을 넓히자는 Jeff Sebo의 논문과, 그 뒤 입법자들에게 서두르지 말라고 한 강연을 깊이 읽습니다. ==권리를 가질 수 있으면 누구나 인격체이고, 열린 질문은 누가 그럴 수 있느냐입니다==.",
             "ratio": "1/1",
             "image": {
-              "src": "images/mp-card.jpg",
-              "alt": "붓으로 그린 넓은 원상. 오른쪽 위가 열려 있고, 안쪽 가장자리 가까이에 작은 먹점 하나가 옅은 초록 번짐 속에 있음"
+              "src": "images/mp-card-b.jpg",
+              "alt": "붓을 두 번씩 찍어 그린 두 사람. 왼쪽은 작고 오른쪽은 큼. 저마다 비스듬히 기운 타원 머리 아래, 위가 좁고 아래가 넓은 몸이 있고, 몸의 먹은 위로 갈수록 마름"
             }
           },
           {
@@ -285,8 +285,8 @@
             "desc": "A close reading of Jeff Sebo's case for legal personhood beyond humans, and of the talk that later asked lawmakers to slow down. ==A person is anyone who can hold a right; the open question is who can.==",
             "ratio": "1/1",
             "image": {
-              "src": "images/mp-card.jpg",
-              "alt": "A wide circle drawn with a brush, left open at the upper right, with one small ink dot inside it near the rim, in a pale green wash"
+              "src": "images/mp-card-b.jpg",
+              "alt": "Two people, each made with two presses of the brush, a small one on the left and a large one on the right: a tilted oval head above a body narrow at the top and broad at the base, its ink drying toward the top"
             }
           },
           {
