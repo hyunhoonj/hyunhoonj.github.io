@@ -57,8 +57,8 @@
             "desc": "뇌영상 논문 912편으로 자아의 중심을 찾아본 프리프린트를 깊이 읽습니다. ==중심은 없고, 다른 일도 하는 체계들의 연합만 있었다고 합니다==.",
             "ratio": "1/1",
             "image": {
-              "src": "images/ws-card.jpg",
-              "alt": "붓으로 그린 수레바퀴. 테두리에서 안쪽으로 뻗은 바큇살들이 저마다 다른 길이에서 멈춰 가운데에 바퀴통이 없고, 그 옆에 옅은 황토색 번짐이 있음"
+              "src": "images/ws-card-b.jpg",
+              "alt": "색색의 작은 구름 열다섯 개가 종이 위에 흩어져 있고, 가는 먹선들이 구름과 구름을 이리저리 잇는 그림. 가운데 왼쪽의 구름 다섯 개를 잇는 선만 굵고 진함"
             }
           },
           {
@@ -259,8 +259,8 @@
             "desc": "A close reading of a preprint that looked for the self's core across 912 neuroimaging papers. ==It found no core, only coalitions of systems that also do other work.==",
             "ratio": "1/1",
             "image": {
-              "src": "images/ws-card.jpg",
-              "alt": "A cartwheel drawn with a brush, its spokes reaching in from the rim and stopping at different lengths so there is no hub, with a pale ochre wash beside the empty centre"
+              "src": "images/ws-card-b.jpg",
+              "alt": "Fifteen small clouds of colour scattered over the paper, joined this way and that by fine ink lines; only the lines among five clouds left of centre are drawn heavy and dark"
             }
           },
           {
