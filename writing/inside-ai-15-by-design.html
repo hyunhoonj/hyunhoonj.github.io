@@ -13,8 +13,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,400&amp;family=Noto+Serif+KR:wght@300;400;600&amp;display=swap">
-  <link rel="stylesheet" href="../assets/broadsheet.css?v=4348a9b1">
-  <link rel="stylesheet" href="../assets/site.css?v=4348a9b1">
+  <link rel="stylesheet" href="../assets/broadsheet.css?v=e4498c44">
+  <link rel="stylesheet" href="../assets/site.css?v=e4498c44">
 </head>
 <body>
 <div class="sheet">
@@ -43,7 +43,7 @@
 <figure><div class="frame" style="aspect-ratio:640/280"><img src="../images/inside-15-kan-ko.png" alt="입력 세 개를 받는 노드 하나를 나타낸 도식 두 개. 보통의 신경망에서는 들어오는 각 연결이 숫자 하나, 곧 가중치를 지니고, 노드는 가중치를 곱한 입력들을 더한 뒤 고정된 비선형 함수를 적용합니다. 콜모고로프–아르놀트 신경망에서는 각 연결이 학습 가능한 작은 곡선을 지니고, 노드는 곡선들이 내놓은 값을 더하기만 합니다."></div><figcaption>도판 2 — 6.10.5절을 따라, 비선형성이 어디에 있는지 비교한 것입니다. KAN은 비선형성을 노드에서 연결로 옮깁니다. 연결마다 놓인 비선형성은 입력 하나만 받는 함수이므로, 그래프로 그려 볼 수 있고 때로는 수식으로 적어 낼 수도 있습니다.</figcaption></figure>
 <p>이렇게 하면 함수들을 합성한 구조가 겉으로 그대로 드러납니다. 모든 비선형성이 입력 하나만 받는 함수이므로, 연결마다 곡선을 그대로 그려 볼 수 있습니다. 그다음 곡선에 맞는 수식을 찾아 주는 기호 회귀(symbolic regression)를 적용해, 신경망이 무엇을 배웠는지 읽어 낼 수 있습니다. 실제로 KAN은 이런 방식으로 물리학의 알려진 방정식을 다시 찾아내는 데 쓰였습니다. KAN을 학습시키는 데는 지금으로서는 보통의 MLP보다 비용이 더 들고, 대규모 언어 모델 규모에서 작동한다는 것이 설득력 있게 입증된 적은 없습니다. 하지만 이 책은 KAN이 야심 찬 목표를 가리킨다고 봅니다. 파라미터 하나하나가 수학적으로 의미 있는 함수에 대응하는 신경망이라는 목표입니다.</p>
 <h2 class="article-h2" id="section-6">다섯 접근을 한자리에</h2>
-<div class="table-block"><table class="table"><thead><tr><th>방법</th><th>접근</th><th>얻는 것</th><th>주된 한계</th></tr></thead><tbody><tr><td>SoLU</td><td>소프트맥스로 조절하는 활성화 함수</td><td>더 많은 단의적 뉴런</td><td>층 정규화가 중첩을 다시 밀반입함</td></tr><tr><td>가중치 희소성</td><td>가중치 대부분을 정확히 0으로 강제</td><td>더 단의적인 뉴런과 훨씬 작은 회로</td><td>학습이 불안정하고 규모를 키우기 어려움</td></tr><tr><td>어텐션 희소성</td><td>0이 아닌 어텐션 가중치에 벌점</td><td>읽을 수 있는 어텐션 패턴</td><td>학습된 모델을 미세 조정해야 함</td></tr><tr><td>MOLT</td><td>선형 변환들의 희소한 혼합</td><td>모델이 수행하는 연산을 보여 줌</td><td>행렬 자체를 분석하기가 복잡할 수 있음</td></tr><tr><td>KAN</td><td>연결 위의 학습 가능한 곡선</td><td>수식을 뽑아낼 수 있음</td><td>대규모 언어 모델 규모에서 검증되지 않음</td></tr></tbody></table><div class="table-cap">설계로 얻는 해석 가능성 방법들 (이 책의 표 7을 바탕으로)</div></div>
+<div class="table-block"><table class="table"><thead><tr><th>방법</th><th>접근</th><th>얻는 것</th><th>주된 한계</th></tr></thead><tbody><tr><td>SoLU</td><td>소프트맥스로 조절하는 활성화 함수</td><td>더 많은 단의적 뉴런</td><td>층 정규화가 중첩을 다시 밀반입함</td></tr><tr><td>가중치 희소성</td><td>가중치 대부분을 정확히 0으로 강제</td><td>더 단의적인 뉴런과 훨씬 작은 회로</td><td>0이 아닌 가중치가 수천만 개를 넘으면 해석 가능성 유지가 어렵고, 계산이 훨씬 많이 듦</td></tr><tr><td>어텐션 희소성</td><td>0이 아닌 어텐션 가중치에 벌점</td><td>읽을 수 있는 어텐션 패턴</td><td>학습된 모델을 미세 조정해야 함</td></tr><tr><td>MOLT</td><td>선형 변환들의 희소한 혼합</td><td>모델이 수행하는 연산을 보여 줌</td><td>행렬 자체를 분석하기가 복잡할 수 있음</td></tr><tr><td>KAN</td><td>연결 위의 학습 가능한 곡선</td><td>수식을 뽑아낼 수 있음</td><td>대규모 언어 모델 규모에서 검증되지 않음</td></tr></tbody></table><div class="table-cap">설계로 얻는 해석 가능성 방법들 (이 책의 표 7을 바탕으로)</div></div>
 <h2 class="article-h2" id="section-7">특징 부를 마치며</h2>
 <p>이 책은 특징에 관한 장을 마무리하며 당부를 하나 남기는데, 이 부의 여섯 편 모두에 해당하는 말입니다. 특징을 나중에 되찾든 설계로 유도하든, 특징은 분석의 단위일 뿐, 모델이 어떻게 작동하는지 완전히 설명해 주지는 않습니다. 설명이 되려면 이 단위들이 서로 어떻게 상호작용하고 영향을 주고받아 행동을 만들어 내는지까지 말해야 합니다. 이것이 바로 회로가 하는 일이고, 다음 부가 이를 다룹니다.</p>
 <div class="table-block"><table class="table"><thead><tr><th>용어</th><th>뜻</th></tr></thead><tbody><tr><td>설계로 얻는 해석 가능성</td><td>나중에 풀어내는 대신, 계산을 분석하기 쉬운 모델을 처음부터 만드는 것</td></tr><tr><td>SoLU</td><td>소프트맥스로 뉴런들을 경쟁시키는 MLP 활성화 함수</td></tr><tr><td>측면 억제</td><td>뇌에서처럼, 켜진 단위가 이웃 단위를 누르는 것</td></tr><tr><td>밀반입</td><td>한 부분에 제약을 걸자 중첩이 신경망의 다른 부분으로 옮겨 가는 것</td></tr><tr><td>가중치 희소성</td><td>가중치 대부분을 정확히 0으로 강제하며 학습하는 것</td></tr><tr><td>파레토 경계</td><td>두 목표, 여기서는 능력과 해석 가능성 사이의 가장 좋은 절충들의 집합</td></tr><tr><td>퍼진 어텐션</td><td>여러 위치에 얇게 나뉜 주의</td></tr><tr><td>MOLT</td><td>희소 선형 변환 혼합. 특징이 아니라 연산을 분석의 단위로 삼음</td></tr><tr><td>KAN</td><td>콜모고로프–아르놀트 신경망. 연결마다 가중치 하나 대신 학습 가능한 곡선을 둠</td></tr><tr><td>기호 회귀</td><td>학습된 함수에 맞는 수학 수식을 찾는 것</td></tr></tbody></table><div class="table-cap">이번 편의 용어</div></div>
@@ -52,7 +52,7 @@
 <footer class="colophon"><div class="colophon-links"><a href="https://scholar.google.com/citations?user=0ROak0YAAAAJ&amp;hl=en">Google Scholar</a><span>,</span><a href="mailto:hyunhoon.j@gmail.com">hyunhoon.j@gmail.com</a></div><span class="colophon-copy">© 2026 정현훈. 무단 전재·재배포 금지.</span></footer>
 </div>
 </div>
-<script src="../assets/site.js?v=4348a9b1"></script>
+<script src="../assets/site.js?v=e4498c44"></script>
 <script data-goatcounter="https://hyunhoonj.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
 </body>
 </html>

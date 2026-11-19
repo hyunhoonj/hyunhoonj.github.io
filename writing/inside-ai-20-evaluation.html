@@ -13,8 +13,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,400&amp;family=Noto+Serif+KR:wght@300;400;600&amp;display=swap">
-  <link rel="stylesheet" href="../assets/broadsheet.css?v=4348a9b1">
-  <link rel="stylesheet" href="../assets/site.css?v=4348a9b1">
+  <link rel="stylesheet" href="../assets/broadsheet.css?v=e4498c44">
+  <link rel="stylesheet" href="../assets/site.css?v=e4498c44">
 </head>
 <body>
 <div class="sheet">
@@ -42,7 +42,7 @@
 <p>구성 요소가 필요하고, 충분하고, 특이한가? 18편에서 본 시험들을 점수로 바꾼 것입니다. 필요성 점수는 구성 요소를 제거(ablation)했을 때 잃는 성능의 비율입니다. 충분성 점수는 그 구성 요소만 켜 두었을 때 남는 성능의 비율입니다. 특이성(specificity)은 그 구성 요소에 개입했을 때, 대조용으로 고른 여러 행동이 아니라 목표 행동에 영향이 가는지 잽니다. 평가 절차는 중요한 대조 실험을 하나 덧붙입니다. 같은 크기의 구성 요소 집합을 무작위로 골라 제거하거나 남겨 둔 경우와 비교하라는 것입니다. 모델에서 큰 덩어리를 떼어 내면 무엇을 떼어 내든 모델이 망가질 수 있기 때문입니다. 여기에 서로 다른 행동을 보이는 입력들 사이에서 활성값을 맞바꾸는 교환 시험(interchange test)을 더하면 시험 묶음이 완성됩니다.</p>
 <p>인과적 타당성을 시험하는 벤치마크도 이미 여럿 있습니다. 회로와 인과 변수를 평가하는 MIB, 모델을 특정 개념 쪽으로 조종하는 능력을 보는 AxBench, 주어진 개념의 특징을 찾는 능력을 보는 RAVEL, 그리고 희소 오토인코더를 위한 SAEBench입니다. SAEBench는 재구성 지표와 함께 성별 편향 제거 같은 응용 과제도 봅니다.</p>
 <h2 class="article-h2" id="section-7">차원 5: 사람의 해석 가능성</h2>
-<p>설명이 실제로 사람들에게 도움이 되는가? 설명 효용은 설명을 보여 주었을 때 보여 주지 않았을 때보다 사람들이 새 입력에 대한 모델의 행동을 얼마나 더 잘 예측하는지 잽니다. 디버깅 효용은 설명이 있을 때 사람들이 모델의 오류를 찾아내 고치는 데 얼마나 더 자주 성공하는지 잽니다. 해석의 일관성은 서로 다른 사람들이 같은 설명을 같은 방식으로 읽는지 잽니다. 이 책은 어려움도 인정합니다. 사람을 대상으로 한 연구는 비용이 많이 들고, 참가자의 전문성에 따라 결과가 달라집니다. 해석 가능성 연구자에게 분명한 설명이 그 응용 분야의 전문가에게는 알기 어려울 수 있고, 그 반대도 마찬가지입니다.</p>
+<p>설명이 실제로 사람들에게 도움이 되는가? 설명 효용은 설명을 보여 주었을 때 보여 주지 않았을 때보다 사람들이 새 입력에 대한 모델의 행동을 얼마나 더 잘 예측하는지 잽니다. 디버깅 효용은 설명이 있을 때 사람들이 모델의 오류를 찾아내 고치는 데 얼마나 더 자주 성공하는지 잽니다. 해석의 일관성은 서로 다른 사람들이 같은 설명을 같은 방식으로 읽는지를 평가자 간 일치도(inter-rater agreement)로 잽니다. 이 책은 어려움도 인정합니다. 사람을 대상으로 한 연구는 비용이 많이 들고, 참가자의 전문성에 따라 결과가 달라집니다. 해석 가능성 연구자에게 분명한 설명이 그 응용 분야의 전문가에게는 알기 어려울 수 있고, 그 반대도 마찬가지입니다.</p>
 <h2 class="article-h2" id="section-8">틀을 적용하기</h2>
 <p>이 책은 방법의 갈래마다 무엇을 가장 중요하게 봐야 하는지도 제안합니다. SAE라면 특징의 귀속 점수가 개입 결과와 맞는지, 재구성이 얼마나 잘 되고 손실이 얼마나 회복되는지, 시드를 바꿔도 같은 특징이 나오는지, 특징이 필요하고 충분한지, 그리고 사람과 모델이 특징을 일관되게 설명하는지가 중요합니다. 회로 찾기라면 반사실적 회복, 행동 적용 범위, 시드와 설정과 바꿔 쓴 문장에 흔들리지 않는지, 교환 시험, 그리고 회로를 작게 만드는 것과 많이 설명하게 만드는 것 사이의 절충이 중요합니다. 프로브(probe)와 조종 벡터에서는, 이들을 학습시키는 데 쓴 데이터에서 교란 요인을 찾아보라는 항목이 거듭 나옵니다. 교란 요인(confounding factor)이란 데이터에 공통으로 깔려 있어서, 찾아낸 방향이 실제로는 그것을 잡아내고 있을지 모르는 정보입니다.</p>
 <p>그리고 다섯 단계로 된 평가 절차를 제시합니다.</p>
@@ -57,7 +57,7 @@
 <footer class="colophon"><div class="colophon-links"><a href="https://scholar.google.com/citations?user=0ROak0YAAAAJ&amp;hl=en">Google Scholar</a><span>,</span><a href="mailto:hyunhoon.j@gmail.com">hyunhoon.j@gmail.com</a></div><span class="colophon-copy">© 2026 정현훈. 무단 전재·재배포 금지.</span></footer>
 </div>
 </div>
-<script src="../assets/site.js?v=4348a9b1"></script>
+<script src="../assets/site.js?v=e4498c44"></script>
 <script data-goatcounter="https://hyunhoonj.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
 </body>
 </html>

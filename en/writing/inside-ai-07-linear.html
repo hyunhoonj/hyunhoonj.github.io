@@ -13,8 +13,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,400&amp;family=Noto+Serif+KR:wght@300;400;600&amp;display=swap">
-  <link rel="stylesheet" href="../../assets/broadsheet.css?v=4348a9b1">
-  <link rel="stylesheet" href="../../assets/site.css?v=4348a9b1">
+  <link rel="stylesheet" href="../../assets/broadsheet.css?v=e4498c44">
+  <link rel="stylesheet" href="../../assets/site.css?v=e4498c44">
 </head>
 <body>
 <div class="sheet">
@@ -43,7 +43,7 @@
 <p>The book lists three kinds of support for the weak version. Linear probes, the simple classifiers of part 3, succeed in reading a wide range of concepts out of a wide range of models. Activation steering along a single direction can produce targeted changes in behaviour, as in a 2024 study that steered models by adding one vector to their activations. And sparse autoencoders recover, at scale, features that are linearly accessible and that can be used for steering.</p>
 <h2 class="article-h2" id="section-6">The evidence against it</h2>
 <p>At the same time, the book reports substantial evidence that not all representations are well described as straight-line directions. Some features interact nonlinearly. Some algorithms inside models rely on nonlinear transformations. Some features are spread across several subspaces that interact with each other.</p>
-<p>Two of the cited studies make this concrete. A 2023 study of a small transformer trained to add numbers modulo a fixed number found that the model represents numbers as positions on circles and adds them by combining rotations, using trigonometric identities. And a 2025 study, titled bluntly &quot;Not All Language Model Features Are One-Dimensionally Linear&quot;, found that language models represent the days of the week and the months of the year as points arranged on a circle: a two-dimensional shape in which Monday sits next to Tuesday and Sunday wraps round to Monday. The study also found evidence that models use these circles when they work out, for example, which day comes two days after a given one. No single straight direction can hold that wrap-around.</p>
+<p>Two of the cited studies make this concrete. A 2023 study of a small transformer trained to add numbers modulo a fixed number found that the model represents numbers as positions on circles and adds them by combining rotations, using trigonometric identities. And a 2025 study, titled bluntly &quot;Not All Language Model Features Are One-Dimensionally Linear&quot;, found that language models represent the days of the week and the months of the year as points arranged on a circle: a two-dimensional shape in which Monday sits next to Tuesday and Sunday wraps round to Monday. The study also found evidence that models use these circles when they work out, for example, which day comes two days after a given one. No single straight direction can hold that wrap-around. The study calls features like these, which need more than one direction, multidimensional features.</p>
 <p>Some researchers go further. One 2024 essay argues that features may not always exist as explicit objects in a model at all, but may emerge from the dynamics of its circuits. On that view, asking for &quot;the direction&quot; of a concept might sometimes be the wrong question.</p>
 <h2 class="article-h2" id="section-7">A useful approximation</h2>
 <p>The book&#39;s verdict is measured. The linear representation hypothesis is best viewed as a useful approximation that holds in some settings, not as a universal law. That is a good way to hold it while reading the rest of the series. Many of the most successful tools, from probes to sparse autoencoders to steering vectors, assume linearity, and their successes are evidence that a lot of what models represent is linear enough. Their failures are often places where it is not.</p>
@@ -53,7 +53,7 @@
 <footer class="colophon"><div class="colophon-links"><a href="https://scholar.google.com/citations?user=0ROak0YAAAAJ&amp;hl=en">Google Scholar</a><span>,</span><a href="mailto:hyunhoon.j@gmail.com">hyunhoon.j@gmail.com</a></div><span class="colophon-copy">© 2026 Hyunhoon Jung. All rights reserved.</span></footer>
 </div>
 </div>
-<script src="../../assets/site.js?v=4348a9b1"></script>
+<script src="../../assets/site.js?v=e4498c44"></script>
 <script data-goatcounter="https://hyunhoonj.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
 </body>
 </html>

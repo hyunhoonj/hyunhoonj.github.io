@@ -13,8 +13,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,400&amp;family=Noto+Serif+KR:wght@300;400;600&amp;display=swap">
-  <link rel="stylesheet" href="../../assets/broadsheet.css?v=4348a9b1">
-  <link rel="stylesheet" href="../../assets/site.css?v=4348a9b1">
+  <link rel="stylesheet" href="../../assets/broadsheet.css?v=e4498c44">
+  <link rel="stylesheet" href="../../assets/site.css?v=e4498c44">
 </head>
 <body>
 <div class="sheet">
@@ -32,7 +32,7 @@
 <h2 class="article-h2" id="section-3">Replacement models</h2>
 <p>The key idea the book draws from CLTs is the replacement model: a version of the original model in which every MLP layer is replaced by its CLT reconstruction. To run it, you compute the CLT features at each layer, replace each MLP&#39;s output with the reconstruction built from the features of that layer and earlier ones, and keep the attention layers unchanged.</p>
 <p>To study one particular prompt, researchers go a step further and build a local replacement model. They freeze the original model&#39;s attention patterns and normalisation statistics from its run on that prompt, and add a correction term at each layer for whatever the CLT failed to reconstruct. Under those conditions the local replacement model matches the original&#39;s activations on that prompt exactly, while expressing them in terms of interpretable CLT features.</p>
-<p>When the MLPs are replaced outright, without those corrections, the match is much weaker. In the 2025 study that introduced the method, on a fairly small 18-layer model, the replacement model&#39;s most likely next token agreed with the original model&#39;s on only about 50% of prompts from a standard text dataset.</p>
+<p>When the MLPs are replaced outright, without those corrections, the match is much weaker. In the 2025 study that introduced the method, on a fairly small 18-layer model, the replacement model&#39;s most likely next token agreed with the original model&#39;s on only about 50% of prompts from the Pile, a standard text dataset.</p>
 <figure><div class="frame" style="aspect-ratio:640/360"><img src="../../images/inside-13-tools-en.png" alt="Four small diagrams of a three-layer model, one per tool. An SAE reads one point in the residual stream and rebuilds the same point. A transcoder reads the input of an MLP and predicts its output. A cross-layer transcoder reads the stream at one layer and writes to the MLP outputs of that layer and every later one. A crosscoder reads all layers at once and rebuilds all of them from one shared set of features."></div><figcaption>Fig. 1 — What each dictionary tool reads and what it rebuilds, after the book&#39;s Figures 6, 7 and 9 and section 6.7. Moving right, the tools see more of the model&#39;s depth, and cost more.</figcaption></figure>
 <h2 class="article-h2" id="section-4">The book&#39;s warnings about fidelity</h2>
 <p>Fidelity here means how faithfully the replacement reproduces the original. The book sets out its caveats in a box of their own, which is worth following closely because CLT-based results have attracted a lot of attention.</p>
@@ -62,7 +62,7 @@
 <footer class="colophon"><div class="colophon-links"><a href="https://scholar.google.com/citations?user=0ROak0YAAAAJ&amp;hl=en">Google Scholar</a><span>,</span><a href="mailto:hyunhoon.j@gmail.com">hyunhoon.j@gmail.com</a></div><span class="colophon-copy">© 2026 Hyunhoon Jung. All rights reserved.</span></footer>
 </div>
 </div>
-<script src="../../assets/site.js?v=4348a9b1"></script>
+<script src="../../assets/site.js?v=e4498c44"></script>
 <script data-goatcounter="https://hyunhoonj.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
 </body>
 </html>
