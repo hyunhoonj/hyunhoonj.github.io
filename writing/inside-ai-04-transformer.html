@@ -13,8 +13,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,400&amp;family=Noto+Serif+KR:wght@300;400;600&amp;display=swap">
-  <link rel="stylesheet" href="../assets/broadsheet.css?v=e4498c44">
-  <link rel="stylesheet" href="../assets/site.css?v=e4498c44">
+  <link rel="stylesheet" href="../assets/broadsheet.css?v=0f99208f">
+  <link rel="stylesheet" href="../assets/site.css?v=0f99208f">
 </head>
 <body>
 <div class="sheet">
@@ -35,7 +35,7 @@
 <p>이 과정을 모든 층에 걸쳐 되풀이하면 쓸모 있는 결론이 하나 나옵니다. 어느 층의 스트림이든, 처음의 임베딩에 그 아래의 모든 어텐션 모듈과 모든 MLP가 써 넣은 것을 전부 더한 값과 같다는 것입니다. 다시 떼어 낼 수 없는 방식으로 뒤섞인 것은 없습니다.</p>
 <figure><div class="frame" style="aspect-ratio:640/400"><img src="../images/inside-04-stream-ko.png" alt="텍스트 한 위치의 잔차 스트림을 세로선으로 나타낸 도식. 맨 아래에서 단어의 임베딩으로 시작합니다. 층마다 어텐션 블록과 MLP 블록이 차례로 스트림을 읽고, 더하기 기호를 거쳐 출력을 스트림에 더합니다. 맨 위에서 언임베딩이 마지막 스트림을 다음 단어에 대한 점수로 바꿉니다. 옆의 메모는 어느 층의 스트림이든 임베딩에 그 아래 모든 블록이 더한 것을 합친 값과 같다고 설명합니다."></div><figcaption>도판 1 — 이 책 4.4절의 수식을 따라 정리한 잔차 스트림입니다. 각 블록은 스트림을 읽고 자기 출력을 스트림에 더합니다. 덮어쓰는 것이 없으므로 어느 층의 스트림이든 여러 기여를 더한 합이고, 그 안에서 각 블록이 차지하는 몫을 잴 수 있습니다.</figcaption></figure>
 <p>이 책이 잔차 스트림을 여럿이 함께 쓰는 통신 채널이라고 부르는 이유가 여기에 있습니다. 멀리 떨어진 구성 요소들은 직접 대화하지 않지만, 3층의 구성 요소가 스트림에 써 넣은 것을 20층의 구성 요소가 읽을 수 있습니다. 또 스트림이 합이기 때문에, 연구자들은 &#39;마지막 예측 가운데 얼마가 바로 이 어텐션 헤드에서 왔는가?&#39; 같은 정밀한 질문을 던질 수 있습니다. 이 책은 이 관점이 기계적 해석 가능성의 중심에 있다고 말합니다. 모델의 계산을 개별 구성 요소들이 더한 몫으로 나누어 볼 수 있게 해 주기 때문입니다.</p>
-<p>솔직히 짚어야 할 복잡한 점이 하나 있습니다. 실제 트랜스포머에는 층 정규화(layer normalisation)도 들어 있습니다. 스트림의 숫자들이 안정된 범위에 머물도록 크기를 다시 맞추는 단계입니다. 엄밀히 말하면 이 단계 때문에 깔끔한 합이 깨집니다. 이 책은 표준적인 논증을 따릅니다. 입력이 정해져 있으면, 층 정규화는 단순한 선형 변환에 크기 조정 계수 하나를 곱한 것과 거의 같게 작동합니다. 선형 변환 부분은 이웃한 가중치에 합쳐 넣을 수 있습니다. 크기 조정은 각 기여가 얼마나 크게 반영되는지만 바꿉니다. 그래서 스트림을 여전히 덧셈으로 이루어진 채널로 다룰 수 있고, 해석 가능성 연구 대부분이 실제로 그렇게 합니다.</p>
+<p>솔직히 짚어야 할 복잡한 점이 하나 있습니다. 실제 트랜스포머에는 층 정규화(layer normalisation)도 들어 있습니다. 스트림의 숫자들이 안정된 범위에 머물도록 크기를 다시 맞추는 단계입니다. 엄밀히 말하면 이 단계 때문에 깔끔한 합이 깨집니다. 이 책은 표준적인 논증을 따릅니다. 입력이 정해져 있으면, 층 정규화는 단순한 선형 변환에 크기 조정 계수 하나를 곱한 것과 거의 같게 작동합니다. 선형 변환 부분은 이웃한 가중치에 합쳐 넣을 수 있습니다. 크기 조정은 각 기여가 얼마나 크게 반영되는지만 바꿉니다. 그래서 스트림을 여전히 덧셈으로 이루어진 채널로 다룰 수 있고, 이 책도 그렇게 다룹니다.</p>
 <h2 class="article-h2" id="section-4">두 종류의 일</h2>
 <p>어텐션 모듈과 MLP는 하는 일이 다르고, 그렇게 나뉘어 있기 때문에 연구자들은 둘을 따로 살펴볼 수 있습니다. 이 책에 따르면 어텐션 모듈은 주로 위치 사이에서 정보를 옮깁니다. 텍스트 곳곳의 정보를 이리저리 보내고, 모으고, 엮습니다. MLP는 주로 한 위치 안에서 일합니다. 이미 있는 특징을 변환하고, 흔히 사실 같은 저장된 지식을 꺼내 옵니다. 어텐션은 정보를 텍스트 위에서 옆으로 옮기고, MLP는 그 자리에서 정보를 가공합니다.</p>
 <h2 class="article-h2" id="section-5">어텐션: 다른 단어를 돌아보기</h2>
@@ -71,7 +71,7 @@
 <footer class="colophon"><div class="colophon-links"><a href="https://scholar.google.com/citations?user=0ROak0YAAAAJ&amp;hl=en">Google Scholar</a><span>,</span><a href="mailto:hyunhoon.j@gmail.com">hyunhoon.j@gmail.com</a></div><span class="colophon-copy">© 2026 정현훈. 무단 전재·재배포 금지.</span></footer>
 </div>
 </div>
-<script src="../assets/site.js?v=e4498c44"></script>
+<script src="../assets/site.js?v=0f99208f"></script>
 <script data-goatcounter="https://hyunhoonj.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
 </body>
 </html>

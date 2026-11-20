@@ -13,8 +13,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,400&amp;family=Noto+Serif+KR:wght@300;400;600&amp;display=swap">
-  <link rel="stylesheet" href="../../assets/broadsheet.css?v=e4498c44">
-  <link rel="stylesheet" href="../../assets/site.css?v=e4498c44">
+  <link rel="stylesheet" href="../../assets/broadsheet.css?v=0f99208f">
+  <link rel="stylesheet" href="../../assets/site.css?v=0f99208f">
 </head>
 <body>
 <div class="sheet">
@@ -27,7 +27,7 @@
 <p>That has two consequences. First, the features cannot all be orthogonal to one another. Two directions are orthogonal when they are at right angles, so that moving along one does not move you at all along the other. A space with d dimensions has room for at most d directions that are all at right angles to each other. With more features than that, some must overlap.</p>
 <p>But they can be nearly orthogonal: at angles close to, but not exactly, ninety degrees. Here our everyday intuition, built on two and three dimensions, misleads us. In a space with thousands of dimensions, the number of directions that are all nearly at right angles to each other is vastly larger than the number of dimensions. The book&#39;s notebook for this section explains why, using a mathematical result called the Johnson–Lindenstrauss lemma. So a large model has room for a huge number of almost independent directions, as long as it tolerates a little overlap.</p>
 <p>Second, superposition implies polysemanticity. If features outnumber dimensions, the model cannot give each feature its own neuron. Features have to share the same dimensions, so a single neuron ends up taking part in encoding several unrelated concepts.</p>
-<figure><div class="frame" style="aspect-ratio:640/300"><img src="../../images/inside-08-packing-en.png" alt="Two panels, each with two neuron axes. Left: two features, cat and dog, each lie along their own axis, so each neuron means one thing. Right: five features, cat, dog, car, flower and tree, are spread around like the points of a star in the same two dimensions, so each neuron axis cuts across several features, and nearby features interfere."></div><figcaption>Fig. 1 — Superposition implies polysemanticity, redrawn after the book&#39;s Figure 5. With no more features than dimensions, each feature can have its own neuron. With more features than dimensions, they must share, and every neuron ends up involved in several.</figcaption></figure>
+<figure><div class="frame" style="aspect-ratio:640/300"><img src="../../images/inside-08-packing-en.png" alt="Two panels, each with two neuron axes. Left: two features, cat and dog, each lie along their own axis, so each neuron means one thing. Right: five features, cat, dog, car, flower and tree, are spread around like the points of a star in the same two dimensions, so each neuron axis cuts across several features, and nearby features interfere."></div><figcaption>Fig. 1 — Superposition implies polysemanticity, adapted from the book&#39;s Figure 5. With no more features than dimensions, each feature can have its own neuron. With more features than dimensions, they must share, and every neuron ends up involved in several.</figcaption></figure>
 <h2 class="article-h2" id="section-2">Why sharing could pay</h2>
 <p>Overlap has a cost. When two features share dimensions, activating one also slightly activates the reading of the other. This is called interference. So why would training ever settle on such an arrangement?</p>
 <p>The book&#39;s main source here, a 2022 study called &quot;Toy Models of Superposition&quot;, gives the standard answer. It trained tiny networks to store more features than they had dimensions and then recover them, and watched when they chose to superpose. The key was sparsity: how rarely each feature is active. Most concepts are absent from most inputs. A text about cooking rarely mentions tax law, and a line of code rarely contains a Korean poem. If two features are seldom active at the same time, the interference between them seldom matters, and a nonlinearity such as ReLU can filter out the small leftover overlap. In that regime, packing many sparse features into a few dimensions is a good trade, and the toy networks made it. When features were active often, they did not.</p>
@@ -48,7 +48,7 @@
 <footer class="colophon"><div class="colophon-links"><a href="https://scholar.google.com/citations?user=0ROak0YAAAAJ&amp;hl=en">Google Scholar</a><span>,</span><a href="mailto:hyunhoon.j@gmail.com">hyunhoon.j@gmail.com</a></div><span class="colophon-copy">© 2026 Hyunhoon Jung. All rights reserved.</span></footer>
 </div>
 </div>
-<script src="../../assets/site.js?v=e4498c44"></script>
+<script src="../../assets/site.js?v=0f99208f"></script>
 <script data-goatcounter="https://hyunhoonj.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
 </body>
 </html>

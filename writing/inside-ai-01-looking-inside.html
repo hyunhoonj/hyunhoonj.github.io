@@ -13,8 +13,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,400&amp;family=Noto+Serif+KR:wght@300;400;600&amp;display=swap">
-  <link rel="stylesheet" href="../assets/broadsheet.css?v=e4498c44">
-  <link rel="stylesheet" href="../assets/site.css?v=e4498c44">
+  <link rel="stylesheet" href="../assets/broadsheet.css?v=0f99208f">
+  <link rel="stylesheet" href="../assets/site.css?v=0f99208f">
 </head>
 <body>
 <div class="sheet">
@@ -25,7 +25,7 @@
 <p>교육과정과 시험 문제는 직접 만들지만 학생의 공책은 한 번도 볼 수 없는 교사를 떠올려 보면 됩니다. 교사는 무엇을 가르쳤는지 알고, 시험 점수도 볼 수 있습니다. 하지만 학생이 실제로 무엇을 이해했는지, 시험을 통과하려고 어떤 지름길을 썼는지는 알 수 없습니다. 해석 가능성(interpretability) 연구는 그 공책을 읽어 보려는 노력입니다.</p>
 <p>이 연재는 이 노력을 다룬 책 한 권을 함께 읽습니다. 책을 장마다 따라가며 각 개념을 쉬운 말로 풀어서, 이 분야를 처음 공부하려는 사람 누구나 읽을 수 있게 하는 것이 목표입니다. 첫 편에서는 책의 서론을 다룹니다. 이 분야가 무엇인지, 어디서 왔는지, 그리고 이 책이 무엇을 하려는지 살펴봅니다.</p>
 <h2 class="article-h2" id="section-1">이 책에 대하여</h2>
-<p>2026년 11월, 옥스퍼드 대학교, 밀라(Mila), 엘루서AI(EleutherAI), 텔아비브 대학교를 비롯한 열일곱 개 기관의 연구자 27명이 182쪽 분량의 책 「Understanding AI from the Inside: The State of Mechanistic Interpretability for AI Safety」를 공개했습니다. 요슈아 벤지오(Yoshua Bengio)와 스텔라 바이더먼(Stella Biderman)도 저자에 이름을 올렸습니다. 스스로는 서베이(survey), 곧 연구 동향을 정리한 논문이라고 부르지만, 짜임새는 교과서에 가깝습니다. 용어를 상자 안에 따로 정의하고, 예제를 함께 풀고, 흔히 하는 오해를 경고하고, 핵심 결과를 직접 재현해 볼 수 있는 코드 노트북도 함께 내놓았습니다. CC BY 4.0 라이선스로 공개되어 누구나 읽고 활용할 수 있습니다.</p>
+<p>2026년 11월, 옥스퍼드 대학교, 밀라(Mila), 엘루서AI(EleutherAI), 텔아비브 대학교와 그 밖의 열 곳이 넘는 기관에 속한 연구자 27명이 183쪽 분량의 책 「Understanding AI from the Inside: The State of Mechanistic Interpretability for AI Safety」를 공개했습니다. 요슈아 벤지오(Yoshua Bengio)와 스텔라 바이더먼(Stella Biderman)도 저자에 이름을 올렸습니다. 스스로는 서베이(survey), 곧 연구 동향을 정리한 논문이라고 부르지만, 짜임새는 교과서에 가깝습니다. 용어를 상자 안에 따로 정의하고, 예제를 함께 풀고, 흔히 하는 오해를 경고하고, 핵심 결과를 직접 재현해 볼 수 있는 코드 노트북도 함께 내놓았습니다. CC BY 4.0 라이선스로 공개되어 누구나 읽고 활용할 수 있습니다.</p>
 <p>이 책을 이끄는 질문은 하나입니다. 모델이 어떻게 작동하는지 이해하면, 모델이 실제로 더 안전해질까요? 저자들은 이 분야의 많은 연구가 답을 &#39;그렇다&#39;로 당연하게 여기지만, 그 가정을 제대로 검증한 연구는 거의 없다고 지적합니다. 그래서 이 책은 다루는 방법마다 두 가지를 묻습니다. 이 방법은 모델 내부의 계산에 대해 무엇을 알려 주는가? 그리고 이 방법이 없었다면 할 수 없었던 일 가운데 무엇을 실제로 가능하게 하는가?</p>
 <h2 class="article-h2" id="section-2">해석 가능성 격차</h2>
 <p>지난 수십 년 동안 AI의 능력은 아주 빠르게 발전했습니다. 반면 모델이 그 능력을 어떻게 만들어 내는지 이해하는 방법은 훨씬 느리게 발전했습니다. 이 책은 그 차이를 해석 가능성 격차(interpretability gap)라고 부릅니다. 모델이 할 수 있는 일과, 모델이 그 일을 어떻게 해내는지 우리가 이해하는 것 사이의 거리입니다.</p>
@@ -43,7 +43,7 @@
 <p>이런 초기 연구는 대부분 손으로 하는 작업이었습니다. 연구자가 뉴런을 들여다보고 본 것을 보고하는 식이었습니다. 2016년부터 2019년 사이에는 프로빙 분류기(probing classifier)가 이 탐색을 체계화했습니다. 품사나 문장 길이 같은 성질을 어떤 층에서 읽어 낼 수 있는지 묻는 방식입니다. 덕분에 모델 안에 어떤 정보가 있는지를 정리한 목록이 풍부하게 쌓였습니다. 이 책은 여기에 이 분야 전체에 해당하는 주의 사항을 덧붙입니다. 정보가 모델 안에 있다고 해서 모델이 그 정보를 쓴다는 뜻은 아닙니다.</p>
 <p>2017년 트랜스포머가, 2019년 BERT가 나오면서 연구자들은 어텐션 패턴이라는, 모델 안을 들여다볼 새 창을 얻었습니다. 동시에 어텐션 가중치가 정말로 모델의 결정을 설명하는지를 두고 논쟁도 시작되었습니다. 2017년부터는 학술지 디스틸(Distill)에 실린 일련의 시각적 에세이가, 신경망 안에 사람이 읽을 수 있는 의미 있는 특징이 있다고 주장했습니다. 2020년 크리스 올라(Chris Olah)와 동료들은 이를 &#39;회로(Circuits)&#39; 연구 프로그램으로 발전시켰습니다. 신경망을, 해석 가능한 특징들이 이해 가능한 알고리즘으로 연결된 구조로 보는 관점입니다. 이 책은 이런 초기 노력이 현대 기계적 해석 가능성의 토대가 되었다고 봅니다.</p>
 <p>이후 이 아이디어들은 언어 모델로 옮겨 갔습니다. 2022년에는 유도 헤드(induction head)가, 2023년에는 문장의 간접 목적어를 찾아내는 회로가 밝혀졌고, 작은 모델이 모듈러 산술(modular arithmetic)과 정수 덧셈을 어떻게 하는지 밝힌 연구도 나왔습니다. 2024년 중반에는 희소 오토인코더(sparse autoencoder)로 파라미터가 수십억 개인 모델에서 특징을 뽑아낼 수 있게 되었습니다.</p>
-<figure><div class="frame" style="aspect-ratio:640/400"><img src="../images/inside-01-timeline-ko.png" alt="1969년부터 2024년까지 신경망 내부 연구의 주요 사건 열두 개를 놓은 연표. 민스키와 페퍼트의 퍼셉트론 한계 연구부터 수십억 개 파라미터 규모의 희소 오토인코더까지 이어지며, 초기 신경망, 딥러닝 시대, 트랜스포머 언어 모델의 세 구간으로 나뉩니다."></div><figcaption>도판 2 — 이 책 1.1절을 따라 정리한, 신경망 안을 들여다본 짧은 역사입니다. &#39;기계적 해석 가능성&#39;이라는 이름은 최근에 생겼지만, 그 아이디어 상당수는 수십 년 전으로 거슬러 올라갑니다.</figcaption></figure>
+<figure><div class="frame" style="aspect-ratio:640/400"><img src="../images/inside-01-timeline-ko.png" alt="1969년부터 2024년까지 신경망 내부 연구의 주요 사건 열두 개를 놓은 연표. 민스키와 페퍼트의 퍼셉트론 한계 연구부터 수십억 개 파라미터 규모의 희소 오토인코더까지 이어지며, 초기 신경망, 딥러닝 시대, 회로 연구와 그 이후의 세 구간으로 나뉩니다."></div><figcaption>도판 2 — 이 책 1.1절을 따라 정리한, 신경망 안을 들여다본 짧은 역사입니다. &#39;기계적 해석 가능성&#39;이라는 이름은 최근에 생겼지만, 그 아이디어 상당수는 수십 년 전으로 거슬러 올라갑니다.</figcaption></figure>
 <p>이 책은 오늘날의 도구 상당수가 뿌리가 깊다는 점을 강조합니다. 희소 오토인코더는 적어도 1996년 브루노 올스하우젠(Bruno Olshausen)과 데이비드 필드(David Field)까지 거슬러 올라가는 희소 코딩(sparse coding) 연구 위에 서 있습니다. 대규모 언어 모델에서 회로를 찾는 작업은, 1990년대에 순환 신경망에서 유한 상태 기계(finite-state machine)를 뽑아내던 연구와 닮았습니다. 어텐션으로 모델을 설명할 수 있느냐는 오늘날의 논쟁은, 예전에 살리언시 맵(saliency map)을 두고 벌어진 논쟁을 되풀이합니다. 이런 연결을 알면, 정말 새로운 아이디어와 오래된 아이디어를 새 모델에 적용한 것을 구별하기 쉬워집니다.</p>
 <h2 class="article-h2" id="section-5">왜 연구하는가</h2>
 <p>이 책은 세 가지 이유를 듭니다. 첫째는 안전입니다. 많은 연구자는 모델 내부를 이해하면 위험한 행동을 더 잘 찾아내고 통제할 수 있으리라 기대합니다. 이 책은 여기서 신중합니다. 행동을 보거나 상관관계에 기대는 방법이 놓치는 실패를, 지금의 기계적 방법이 다룰 수 있는지는 아직 분명하지 않다는 것입니다. 그래서 이 책은 각 방법이 이해를 얼마나 넓혀 주는지만 보고 평가하지 않습니다. 그 방법으로 실제로 무엇을 할 수 있는지, 그 효과가 얼마나 강한지도 함께 봅니다.</p>
@@ -69,7 +69,7 @@
 <footer class="colophon"><div class="colophon-links"><a href="https://scholar.google.com/citations?user=0ROak0YAAAAJ&amp;hl=en">Google Scholar</a><span>,</span><a href="mailto:hyunhoon.j@gmail.com">hyunhoon.j@gmail.com</a></div><span class="colophon-copy">© 2026 정현훈. 무단 전재·재배포 금지.</span></footer>
 </div>
 </div>
-<script src="../assets/site.js?v=e4498c44"></script>
+<script src="../assets/site.js?v=0f99208f"></script>
 <script data-goatcounter="https://hyunhoonj.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
 </body>
 </html>

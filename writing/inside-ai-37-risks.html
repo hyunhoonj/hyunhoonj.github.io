@@ -13,8 +13,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,400&amp;family=Noto+Serif+KR:wght@300;400;600&amp;display=swap">
-  <link rel="stylesheet" href="../assets/broadsheet.css?v=e4498c44">
-  <link rel="stylesheet" href="../assets/site.css?v=e4498c44">
+  <link rel="stylesheet" href="../assets/broadsheet.css?v=0f99208f">
+  <link rel="stylesheet" href="../assets/site.css?v=0f99208f">
 </head>
 <body>
 <div class="sheet">
@@ -24,7 +24,7 @@
 <div class="split article-grid"><div class="rail"><div><div class="rail-title">[차례]</div><div class="rail-list"><div>01 &nbsp;<a href="#section-1">안전 업무에 맞는 방법 고르기</a></div><div>02 &nbsp;<a href="#section-2">네 종류의 위험</a></div><div>03 &nbsp;<a href="#section-3">잘못된 확신</a></div><div>04 &nbsp;<a href="#section-4">소리 없는 실패</a></div><div>05 &nbsp;<a href="#section-5">공격자를 돕는 일</a></div><div>06 &nbsp;<a href="#section-6">가장 덜 도움이 되는 곳에 쓰인 자원</a></div><div>07 &nbsp;<a href="#section-7">여러 겹 가운데 한 겹</a></div></div></div><div><div class="rail-title">[주제]</div><div class="rail-list rail-list--dim"><span>안전 응용</span><span>잘못된 확신</span><span>소리 없는 실패</span><span>이중 용도</span><span>기회비용</span></div></div><div><div class="rail-title">[연재]</div><div class="rail-list rail-list--dim"><a href="#series">안에서 보는 AI</a><span>38편 중 37편</span></div></div></div><div class="article-body"><p>34편부터 36편까지는 기계적 해석 가능성(mechanistic interpretability)이 안전을 위해 무엇을 할 수 있는지 보았습니다. 이번 편은 이 책 13장의 나머지인 13.5–13.7절(119–123쪽)을 읽으며, 어떤 방법이 어떤 안전 업무에 맞는지, 그리고 안전을 해석 가능성 자체에 맡길 때 무엇이 잘못될 수 있는지 봅니다.</p>
 <h2 class="article-h2" id="section-1">안전 업무에 맞는 방법 고르기</h2>
 <p>안전 응용마다 알맞은 기법이 필요하고, 그 기법이 기계적인 것만은 아닙니다. 이 책은 흔한 안전 응용 여섯 가지와, 각각에서 가장 중요한 것, 그리고 가장 유망해 보이는 방법을 정리합니다. 안전이 중요한 시스템을 배포하는 실무자에게는 검토해 볼 방법의 목록으로, 연구자에게는 자기 방법을 시험해 볼 상황의 목록으로 이 표를 내놓습니다.</p>
-<div class="table-block"><table class="table"><thead><tr><th>응용</th><th>가장 중요한 것</th><th>유망한 방법</th></tr></thead><tbody><tr><td>사용 중에 거짓말이나 아첨 같은 해로운 내부 특성 감시</td><td>확장성, 강건성</td><td>희소 오토인코더, 회로 찾기, 프로브</td></tr><tr><td>평가 중에 보상 해킹, 백도어, 평가 인식을 찾는 모델 감사</td><td>실제 사례에 대한 재현율</td><td>행동 평가, 프로브, 언어 모델을 쓴 자동 감사</td></tr><tr><td>생물학적 위협 지식을 막는 것처럼 학습 중에 능력을 빚기</td><td>넣거나 뺀 능력이 강건하게 유지되는지</td><td>데이터 귀속과 거르기, 학습 중 개입, 종단 분석과 규모 분석</td></tr><tr><td>틀리거나 낡았거나 부적절한 지식 고치기</td><td>정밀성, 일반화</td><td>지식 고치기, 개념 지우기, 활성값의 저차원 영역 분석</td></tr><tr><td>배포 중에 치명적으로 해로운 행동에서 멀어지게 조종</td><td>정밀성, 낮은 계산 비용</td><td>조종 벡터, 프롬프팅</td></tr><tr><td>모델이 말한 이유가 실제 계산과 맞는지 확인</td><td>분석의 세밀함</td><td>반사실적 행동 시험, 회로 찾기, 활성값 패칭</td></tr></tbody></table><div class="table-cap">안전 응용과 유망한 방법 (이 책의 표 14를 바탕으로)</div></div>
+<div class="table-block"><table class="table"><thead><tr><th>응용</th><th>가장 중요한 것</th><th>유망한 방법</th></tr></thead><tbody><tr><td>사용 중에 거짓말이나 아첨 같은 해로운 내부 특성 감시</td><td>확장성, 강건성</td><td>희소 오토인코더, 회로 찾기, 프로브</td></tr><tr><td>평가 중에 보상 해킹, 백도어, 평가 인식을 찾는 모델 감사</td><td>재현율, 실제 사례</td><td>행동 평가, 프로브, 언어 모델을 쓴 자동 감사</td></tr><tr><td>생물학적 위협 지식을 막는 것처럼 학습 중에 능력을 빚기</td><td>넣거나 뺀 능력이 강건하게 유지되는지</td><td>데이터 귀속과 거르기, 학습 중 개입, 종단 분석과 규모 분석</td></tr><tr><td>틀리거나 낡았거나 부적절한 지식 고치기</td><td>정밀성, 일반화</td><td>지식 고치기, 개념 지우기, 활성값의 저차원 영역 분석</td></tr><tr><td>배포 중에 치명적으로 해로운 행동에서 멀어지게 조종</td><td>정밀성, 낮은 계산 비용</td><td>조종 벡터, 프롬프팅</td></tr><tr><td>모델이 말한 이유가 실제 계산과 맞는지 확인</td><td>분석의 세밀함</td><td>반사실적 행동 시험, 회로 찾기, 활성값 패칭</td></tr></tbody></table><div class="table-cap">안전 응용과 유망한 방법 (이 책의 표 14를 바탕으로)</div></div>
 <p>이 책은 이어서 이 응용들을 31편의 방향들과 다시 잇습니다. 실용적 해석 가능성(pragmatic interpretability)은 완전한 이해 없이 바로 개입하는 방법을 선호합니다. 야심 찬 해석 가능성(ambitious interpretability)은 완전하고 충실한 회로나 처음부터 읽기 쉽게 만든 모델처럼, 보장이 검증된 개입을 개발합니다. 발달 해석 가능성(developmental interpretability)은 표현, 회로, 능력이 발달하는 방식을 따라가는 신호를 찾습니다. 시간에 걸친 해석 가능성(interpretability across time)은 학습 중에 행동을 예측하고 빚는 절차를 만듭니다. 내성 해석 가능성(introspective interpretability)은 모델이 자신에 대해 보고할 수 있게 하는 학습 방법을 개발합니다. 자동화된 해석 가능성(automated interpretability)은 큰 규모에서 작동하는 절차를 만듭니다. 이 책은 이 방향들이 함께 해석 가능성 방법의 빠른 성장을 이끌었다고 말합니다.</p>
 <h2 class="article-h2" id="section-2">네 종류의 위험</h2>
 <p>기계적 해석 가능성은 흔히 안전 도구로 소개되지만, 이 책은 기계적 해석 가능성에도 나름의 위험이 따른다고 강조하고, 그 위험을 네 종류로 나눕니다.</p>
@@ -37,7 +37,7 @@
 <p>아주 꼼꼼하게 검증한 설명이라도 모델의 참되고 완전한 인과적 설명이 아닐 수 있습니다. 해석 가능성 연구는 야심 찬 연구라 해도 한정된 증거에 기댈 수밖에 없고, 관찰한 모든 것에 맞는 경쟁 설명이 여럿 있을 수 있습니다. 이 책은 일종의 추상적인 산술인 군 연산(group operation)을 학습한 신경망을 예로 듭니다. 2023년의 한 연구는 표현론(representation theory)에 기반해 그 알고리즘을 설명했습니다. 2024년의 한 연구는 그 설명이 불완전하다고 주장하며 잉여류(coset)에 기반한 다른 설명을 내놓았습니다. 그리고 2025년의 한 연구는 둘 다 불완전하다는 것을 보이고, 둘을 모두 품는 더 넓은 틀을 제시했습니다. 이 책은 엄밀한 역설계(reverse-engineering)도 지금의 증거가 뒷받침하는 가장 나은 설명을 줄 뿐, 유일하고 결정적인 이론을 주지는 않는다고 결론짓습니다.</p>
 <p>처방은 두 가지입니다. 첫째, 모든 결과에는 분석의 범위(coverage)를 밝혀야 합니다. 행동, 특징, 계산 가운데 얼마를 살펴봤는지, 어떤 도구를 썼고 그 도구의 한계는 무엇인지를 적는 것입니다. 주장은 정확하게 표현해야 합니다. &#39;속임수 회로는 없다&#39;가 아니라 &#39;귀속 점수 상위 10%의 노드와 간선 안에서는 속임수 회로를 찾지 못했다&#39;처럼 말해야 합니다. 둘째, 기계적 분석을 그 자체로 충분한 증거로 여겨서는 안 됩니다. 가능하면 행동 시험, 적대적 평가, 형식적 검증(formal verification)과 함께 써야 합니다.</p>
 <h2 class="article-h2" id="section-4">소리 없는 실패</h2>
-<p>둘째는 운영상 위험(operational risk)입니다. 해석 가능성 도구는 통제된 환경에서 개발하고 시험하므로, 입력이 다양하고 적대적이며 처음 보는 것일 수 있는 현실에서는 성능이 떨어질 수 있습니다. 가장 큰 위협은 분포 이동(distribution shift), 곧 실제 입력이 도구를 만들 때의 입력과 달라지는 것입니다. 한 데이터셋에서 뽑은 조종 벡터(steering vector)는 관련된 과제에서 성능이 떨어지는 경우가 많습니다. 잘 다듬은 벤치마크에서는 유해성을 줄이던 평균 차이 벡터가 새로운 은어나 다른 언어에서는 통하지 않을 수 있습니다. 학습 데이터로 배운 희소 오토인코더 특징은 새 입력에서 들쭉날쭉하게 켜져서 거짓 음성(false negative)이나 거짓 양성(false positive)을 낼 수 있습니다. 그리고 다듬어진 예시로 검증한 회로가 같은 행동을 보이는 다른 입력에서는 다르게 작동할 수 있습니다.</p>
+<p>둘째는 운영상 위험(operational risk)입니다. 해석 가능성 도구는 통제된 환경에서 개발하고 시험하므로, 입력이 다양하고 적대적이며 처음 보는 것일 수 있는 현실에서는 성능이 떨어질 수 있습니다. 큰 위협 하나는 분포 이동(distribution shift), 곧 실제 입력이 도구를 만들 때의 입력과 달라지는 것입니다. 한 데이터셋에서 뽑은 조종 벡터(steering vector)는 관련된 과제에서 성능이 떨어지는 경우가 많습니다. 잘 다듬은 벤치마크에서는 유해성을 줄이던 평균 차이 벡터가 새로운 은어나 다른 언어에서는 통하지 않을 수 있습니다. 학습 데이터로 배운 희소 오토인코더 특징은 새 입력에서 들쭉날쭉하게 켜져서 거짓 음성(false negative)이나 거짓 양성(false positive)을 낼 수 있습니다. 그리고 다듬어진 예시로 검증한 회로가 같은 행동을 보이는 다른 입력에서는 다르게 작동할 수 있습니다.</p>
 <p>더 나쁜 것은 이런 실패가 소리 없이 일어난다는 점입니다. 작동을 멈춘 조종 벡터는 오류를 내지 않습니다. 그냥 효과가 사라질 뿐입니다. 희소 오토인코더 특징으로 만든 감시 장치는 어떤 입력에서 특징이 개념을 제대로 따라가지 못하면 위험한 활성값을 놓칠 수 있습니다. 그리고 PISCES 같은 개념 지우기(concept erasure)는 아무런 실패 신호도 없이, 어떤 프롬프트로는 여전히 꺼낼 수 있는 능력 일부를 남겨 둘 수 있습니다.</p>
 <p>처방은 해석 가능성 도구를 튼튼한 배포 체계 안에 넣는 것입니다. 실제 데이터에서 도구의 성능을 계속 추적하고, 행동 안전장치와 함께 써서 한 겹이 다른 겹의 실패를 잡게 하고, 도구가 실패하도록 설계한 적대적 입력으로 시험합니다. 그리고 안전장치가 고장 나거나 성능이 서서히 틀어지면 보수적이고 안전한 응답으로 바꾸는 식으로, 문제가 생겨도 시스템이 갑자기 무너지지 않고 안전한 쪽으로 물러나게 설계합니다.</p>
 <h2 class="article-h2" id="section-5">공격자를 돕는 일</h2>
@@ -55,7 +55,7 @@
 <footer class="colophon"><div class="colophon-links"><a href="https://scholar.google.com/citations?user=0ROak0YAAAAJ&amp;hl=en">Google Scholar</a><span>,</span><a href="mailto:hyunhoon.j@gmail.com">hyunhoon.j@gmail.com</a></div><span class="colophon-copy">© 2026 정현훈. 무단 전재·재배포 금지.</span></footer>
 </div>
 </div>
-<script src="../assets/site.js?v=e4498c44"></script>
+<script src="../assets/site.js?v=0f99208f"></script>
 <script data-goatcounter="https://hyunhoonj.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
 </body>
 </html>
