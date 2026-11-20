@@ -13,8 +13,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,400&amp;family=Noto+Serif+KR:wght@300;400;600&amp;display=swap">
-  <link rel="stylesheet" href="../../assets/broadsheet.css?v=e4498c44">
-  <link rel="stylesheet" href="../../assets/site.css?v=e4498c44">
+  <link rel="stylesheet" href="../../assets/broadsheet.css?v=0f99208f">
+  <link rel="stylesheet" href="../../assets/site.css?v=0f99208f">
 </head>
 <body>
 <div class="sheet">
@@ -37,7 +37,7 @@
 <p>The book then makes a subtle point about where features can be expected to line up with neurons.</p>
 <p>Different parts of a model have activation spaces with different geometry. In the hidden layer of an MLP, a nonlinear function such as ReLU acts on each neuron separately. That singles out the neuron axes: it matters which numbers are neurons, because each is clipped at zero on its own. The coordinate system is meaningful, and the book, following earlier work, calls it a privileged basis.</p>
 <p>In other spaces, such as the residual stream, no operation acts on the coordinates one at a time. Everything that reads from or writes to the stream does so through matrix multiplications, which treat all directions alike. If you rotated the stream&#39;s coordinate system and adjusted the weights around it to match, the model would compute exactly the same thing. Such a space has a non-privileged basis, and there is no reason for features to line up with its axes. They can point in any direction.</p>
-<figure><div class="frame" style="aspect-ratio:640/300"><img src="../../images/inside-07-basis-en.png" alt="Two panels. Left, the hidden layer of an MLP: the axes are neuron 1 and neuron 2, and because ReLU acts on each neuron separately, the axes are special; a feature lies along one of them. Right, the residual stream: the axes are dimension 1 and dimension 2, a rotated copy of the axes is drawn dashed, and nothing changes under the rotation; a feature lies along an arbitrary direction."></div><figcaption>Fig. 2 — Privileged and non-privileged bases, redrawn after the book&#39;s Figure 4. Where an operation acts on each neuron separately, the neuron axes are meaningful and a single neuron can carry a concept. In the residual stream no operation singles out the axes, so features can point anywhere.</figcaption></figure>
+<figure><div class="frame" style="aspect-ratio:640/300"><img src="../../images/inside-07-basis-en.png" alt="Two panels. Left, the hidden layer of an MLP: the axes are neuron 1 and neuron 2, and because ReLU acts on each neuron separately, the axes are special; a feature lies along one of them. Right, the residual stream: the axes are dimension 1 and dimension 2, a rotated copy of the axes is drawn dashed, and nothing changes under the rotation; a feature lies along an arbitrary direction."></div><figcaption>Fig. 2 — Privileged and non-privileged bases, adapted from the book&#39;s Figure 4. Where an operation acts on each neuron separately, the neuron axes are meaningful and a single neuron can carry a concept. In the residual stream no operation singles out the axes, so features can point anywhere.</figcaption></figure>
 <p>This explains a lot. Where the basis is privileged, a single neuron can serve as a feature that stands for a concept. Where it is not, features may be directions, or other shapes, that do not match any individual neuron, and specialised methods are needed to find them in the activation space. It is one reason neurons are sometimes readable and sometimes not, and why researchers search for directions rather than inspecting dimensions of the residual stream.</p>
 <h2 class="article-h2" id="section-5">The evidence for it</h2>
 <p>The book lists three kinds of support for the weak version. Linear probes, the simple classifiers of part 3, succeed in reading a wide range of concepts out of a wide range of models. Activation steering along a single direction can produce targeted changes in behaviour, as in a 2024 study that steered models by adding one vector to their activations. And sparse autoencoders recover, at scale, features that are linearly accessible and that can be used for steering.</p>
@@ -53,7 +53,7 @@
 <footer class="colophon"><div class="colophon-links"><a href="https://scholar.google.com/citations?user=0ROak0YAAAAJ&amp;hl=en">Google Scholar</a><span>,</span><a href="mailto:hyunhoon.j@gmail.com">hyunhoon.j@gmail.com</a></div><span class="colophon-copy">© 2026 Hyunhoon Jung. All rights reserved.</span></footer>
 </div>
 </div>
-<script src="../../assets/site.js?v=e4498c44"></script>
+<script src="../../assets/site.js?v=0f99208f"></script>
 <script data-goatcounter="https://hyunhoonj.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
 </body>
 </html>

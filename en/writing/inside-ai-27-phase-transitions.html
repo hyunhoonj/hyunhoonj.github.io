@@ -13,8 +13,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,400&amp;family=Noto+Serif+KR:wght@300;400;600&amp;display=swap">
-  <link rel="stylesheet" href="../../assets/broadsheet.css?v=e4498c44">
-  <link rel="stylesheet" href="../../assets/site.css?v=e4498c44">
+  <link rel="stylesheet" href="../../assets/broadsheet.css?v=0f99208f">
+  <link rel="stylesheet" href="../../assets/site.css?v=0f99208f">
 </head>
 <body>
 <div class="sheet">
@@ -37,7 +37,7 @@
 <h2 class="article-h2" id="section-4">Seeing it form inside: progress measures</h2>
 <p>Because behaviour and mechanisms can change on different schedules, researchers also measure the internals directly. A progress measure is a single number, defined on a model&#39;s internals, that changes continuously as a mechanism forms. It can therefore track the mechanism&#39;s development before the behaviour it supports changes. Progress measures are usually derived from a mechanistic analysis of the finished mechanism at the end of training, then evaluated backwards on earlier checkpoints.</p>
 <p>They have been demonstrated most completely on grokking. Grokking is when a model reaches low training loss early in training but starts to generalise to unseen inputs only after a long further period of optimisation. It is seen almost only in narrow, closed settings, though general-purpose language models have shown conceptually similar behaviour. In modular arithmetic, adding numbers that wrap around like the hours on a clock, training accuracy saturates early while test accuracy stays near chance for many steps before rising sharply.</p>
-<figure><div class="frame" style="aspect-ratio:640/310"><img src="../../images/inside-27-grokking-en.png" alt="A schematic of grokking, after the book&#39;s Figure 16. Training loss falls early in training. Test loss stays high through a long plateau and then drops sharply. A dashed line, a progress measure computed on the model&#39;s internals, rises gradually through the plateau, before the drop in test loss."></div><figcaption>Fig. 2 — Grokking, after the book&#39;s Figure 16 (an illustration). The behaviour changes suddenly, but a progress measure on the internals shows the generalising circuit forming gradually during the plateau.</figcaption></figure>
+<figure><div class="frame" style="aspect-ratio:640/310"><img src="../../images/inside-27-grokking-en.png" alt="A schematic of grokking, after the book&#39;s Figure 16, with a progress-measure curve added to illustrate its caption. Training loss falls early in training. Test loss stays high through a long plateau and then drops sharply. A dashed line, a progress measure computed on the model&#39;s internals, rises gradually through the plateau, before the drop in test loss."></div><figcaption>Fig. 2 — Grokking, after the book&#39;s Figure 16 (an illustration; the progress-measure curve is added from that figure&#39;s caption). The behaviour changes suddenly, but a progress measure on the internals shows the generalising circuit forming gradually during the plateau.</figcaption></figure>
 <p>Mechanistic analysis of networks that have grokked recovers the algorithm they learned, trigonometric identities that carry out modular addition (roughly, numbers are represented as angles and adding them becomes rotating), and defines progress measures that track its formation. The generalising circuit grows gradually during the plateau. The sharp change in test accuracy corresponds to the switch from a memorising solution to the finished generalising circuit, followed by the removal of the memorising components. Grokking has been explained as a competition between a memorising circuit and a generalising circuit that differ in efficiency under weight decay, a penalty on large parameters; this account predicted, and experiments confirmed, ungrokking and semi-grokking, partial or reversed versions of the effect. Grokking can also be induced or removed by controlling the size of the parameters at initialisation, and it occurs beyond algorithmic tasks.</p>
 <p>The book adds a caution. The standard grokking setup differs from language-model pretraining in many ways, including the size of the dataset, the weight decay and the number of passes over the data, and no study has yet shown that its quantitative conclusions carry over to large-scale pretraining.</p>
 <p>Still, similar findings have appeared outside grokking. In masked language models, a 2024 study found that attention structures following grammar emerged during a sharp drop in the training loss, before accuracy improved on a grammar benchmark. A 2025 study found that attention circuits for recalling facts formed during the plateau in learning factual knowledge, before a rapid rise in performance. Changes inside can come before changes in what the model can do, and that motivates forecasting by monitoring internals, the subject of part 28.</p>
@@ -58,7 +58,7 @@
 <footer class="colophon"><div class="colophon-links"><a href="https://scholar.google.com/citations?user=0ROak0YAAAAJ&amp;hl=en">Google Scholar</a><span>,</span><a href="mailto:hyunhoon.j@gmail.com">hyunhoon.j@gmail.com</a></div><span class="colophon-copy">© 2026 Hyunhoon Jung. All rights reserved.</span></footer>
 </div>
 </div>
-<script src="../../assets/site.js?v=e4498c44"></script>
+<script src="../../assets/site.js?v=0f99208f"></script>
 <script data-goatcounter="https://hyunhoonj.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
 </body>
 </html>

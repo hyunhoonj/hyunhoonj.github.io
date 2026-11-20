@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>학습 과정을 안전에 쓰기 — Hyunhoon Jung / 정현훈</title>
-  <meta name="description" content="능력이 갑자기 나타날 수 있다면, 미리 내다볼 수 있을까요? 아예 생기지 않게 막을 수는 있을까요? 10.4절은 초기의 답들을 모읍니다. 작은 모델이나 도중까지만 진행한 학습으로 행동을 예측하기, 학습 전에 데이터를 걸러 내기, 메커니즘이 생기는 자리를 정하기, 미세 조정 중에 조종하기입니다. 지켜보고 개입하는 이 과정 전체를 큰 규모에서 돌려 본 사람은 아직 없습니다.">
+  <meta name="description" content="능력이 갑자기 나타날 수 있다면, 미리 내다볼 수 있을까요? 아예 생기지 않게 막을 수는 있을까요? 10.4절은 초기의 답들을 모읍니다. 작은 모델이나 도중까지만 진행한 학습으로 행동을 예측하기, 학습 전에 데이터를 걸러 내기, 메커니즘이 생기는 자리를 정하기, 미세 조정 중에 조종하기입니다. 지켜보고 개입하는 이 과정 전체를 큰 규모에서 돌리는 시스템은 아직 발표되지 않았습니다.">
   <meta name="author" content="Hyunhoon Jung / 정현훈">
   <meta name="robots" content="noai, noimageai">
   <meta name="tdm-reservation" content="1">
@@ -13,14 +13,14 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,400&amp;family=Noto+Serif+KR:wght@300;400;600&amp;display=swap">
-  <link rel="stylesheet" href="../assets/broadsheet.css?v=e4498c44">
-  <link rel="stylesheet" href="../assets/site.css?v=e4498c44">
+  <link rel="stylesheet" href="../assets/broadsheet.css?v=0f99208f">
+  <link rel="stylesheet" href="../assets/site.css?v=0f99208f">
 </head>
 <body>
 <div class="sheet">
 <div class="page">
 <header class="masthead"><div><a class="masthead-name" href="../index.html">Hyunhoon Jung <span class="slash">/</span> 정현훈</a></div><nav class="masthead-nav"><a href="../information.html">소개</a><a href="../contact.html">연락</a><a class="lang-switch" lang="en" hreflang="en" href="../en/writing/inside-ai-28-training-for-safety.html">English</a></nav></header>
-<div class="split article-head"><div class="meta meta--dim"><span>안에서 보는 AI · 28편</span><span>,</span><span>2026.11</span><span>,</span><span>11분</span></div><div><h1 class="article-title">학습 과정을 안전에 쓰기</h1><p class="article-dek">능력이 갑자기 나타날 수 있다면, 미리 내다볼 수 있을까요? 아예 생기지 않게 막을 수는 있을까요? 10.4절은 초기의 답들을 모읍니다. 작은 모델이나 도중까지만 진행한 학습으로 행동을 예측하기, 학습 전에 데이터를 걸러 내기, 메커니즘이 생기는 자리를 정하기, 미세 조정 중에 조종하기입니다. <span class="band">지켜보고 개입하는 이 과정 전체를 큰 규모에서 돌려 본 사람은 아직 없습니다.</span></p></div></div>
+<div class="split article-head"><div class="meta meta--dim"><span>안에서 보는 AI · 28편</span><span>,</span><span>2026.11</span><span>,</span><span>11분</span></div><div><h1 class="article-title">학습 과정을 안전에 쓰기</h1><p class="article-dek">능력이 갑자기 나타날 수 있다면, 미리 내다볼 수 있을까요? 아예 생기지 않게 막을 수는 있을까요? 10.4절은 초기의 답들을 모읍니다. 작은 모델이나 도중까지만 진행한 학습으로 행동을 예측하기, 학습 전에 데이터를 걸러 내기, 메커니즘이 생기는 자리를 정하기, 미세 조정 중에 조종하기입니다. <span class="band">지켜보고 개입하는 이 과정 전체를 큰 규모에서 돌리는 시스템은 아직 발표되지 않았습니다.</span></p></div></div>
 <div class="split article-grid"><div class="rail"><div><div class="rail-title">[차례]</div><div class="rail-list"><div>01 &nbsp;<a href="#section-1">작은 실행과 중간까지 한 실행으로 예측하기</a></div><div>02 &nbsp;<a href="#section-2">안전에 중요한 행동 예측하기</a></div><div>03 &nbsp;<a href="#section-3">조기 경보는 대부분 사후적이다</a></div><div>04 &nbsp;<a href="#section-4">학습 중에 개입하기</a></div><div>05 &nbsp;<a href="#section-5">데이터를 바꾸면 파문이 번진다</a></div><div>06 &nbsp;<a href="#section-6">메커니즘이 생기는 자리 정하기</a></div><div>07 &nbsp;<a href="#section-7">미세 조정 중에 지켜보고 조종하기</a></div><div>08 &nbsp;<a href="#section-8">개입의 고리</a></div><div>09 &nbsp;<a href="#section-9">열린 질문</a></div><div>10 &nbsp;<a href="#section-10">이 장을 한눈에</a></div></div></div><div><div class="rail-title">[주제]</div><div class="rail-list rail-list--dim"><span>예측</span><span>데이터 거르기</span><span>기울기 라우팅</span><span>페르소나 벡터</span><span>학습 중 개입</span></div></div><div><div class="rail-title">[연재]</div><div class="rail-list rail-list--dim"><a href="#series">안에서 보는 AI</a><span>38편 중 28편</span></div></div></div><div class="article-body"><p>26편과 27편에서는 학습하는 동안 모델이 어떻게 바뀌는지 살펴봤습니다. 이번 편에서 읽을 이 책의 10.4절(90–93쪽)은 그 지식을 안전을 위한 두 가지 목표에 씁니다. 능력이 나타나기 전에 내다보는 것, 그리고 학습이 아직 진행 중일 때 개입하는 것입니다. 이 책에서 학습 동역학(learning dynamics)을 다루는 장도 여기서 끝납니다.</p>
 <h2 class="article-h2" id="section-1">작은 실행과 중간까지 한 실행으로 예측하기</h2>
 <p>규모 법칙(scaling law)을 쓰면 학습하기 전에 전체 손실을 예측할 수 있지만, 27편에서 본 것처럼 상전이(phase transition) 때문에 개별 능력에는 이런 식의 외삽이 통하지 않습니다. 그래서 예측 연구는 특정한 행동을 직접 겨냥합니다. 이 문제가 가장 분명하게 정리된 분야는 암기입니다. 2023년의 한 연구는 모델을 학습시키기 전에, 그 모델이 특정한 학습 시퀀스를 외울지 예측하는 과제를 내놓았습니다. 저자들은 실제 사례 가운데 예측이 잡아내는 비율인 재현율(recall)을 최적화해야 한다고 주장했습니다. 사례 하나를 놓치면 그 시퀀스를 유출하는 모델을 끝까지 학습시키게 되지만, 잘못된 경보는 값싼 시험 실행 하나를 버리는 것으로 끝나기 때문입니다. 저자들은 기준선(baseline) 두 가지를 세웠습니다. 학습을 끝까지 마친 더 작은 모델로 예측하는 것과, 목표로 하는 학습 실행의 중간 체크포인트로 예측하는 것입니다. 그리고 예측에 쓸 수 있는 정해진 예산을 모델 크기와 토큰 수에 어떻게 나눌지도 권고했습니다.</p>
@@ -34,7 +34,7 @@
 <p>이 책은 이 주의할 점을 따로 상자에 담았습니다. 모델 내부의 변화가 행동의 변화보다 앞선다는 것을 보인 사례는 거의 모두 사후적, 곧 일이 다 일어난 뒤에 확인한 것입니다. 연구자들은 학습이 끝난 뒤 완성된 메커니즘을 분석해서 진척 척도나 전조 구조를 찾고, 그다음 저장해 둔 체크포인트들에 거슬러 적용합니다. 27편에서 본, 국소 학습 계수(LLC)로 전이를 찾아내는 방법에도 같은 문제가 있습니다. 반면 사전적 예측은 결과를 보기 전에 예측하는 것입니다. 위에서 본 암기 예측의 기준선을 빼면, 안전에 중요한 더 넓은 능력 전이를 사전적으로 예측하는 연구는 아직 충분히 발달하지 못했습니다. <span class="band-2">조기 경보 신호는 사전적으로 검증되어야 믿을 만하다고 할 수 있습니다.</span></p>
 <h2 class="article-h2" id="section-4">학습 중에 개입하기</h2>
 <p>중요한 것은 학습이 끝나고 배포되는 모델입니다. 배포된 모델에서 나쁜 행동을 발견하면 흔히 학습 뒤에 미세 조정을 더 하는데, 이 절은 그 방법을 다루지 않습니다. 대안은 학습 중에 개입해서 원치 않는 능력이 생기지 않게 하거나, 그 능력이 생기는 방식을 통제하는 것입니다. 이 책은 세 가지 접근을 설명합니다. 학습 데이터를 바꾸는 것, 모델의 구조를 바꾸는 것, 미세 조정 중에 활성값(activation)에 개입하는 것입니다.</p>
-<figure><div class="frame" style="aspect-ratio:640/300"><img src="../images/inside-28-levers-ko.png" alt="왼쪽에서 오른쪽으로 이어지는 학습 과정: 학습 데이터, 사전 학습, 미세 조정, 배포된 모델. 개입할 수 있는 지점 세 곳이 표시되어 있습니다. 데이터에서는 문서나 토큰 하나하나를 걸러 내는 것과 커리큘럼의 순서입니다. 학습 중의 구조에서는 기울기 라우팅으로, 고른 개념에 대한 업데이트를 지정한 구역으로 보내서 나중에 그 구역을 끌 수 있게 합니다. 미세 조정 중에는 페르소나 벡터로, 어떤 성향을 지켜보고, 그 성향과 반대로 조종하고, 그 성향을 불러올 데이터를 표시합니다. 배포된 모델을 학습 후에 다시 미세 조정하는 것은 이 절의 범위 밖으로 표시되어 있습니다."></div><figcaption>도판 1 — 학습 중에 개입할 수 있는 세 자리입니다(10.4.2절). 학습이 끝난 뒤에 고치는 방법과 달리, 셋 모두 최종 모델이 생기기 전에 작용합니다.</figcaption></figure>
+<figure><div class="frame" style="aspect-ratio:640/300"><img src="../images/inside-28-levers-b-ko.png" alt="왼쪽에서 오른쪽으로 이어지는 학습 과정: 학습 데이터, 사전 학습, 미세 조정, 배포된 모델. 개입할 수 있는 지점 세 곳이 표시되어 있습니다. 데이터에서는 문서나 토큰 하나하나를 걸러 내는 것과 커리큘럼의 순서입니다. 학습 중의 구조에서는 기울기 라우팅으로, 고른 개념에 대한 업데이트를 지정한 구역으로 보내서 나중에 그 구역을 끌 수 있게 합니다. 미세 조정 중에는 페르소나 벡터로, 어떤 성향을 지켜보고, 미세 조정 중에 그 벡터를 따라 예방적으로 조종해 성향이 덜 생기게 하고, 그 성향을 불러올 데이터를 표시합니다. 배포된 모델을 학습 후에 다시 미세 조정하는 것은 이 절의 범위 밖으로 표시되어 있습니다."></div><figcaption>도판 1 — 학습 중에 개입할 수 있는 세 자리입니다(10.4.2절). 학습이 끝난 뒤에 고치는 방법과 달리, 셋 모두 최종 모델이 생기기 전에 작용합니다.</figcaption></figure>
 <p>첫 번째 접근은 사전 학습 전에 데이터를 걸러 내는 것입니다. 26편에서 만난 Deep Ignorance는 사전 학습 말뭉치에서 생물학적 위험 지식의 대리 지표가 되는 내용을 걷어 내고, 남은 데이터로 파라미터 69억 개짜리 모델을 학습시킵니다. 걸러 낸 데이터로 학습한 모델은 겨냥한 지식을 아예 얻지 못하므로, 나중에 누군가 악의적으로 미세 조정해도 원치 않는 능력이 되살아나기 어렵습니다. 반면 학습이 끝난 뒤 능력을 지우려는 언러닝(unlearning)은, 바탕에 있는 지식은 그대로 둔 채 행동만 억누를 수 있습니다. 후속 연구는 거르는 단위를 문서에서 토큰으로 옮겼습니다. 희소 오토인코더(sparse autoencoder)로 토큰 하나하나에 이름표를 붙이고, 그 이름표로 가벼운 분류기를 학습시켰습니다. 토큰 단위로 거르면 문서 전체를 거를 때보다 원하는 능력을 덜 해치면서 원치 않는 능력을 없앨 수 있었습니다. 시험한 범위(모델 크기로 백 배)에서는 모델이 커질수록 더 효과적이었고, 이렇게 거른 모델도 그 뒤에 정렬할 수 있었습니다.</p>
 <p>데이터의 순서도 중요합니다. 2026년의 한 연구는 한 과제를 다른 과제보다 먼저 보여 주는 불균형한 사전 학습 커리큘럼에서, 모델이 과제들을 하나씩 차례로, 서로 떼어 낼 수 있는 회로에 담는다는 것을 발견했습니다. 그 결과 나중에 그중 한 과제를 거절하도록 미세 조정할 때 더 정확하게 겨냥할 수 있었습니다.</p>
 <h2 class="article-h2" id="section-5">데이터를 바꾸면 파문이 번진다</h2>
@@ -58,7 +58,7 @@
 <footer class="colophon"><div class="colophon-links"><a href="https://scholar.google.com/citations?user=0ROak0YAAAAJ&amp;hl=en">Google Scholar</a><span>,</span><a href="mailto:hyunhoon.j@gmail.com">hyunhoon.j@gmail.com</a></div><span class="colophon-copy">© 2026 정현훈. 무단 전재·재배포 금지.</span></footer>
 </div>
 </div>
-<script src="../assets/site.js?v=e4498c44"></script>
+<script src="../assets/site.js?v=0f99208f"></script>
 <script data-goatcounter="https://hyunhoonj.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
 </body>
 </html>
