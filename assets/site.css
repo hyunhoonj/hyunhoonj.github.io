@@ -200,13 +200,25 @@ figcaption { margin-top: 10px; font-size: 12px; color: var(--color-neutral-600);
   margin: calc(var(--space-8) * 1.2) 0 0;
   font-size: 22px; line-height: 1.5; font-style: italic;
 }
+/* A plain-language note: the site's own explanation set beside a summary, on a
+   tint and under a label, so it never reads as the source's words. */
+.article-body > .gloss {
+  margin: var(--space-6) 0 0; padding: var(--space-3) var(--space-4) var(--space-4);
+  background: var(--color-neutral-100); border-left: 2px solid var(--color-accent);
+  font-size: 15.5px; line-height: 1.72;
+}
+.gloss p { margin: 0; }
+.gloss p + p { margin-top: var(--space-3); }
+.gloss .gloss-label { margin-bottom: var(--space-1); font-size: 12px; color: var(--color-neutral-600); }
 /* Prose resuming after anything that is not prose takes the wider rest. */
 .article-body > figure + p,
 .article-body > .pull + p,
+.article-body > .gloss + p,
 .article-body > .table-block + p { margin-top: calc(var(--space-8) * 1.2); }
 /* A heading owns the space above it; whatever follows sits close under it. */
 .article-body > .article-h2 + p,
 .article-body > .article-h2 + .table-block,
+.article-body > .article-h2 + .gloss,
 .article-body > .article-h2 + figure { margin-top: var(--space-4); }
 .article-refs { margin: calc(var(--space-8) * 1.6) 0 0; }
 .article-refs .rail-title { margin-bottom: var(--space-3); }
@@ -330,7 +342,9 @@ figcaption { margin-top: 10px; font-size: 12px; color: var(--color-neutral-600);
   .article-body > .pull { margin-top: var(--space-4); font-size: 19px; }
   .article-body > figure + p,
   .article-body > .pull + p,
+  .article-body > .gloss + p,
   .article-body > .table-block + p { margin-top: var(--space-4); }
+  .article-body > .gloss { margin-top: var(--space-4); padding: var(--space-3); font-size: 15px; }
   .article-h2 { margin-top: var(--space-3); font-size: 17px; }
   .table-block .table { font-size: 12px; }
   .table-block .table th, .table-block .table td { padding: var(--space-2) var(--space-1); }

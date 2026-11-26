@@ -396,7 +396,11 @@
        > text                a pull quote — the quotation marks are ours, so the
                              text never has to carry a matched pair
        [표: cap] + rows      a table, cells split by |, first row the head
-     Inside a paragraph or a pull quote, [text](target) is a link: see inline(). 
+       [풀이] / [Plain] + lines
+                             a plain-language note of the site's own, boxed and
+                             labelled so it is never read as the source's words;
+                             each following line is one paragraph of the note
+     Inside a paragraph or a pull quote, [text](target) is a link: see inline().
        anything else         a paragraph */
   /* The blocks a body is made of. The contents list and the body itself read the
      same ones, so a heading cannot be in one and not the other. */
@@ -449,6 +453,15 @@
 
         if (t.charAt(0) === '>') {
           return '<p class="pull">&ldquo;' + inline(ctx, t.replace(/^>\s*/, ''), 'band-2') + '&rdquo;</p>';
+        }
+
+        var gloss = /^\[(?:풀이|Plain)\]\n([\s\S]+)$/.exec(t);
+        if (gloss) {
+          return '<aside class="gloss">' +
+            '<p class="gloss-label">' + esc(ctx.lang === 'ko' ? '쉬운 풀이' : 'In plain terms') + '</p>' +
+            gloss[1].split('\n').map(function (l) { return l.trim(); }).filter(Boolean)
+              .map(function (l) { return '<p>' + inline(ctx, l, 'band-2') + '</p>'; }).join('') +
+            '</aside>';
         }
 
         var table = /^\[(?:표|Table)(?::\s*([^\]]*))?\]\n([\s\S]+)$/.exec(t);
